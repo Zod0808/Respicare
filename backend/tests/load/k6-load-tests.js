@@ -1,35 +1,58 @@
 /**
  * Tests de Carga con K6 para RespiCare Backend
- * 
+ *
  * Este script prueba la capacidad del backend bajo diferentes niveles de carga.
- * 
+ *
  * Instalación de K6:
  * - Windows: choco install k6
  * - macOS: brew install k6
  * - Linux: https://k6.io/docs/getting-started/installation/
- * 
- * Ejecución:
+ *
+ * Ejecución (perfil de carga normal, hasta 100 VUs):
  * k6 run tests/load/k6-load-tests.js
- * 
+ *
  * Con opciones:
  * k6 run --vus 50 --duration 2m tests/load/k6-load-tests.js
  * k6 run --stage 30s:100,1m:200,30s:0 tests/load/k6-load-tests.js
+ *
+ * Ejecución del perfil de estrés (CP-014, escalado hasta 10 000 VUs).
+ * Requiere un entorno de staging equivalente a producción (no ejecutar
+ * contra `npm run dev` local: 10 000 conexiones concurrentes saturan
+ * un backend/MongoDB de desarrollo sin representar un resultado válido):
+ * k6 run -e PROFILE=stress -e BASE_URL=https://staging.example.com tests/load/k6-load-tests.js
  */
 
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { Rate, Trend, Counter } from 'k6/metrics';
 
+const PROFILE = __ENV.PROFILE || 'load';
+
+// Perfil "load": carga normal/pico esperado en producción (hasta 100 VUs).
+const LOAD_STAGES = [
+  { duration: '30s', target: 10 },   // Ramp-up: 10 usuarios en 30s
+  { duration: '1m', target: 50 },    // Carga normal: 50 usuarios
+  { duration: '30s', target: 100 },  // Ramp-up: 100 usuarios
+  { duration: '2m', target: 100 },    // Carga alta: 100 usuarios
+  { duration: '30s', target: 50 },    // Ramp-down: 50 usuarios
+  { duration: '30s', target: 0 },     // Ramp-down: 0 usuarios
+];
+
+// Perfil "stress" (CP-014): escalabilidad hasta 10 000 usuarios concurrentes.
+// Diseñado para ejecutarse contra un entorno de staging equivalente a
+// producción, no contra un backend de desarrollo local.
+const STRESS_STAGES = [
+  { duration: '1m', target: 500 },
+  { duration: '2m', target: 2000 },
+  { duration: '3m', target: 5000 },
+  { duration: '3m', target: 10000 },
+  { duration: '5m', target: 10000 },
+  { duration: '2m', target: 0 },
+];
+
 // Configuración base
 export const options = {
-  stages: [
-    { duration: '30s', target: 10 },   // Ramp-up: 10 usuarios en 30s
-    { duration: '1m', target: 50 },    // Carga normal: 50 usuarios
-    { duration: '30s', target: 100 },  // Ramp-up: 100 usuarios
-    { duration: '2m', target: 100 },    // Carga alta: 100 usuarios
-    { duration: '30s', target: 50 },    // Ramp-down: 50 usuarios
-    { duration: '30s', target: 0 },     // Ramp-down: 0 usuarios
-  ],
+  stages: PROFILE === 'stress' ? STRESS_STAGES : LOAD_STAGES,
   thresholds: {
     // 95% de las peticiones deben completarse en menos de 500ms
     http_req_duration: ['p(95)<500', 'p(99)<1000'],
