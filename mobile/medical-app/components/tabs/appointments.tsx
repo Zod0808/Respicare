@@ -1,12 +1,13 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Plus, Search, ChevronRight, Calendar, Clock, MapPin, Activity, Edit, Eye } from "lucide-react"
+import { Plus, Search, ChevronRight, Calendar, Clock, MapPin, Activity, Edit, Eye, UserSearch, X as XIcon } from "lucide-react"
 import { ModernButton } from "@/components/ui/ModernButton"
 import { ModernCard } from "@/components/ui/ModernCard"
 import type { Translation, ViewState } from "@/lib/translations"
 import { medicalHistoryService } from "@/lib/api/services"
 import { appointmentService } from "@/lib/api/services"
+import { patientService, type PatientSearchResult } from "@/lib/api/services/patientService"
 import { useAppStore } from "@/store/useAppStore"
 import { toast } from "sonner"
 import { format } from "date-fns"
@@ -33,26 +34,68 @@ export function HistoryView({ t, setCurrentView }: HistoryViewProps) {
   const [editingHistory, setEditingHistory] = useState<MedicalHistory | null>(null)
   const [_selectedHistory, _setSelectedHistory] = useState<MedicalHistory | null>(null)
 
+  // Doctor-only: búsqueda de paciente por nombre / email / ID para consultar su historial
+  const isDoctor = user?.role === 'doctor' || user?.role === 'admin'
+  const [patientQuery, setPatientQuery] = useState("")
+  const [patientResults, setPatientResults] = useState<PatientSearchResult[]>([])
+  const [selectedPatient, setSelectedPatient] = useState<PatientSearchResult | null>(null)
+  const [isSearching, setIsSearching] = useState(false)
+
   useEffect(() => {
     loadData()
-  }, [user])
+  }, [user, selectedPatient?._id])
+
+  useEffect(() => {
+    if (!isDoctor) return
+    if (selectedPatient) return
+    const q = patientQuery.trim()
+    if (q.length < 2) {
+      setPatientResults([])
+      return
+    }
+    let cancelled = false
+    setIsSearching(true)
+    const handle = setTimeout(async () => {
+      try {
+        const results = await patientService.search(q)
+        if (!cancelled) setPatientResults(results)
+      } catch (err: any) {
+        if (!cancelled) {
+          console.error('Error buscando pacientes:', err)
+          setPatientResults([])
+        }
+      } finally {
+        if (!cancelled) setIsSearching(false)
+      }
+    }, 300)
+    return () => { cancelled = true; clearTimeout(handle) }
+  }, [patientQuery, isDoctor, selectedPatient?._id])
 
   const loadData = async () => {
     if (!user) return
 
+    // Doctor sin paciente seleccionado: no cargar historias (evita el flujo vacío).
+    // Igualmente cargamos sus próximas citas.
     setIsLoading(true)
     try {
-      // Cargar historias médicas
-      const historiesResponse = await medicalHistoryService.list({
-        patientId: user._id,
-        limit: 50
-      })
-      const histories = Array.isArray(historiesResponse)
-        ? historiesResponse
-        : (historiesResponse as { data: MedicalHistory[] }).data ?? []
-      setMedicalHistories(histories)
+      const targetPatientId = isDoctor
+        ? (selectedPatient?._id ?? null)
+        : user._id
 
-      // Cargar citas
+      if (targetPatientId) {
+        const historiesResponse = await medicalHistoryService.list({
+          patientId: targetPatientId,
+          limit: 50
+        })
+        const histories = Array.isArray(historiesResponse)
+          ? historiesResponse
+          : (historiesResponse as { data: MedicalHistory[] }).data ?? []
+        setMedicalHistories(histories)
+      } else {
+        setMedicalHistories([])
+      }
+
+      // Cargar citas propias (paciente o doctor)
       const appointmentsData = await appointmentService.getUpcoming()
       setAppointments(appointmentsData)
 
@@ -175,12 +218,94 @@ export function HistoryView({ t, setCurrentView }: HistoryViewProps) {
         />
       </div>
 
+      {isDoctor && viewMode === 'histories' && (
+        <div className="space-y-2">
+          {selectedPatient ? (
+            <ModernCard className="p-3 flex items-center justify-between bg-primary/5 border-primary/30">
+              <div className="min-w-0">
+                <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                  Historial del paciente
+                </p>
+                <p className="font-bold truncate">{selectedPatient.name}</p>
+                <p className="text-xs text-muted-foreground truncate">
+                  {selectedPatient.email} · ID {selectedPatient._id.slice(-6)}
+                </p>
+              </div>
+              <button
+                aria-label="Cambiar paciente"
+                onClick={() => {
+                  setSelectedPatient(null)
+                  setPatientQuery("")
+                  setPatientResults([])
+                }}
+                className="p-2 rounded-full hover:bg-secondary shrink-0"
+              >
+                <XIcon className="w-4 h-4" />
+              </button>
+            </ModernCard>
+          ) : (
+            <>
+              <div className="relative">
+                <UserSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <input
+                  value={patientQuery}
+                  onChange={(e) => setPatientQuery(e.target.value)}
+                  className="w-full bg-secondary/50 rounded-xl pl-10 pr-4 py-3 text-sm outline-none focus:ring-2 ring-primary/20"
+                  placeholder="Buscar paciente por nombre, email o ID"
+                />
+              </div>
+              {isSearching && (
+                <p className="text-xs text-muted-foreground px-1">Buscando…</p>
+              )}
+              {!isSearching && patientQuery.trim().length >= 2 && patientResults.length === 0 && (
+                <p className="text-xs text-muted-foreground px-1">Sin coincidencias</p>
+              )}
+              {patientResults.length > 0 && (
+                <div className="space-y-1 max-h-64 overflow-y-auto rounded-xl border bg-background">
+                  {patientResults.map((p) => (
+                    <button
+                      key={p._id}
+                      onClick={() => {
+                        setSelectedPatient(p)
+                        setPatientResults([])
+                      }}
+                      className="w-full text-left px-3 py-2 hover:bg-secondary/50 border-b last:border-b-0 flex items-center gap-3"
+                    >
+                      <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold shrink-0">
+                        {p.name.split(' ').map(s => s[0]).slice(0, 2).join('').toUpperCase()}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-medium truncate">{p.name}</p>
+                        <p className="text-[11px] text-muted-foreground truncate">
+                          {p.email} · ID {p._id.slice(-6)}
+                        </p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      )}
+
       {viewMode === 'histories' ? (
         <div className="space-y-3">
           {filteredHistories.length === 0 ? (
             <div className="text-center py-12">
-              <Activity className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">No hay historias médicas registradas</p>
+              {isDoctor && !selectedPatient ? (
+                <>
+                  <UserSearch className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">
+                    Busca un paciente por nombre, email o ID para revisar su historial clínico.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <Activity className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-muted-foreground">No hay historias médicas registradas</p>
+                </>
+              )}
             </div>
           ) : (
             filteredHistories.map((history) => (

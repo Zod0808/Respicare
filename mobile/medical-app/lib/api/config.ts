@@ -52,6 +52,11 @@ export const API_ENDPOINTS = {
     users: buildEndpoint('/auth/users'),
   },
   
+  // Pacientes (búsqueda por doctor)
+  patients: {
+    search: buildEndpoint('/patients/search'),
+  },
+
   // Historias Médicas
   medicalHistories: {
     list: buildEndpoint('/medical-histories'),
