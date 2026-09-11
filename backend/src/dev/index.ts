@@ -109,6 +109,57 @@ export function applyDevRoutes(app: Application): void {
   app.get('/api/patients', (_req: Request, res: Response) => {
     res.json({ message: 'Patients endpoint', status: 'placeholder', data: [] });
   });
+
+  // GET /api/v1/patients/search?q=<term> — doctor patient lookup
+  // El campo `name` está encriptado at-rest, así que el filtro por nombre se hace
+  // en memoria sobre los valores desencriptados por el modelo Mongoose. Email/ID
+  // sí se filtran en la query. Limit 20 resultados.
+  app.get('/api/v1/patients/search', async (req: Request, res: Response) => {
+    try {
+      const mongoose = require('mongoose') as typeof import('mongoose');
+      const UserModel = mongoose.models['User'];
+      if (!UserModel) {
+        return res.json({ success: true, data: [] });
+      }
+
+      const q = String(req.query['q'] ?? '').trim();
+      const baseFilter: Record<string, any> = { role: 'patient', isActive: true };
+
+      // ObjectId directo → match único
+      if (q && mongoose.Types.ObjectId.isValid(q) && q.length === 24) {
+        const one = await UserModel.findOne({ ...baseFilter, _id: new mongoose.Types.ObjectId(q) })
+          .select('_id name email createdAt');
+        return res.json({ success: true, data: one ? [one.toObject()] : [] });
+      }
+
+      // Traer conjunto candidato (email match en DB, resto se filtra en memoria)
+      const rx = q ? new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i') : null;
+      const dbFilter: Record<string, any> = { ...baseFilter };
+      if (rx) {
+        // Optimización: si q parece email/parcial, filtramos por email en DB;
+        // si es cortísimo o alfabético, traemos todos los pacientes activos (~20).
+        if (/[@.]/.test(q) || /[a-z]+\.demo/i.test(q)) {
+          dbFilter.email = rx;
+        }
+      }
+
+      const candidates = await UserModel.find(dbFilter)
+        .select('_id name email createdAt')
+        .limit(100);
+
+      const filtered = rx
+        ? candidates.filter((u: any) => rx.test(u.name ?? '') || rx.test(u.email ?? ''))
+        : candidates;
+
+      const results = filtered
+        .slice(0, 20)
+        .map((u: any) => (typeof u.toObject === 'function' ? u.toObject() : u));
+
+      res.json({ success: true, data: results });
+    } catch (err: any) {
+      res.status(500).json({ success: false, message: 'Error al buscar pacientes', error: err.message });
+    }
+  });
 }
 
 export default applyDevRoutes;
