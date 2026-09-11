@@ -12,7 +12,9 @@ RUN apt-get update && apt-get install -y \
 
 # Copiar requirements
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# openai-whisper 20231117 usa pkg_resources durante el build; garantizar setuptools/wheel al dia.
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel \
+ && pip install --no-cache-dir -r requirements.txt
 
 # Descargar modelos pre-entrenados
 RUN mkdir -p /app/models

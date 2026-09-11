@@ -43,5 +43,9 @@ sentry-sdk[fastapi]==1.38.0
 # Audio processing (pre-trained models, no dataset needed)
 librosa==0.10.1
 soundfile==0.12.1
-openai-whisper==20231117
+# openai-whisper: importado lazy en audio_transcription_service. Requiere pkg_resources
+# durante el build (incompatible con setuptools>=70 en env aislado de pip). No es esencial
+# para la demo (audio transcription es un feature secundario). Instalar manualmente si se
+# necesita:  docker exec respicare-ai-dev pip install openai-whisper==20240930 --no-build-isolation
+# openai-whisper==20240930
 ffmpeg-python==0.2.0
