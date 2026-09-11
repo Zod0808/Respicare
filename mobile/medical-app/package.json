@@ -16,6 +16,7 @@
     "android:lan": "npm run build:lan && npm run capacitor:sync",
     "android:release:production": "npm run build:production && npm run capacitor:sync && cd android && gradlew.bat assembleRelease",
     "dev": "next dev -p 8083",
+    "demo": "dotenv -e .env.demo -- next dev -p 8083",
     "lint": "eslint app components lib hooks",
     "start": "next start -p 8083",
     "capacitor:sync": "npx cap sync",
