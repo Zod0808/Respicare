@@ -5,7 +5,6 @@
  */
 
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import { logger } from '../utils/logger';
 import UserModel, { UserDocument } from '../models/User';
@@ -616,11 +615,10 @@ async function ensureUsers(): Promise<{
     let user = await UserModel.findOne({ email });
     if (!user) {
       const name = generateName();
-      const password = await bcrypt.hash('demo1234', 10);
       user = new UserModel({
         name,
         email,
-        password,
+        password: 'demo1234',
         role,
         isActive: true,
         lastLogin: randomDateWithinDays(10),

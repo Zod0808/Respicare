@@ -147,12 +147,23 @@ router.get('/me/upcoming', async (req: Request, res: Response) => {
   const userId = requireBearer(req, res);
   if (!userId) return;
 
+  let userRole: string | null = null;
+  try {
+    const UserModel = (mongoose.models as any).User;
+    if (UserModel) {
+      const u = await UserModel.findById(userId).select('role');
+      if (u) userRole = u.role;
+    }
+  } catch {
+    // ignore — default to patient filter below
+  }
+
   try {
     let Appointment: mongoose.Model<any> | null = null;
     try {
       Appointment = mongoose.model('Appointment');
     } catch {
-      // Fallback: sample data
+      // Fallback: sample data (patient-only, dev sample has no doctorId)
       const now = new Date();
       const mock = SAMPLE_APPOINTMENTS
         .filter(
@@ -166,12 +177,18 @@ router.get('/me/upcoming', async (req: Request, res: Response) => {
     }
 
     const now = new Date();
+    const query: Record<string, any> = {
+      status: { $in: ['scheduled', 'rescheduled'] },
+      scheduledAt: { $gte: now },
+    };
+    if (userRole === 'doctor') {
+      query.doctorId = String(userId);
+    } else {
+      query.patientId = String(userId);
+    }
+
     const upcoming = await Appointment!
-      .find({
-        patientId: userId,
-        status: { $in: ['scheduled', 'rescheduled'] },
-        scheduledAt: { $gte: now },
-      })
+      .find(query)
       .sort({ scheduledAt: 1 })
       .limit(10)
       .lean();
