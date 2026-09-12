@@ -2,7 +2,7 @@
 import re
 from pathlib import Path
 from docx import Document
-from docx.shared import Pt, Cm, RGBColor
+from docx.shared import Pt, Cm, RGBColor, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_ALIGN_VERTICAL
 from docx.oxml.ns import qn
@@ -184,6 +184,21 @@ def convert():
             header, rows, i = parse_table(md, i)
             add_table(doc, header, rows)
             doc.add_paragraph()
+            continue
+
+        m = re.match(r"^!\[([^\]]*)\]\(([^)]+)\)$", stripped)
+        if m:
+            caption, img_path = m.group(1), m.group(2)
+            resolved = Path(__file__).parent / img_path
+            if resolved.exists():
+                doc.add_picture(str(resolved), width=Cm(14))
+                pic_p = doc.paragraphs[-1]
+                pic_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            if caption:
+                cap_p = doc.add_paragraph()
+                cap_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                add_inline(cap_p, caption, base_italic=True)
+            i += 1
             continue
 
         if stripped.startswith("> "):
