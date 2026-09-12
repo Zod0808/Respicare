@@ -37,6 +37,16 @@ Construir la interfaz web en React y el dashboard básico integrado con los endp
 
 - Entregables de otras iteraciones (Sprint 1 y anteriores ya cerrados; Sprint 3 y posteriores aún no iniciados).
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- **RF-001**: Gestión de usuarios — extensión frontend
+- **RF-008**: Historial clínico electrónico — asociado temáticamente — páginas de gestión clínica del frontend
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-001**: Usabilidad
+- **RNF-006**: Compatibilidad
+
 ## 4. Entregables Esperados
 
 Entregables verificables comprometidos para el Sprint 2:
@@ -98,6 +108,66 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Integración con backend (cliente API base) | `web/src/utils/apiBase.js` | Cesar Fabian Chavez Linares |
 | Tests del dashboard y páginas base | `web/src/pages/__tests__/Dashboard.test.js`, `web/src/pages/__tests__/Home.test.js`, `web/src/pages/__tests__/LoginPage.test.js`, `web/src/utils/__tests__/apiBase.test.js` | Cesar Fabian Chavez Linares |
 | Fuente y verificación narrativa del Sprint | Sección "Sprint 2: Frontend y Dashboard" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Interfaz web con React*
+
+`web/src/pages/LoginPage.js` (líneas 40-57):
+
+```javascript
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    try {
+      const loggedUser = await login(email, password);
+      const from = location.state?.from?.pathname;
+      // Redirigir según rol
+      const dest = from && from !== '/login'
+        ? from
+        : ['doctor', 'admin'].includes(loggedUser?.role) ? '/dashboard' : '/';
+      navigate(dest, { replace: true });
+    } catch (err) {
+      setError(err.response?.data?.message || 'Credenciales inválidas. Intenta de nuevo.');
+    } finally {
+      setLoading(false);
+    }
+  };
+```
+
+*Entregable: Integración con backend*
+
+`web/src/utils/apiBase.js` (líneas 80-105):
+
+```javascript
+const resolveBackendBase = () => {
+  const raw =
+    process.env.REACT_APP_BACKEND_URL ||
+    process.env.REACT_APP_API_URL ||
+    'https://vhs-significantly-furniture-complicated.trycloudflare.com';
+
+  const rewritten = maybeRewriteForBrowser(raw, '3001');
+  return normalize(rewritten);
+};
+
+const resolveApiBase = () => {
+  const backend = resolveBackendBase();
+  if (!backend) {
+    return 'http://localhost:3001/api/v1';
+  }
+
+  if (/\/api\/v\d+$/i.test(backend)) {
+    return backend;
+  }
+
+  if (backend.endsWith('/api')) {
+    return `${backend}/v1`;
+  }
+
+  return `${backend}/api/v1`;
+};
+```
 
 ## 10. Indicadores de Éxito
 

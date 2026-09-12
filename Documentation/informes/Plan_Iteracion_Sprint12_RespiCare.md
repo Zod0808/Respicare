@@ -39,6 +39,16 @@ Cerrar el proyecto con modelos ML predictivos (tendencias, anomalías, demanda),
 
 - Entregables de otras iteraciones (Sprint 11 y anteriores ya cerrados; Sprint - y posteriores aún no iniciados).
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- **RF-002**: Diagnóstico inteligente de síntomas — extensión — modelos predictivos
+- **RF-010**: Reportes y estadísticas — extensión
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-012**: Cobertura de pruebas
+- **RNF-007**: Precisión
+
 ## 4. Entregables Esperados
 
 Entregables verificables comprometidos para el Sprint 12:
@@ -105,6 +115,58 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Endpoints REST de monitoreo y fairness/SHAP | `ai-services/api/routes/ml_monitoring.py`, `ai-services/ml_models/prediction_monitor.py` | Cesar Fabian Chavez Linares |
 | Tests del monitor de predicciones | `ai-services/tests/ml_models/test_prediction_monitor.py` | Cesar Fabian Chavez Linares |
 | Fuente y verificación narrativa del Sprint | Secciones "Sprint 12: Modelos ML Predictivos y Cobertura", "Retrospectiva (Sprint 12)" y "Reportes de Progreso" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Modelos ML: trend_predictor.py*
+
+`ai-services/ml_models/trend_predictor.py` (líneas 50-69):
+
+```python
+def fit(self, data: pd.DataFrame) -> "DiseaseTrendPredictor":
+    """
+    Ajusta el predictor con datos históricos.
+
+    Espera un DataFrame con las columnas: ``date``, ``disease`` y ``count``.
+    La fecha puede venir como string, será convertida a ``datetime64``.
+    """
+    required_columns = {"date", "disease", "count"}
+    if not required_columns.issubset(data.columns):
+        missing = required_columns - set(data.columns)
+        raise ValueError(f"Faltan columnas requeridas: {missing}")
+
+    if data.empty:
+        raise ValueError("Se requieren registros históricos para entrenar el predictor.")
+
+    df = data.copy()
+    df["date"] = pd.to_datetime(df["date"])
+    df = df.groupby(["disease", "date"], as_index=False)["count"].sum()
+    df = df.sort_values(["disease", "date"])
+    self._history = df.reset_index(drop=True)
+    return self
+```
+
+*Entregable: Endpoints REST de monitoreo (api/routes/ml_monitoring.py)*
+
+`ai-services/api/routes/ml_monitoring.py` (líneas 94-108):
+
+```python
+async def get_monitoring_metrics(days: int = 1) -> Dict[str, Any]:
+    """
+    Get monitoring metrics for ML predictions
+    
+    Args:
+        days: Number of days to analyze (default: 1)
+    
+    Returns:
+        Monitoring metrics with success flag
+    """
+    try:
+        monitor = get_monitor()
+        # Reload predictions to ensure we have latest data
+        monitor._load_existing_predictions(days=min(days + 7, 30))  # Load a bit more to ensure we have data
+        metrics = monitor.get_metrics(days=days)
+```
 
 ## 10. Indicadores de Éxito
 

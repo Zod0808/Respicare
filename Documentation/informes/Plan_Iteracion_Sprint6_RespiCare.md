@@ -37,6 +37,16 @@ Optimizar el modelo de clasificación con XGBoost y feature engineering avanzado
 
 - Entregables de otras iteraciones (Sprint 5 y anteriores ya cerrados; Sprint 7 y posteriores aún no iniciados).
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- **RF-002**: Diagnóstico inteligente de síntomas — extensión XGBoost
+- **RF-006**: Explicabilidad (SHAP) — versión inicial
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-007**: Precisión
+- **RNF-011**: Explicabilidad
+
 ## 4. Entregables Esperados
 
 Entregables verificables comprometidos para el Sprint 6:
@@ -99,6 +109,43 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Dashboard ejecutivo de KPIs (US-105) | `web/src/components/ExecutiveDashboard.js`, `web/src/components/__tests__/ExecutiveDashboard.enhanced.test.js` | Cesar Fabian Chavez Linares |
 | Tests del modelo XGBoost y del explicador SHAP | `ai-services/tests/ml_models/test_xgboost_model.py`, `ai-services/tests/services/test_shap_explainer.py` | Cesar Fabian Chavez Linares |
 | Fuente y verificación narrativa del Sprint | Secciones "Sprint 6: XGBoost Optimizado" y "Casos de Uso por Sprint > Sprint 6" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Modelo XGBoost (99.81% accuracy)*
+
+`ai-services/ml_models/xgboost_model.py` (líneas 299-302):
+
+```python
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        """Predict disease class indices for a feature matrix"""
+        if not self.is_trained:
+            raise ValueError("Model not trained yet")
+```
+
+*Entregable: Explicabilidad SHAP*
+
+`ai-services/shap_explainer.py` (líneas 85-101):
+
+```python
+    def explain_prediction(self, 
+                          symptoms: str, 
+                          patient_age: int = 35,
+                          top_k: int = 10) -> Dict[str, Any]:
+        """
+        Explain model prediction for given symptoms
+        
+        Args:
+            symptoms: Comma-separated symptoms
+            patient_age: Patient age
+            top_k: Number of top features to show
+        
+        Returns:
+            Dict with prediction, confidence, and explanation
+        """
+        if not self.model:
+            return {'error': 'Model not loaded'}
+```
 
 ## 10. Indicadores de Éxito
 

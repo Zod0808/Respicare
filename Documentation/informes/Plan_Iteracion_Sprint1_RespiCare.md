@@ -37,6 +37,15 @@ Construir el núcleo de autenticación y los endpoints básicos de la API REST q
 
 - Entregables de otras iteraciones (Sprint 0 y anteriores ya cerrados; Sprint 2 y posteriores aún no iniciados).
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- **RF-001**: Gestión de usuarios
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-004**: Seguridad
+- **RNF-012**: Cobertura de pruebas
+
 ## 4. Entregables Esperados
 
 Entregables verificables comprometidos para el Sprint 1:
@@ -99,6 +108,76 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Documentación Swagger de la API | `backend/src/config/swagger.ts`, montada en `/api/docs` (`swaggerUi.setup`) | Cesar Fabian Chavez Linares |
 | Tests de autenticación y autorización | `backend/tests/unit/controllers/authController.test.ts`, `backend/tests/unit/middleware/auth.test.ts`, `backend/tests/unit/validators/authValidators.test.ts`, `backend/tests/integration/auth.integration.test.ts`, `backend/tests/security/auth-authorization.security.test.ts` | Cesar Fabian Chavez Linares |
 | Fuente y verificación narrativa del Sprint | Sección "Sprint 1: Autenticación y Backend Básico" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Sistema de autenticación JWT (login, refresh token)*
+
+`backend/src/controllers/authController.ts` (líneas 103-128):
+
+```typescript
+export const login = asyncHandler(async (req: Request<{}, ApiResponse<AuthResponse>, LoginRequest>, res: Response) => {
+  const { email, password } = req.body;
+
+  // Buscar usuario y incluir contraseña
+  const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+  if (!user) {
+    logger.warn('Login fallido: email no encontrado', { email });
+    throw new AppError('Credenciales inválidas', 401);
+  }
+
+  // Verificar si el usuario está activo
+  if (!user.isActive) {
+    logger.warn('Login fallido: cuenta desactivada', { email });
+    throw new AppError('La cuenta está desactivada', 401);
+  }
+
+  // Verificar contraseña
+  const isPasswordValid = await user.comparePassword(password);
+  if (!isPasswordValid) {
+    logger.warn('Login fallido: contraseña incorrecta', { email });
+    throw new AppError('Credenciales inválidas', 401);
+  }
+
+  // Generar tokens
+  const token = generateToken((user._id as mongoose.Types.ObjectId).toString());
+  const refreshToken = generateRefreshToken((user._id as mongoose.Types.ObjectId).toString());
+```
+
+*Entregable: Gestión de usuarios (CRUD, roles admin/doctor/patient)*
+
+`backend/src/models/User.ts` (líneas 27-54):
+
+```typescript
+const UserSchema = new Schema<UserDocument>({
+  name: {
+    type: String,
+    required: [true, 'El nombre es obligatorio'],
+    trim: true,
+    maxlength: [100, 'El nombre no puede exceder 100 caracteres']
+  },
+  email: {
+    type: String,
+    required: [true, 'El email es obligatorio'],
+    unique: true,
+    lowercase: true,
+    trim: true,
+    match: [
+      /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+      'Por favor ingresa un email válido'
+    ]
+  },
+  password: {
+    type: String,
+    required: [true, 'La contraseña es obligatoria'],
+    minlength: [8, 'La contraseña debe tener al menos 8 caracteres'],
+    select: false // No incluir en consultas por defecto
+  },
+  role: {
+    type: String,
+    enum: {
+      values: ['patient', 'doctor', 'admin'],
+```
 
 ## 10. Indicadores de Éxito
 

@@ -37,6 +37,17 @@ Integrar el modelo ML entrenado dentro del chatbot médico, exponiendo prediccio
 
 - Entregables de otras iteraciones (Sprint 6 y anteriores ya cerrados; Sprint 8 y posteriores aún no iniciados).
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- **RF-002**: Diagnóstico inteligente de síntomas — extensión
+- **RF-005**: Validación de coherencia médica — extensión
+- **RF-006**: Explicabilidad (SHAP) — extensión
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-007**: Precisión
+- **RNF-011**: Explicabilidad
+
 ## 4. Entregables Esperados
 
 Entregables verificables comprometidos para el Sprint 7:
@@ -98,6 +109,45 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Top 3 predicciones alternativas (ensamble de modelos) | `ai-services/ml_models/ensemble_predictor.py` | Cesar Fabian Chavez Linares |
 | Test del endpoint de explicación ML del chatbot | `ai-services/tests/api/test_symptom_ml_analyzer_explanation_endpoint.py` | Cesar Fabian Chavez Linares |
 | Fuente y verificación narrativa del Sprint | Sección "Sprint 7: Integración Chatbot + ML" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Top 3 predicciones alternativas (ensamble de modelos)*
+
+`ai-services/ml_models/ensemble_predictor.py` (líneas 102-122):
+
+```python
+    def predict(self, 
+                symptoms: List[str],
+                symptoms_text: str = None,
+                patient_age: int = 35,
+                risk_factors: List[str] = None,
+                ensemble_method: str = 'weighted_vote',
+                apply_personalization: bool = True) -> Dict[str, Any]:
+        """
+        Predict using ensemble of models
+        
+        Args:
+            symptoms: List of symptom strings
+            symptoms_text: Comma-separated symptoms string (for XGBoost/RF)
+            patient_age: Patient age
+            ensemble_method: 'weighted_vote' or 'average'
+        
+        Returns:
+            Ensemble prediction result
+        """
+        if symptoms_text is None:
+            symptoms_text = ', '.join(symptoms)
+```
+
+*Entregable: Integración de ML en el chatbot*
+
+`ai-services/api/routes/chat_analyzer.py` (líneas 57-58):
+
+```python
+@router.post("/v1/analyze", response_model=ChatMessageOutput)
+async def analyze_message(
+```
 
 ## 10. Indicadores de Éxito
 

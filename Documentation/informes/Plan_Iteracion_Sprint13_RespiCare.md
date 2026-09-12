@@ -43,6 +43,19 @@ Cerrar dos brechas identificadas en la revisión de requerimientos, objetivos y 
 
 **Nota de alcance (ajuste durante la ejecución):** el motor de predicción de síntomas (`symptom_ml_analyzer.py`) es un clasificador de texto (TF-IDF + SHAP sobre listas de síntomas), no un modelo tabular entrenado con variables numéricas como feature. Reentrenar los modelos para usar vitales como feature de entrenamiento excedía el alcance razonable de este sprint. Los vitales de wearables se incorporaron en su lugar como una **capa adicional de validación clínica basada en reglas** (extensión del patrón de coherencia médica RF-005, `MedicalValidationRules`), que ajusta confianza y puede escalar la urgencia de una predicción cuando los signos vitales indican riesgo, con degradación automática al comportamiento actual si no hay datos de wearables. Este ajuste no reduce el entregable original (fallback opcional con degradación controlada), solo precisa el mecanismo técnico usado para cumplirlo.
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- **RF-005**: Validación de coherencia médica — extensión — validación con vitales de wearables
+- **RF-002**: Diagnóstico inteligente de síntomas — extensión — capa de validación con vitales
+- **RF-007**: Panel del doctor — monitoreo en tiempo real de vitales del paciente
+- **RF-008**: Historial clínico electrónico — extensión — interoperabilidad institucional MINSA/SINADEF
+- **RF-009**: Sistema de alertas y notificaciones — asociado temáticamente — alertas sanitarias regionales del API institucional
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-008**: Interoperabilidad
+- **RNF-004**: Seguridad
+
 ## 4. Entregables Esperados
 
 Entregables comprometidos para el Sprint 13 (avance a la fecha):
@@ -110,6 +123,48 @@ Fuentes documentales que sustentan este Sprint como extensión de alcance:
 | Pipeline de vitales de wearables backend → ai-services | `backend/src/controllers/symptomAnalyzerController.ts` (`getRecentVitalsForPatient`), `backend/src/services/aiIntegration.ts` | Cesar Fabian Chavez Linares |
 | Capa de validación clínica basada en reglas con vitales de wearables | `ai-services/services/medical_validation_rules.py` (`validate_vitals`) | Cesar Fabian Chavez Linares |
 | Tests de integración end-to-end de ambos flujos | `backend/tests/integration/institutional.integration.test.ts`, `backend/tests/unit/middleware/institutionalAuth.test.ts`, `ai-services/tests/services/test_medical_validation_rules.py`, `ai-services/tests/api/test_symptom_ml_analyzer_endpoints.py` | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Extensión del pipeline backend → ai-services para vitales de wearables*
+
+`backend/src/controllers/symptomAnalyzerController.ts` (líneas 29-43):
+
+```typescript
+async function getRecentVitalsForPatient(patientId?: string): Promise<SymptomVitalsInput | undefined> {
+  if (!patientId) {
+    return undefined;
+  }
+
+  try {
+    const latest = await WearableData.findOne({ patientId }).sort({ timestamp: -1 }).lean();
+    if (!latest) {
+      return undefined;
+    }
+
+    const isFresh = Date.now() - new Date(latest.timestamp).getTime() <= WEARABLE_VITALS_FRESHNESS_MS;
+    if (!isFresh) {
+      return undefined;
+    }
+```
+
+*Entregable: API de interoperabilidad MINSA/SINADEF*
+
+`backend/src/controllers/institutionalController.ts` (líneas 39-47):
+
+```typescript
+export const getEpidemiologicalExport = asyncHandler(async (req: InstitutionalRequest, res: Response) => {
+  const days = req.query.days ? Number(req.query.days) : undefined;
+  const data = await institutionalIntegrationService.getEpidemiologicalExport({ days });
+
+  logger.info('Exportación epidemiológica institucional solicitada', {
+    clientId: req.institutionalClient?.id,
+    clientName: req.institutionalClient?.name,
+  });
+
+  res.status(200).json({ success: true, data });
+});
+```
 
 ## 10. Indicadores de Éxito
 

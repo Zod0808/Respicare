@@ -37,6 +37,18 @@ Generar el dataset sintético de enfermedades respiratorias y entrenar el primer
 
 - Entregables de otras iteraciones (Sprint 4 y anteriores ya cerrados; Sprint 6 y posteriores aún no iniciados).
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- **RF-002**: Diagnóstico inteligente de síntomas — extensión
+- **RF-004**: Reglas clínicas de emergencia
+- **RF-005**: Validación de coherencia médica
+- **RF-009**: Sistema de alertas y notificaciones — asociado temáticamente — las reglas de emergencia disparan alertas
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-007**: Precisión
+- **RNF-010**: Confiabilidad
+
 ## 4. Entregables Esperados
 
 Entregables verificables comprometidos para el Sprint 5:
@@ -99,6 +111,64 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Sistema de reglas de emergencia | `ai-services/strategies/rule_based_strategy.py`, `ai-services/services/medical_validation_rules.py` | Cesar Fabian Chavez Linares |
 | Tests de componentes de ML y estrategia basada en reglas | `ai-services/tests/ml_models/test_ml_components.py`, `ai-services/tests/strategies/test_rule_based_strategy.py` | Cesar Fabian Chavez Linares |
 | Fuente y verificación narrativa del Sprint | Secciones "Sprint 5: Dataset y Random Forest" y "Casos de Uso por Sprint > Sprint 5" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Sistema de reglas de emergencia / validación de coherencia médica*
+
+`ai-services/services/medical_validation_rules.py` (líneas 113-134):
+
+```python
+    def validate_prediction(
+        self,
+        disease: str,
+        symptoms: str,
+        age: int,
+        vitals: Optional[Dict[str, float]] = None,
+    ) -> Dict[str, Any]:
+        """
+        Validate if predicted disease is plausible given symptoms, age and
+        (optionally) wearable vitals captured near the time of the report (Sprint 13).
+
+        Returns:
+            Dict with validation status and any warnings
+        """
+        symptoms_lower = symptoms.lower()
+
+        validation_status = {
+            'is_valid': True,
+            'warnings': [],
+            'confidence_adjustment': 0.0,
+            'urgency_escalation': False,
+        }
+```
+
+*Entregable: Modelo Random Forest entrenado*
+
+`ai-services/ml_models/random_forest_model.py` (líneas 128-147):
+
+```python
+    def train(self, X: np.ndarray, y: np.ndarray, test_size: float = 0.2):
+        """
+        Train Random Forest model
+        
+        Args:
+            X: Feature matrix
+            y: Labels
+            test_size: Proportion of test set
+        """
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=test_size, random_state=self.random_state, stratify=y
+        )
+        
+        print(f"Training Random Forest with {self.n_estimators} trees...")
+        self.model.fit(X_train, y_train)
+        
+        # Evaluate
+        train_score = self.model.score(X_train, y_train)
+        test_score = self.model.score(X_test, y_test)
+        oob_score = self.model.oob_score_
+```
 
 ## 10. Indicadores de Éxito
 
