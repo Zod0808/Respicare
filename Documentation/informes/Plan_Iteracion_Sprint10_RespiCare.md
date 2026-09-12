@@ -93,7 +93,11 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Evidencia | Ubicación | Responsable |
 |---|---|---|
 | Sección "Sprint 10: Integración HL7 FHIR" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
-| Fuente y verificación de código real | Sección "Sprint 10: Integración HL7 FHIR" de METODOLOGIA_AGIL_PROYECTO.md — verificado en código real: backend/src/services/fhirService.ts, backend/src/utils/hl7Parser.ts | Cesar Fabian Chavez Linares |
+| Servicio cliente FHIR | `backend/src/services/fhirService.ts`, `backend/src/routes/fhirRoutes.ts` | Cesar Fabian Chavez Linares |
+| Parser HL7 v2/v3 | `backend/src/utils/hl7Parser.ts` | Cesar Fabian Chavez Linares |
+| Página de visualización de mensajes HL7 (frontend) | `web/src/pages/Hl7Page.js` | Cesar Fabian Chavez Linares |
+| Tests unitarios y de integración de FHIR/HL7 | `backend/tests/unit/services/fhirService.test.ts`, `backend/tests/unit/utils/hl7Parser.test.ts`, `backend/tests/unit/controllers/fhirController.test.ts`, `backend/tests/unit/services/fhirValidator.test.ts`, `backend/tests/integration/fhir.integration.test.ts` | Cesar Fabian Chavez Linares |
+| Fuente y verificación narrativa del Sprint | Sección "Sprint 10: Integración HL7 FHIR" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 

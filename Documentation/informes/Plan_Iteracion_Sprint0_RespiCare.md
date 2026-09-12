@@ -96,7 +96,14 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Evidencia | Ubicación | Responsable |
 |---|---|---|
 | Sección "Sprint 0: Setup y Arquitectura" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
-| Fuente y verificación de código real | Sección "Fase 1: Setup y Arquitectura (Sprint 0)" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+| Estructura de microservicios (backend, ai-services, web, mobile) | `backend/`, `ai-services/`, `web/`, `mobile/` (raíz del repositorio) | Cesar Fabian Chavez Linares |
+| Orquestación Docker Compose por entorno (dev, prod, servidor, túnel, VM) | `docker-compose.yml`, `docker-compose.dev.yml`, `docker-compose.prod.yml`, `docker-compose.server.yml`, `docker-compose.tunnel.yml`, `docker-compose.vm.yml` | Cesar Fabian Chavez Linares |
+| Dockerfiles de cada microservicio | `backend/Dockerfile`, `backend/dockerfile.dev`, `web/Dockerfile`, `web/dockerfile.dev`, `nginx/Dockerfile`, `ai-services/Dockerfile.prod`, `ai-services/dockerfile` | Cesar Fabian Chavez Linares |
+| Makefile con targets estandarizados de Docker (mitigación del riesgo de la sección 7) | `Makefile.docker` | Cesar Fabian Chavez Linares |
+| Base de datos MongoDB inicial (definida como servicio en la orquestación Docker) | Servicio `mongo`/`mongodb` en `docker-compose.yml` | Cesar Fabian Chavez Linares |
+| Integración básica backend-frontend (rutas Express consumidas por el cliente web) | `backend/src/routes/`, `web/src/services/` (llamadas API del frontend al backend) | Cesar Fabian Chavez Linares |
+| Configuración de CI/CD (GitHub Actions) | `.github/workflows/` (20 workflows, entre ellos `backend-tests.yml`, `web-tests.yml`, `mobile-ci.yml`, `ai-services-tests.yml`, `docker-build.yml`, `ci-cd-complete.yml`) | Cesar Fabian Chavez Linares |
+| Fuente y verificación narrativa del Sprint | Sección "Fase 1: Setup y Arquitectura (Sprint 0)" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 

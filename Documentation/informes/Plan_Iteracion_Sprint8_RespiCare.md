@@ -93,7 +93,11 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Evidencia | Ubicación | Responsable |
 |---|---|---|
 | Sección "Sprint 8: Analytics Avanzados" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
-| Fuente y verificación de código real | Sección "Sprint 8: Analytics Avanzados" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+| Dashboard de analítica con tendencias y visualizaciones | `web/src/components/AnalyticsDashboard.js`, `web/src/components/AnalyticsDashboardSimple.js` | Cesar Fabian Chavez Linares |
+| Reportes geográficos y epidemiológicos (backend) | `backend/src/services/epidemiologicalService.ts`, `backend/src/services/analyticsService.ts` | Cesar Fabian Chavez Linares |
+| Mapas de calor interactivos de reportes (heredados/extendidos desde Sprint 4) | `web/src/components/EpidemiologicalHeatmap.js`, `web/src/components/InteractiveHeatMap.js` | Cesar Fabian Chavez Linares |
+| Tests de analítica y servicio epidemiológico | `web/src/components/__tests__/AnalyticsDashboard.test.js`, `backend/tests/unit/services/analyticsService.test.ts`, `backend/tests/unit/services/epidemiologicalService.test.ts`, `backend/tests/integration/analytics.integration.test.ts` | Cesar Fabian Chavez Linares |
+| Fuente y verificación narrativa del Sprint | Sección "Sprint 8: Analytics Avanzados" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 

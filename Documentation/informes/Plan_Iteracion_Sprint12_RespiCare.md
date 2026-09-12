@@ -99,7 +99,12 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Evidencia | Ubicación | Responsable |
 |---|---|---|
 | Sección "Sprint 12: Modelos ML Predictivos y Cobertura" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
-| Fuente y verificación de código real | Secciones "Sprint 12: Modelos ML Predictivos y Cobertura", "Retrospectiva (Sprint 12)" y "Reportes de Progreso" de METODOLOGIA_AGIL_PROYECTO.md — verificado en código real: ai-services/ml_models/trend_predictor.py, anomaly_detector.py, demand_forecasting.py | Cesar Fabian Chavez Linares |
+| Modelos ML predictivos (tendencias, anomalías, demanda) | `ai-services/ml_models/trend_predictor.py`, `ai-services/ml_models/anomaly_detector.py`, `ai-services/ml_models/demand_forecasting.py` | Cesar Fabian Chavez Linares |
+| Suite de tests pytest de los modelos analíticos | `ai-services/tests/ml_models/test_analytics_models.py` | Cesar Fabian Chavez Linares |
+| Ajuste de dependencias de testing | `ai-services/requirements-test.txt` | Cesar Fabian Chavez Linares |
+| Endpoints REST de monitoreo y fairness/SHAP | `ai-services/api/routes/ml_monitoring.py`, `ai-services/ml_models/prediction_monitor.py` | Cesar Fabian Chavez Linares |
+| Tests del monitor de predicciones | `ai-services/tests/ml_models/test_prediction_monitor.py` | Cesar Fabian Chavez Linares |
+| Fuente y verificación narrativa del Sprint | Secciones "Sprint 12: Modelos ML Predictivos y Cobertura", "Retrospectiva (Sprint 12)" y "Reportes de Progreso" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 

@@ -93,7 +93,11 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Evidencia | Ubicación | Responsable |
 |---|---|---|
 | Sección "Sprint 4: Chatbot y Analytics" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
-| Fuente y verificación de código real | Sección "Sprint 4: Chatbot y Analytics" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+| Chatbot médico integrado | `web/src/components/ChatBot.js`, `web/src/components/ChatBotEnhanced.js` | Cesar Fabian Chavez Linares |
+| Analytics básicos y reportes de síntomas (backend) | `backend/src/models/SymptomReport.js`, `backend/src/routes/symptomReportsRoutes.ts`, `backend/src/services/analyticsService.ts`, `backend/src/routes/analyticsRoutes.ts` | Cesar Fabian Chavez Linares |
+| Mapas interactivos de reportes | `web/src/components/HeatMap.js`, `web/src/components/InteractiveHeatMap.js`, `web/src/components/EpidemiologicalHeatmap.js`, `web/src/pages/HeatMapPage.js` | Cesar Fabian Chavez Linares |
+| Tests del chatbot | `web/src/components/__tests__/ChatBot.test.js`, `web/src/components/__tests__/ChatBotEnhanced.test.js`, `web/src/tests/accessibility/chatbot.accessibility.test.js` | Cesar Fabian Chavez Linares |
+| Fuente y verificación narrativa del Sprint | Sección "Sprint 4: Chatbot y Analytics" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 

@@ -94,7 +94,11 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Evidencia | Ubicación | Responsable |
 |---|---|---|
 | Sección "Sprint 6: XGBoost Optimizado" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
-| Fuente y verificación de código real | Secciones "Sprint 6: XGBoost Optimizado" y "Casos de Uso por Sprint > Sprint 6" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+| Modelo XGBoost optimizado | `ai-services/ml_models/xgboost_model.py`, `ai-services/models/xgboost_model.pkl`, `ai-services/scripts/training/train_xgboost_model.py` | Cesar Fabian Chavez Linares |
+| Explicabilidad SHAP | `ai-services/shap_explainer.py` | Cesar Fabian Chavez Linares |
+| Dashboard ejecutivo de KPIs (US-105) | `web/src/components/ExecutiveDashboard.js`, `web/src/components/__tests__/ExecutiveDashboard.enhanced.test.js` | Cesar Fabian Chavez Linares |
+| Tests del modelo XGBoost y del explicador SHAP | `ai-services/tests/ml_models/test_xgboost_model.py`, `ai-services/tests/services/test_shap_explainer.py` | Cesar Fabian Chavez Linares |
+| Fuente y verificación narrativa del Sprint | Secciones "Sprint 6: XGBoost Optimizado" y "Casos de Uso por Sprint > Sprint 6" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 

@@ -93,7 +93,12 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Evidencia | Ubicación | Responsable |
 |---|---|---|
 | Sección "Sprint 3: AI Services" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
-| Fuente y verificación de código real | Sección "Sprint 3: AI Services" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+| Microservicio de IA en Python/FastAPI | `ai-services/main.py` | Cesar Fabian Chavez Linares |
+| Análisis básico de síntomas | `ai-services/api/routes/symptom_analyzer.py`, `ai-services/api/routes/symptom_ml_analyzer.py` | Cesar Fabian Chavez Linares |
+| Integración con OpenAI | `ai-services/strategies/openai_strategy.py`, `ai-services/models/model_manager.py`, `ai-services/factories/model_factory.py` | Cesar Fabian Chavez Linares |
+| Circuit Breaker para llamadas externas | `ai-services/circuit_breaker/openai_circuit_breaker.py`, `ai-services/circuit_breaker/external_service_circuit_breaker.py` | Cesar Fabian Chavez Linares |
+| Tests de análisis de síntomas y Circuit Breaker | `ai-services/tests/api/test_symptom_analyzer_endpoints.py`, `ai-services/tests/services/test_symptom_analysis_service.py`, `ai-services/tests/circuit_breaker/test_openai_circuit_breaker.py`, `ai-services/tests/circuit_breaker/test_external_service_circuit_breaker.py`, `ai-services/tests/patterns/test_circuit_breaker_pattern.py` | Cesar Fabian Chavez Linares |
+| Fuente y verificación narrativa del Sprint | Sección "Sprint 3: AI Services" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 

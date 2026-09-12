@@ -93,7 +93,11 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Evidencia | Ubicación | Responsable |
 |---|---|---|
 | Sección "Sprint 7: Integración Chatbot + ML" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
-| Fuente y verificación de código real | Sección "Sprint 7: Integración Chatbot + ML" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+| Integración de ML en el chatbot | `ai-services/api/routes/chat_analyzer.py`, `ai-services/api/routes/symptom_ml_analyzer.py` | Cesar Fabian Chavez Linares |
+| Predicciones con explicación SHAP y factores de decisión | `ai-services/shap_explainer.py`, `ai-services/ml_models/hybrid_system.py` | Cesar Fabian Chavez Linares |
+| Top 3 predicciones alternativas (ensamble de modelos) | `ai-services/ml_models/ensemble_predictor.py` | Cesar Fabian Chavez Linares |
+| Test del endpoint de explicación ML del chatbot | `ai-services/tests/api/test_symptom_ml_analyzer_explanation_endpoint.py` | Cesar Fabian Chavez Linares |
+| Fuente y verificación narrativa del Sprint | Sección "Sprint 7: Integración Chatbot + ML" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 

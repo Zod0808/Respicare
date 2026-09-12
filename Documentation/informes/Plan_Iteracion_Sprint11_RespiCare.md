@@ -95,7 +95,11 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Evidencia | Ubicación | Responsable |
 |---|---|---|
 | Sección "Sprint 11: Dashboard Ejecutivo y Analytics" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
-| Fuente y verificación de código real | Sección "Sprint 11: Dashboard Ejecutivo y Analytics" de METODOLOGIA_AGIL_PROYECTO.md — verificado en código real: web/src/components/ShapDashboard.js, backend/src/services/epidemiologicalService.ts | Cesar Fabian Chavez Linares |
+| Servicios de analítica y epidemiología (backend) | `backend/src/services/analyticsService.ts`, `backend/src/services/epidemiologicalService.ts` | Cesar Fabian Chavez Linares |
+| Dashboard ejecutivo con predicciones y KPIs | `web/src/components/ExecutiveDashboard.js`, `web/src/components/ExecutiveDashboard.css` | Cesar Fabian Chavez Linares |
+| Dashboard de explicabilidad SHAP | `web/src/components/ShapDashboard.js`, `web/src/components/ShapDashboard.css` | Cesar Fabian Chavez Linares |
+| Tests del dashboard ejecutivo y del dashboard SHAP | `web/src/components/__tests__/ExecutiveDashboard.enhanced.test.js`, `web/src/components/__tests__/ShapDashboard.test.js`, `backend/tests/unit/services/analyticsService.test.ts`, `backend/tests/unit/services/epidemiologicalService.test.ts` | Cesar Fabian Chavez Linares |
+| Fuente y verificación narrativa del Sprint | Sección "Sprint 11: Dashboard Ejecutivo y Analytics" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 

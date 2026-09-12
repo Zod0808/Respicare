@@ -93,7 +93,11 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Evidencia | Ubicación | Responsable |
 |---|---|---|
 | Sección "Sprint 9: Refinamiento y Preparación para Producción" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
-| Fuente y verificación de código real | Sección "Fase 4: Refinamiento (Sprint 9)" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+| Documentación técnica por servicio (READMEs) | `README.md`, `backend/README.md`, `web` (README propio), `mobile/README.md`, `ai-services/README.md`, `ai-services/README_TESTS.md` | Cesar Fabian Chavez Linares |
+| Estrategia de testing documentada | `docs/testing/TESTING_STRATEGY.md` | Cesar Fabian Chavez Linares |
+| ROADMAPs actualizados por módulo | `docs/roadmaps/PROJECT_ROADMAP.md`, `docs/roadmaps/BACKEND_ROADMAP.md`, `docs/roadmaps/WEB_ROADMAP.md`, `docs/roadmaps/MOBILE_ROADMAP.md`, `docs/roadmaps/AI_SERVICES_ROADMAP.md`, `docs/roadmaps/ML_ROADMAP.md`, `docs/roadmaps/TESTS_ROADMAP.md`, `docs/roadmaps/WORKFLOWS_ROADMAP.md` | Cesar Fabian Chavez Linares |
+| Preparación para producción (CI/CD verificado) | `.github/workflows/ci-cd-complete.yml`, `.github/workflows/deploy-production.yml`, `.github/workflows/deploy-staging.yml` | Cesar Fabian Chavez Linares |
+| Fuente y verificación narrativa del Sprint | Sección "Fase 4: Refinamiento (Sprint 9)" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 

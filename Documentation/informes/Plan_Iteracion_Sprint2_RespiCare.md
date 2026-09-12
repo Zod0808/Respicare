@@ -93,7 +93,11 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Evidencia | Ubicación | Responsable |
 |---|---|---|
 | Sección "Sprint 2: Frontend y Dashboard" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
-| Fuente y verificación de código real | Sección "Sprint 2: Frontend y Dashboard" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+| Interfaz web con React (login, home, dashboard) | `web/src/pages/LoginPage.js`, `web/src/pages/Home.js`, `web/src/pages/Dashboard.js` | Cesar Fabian Chavez Linares |
+| Diseño responsive por página (media queries) | `web/src/pages/Home.css`, `web/src/pages/LoginPage.css`, `web/src/pages/Dashboard.css` | Cesar Fabian Chavez Linares |
+| Integración con backend (cliente API base) | `web/src/utils/apiBase.js` | Cesar Fabian Chavez Linares |
+| Tests del dashboard y páginas base | `web/src/pages/__tests__/Dashboard.test.js`, `web/src/pages/__tests__/Home.test.js`, `web/src/pages/__tests__/LoginPage.test.js`, `web/src/utils/__tests__/apiBase.test.js` | Cesar Fabian Chavez Linares |
+| Fuente y verificación narrativa del Sprint | Sección "Sprint 2: Frontend y Dashboard" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 

@@ -106,6 +106,10 @@ Fuentes documentales que sustentan este Sprint como extensión de alcance:
 | Sección "Sprint 13 (Propuesto — Pendiente de Ejecución)" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 | Gap de integración institucional MINSA/SINADEF no ejecutado (Fase 4 del Documento de Visión) | Documentation/FD02-EPIS-Informe Vision de Proyecto.docx, §8 | Cesar Fabian Chavez Linares |
 | Gap de integración wearables-IA verificado en código (captura BLE en mobile sin consumo en ai-services) | mobile/medical-app (captura BLE) vs ai-services (sin features de wearables) | Cesar Fabian Chavez Linares |
+| API institucional MINSA/SINADEF (controlador, autenticación por API Key) | `backend/src/controllers/institutionalController.ts`, `backend/src/middleware/institutionalAuth.ts` | Cesar Fabian Chavez Linares |
+| Pipeline de vitales de wearables backend → ai-services | `backend/src/controllers/symptomAnalyzerController.ts` (`getRecentVitalsForPatient`), `backend/src/services/aiIntegration.ts` | Cesar Fabian Chavez Linares |
+| Capa de validación clínica basada en reglas con vitales de wearables | `ai-services/services/medical_validation_rules.py` (`validate_vitals`) | Cesar Fabian Chavez Linares |
+| Tests de integración end-to-end de ambos flujos | `backend/tests/integration/institutional.integration.test.ts`, `backend/tests/unit/middleware/institutionalAuth.test.ts`, `ai-services/tests/services/test_medical_validation_rules.py`, `ai-services/tests/api/test_symptom_ml_analyzer_endpoints.py` | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 

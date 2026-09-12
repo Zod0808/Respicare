@@ -112,6 +112,7 @@ def add_table(doc, header, rows):
         cell = table.rows[0].cells[j]
         cell.text = ""
         p = cell.paragraphs[0]
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         add_inline(p, h, base_bold=True)
     for r, row in enumerate(rows, start=1):
         for j, val in enumerate(row):
@@ -120,6 +121,7 @@ def add_table(doc, header, rows):
             cell = table.rows[r].cells[j]
             cell.text = ""
             p = cell.paragraphs[0]
+            p.alignment = WD_ALIGN_PARAGRAPH.LEFT
             add_inline(p, val)
 
 
@@ -187,6 +189,7 @@ def convert():
         if stripped.startswith("> "):
             p = doc.add_paragraph()
             p.paragraph_format.left_indent = Cm(0.75)
+            p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
             add_inline(p, stripped[2:], base_italic=True)
             i += 1
             continue

@@ -94,7 +94,11 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Evidencia | Ubicación | Responsable |
 |---|---|---|
 | Sección "Sprint 5: Dataset y Random Forest" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
-| Fuente y verificación de código real | Secciones "Sprint 5: Dataset y Random Forest" y "Casos de Uso por Sprint > Sprint 5" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+| Generador de dataset sintético | `ai-services/ml_models/synthetic_dataset_generator.py`, `ai-services/scripts/training/generate_dataset.py`, `ai-services/data/datasets/dataset_registry.py` | Cesar Fabian Chavez Linares |
+| Modelo Random Forest entrenado | `ai-services/ml_models/random_forest_model.py`, `ai-services/models/base_random_forest.pkl`, `ai-services/scripts/training/train_base_model.py` | Cesar Fabian Chavez Linares |
+| Sistema de reglas de emergencia | `ai-services/strategies/rule_based_strategy.py`, `ai-services/services/medical_validation_rules.py` | Cesar Fabian Chavez Linares |
+| Tests de componentes de ML y estrategia basada en reglas | `ai-services/tests/ml_models/test_ml_components.py`, `ai-services/tests/strategies/test_rule_based_strategy.py` | Cesar Fabian Chavez Linares |
+| Fuente y verificación narrativa del Sprint | Secciones "Sprint 5: Dataset y Random Forest" y "Casos de Uso por Sprint > Sprint 5" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 

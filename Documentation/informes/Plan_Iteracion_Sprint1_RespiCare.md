@@ -93,7 +93,12 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Evidencia | Ubicación | Responsable |
 |---|---|---|
 | Sección "Sprint 1: Autenticación y Backend Básico" documentada | Documentation/METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
-| Fuente y verificación de código real | Sección "Sprint 1: Autenticación y Backend Básico" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+| Sistema de autenticación JWT (login, refresh, middleware) | `backend/src/controllers/authController.ts`, `backend/src/middleware/auth.ts`, `backend/src/routes/authRoutes.ts`, `backend/src/services/oauth2Service.ts` | Cesar Fabian Chavez Linares |
+| Validación de credenciales | `backend/src/validators/authValidators.ts` | Cesar Fabian Chavez Linares |
+| Gestión de usuarios (modelo, roles admin/doctor/patient, repositorio) | `backend/src/models/User.ts`, `backend/src/domain/entities/User.ts`, `backend/src/domain/repositories/UserRepository.ts`, `backend/src/infrastructure/repositories/MongoUserRepository.ts` | Cesar Fabian Chavez Linares |
+| Documentación Swagger de la API | `backend/src/config/swagger.ts`, montada en `/api/docs` (`swaggerUi.setup`) | Cesar Fabian Chavez Linares |
+| Tests de autenticación y autorización | `backend/tests/unit/controllers/authController.test.ts`, `backend/tests/unit/middleware/auth.test.ts`, `backend/tests/unit/validators/authValidators.test.ts`, `backend/tests/integration/auth.integration.test.ts`, `backend/tests/security/auth-authorization.security.test.ts` | Cesar Fabian Chavez Linares |
+| Fuente y verificación narrativa del Sprint | Sección "Sprint 1: Autenticación y Backend Básico" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
 
 ## 10. Indicadores de Éxito
 
