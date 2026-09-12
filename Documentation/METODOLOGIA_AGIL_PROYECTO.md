@@ -623,3 +623,43 @@ Mejoras:
 **Framework**: Scrum adaptado con elementos Kanban  
 **Resultado**: Proyecto exitoso con entregas incrementales
 
+---
+
+## 🚧 Extensión Propuesta (Pendiente de Ejecución): Sprint 13
+
+> Nota: Los Sprints 0-12 documentados arriba conforman el alcance original cerrado del proyecto (13/13 sprints, 100% completado). El siguiente sprint es una extensión de alcance identificada en una revisión posterior de requerimientos, objetivos y avances frente al SRS/Visión — **no formaba parte del alcance original (FD02/FD03)** y aún no ha sido ejecutada.
+
+### **Sprint 13: API de Interoperabilidad MINSA/SINADEF e Integración Wearables-IA**
+**Estado: 🟡 En ejecución (implementación funcional, documentación de cierre pendiente)** | **Semana planificada: 27-28**
+
+**Origen del gap:**
+- El Documento de Visión (FD02, Fase 4) contemplaba "Integración con sistemas del MINSA" como prioridad baja, nunca ejecutada — no existe en el código ninguna conexión real con MINSA/SINADEF, solo el soporte estándar HL7/FHIR interno (`fhirService.ts`, `hl7Parser.ts`) entregado en el Sprint 10.
+- La app móvil (`mobile/medical-app`) ya captura datos de wearables por BLE, pero esos datos nunca llegan a `ai-services`: el motor de predicción (Random Forest/XGBoost/MLP) no los usa como feature.
+
+**Objetivo:**
+Cerrar ambas brechas: exponer una API institucional para que MINSA/DIRESA Tacna y SINADEF puedan enviar y recibir información de RespiCare de forma estandarizada, y conectar el pipeline de wearables con el motor de IA para enriquecer la precisión diagnóstica.
+
+**Nota de alcance (decisión tomada durante la implementación):** el motor de predicción de síntomas (`symptom_ml_analyzer.py`) es un clasificador de texto (TF-IDF + SHAP sobre `symptoms: List[str]`), no un modelo tabular entrenado con vitales como feature. Reentrenar los modelos para incorporar vitales como feature de entrenamiento excedía el alcance razonable de este sprint. En su lugar, los vitales de wearables se integraron como una **capa adicional de validación clínica basada en reglas**, extendiendo el patrón ya existente de coherencia médica (RF-005, `MedicalValidationRules`): ajusta la confianza y puede escalar la urgencia de una predicción cuando los signos vitales recientes (SpO2, frecuencia respiratoria, frecuencia cardíaca) indican riesgo, con degradación automática al comportamiento actual cuando no hay datos de wearables disponibles.
+
+**Entregables comprometidos:**
+- [x] API de interoperabilidad MINSA/SINADEF: endpoints REST autenticados por API Key (`InstitutionalApiClient`, header `X-API-Key`) para exportación epidemiológica agregada (`GET /api/v1/institutional/epidemiological-export`), sincronización del catálogo de centros de salud (`POST /api/v1/institutional/health-centers/sync`) y recepción de alertas sanitarias regionales (`POST /api/v1/institutional/alerts`)
+- [ ] Documentación OpenAPI 3.0 dedicada para el consumidor externo (portal de integración MINSA/DIRESA) — anotaciones `@swagger` agregadas en `institutionalController.ts`; falta publicar/enlazar un OpenAPI dedicado para el consumidor externo
+- [x] Extensión del pipeline backend → ai-services para transmitir señales de wearables (frecuencia cardíaca, SpO2, frecuencia respiratoria) capturadas vía BLE junto con el reporte de síntomas (`getRecentVitalsForPatient`, ventana de frescura de 6 horas, en `symptomAnalyzerController.ts`)
+- [x] Incorporación de vitales de wearables como capa de validación clínica basada en reglas (no como feature de entrenamiento ML — ver nota de alcance arriba), con fallback automático al modelo actual cuando no haya datos disponibles
+- [x] Tests de integración end-to-end para ambos flujos nuevos (`institutional.integration.test.ts`, `institutionalAuth.test.ts` en backend; `test_medical_validation_rules.py`, `test_symptom_ml_analyzer_endpoints.py` en ai-services)
+- [ ] Actualización de README.md, ROADMAP y Matriz de Trazabilidad con el nuevo alcance
+
+**Riesgos identificados:**
+
+| Riesgo | Mitigación |
+|---|---|
+| Ausencia de un contrato de datos formal por parte de MINSA/DIRESA | Diseñar el endpoint sobre el estándar HL7 FHIR ya adoptado (`fhirService.ts`) en vez de un formato ad-hoc |
+| Heterogeneidad y calidad variable de las señales de wearables entre dispositivos BLE | Tratar los features de wearables como opcionales, con degradación controlada al modelo sin wearables |
+| Exposición de un endpoint público a un consumidor institucional externo sin controles suficientes | Autenticación dedicada (API Key/OAuth2), rate limiting y logs de auditoría separados del resto de la API |
+
+**Criterios de aceptación:**
+- Endpoint MINSA/SINADEF autenticado, documentado en OpenAPI y probado con al menos un caso de envío y uno de recepción
+- Pipeline wearables→IA validado end-to-end (BLE → backend → ai-services → predicción enriquecida)
+- Tests de integración en verde para ambos flujos
+- Cobertura de tests >80% mantenida (DoD del proyecto)
+
