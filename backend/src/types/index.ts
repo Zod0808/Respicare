@@ -122,7 +122,8 @@ export type AlertCategory =
   | 'consent'
   | 'laboratory'
   | 'referral'
-  | 'ai_analysis';
+  | 'ai_analysis'
+  | 'health_authority';
 
 export type AlertChannel = 'in_app' | 'push' | 'email' | 'sms';
 
@@ -148,7 +149,8 @@ export type AlertTriggerSource =
   | 'informed_consent'
   | 'laboratory'
   | 'referral'
-  | 'ai_analysis_review';
+  | 'ai_analysis_review'
+  | 'external_health_authority';
 
 export interface AlertTrigger {
   source: AlertTriggerSource;

@@ -48,6 +48,7 @@ import chatImageRoutes from './routes/chatImageRoutes';
 import educationalContentRoutes from './routes/educationalContentRoutes';
 import aiAnalysisReviewRoutes from './routes/aiAnalysisReviewRoutes';
 import healthCenterRoutes from './routes/healthCenterRoutes';
+import institutionalRoutes from './routes/institutionalRoutes';
 
 // Importar middleware
 import { errorHandler, notFound } from './middleware/errorHandler';
@@ -292,6 +293,7 @@ class App {
     this.app.use('/api/v1/educational-content', educationalContentRoutes);
     this.app.use('/api/v1/ai-analysis', aiAnalysisReviewRoutes);
     this.app.use('/api/v1/health-centers', healthCenterRoutes);
+    this.app.use('/api/v1/institutional', institutionalRoutes);
     // Chat routes (conversations, audio, image)
     this.app.use('/api/chat-conversations', chatConversationsRoutes);
     this.app.use('/api/v1/chat', chatAudioRoutes);
