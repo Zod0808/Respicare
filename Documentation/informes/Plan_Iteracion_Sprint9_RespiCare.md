@@ -37,6 +37,16 @@ Optimizar el rendimiento del sistema, completar la documentación técnica y dej
 
 - Entregables de otras iteraciones (Sprint 8 y anteriores ya cerrados; Sprint 10 y posteriores aún no iniciados).
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- **RF-011**: Módulo educativo — asociado temáticamente — funcionalidad transversal cerrada en la fase de refinamiento
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-003**: Disponibilidad
+- **RNF-009**: Mantenibilidad
+- **RNF-012**: Cobertura de pruebas
+
 ## 4. Entregables Esperados
 
 Entregables verificables comprometidos para el Sprint 9:
@@ -98,6 +108,54 @@ Fuentes documentales y de código verificadas para este Sprint:
 | ROADMAPs actualizados por módulo | `docs/roadmaps/PROJECT_ROADMAP.md`, `docs/roadmaps/BACKEND_ROADMAP.md`, `docs/roadmaps/WEB_ROADMAP.md`, `docs/roadmaps/MOBILE_ROADMAP.md`, `docs/roadmaps/AI_SERVICES_ROADMAP.md`, `docs/roadmaps/ML_ROADMAP.md`, `docs/roadmaps/TESTS_ROADMAP.md`, `docs/roadmaps/WORKFLOWS_ROADMAP.md` | Cesar Fabian Chavez Linares |
 | Preparación para producción (CI/CD verificado) | `.github/workflows/ci-cd-complete.yml`, `.github/workflows/deploy-production.yml`, `.github/workflows/deploy-staging.yml` | Cesar Fabian Chavez Linares |
 | Fuente y verificación narrativa del Sprint | Sección "Fase 4: Refinamiento (Sprint 9)" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Preparación para producción (verificación CI/CD)*
+
+`.github/workflows/deploy-production.yml` (líneas 1-13):
+
+```yaml
+name: Deploy to Production
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Image tag to deploy (must be a version tag like v1.0.0)'
+        required: true
+      confirm_deploy:
+        description: 'Type "DEPLOY" to confirm production deployment'
+        required: true
+```
+
+*Entregable: Testing exhaustivo (web y mobile, objetivo >80% cobertura)*
+
+`.github/workflows/ci-cd-complete.yml` (líneas 33-53):
+
+```yaml
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Run unit tests
+        working-directory: ./backend
+        run: npm run test:unit
+```
 
 ## 10. Indicadores de Éxito
 

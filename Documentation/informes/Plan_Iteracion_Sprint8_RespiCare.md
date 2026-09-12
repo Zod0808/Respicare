@@ -37,6 +37,15 @@ Completar el dashboard de analítica con tendencias temporales, reportes geográ
 
 - Entregables de otras iteraciones (Sprint 7 y anteriores ya cerrados; Sprint 9 y posteriores aún no iniciados).
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- **RF-010**: Reportes y estadísticas — extensión
+- **RF-012**: Geolocalización de centros de salud — asociado temáticamente — mapas geográficos, precursor de la geolocalización de centros de salud
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-002**: Rendimiento
+
 ## 4. Entregables Esperados
 
 Entregables verificables comprometidos para el Sprint 8:
@@ -98,6 +107,50 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Mapas de calor interactivos de reportes (heredados/extendidos desde Sprint 4) | `web/src/components/EpidemiologicalHeatmap.js`, `web/src/components/InteractiveHeatMap.js` | Cesar Fabian Chavez Linares |
 | Tests de analítica y servicio epidemiológico | `web/src/components/__tests__/AnalyticsDashboard.test.js`, `backend/tests/unit/services/analyticsService.test.ts`, `backend/tests/unit/services/epidemiologicalService.test.ts`, `backend/tests/integration/analytics.integration.test.ts` | Cesar Fabian Chavez Linares |
 | Fuente y verificación narrativa del Sprint | Sección "Sprint 8: Analytics Avanzados" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Reportes geográficos*
+
+`backend/src/services/epidemiologicalService.ts` (líneas 115-133):
+
+```typescript
+async predictOutbreaks(
+  options: OutbreakPredictionOptions = {},
+): Promise<OutbreakPrediction[]> {
+  const {
+    recentWindowDays = 7,
+    baselineWindowDays = 21,
+    growthThreshold = 0.35,
+    minCases = 10,
+  } = options;
+
+  const now = new Date();
+  const recentStart = new Date(now.getTime() - recentWindowDays * 24 * 60 * 60 * 1000);
+  const baselineStart = new Date(
+    recentStart.getTime() - baselineWindowDays * 24 * 60 * 60 * 1000,
+  );
+
+  try {
+    const aggregation = await SymptomReportModel.aggregate([
+      { $match: { createdAt: { $gte: baselineStart } } },
+```
+
+*Entregable: Dashboard completo / visualizaciones interactivas*
+
+`web/src/components/AnalyticsDashboard.js` (líneas 20-28):
+
+```javascript
+function AnalyticsDashboard() {
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [lastUpdated, setLastUpdated] = useState(null);
+
+  const [mlMetrics, setMlMetrics] = useState(null);
+  const [mlError, setMlError] = useState(null);
+  const [mlExperiments, setMlExperiments] = useState([]);
+```
 
 ## 10. Indicadores de Éxito
 

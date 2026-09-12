@@ -37,6 +37,15 @@ Introducir el microservicio de IA en Python/FastAPI con análisis básico de sí
 
 - Entregables de otras iteraciones (Sprint 2 y anteriores ya cerrados; Sprint 4 y posteriores aún no iniciados).
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- **RF-002**: Diagnóstico inteligente de síntomas — versión inicial
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-002**: Rendimiento
+- **RNF-005**: Escalabilidad
+
 ## 4. Entregables Esperados
 
 Entregables verificables comprometidos para el Sprint 3:
@@ -99,6 +108,56 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Circuit Breaker para llamadas externas | `ai-services/circuit_breaker/openai_circuit_breaker.py`, `ai-services/circuit_breaker/external_service_circuit_breaker.py` | Cesar Fabian Chavez Linares |
 | Tests de análisis de síntomas y Circuit Breaker | `ai-services/tests/api/test_symptom_analyzer_endpoints.py`, `ai-services/tests/services/test_symptom_analysis_service.py`, `ai-services/tests/circuit_breaker/test_openai_circuit_breaker.py`, `ai-services/tests/circuit_breaker/test_external_service_circuit_breaker.py`, `ai-services/tests/patterns/test_circuit_breaker_pattern.py` | Cesar Fabian Chavez Linares |
 | Fuente y verificación narrativa del Sprint | Sección "Sprint 3: AI Services" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Análisis básico de síntomas*
+
+`ai-services/api/routes/symptom_analyzer.py` (líneas 54-70):
+
+```python
+@router.post("/symptom-analyzer/analyze", response_model=SymptomAnalysisOutput)
+async def analyze_symptoms(
+    input_data: SymptomInput,
+    db=Depends(get_database),
+    cache=Depends(get_cache)
+) -> SymptomAnalysisOutput:
+    start_time = datetime.utcnow()
+    try:
+        if not ai_service_manager._initialized:
+            await ai_service_manager.initialize()
+
+        symptom_service = SymptomAnalysisService(ai_service_manager)
+        analysis_result = await symptom_service.analyze_symptoms_comprehensive(
+            symptoms=input_data.symptoms,
+            patient_id=input_data.patient_id,
+            context=input_data.context,
+            include_trends=True,
+            include_recommendations=True
+        )
+```
+
+*Entregable: Circuit Breaker patterns para llamadas externas*
+
+`ai-services/circuit_breaker/openai_circuit_breaker.py` (líneas 34-49):
+
+```python
+async def call_openai(self, openai_func: callable, *args, **kwargs) -> Dict[str, Any]:
+    """Call OpenAI function with circuit breaker protection"""
+    try:
+        return await self.call(openai_func, *args, **kwargs)
+    except openai.RateLimitError as e:
+        await self._handle_rate_limit_error(e)
+        raise e
+    except openai.APITimeoutError as e:
+        await self._handle_timeout_error(e)
+        raise e
+    except openai.APIError as e:
+        await self._handle_api_error(e)
+        raise e
+    except Exception as e:
+        raise e
+```
 
 ## 10. Indicadores de Éxito
 

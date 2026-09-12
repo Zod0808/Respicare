@@ -38,6 +38,17 @@ Entregar un dashboard ejecutivo con analítica epidemiológica, predicciones de 
 
 - Entregables de otras iteraciones (Sprint 10 y anteriores ya cerrados; Sprint 12 y posteriores aún no iniciados).
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- **RF-010**: Reportes y estadísticas — extensión — dashboard ejecutivo
+- **RF-006**: Explicabilidad (SHAP) — extensión — dashboard de explicabilidad
+- **RF-007**: Panel del doctor — asociado temáticamente — panel orientado al tomador de decisión
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-001**: Usabilidad
+- **RNF-011**: Explicabilidad
+
 ## 4. Entregables Esperados
 
 Entregables verificables comprometidos para el Sprint 11:
@@ -100,6 +111,49 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Dashboard de explicabilidad SHAP | `web/src/components/ShapDashboard.js`, `web/src/components/ShapDashboard.css` | Cesar Fabian Chavez Linares |
 | Tests del dashboard ejecutivo y del dashboard SHAP | `web/src/components/__tests__/ExecutiveDashboard.enhanced.test.js`, `web/src/components/__tests__/ShapDashboard.test.js`, `backend/tests/unit/services/analyticsService.test.ts`, `backend/tests/unit/services/epidemiologicalService.test.ts` | Cesar Fabian Chavez Linares |
 | Fuente y verificación narrativa del Sprint | Sección "Sprint 11: Dashboard Ejecutivo y Analytics" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Dashboard de explicabilidad ShapDashboard.js*
+
+`web/src/components/ShapDashboard.js` (líneas 37-58):
+
+```javascript
+function ShapDashboard() {
+  const [metrics, setMetrics] = useState(null);
+  const [featureInfluence, setFeatureInfluence] = useState(null);
+  const [fairness, setFairness] = useState({});
+  const [selectedDays, setSelectedDays] = useState(7);
+  const [selectedGroup, setSelectedGroup] = useState('gender');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDays, selectedGroup]);
+
+  const fetchData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const [metricsRes, featureRes, fairnessRes] = await Promise.all([
+        axios.get(`${API_BASE}/analytics/ml/monitoring`, { params: { days: selectedDays } }),
+        axios.get(`${API_BASE}/analytics/ml/features`, { params: { top: 12 } }),
+        axios.get(`${API_BASE}/analytics/ml/fairness`, { params: { groupField: selectedGroup } }),
+      ]);
+```
+
+*Entregable: Componente web ExecutiveDashboard.js*
+
+`web/src/components/ExecutiveDashboard.js` (líneas 71-74):
+
+```javascript
+function ExecutiveDashboard({ refreshInterval = 60000, autoRefresh = true }) {
+  const [data, setData] = useState(INITIAL_STATE);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+```
 
 ## 10. Indicadores de Éxito
 

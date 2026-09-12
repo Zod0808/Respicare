@@ -37,6 +37,14 @@ Habilitar interoperabilidad clínica estándar mediante un cliente FHIR y un par
 
 - Entregables de otras iteraciones (Sprint 9 y anteriores ya cerrados; Sprint 11 y posteriores aún no iniciados).
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- **RF-008**: Historial clínico electrónico — extensión — interoperabilidad HL7/FHIR
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-008**: Interoperabilidad
+
 ## 4. Entregables Esperados
 
 Entregables verificables comprometidos para el Sprint 10:
@@ -98,6 +106,50 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Página de visualización de mensajes HL7 (frontend) | `web/src/pages/Hl7Page.js` | Cesar Fabian Chavez Linares |
 | Tests unitarios y de integración de FHIR/HL7 | `backend/tests/unit/services/fhirService.test.ts`, `backend/tests/unit/utils/hl7Parser.test.ts`, `backend/tests/unit/controllers/fhirController.test.ts`, `backend/tests/unit/services/fhirValidator.test.ts`, `backend/tests/integration/fhir.integration.test.ts` | Cesar Fabian Chavez Linares |
 | Fuente y verificación narrativa del Sprint | Sección "Sprint 10: Integración HL7 FHIR" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Servicio fhirService.ts con cliente Axios configurable*
+
+`backend/src/services/fhirService.ts` (líneas 108-117):
+
+```typescript
+async createResource<T extends FhirResource>(resource: T): Promise<T> {
+  if (this.stubExternalCalls) {
+    // Skip external FHIR server call in tests; return the decorated resource with a stub id.
+    return {
+      ...this.decorateResource(resource),
+      id: (resource as any).id ?? `test-${Date.now()}`,
+    } as T;
+  }
+  const response = await this.client.post<T>('/', this.decorateResource(resource));
+  return response.data;
+}
+```
+
+*Entregable: Parser HL7 v2/v3 (hl7Parser.ts)*
+
+`backend/src/utils/hl7Parser.ts` (líneas 17-31):
+
+```typescript
+export function parseHl7Message(message: string): Hl7Message {
+  const segments: Hl7Segment[] = message
+    .split(/\r\n|\n|\r/)
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+    .map((line) => {
+      const [name, ...fields] = line.split('|');
+      return { name, fields };
+    });
+
+  const header = segments.find((segment) => segment.name === 'MSH') ?? null;
+
+  return {
+    header,
+    segments,
+  };
+}
+```
 
 ## 10. Indicadores de Éxito
 

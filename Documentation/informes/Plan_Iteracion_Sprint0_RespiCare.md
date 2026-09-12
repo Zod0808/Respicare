@@ -38,6 +38,15 @@ Establecer la base técnica del proyecto: arquitectura de microservicios, conten
 
 - Entregables de otras iteraciones (Sprint - y anteriores ya cerrados; Sprint 1 y posteriores aún no iniciados).
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- Sprint de infraestructura: no introduce Requerimientos Funcionales nuevos (RF); establece la base técnica sobre la que se implementan los RF de las siguientes iteraciones.
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-006**: Compatibilidad
+- **RNF-009**: Mantenibilidad
+
 ## 4. Entregables Esperados
 
 Entregables verificables comprometidos para el Sprint 0:
@@ -104,6 +113,54 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Integración básica backend-frontend (rutas Express consumidas por el cliente web) | `backend/src/routes/`, `web/src/services/` (llamadas API del frontend al backend) | Cesar Fabian Chavez Linares |
 | Configuración de CI/CD (GitHub Actions) | `.github/workflows/` (20 workflows, entre ellos `backend-tests.yml`, `web-tests.yml`, `mobile-ci.yml`, `ai-services-tests.yml`, `docker-build.yml`, `ci-cd-complete.yml`) | Cesar Fabian Chavez Linares |
 | Fuente y verificación narrativa del Sprint | Sección "Fase 1: Setup y Arquitectura (Sprint 0)" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Configuración de Docker y Docker Compose*
+
+`docker-compose.yml` (líneas 4-19):
+
+```yaml
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: respicare-mongodb
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-password123}
+      MONGO_INITDB_DATABASE: ${MONGO_DB:-respicare}
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongodb/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - respicare-network
+```
+
+*Entregable: Configuración de CI/CD (GitHub Actions)*
+
+`.github/workflows/ci-cd-complete.yml` (líneas 1-17):
+
+```yaml
+name: Complete CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+env:
+  NODE_VERSION: '18'
+  PYTHON_VERSION: '3.10'
+
+permissions:
+  contents: read
+
+jobs:
+```
 
 ## 10. Indicadores de Éxito
 

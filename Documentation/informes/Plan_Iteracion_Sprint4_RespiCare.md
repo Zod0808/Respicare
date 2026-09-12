@@ -37,6 +37,16 @@ Entregar el chatbot médico integrado y las primeras analíticas y visualizacion
 
 - Entregables de otras iteraciones (Sprint 3 y anteriores ya cerrados; Sprint 5 y posteriores aún no iniciados).
 
+**Requerimientos Funcionales relacionados** (Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx):
+
+- **RF-002**: Diagnóstico inteligente de síntomas — extensión chatbot
+- **RF-010**: Reportes y estadísticas
+- **RF-003**: Análisis de tos por audio — asociado temáticamente — soporte multimedia del chatbot
+
+**Requerimientos No Funcionales relacionados** (FD03-EPIS-Informe SRS de Proyecto.docx, Cuadro de Requerimientos No Funcionales):
+
+- **RNF-001**: Usabilidad
+
 ## 4. Entregables Esperados
 
 Entregables verificables comprometidos para el Sprint 4:
@@ -98,6 +108,59 @@ Fuentes documentales y de código verificadas para este Sprint:
 | Mapas interactivos de reportes | `web/src/components/HeatMap.js`, `web/src/components/InteractiveHeatMap.js`, `web/src/components/EpidemiologicalHeatmap.js`, `web/src/pages/HeatMapPage.js` | Cesar Fabian Chavez Linares |
 | Tests del chatbot | `web/src/components/__tests__/ChatBot.test.js`, `web/src/components/__tests__/ChatBotEnhanced.test.js`, `web/src/tests/accessibility/chatbot.accessibility.test.js` | Cesar Fabian Chavez Linares |
 | Fuente y verificación narrativa del Sprint | Sección "Sprint 4: Chatbot y Analytics" de METODOLOGIA_AGIL_PROYECTO.md | Cesar Fabian Chavez Linares |
+
+**Evidencia de código (extractos reales verificados del repositorio):**
+
+*Entregable: Chatbot médico integrado*
+
+`web/src/components/ChatBot.js` (líneas 109-124):
+
+```javascript
+const handleSend = async () => {
+    if (!inputText.trim()) return;
+
+    const userMessage = { type: 'user', text: inputText, timestamp: new Date() };
+    setMessages(prev => [...prev, userMessage]);
+    saveMessage('user', inputText);
+
+    const currentInput = inputText;
+    setInputText('');
+    setIsLoading(true);
+
+    try {
+      const extractedSymptoms = extractSymptoms(currentInput);
+      let mlAnalysisResult = null;
+      if (extractedSymptoms && extractedSymptoms.length > 0) {
+        try {
+          // Get auth token from localStorage or use guest token
+```
+
+*Entregable: Mapas interactivos*
+
+`web/src/components/HeatMap.js` (líneas 1-20):
+
+```javascript
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './HeatMap.css';
+import { LEGACY_API_BASE } from '../utils/apiBase';
+
+function HeatMap() {
+  const [reportData, setReportData] = useState([]);
+  const [selectedZone, setSelectedZone] = useState(null);
+  const [filterSeverity, setFilterSeverity] = useState('all');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchHeatmapData();
+  }, []);
+
+  const fetchHeatmapData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+```
 
 ## 10. Indicadores de Éxito
 
