@@ -106,9 +106,13 @@ if "whisper" not in sys.modules:
     whisper_mock.load_model.return_value = MagicMock()
     sys.modules["whisper"] = whisper_mock
 
-# Mock soundfile for audio processing (librosa is stubbed earlier in this file)
+# Mock soundfile for audio processing (librosa is stubbed earlier in this file).
+# Needs a real ModuleSpec for the same reason as librosa above: transformers calls
+# importlib.util.find_spec("soundfile"), which raises ValueError if the mocked
+# module has no __spec__.
 if "soundfile" not in sys.modules:
     soundfile_mock = MagicMock(name="soundfile_mock")
+    soundfile_mock.__spec__ = _machinery.ModuleSpec('soundfile', None)
     sys.modules["soundfile"] = soundfile_mock
 
 # Mock SHAPDiseaseExplainer
