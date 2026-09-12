@@ -76,3 +76,51 @@ class TestMlAnalyzeEndpoint:
         assert data['is_clinically_coherent'] is True
         assert data['coherence_warnings'] == []
         assert data['confidence'] == pytest.approx(0.8)
+
+    # --- Sprint 13: vitales de wearables ---
+
+    def test_no_vitals_field_behaves_exactly_as_before(self, client):
+        response = client.post(
+            '/v1/ml-analyze?use_ensemble=false',
+            json={'symptoms': ['congestión nasal'], 'patient_age': 30}
+        )
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data['urgency_level'] == 'medium'
+        assert data['needs_medical_attention'] is False
+
+    def test_critical_vitals_escalate_urgency_and_confidence(self, client):
+        response = client.post(
+            '/v1/ml-analyze?use_ensemble=false',
+            json={
+                'symptoms': ['congestión nasal'],
+                'patient_age': 30,
+                'vitals': {'oxygen_saturation': 85},
+            }
+        )
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data['urgency_level'] == 'high'
+        assert data['needs_medical_attention'] is True
+        assert data['is_clinically_coherent'] is False
+        assert any('crítica' in warning for warning in data['coherence_warnings'])
+        assert data['confidence'] == pytest.approx(0.9)
+
+    def test_normal_vitals_do_not_change_prediction(self, client):
+        response = client.post(
+            '/v1/ml-analyze?use_ensemble=false',
+            json={
+                'symptoms': ['congestión nasal'],
+                'patient_age': 30,
+                'vitals': {'oxygen_saturation': 98, 'heart_rate': 75, 'respiratory_rate': 16},
+            }
+        )
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data['urgency_level'] == 'medium'
+        assert data['needs_medical_attention'] is False
+        assert data['is_clinically_coherent'] is True
+        assert data['confidence'] == pytest.approx(0.8)

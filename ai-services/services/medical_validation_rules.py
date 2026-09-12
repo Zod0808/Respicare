@@ -6,7 +6,7 @@ and patient age, to catch clinically implausible predictions before they
 reach the patient (RF-005).
 """
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 
 class MedicalValidationRules:
@@ -36,12 +36,82 @@ class MedicalValidationRules:
                 'bronquiolitis': (0, 2),  # Only in infants
                 'crup': (1, 5),  # Common in toddlers
                 'enfisema': (50, 100)  # Common in elderly
+            },
+            # Sprint 13: umbrales clínicos para vitales de wearables (SpO2, FC, FR)
+            'vitals_thresholds': {
+                'oxygen_saturation': {'severe_low': 90, 'mild_low': 94},
+                'respiratory_rate': {'severe_high': 30, 'mild_high': 24},
+                'heart_rate': {'severe_high': 120, 'mild_high': 100},
             }
         }
 
-    def validate_prediction(self, disease: str, symptoms: str, age: int) -> Dict[str, Any]:
+    def validate_vitals(self, vitals: Dict[str, float]) -> Dict[str, Any]:
         """
-        Validate if predicted disease is plausible given symptoms and age
+        Evalúa signos vitales de wearables (SpO2, frecuencia respiratoria, frecuencia
+        cardíaca) capturados cerca del reporte de síntomas (Sprint 13).
+
+        No reemplaza al modelo de ML: es una capa de seguridad clínica adicional que
+        ajusta la confianza y puede escalar la urgencia cuando los vitales sugieren
+        mayor severidad de la reflejada en la predicción de síntomas.
+        """
+        thresholds = self.validation_rules['vitals_thresholds']
+        result: Dict[str, Any] = {
+            'warnings': [],
+            'confidence_adjustment': 0.0,
+            'urgency_escalation': False,
+        }
+
+        spo2 = vitals.get('oxygen_saturation')
+        if spo2 is not None:
+            if spo2 < thresholds['oxygen_saturation']['severe_low']:
+                result['warnings'].append(
+                    f"Saturación de oxígeno crítica ({spo2}%) reportada por wearable: "
+                    "sugiere compromiso respiratorio significativo"
+                )
+                result['confidence_adjustment'] += 0.1
+                result['urgency_escalation'] = True
+            elif spo2 < thresholds['oxygen_saturation']['mild_low']:
+                result['warnings'].append(
+                    f"Saturación de oxígeno levemente baja ({spo2}%) reportada por wearable: "
+                    "se recomienda monitoreo cercano"
+                )
+                result['confidence_adjustment'] += 0.05
+
+        respiratory_rate = vitals.get('respiratory_rate')
+        if respiratory_rate is not None:
+            if respiratory_rate > thresholds['respiratory_rate']['severe_high']:
+                result['warnings'].append(
+                    f"Frecuencia respiratoria elevada ({respiratory_rate} rpm) reportada por wearable: "
+                    "sugiere dificultad respiratoria significativa"
+                )
+                result['confidence_adjustment'] += 0.1
+                result['urgency_escalation'] = True
+            elif respiratory_rate > thresholds['respiratory_rate']['mild_high']:
+                result['warnings'].append(
+                    f"Frecuencia respiratoria por encima de lo normal ({respiratory_rate} rpm) reportada por wearable"
+                )
+                result['confidence_adjustment'] += 0.05
+
+        heart_rate = vitals.get('heart_rate')
+        if heart_rate is not None and heart_rate > thresholds['heart_rate']['severe_high']:
+            result['warnings'].append(
+                f"Frecuencia cardíaca elevada ({heart_rate} bpm) reportada por wearable: "
+                "posible signo de estrés fisiológico"
+            )
+            result['confidence_adjustment'] += 0.05
+
+        return result
+
+    def validate_prediction(
+        self,
+        disease: str,
+        symptoms: str,
+        age: int,
+        vitals: Optional[Dict[str, float]] = None,
+    ) -> Dict[str, Any]:
+        """
+        Validate if predicted disease is plausible given symptoms, age and
+        (optionally) wearable vitals captured near the time of the report (Sprint 13).
 
         Returns:
             Dict with validation status and any warnings
@@ -51,7 +121,8 @@ class MedicalValidationRules:
         validation_status = {
             'is_valid': True,
             'warnings': [],
-            'confidence_adjustment': 0.0
+            'confidence_adjustment': 0.0,
+            'urgency_escalation': False,
         }
 
         # Check age restrictions
@@ -76,6 +147,14 @@ class MedicalValidationRules:
                         f"Faltan síntomas típicos de '{disease}': {', '.join(missing)}"
                     )
                     validation_status['confidence_adjustment'] -= 0.15
+
+        # Sprint 13: incorporar vitales de wearables cuando están disponibles.
+        # Fallback automático: si no hay vitales, el comportamiento es idéntico al anterior.
+        if vitals:
+            vitals_result = self.validate_vitals(vitals)
+            validation_status['warnings'].extend(vitals_result['warnings'])
+            validation_status['confidence_adjustment'] += vitals_result['confidence_adjustment']
+            validation_status['urgency_escalation'] = vitals_result['urgency_escalation']
 
         if validation_status['warnings']:
             validation_status['is_valid'] = False

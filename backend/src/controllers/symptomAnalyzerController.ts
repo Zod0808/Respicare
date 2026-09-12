@@ -8,9 +8,46 @@ import { ApiResponse, AuthenticatedRequest } from '../types';
 import { asyncHandler } from '../utils/asyncHandler';
 import { AppError } from '../utils/AppError';
 import { logger } from '../utils/logger';
-import aiIntegrationService, { SymptomAnalysisRequest } from '../services/aiIntegration';
+import aiIntegrationService, { SymptomAnalysisRequest, SymptomVitalsInput } from '../services/aiIntegration';
 import MedicalHistory from '../models/MedicalHistory';
 import AIAnalysisModel from '../models/AIAnalysis';
+import WearableData from '../models/WearableData';
+
+// Sprint 13: los vitales de wearables solo se consideran "frescos" si fueron
+// sincronizados dentro de esta ventana relativa al momento del análisis de síntomas.
+const WEARABLE_VITALS_FRESHNESS_MS = 6 * 60 * 60 * 1000; // 6 horas
+
+async function getRecentVitalsForPatient(patientId?: string): Promise<SymptomVitalsInput | undefined> {
+  if (!patientId) {
+    return undefined;
+  }
+
+  try {
+    const latest = await WearableData.findOne({ patientId }).sort({ timestamp: -1 }).lean();
+    if (!latest) {
+      return undefined;
+    }
+
+    const isFresh = Date.now() - new Date(latest.timestamp).getTime() <= WEARABLE_VITALS_FRESHNESS_MS;
+    if (!isFresh) {
+      return undefined;
+    }
+
+    const vitals: SymptomVitalsInput = {};
+    if (typeof latest.heartRate === 'number') vitals.heart_rate = latest.heartRate;
+    if (typeof latest.oxygenSaturation === 'number') vitals.oxygen_saturation = latest.oxygenSaturation;
+    if (typeof latest.respiratoryRate === 'number') vitals.respiratory_rate = latest.respiratoryRate;
+
+    return Object.keys(vitals).length > 0 ? vitals : undefined;
+  } catch (error: any) {
+    // Best-effort: la ausencia de vitales de wearables nunca debe bloquear el análisis de síntomas.
+    logger.warn('No se pudieron obtener vitales de wearables para enriquecer el análisis ML', {
+      patientId,
+      error: error.message,
+    });
+    return undefined;
+  }
+}
 
 const VALID_URGENCY_LEVELS = ['low', 'medium', 'high', 'critical'];
 
@@ -93,13 +130,16 @@ export const analyzeSymptomsML = asyncHandler(async (req: AuthenticatedRequest, 
   }
 
   try {
+    const vitals = await getRecentVitalsForPatient(patientId);
+
     const mlResult = await aiIntegrationService.analyzeSymptomsML({
       symptoms: symptoms.map(s => s.trim()),
       patient_age: patient_age || 35,
       risk_factors: risk_factors || [],
       include_explanation: include_explanation !== false, // default true
       apply_personalization: apply_personalization !== false, // default true
-      patient_id: patientId
+      patient_id: patientId,
+      vitals
     });
 
     // Log the ML prediction for monitoring
@@ -108,7 +148,8 @@ export const analyzeSymptomsML = asyncHandler(async (req: AuthenticatedRequest, 
       disease: mlResult.disease,
       confidence: mlResult.confidence,
       urgencyLevel: mlResult.urgency_level,
-      hasExplanation: !!mlResult.explanation
+      hasExplanation: !!mlResult.explanation,
+      vitalsUsed: !!vitals
     });
 
     // Persist prediction so it can be reviewed, approved, rejected or adjusted

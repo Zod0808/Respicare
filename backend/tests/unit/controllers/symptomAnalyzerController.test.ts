@@ -12,6 +12,7 @@ import { AppError } from '../../../src/utils/AppError';
 const app = appInstance.app;
 import User, { UserDocument } from '../../../src/models/User';
 import MedicalHistory from '../../../src/models/MedicalHistory';
+import WearableData from '../../../src/models/WearableData';
 import mongoose from 'mongoose';
 
 const STRONG_PASSWORD = 'Password123!';
@@ -203,6 +204,108 @@ describe('Symptom Analyzer Controller', () => {
 
       serviceSpy.mockRestore();
       loggerSpy.mockRestore();
+    });
+
+    // Sprint 13: los vitales de wearables enriquecen el análisis ML cuando están disponibles y frescos
+    describe('integración de vitales de wearables (Sprint 13)', () => {
+      it('incluye los vitales más recientes del paciente cuando existen y están frescos', async () => {
+        await WearableData.create({
+          patientId,
+          heartRate: 110,
+          oxygenSaturation: 91,
+          respiratoryRate: 26,
+          timestamp: new Date(),
+          source: 'manual'
+        });
+
+        const serviceSpy = jest
+          .spyOn(aiIntegrationService, 'analyzeSymptomsML')
+          .mockResolvedValue({
+            disease: 'asma',
+            confidence: 0.8,
+            urgency_level: 'high',
+            top_3_predictions: [],
+            needs_medical_attention: true,
+            timestamp: new Date().toISOString()
+          } as any);
+
+        await request(app)
+          .post('/api/v1/symptom-analyzer/ml-analyze')
+          .set('Authorization', `Bearer ${patientToken}`)
+          .send({ symptoms: ['sibilancias'], patient_age: 30 })
+          .expect(200);
+
+        expect(serviceSpy).toHaveBeenCalledWith(
+          expect.objectContaining({
+            vitals: {
+              heart_rate: 110,
+              oxygen_saturation: 91,
+              respiratory_rate: 26
+            }
+          })
+        );
+
+        serviceSpy.mockRestore();
+      });
+
+      it('no incluye vitales cuando no hay datos de wearables (fallback automático)', async () => {
+        const serviceSpy = jest
+          .spyOn(aiIntegrationService, 'analyzeSymptomsML')
+          .mockResolvedValue({
+            disease: 'resfriado',
+            confidence: 0.7,
+            urgency_level: 'low',
+            top_3_predictions: [],
+            needs_medical_attention: false,
+            timestamp: new Date().toISOString()
+          } as any);
+
+        await request(app)
+          .post('/api/v1/symptom-analyzer/ml-analyze')
+          .set('Authorization', `Bearer ${patientToken}`)
+          .send({ symptoms: ['congestión'], patient_age: 30 })
+          .expect(200);
+
+        expect(serviceSpy).toHaveBeenCalledWith(
+          expect.objectContaining({ vitals: undefined })
+        );
+
+        serviceSpy.mockRestore();
+      });
+
+      it('ignora vitales de wearables obsoletos (más de 6 horas)', async () => {
+        const staleTimestamp = new Date(Date.now() - 7 * 60 * 60 * 1000);
+        await WearableData.create({
+          patientId,
+          heartRate: 130,
+          oxygenSaturation: 85,
+          timestamp: staleTimestamp,
+          source: 'manual'
+        });
+
+        const serviceSpy = jest
+          .spyOn(aiIntegrationService, 'analyzeSymptomsML')
+          .mockResolvedValue({
+            disease: 'resfriado',
+            confidence: 0.7,
+            urgency_level: 'low',
+            top_3_predictions: [],
+            needs_medical_attention: false,
+            timestamp: new Date().toISOString()
+          } as any);
+
+        await request(app)
+          .post('/api/v1/symptom-analyzer/ml-analyze')
+          .set('Authorization', `Bearer ${patientToken}`)
+          .send({ symptoms: ['congestión'], patient_age: 30 })
+          .expect(200);
+
+        expect(serviceSpy).toHaveBeenCalledWith(
+          expect.objectContaining({ vitals: undefined })
+        );
+
+        serviceSpy.mockRestore();
+      });
     });
   });
 

@@ -19,19 +19,30 @@ router = APIRouter()
 _medical_validator = MedicalValidationRules()
 
 
-def _apply_medical_validation(response: "SymptomMLOutput", symptoms_str: str, patient_age: int) -> "SymptomMLOutput":
+def _apply_medical_validation(
+    response: "SymptomMLOutput",
+    symptoms_str: str,
+    patient_age: int,
+    vitals: Optional[Dict[str, float]] = None,
+) -> "SymptomMLOutput":
     """
     Apply medical coherence rules (RF-005) to a prediction before returning it.
 
     Adjusts confidence when the predicted disease is implausible given the
     reported symptoms/age (e.g. missing required symptoms, age outside the
-    typical range), and surfaces the reasons as warnings.
+    typical range), and surfaces the reasons as warnings. When wearable vitals
+    are available (Sprint 13), they are also considered and may escalate the
+    urgency level; if no vitals are provided the behavior is unchanged.
     """
-    validation = _medical_validator.validate_prediction(response.disease, symptoms_str, patient_age)
+    validation = _medical_validator.validate_prediction(response.disease, symptoms_str, patient_age, vitals=vitals)
 
     response.confidence = max(0.0, min(1.0, response.confidence + validation['confidence_adjustment']))
     response.is_clinically_coherent = validation['is_valid']
     response.coherence_warnings = validation['warnings']
+
+    if validation.get('urgency_escalation'):
+        response.urgency_level = 'high'
+        response.needs_medical_attention = True
 
     if validation['warnings']:
         logger.warning(
@@ -43,6 +54,13 @@ def _apply_medical_validation(response: "SymptomMLOutput", symptoms_str: str, pa
     return response
 
 
+class VitalsInput(BaseModel):
+    """Optional wearable vital signs captured near the time of the symptom report (Sprint 13)"""
+    heart_rate: Optional[float] = Field(None, ge=0, le=300, description="Heart rate (bpm) from wearable")
+    oxygen_saturation: Optional[float] = Field(None, ge=0, le=100, description="SpO2 (%) from wearable")
+    respiratory_rate: Optional[float] = Field(None, ge=0, le=100, description="Respiratory rate (breaths/min) from wearable")
+
+
 class SymptomMLInput(BaseModel):
     """Input for ML symptom analysis"""
     symptoms: List[str] = Field(..., min_length=1, max_length=50, description="List of symptoms (max 50)")
@@ -50,6 +68,10 @@ class SymptomMLInput(BaseModel):
     risk_factors: Optional[List[str]] = Field([], max_length=20, description="List of risk factors (max 20)")
     include_explanation: Optional[bool] = Field(True, description="Include SHAP explanation")
     apply_personalization: Optional[bool] = Field(True, description="Apply age/risk personalization")
+    vitals: Optional[VitalsInput] = Field(
+        None,
+        description="Wearable vitals (heart rate, SpO2, respiratory rate) captured near the report (Sprint 13, optional)"
+    )
 
     from pydantic import field_validator
 
@@ -97,7 +119,10 @@ async def analyze_symptoms_ml(input_data: SymptomMLInput, use_ensemble: bool = T
         
         # Convert symptoms to string format
         symptoms_str = ", ".join(input_data.symptoms)
-        
+
+        # Sprint 13: vitales de wearables, opcionales (fallback automático si no llegan)
+        vitals_dict = input_data.vitals.model_dump(exclude_none=True) if input_data.vitals else None
+
         # Try ensemble first if requested
         if use_ensemble:
             try:
@@ -152,7 +177,7 @@ async def analyze_symptoms_ml(input_data: SymptomMLInput, use_ensemble: bool = T
                             personalized_recommendations=ensemble_pred.get('personalized_recommendations', [])
                         )
 
-                        response = _apply_medical_validation(response, symptoms_str, input_data.patient_age)
+                        response = _apply_medical_validation(response, symptoms_str, input_data.patient_age, vitals=vitals_dict)
 
                         # Log for monitoring
                         try:
@@ -209,7 +234,7 @@ async def analyze_symptoms_ml(input_data: SymptomMLInput, use_ensemble: bool = T
                     urgency_level=result.get('urgency', 'medium'),
                     needs_medical_attention=result.get('urgency') in ['high', 'critical']
                 )
-                return _apply_medical_validation(pattern_response, symptoms_str, input_data.patient_age)
+                return _apply_medical_validation(pattern_response, symptoms_str, input_data.patient_age, vitals=vitals_dict)
         
         # Get prediction with SHAP explanation
         prediction = explainer.explain_prediction(
@@ -278,7 +303,7 @@ async def analyze_symptoms_ml(input_data: SymptomMLInput, use_ensemble: bool = T
             needs_medical_attention=is_urgent or prediction['confidence'] > 0.8
         )
 
-        response = _apply_medical_validation(response, symptoms_str, input_data.patient_age)
+        response = _apply_medical_validation(response, symptoms_str, input_data.patient_age, vitals=vitals_dict)
 
         logger.info("ML prediction completed",
                    disease=response.disease,

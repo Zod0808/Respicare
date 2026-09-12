@@ -8,6 +8,12 @@ import { config } from '../config/config';
 import { logger } from '../utils/logger';
 import { AppError } from '../utils/AppError';
 
+export interface SymptomVitalsInput {
+  heart_rate?: number;
+  oxygen_saturation?: number;
+  respiratory_rate?: number;
+}
+
 export interface AIAnalysisRequest {
   patient_id: string;
   text: string;
@@ -343,6 +349,7 @@ class AIIntegrationService {
     include_explanation?: boolean;
     apply_personalization?: boolean;
     patient_id?: string;
+    vitals?: SymptomVitalsInput;
   }): Promise<MLPredictionResponse> {
     try {
       await this.ensureConnected();
@@ -355,6 +362,8 @@ class AIIntegrationService {
           risk_factors: request.risk_factors || [],
           include_explanation: request.include_explanation !== false, // default true
           apply_personalization: request.apply_personalization !== false, // default true
+          // Sprint 13: vitales de wearables, opcionales (fallback automático si no hay datos)
+          ...(request.vitals ? { vitals: request.vitals } : {}),
         },
         {
           params: {
