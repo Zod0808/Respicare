@@ -118,7 +118,7 @@ describe('WearablesView', () => {
 
   it('calls syncMetrics when the sync button is clicked', async () => {
     renderView()
-    const syncBtn = await screen.findByText(/Sincronizar/i)
+    const syncBtn = await screen.findByRole('button', { name: /Sincronizar/i })
     fireEvent.click(syncBtn)
     await waitFor(() => {
       expect(wearableService.syncMetrics).toHaveBeenCalledTimes(1)
