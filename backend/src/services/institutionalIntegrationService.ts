@@ -3,10 +3,12 @@
  *
  * Lógica de negocio para el API de interoperabilidad institucional consumido
  * por MINSA/DIRESA Tacna y SINADEF: exportación epidemiológica agregada,
- * sincronización del catálogo de centros de salud y recepción de alertas
- * sanitarias regionales para su distribución interna.
+ * sincronización del catálogo de centros de salud, recepción de alertas
+ * sanitarias regionales para su distribución interna, y el envío saliente
+ * automático del reporte epidemiológico hacia SINADEF (ver institutionalReportJobs).
  */
 
+import axios from 'axios';
 import HealthCenterModel, { HealthCenterType } from '../models/HealthCenter';
 import UserModel from '../models/User';
 import AlertModel from '../models/Alert';
@@ -14,6 +16,14 @@ import { AlertPriority } from '../types';
 import { epidemiologicalService } from './epidemiologicalService';
 import { AppError } from '../utils/AppError';
 import { logger } from '../utils/logger';
+
+export interface SinadefReportResult {
+  sent: boolean;
+  skippedReason?: string;
+  status?: number;
+  sentAt?: string;
+  periodDays: number;
+}
 
 export interface ExternalHealthCenterInput {
   name: string;
@@ -190,6 +200,44 @@ class InstitutionalIntegrationService {
     });
 
     return { distributedTo: recipients.length };
+  }
+
+  /**
+   * Envía automáticamente el reporte epidemiológico (el mismo payload de
+   * getEpidemiologicalExport) al endpoint de SINADEF, para cumplir con el
+   * reporte periódico de vigilancia sin depender de que SINADEF lo solicite
+   * por su cuenta. Se omite (sin lanzar error) si SINADEF_REPORT_URL no está
+   * configurado, para no romper entornos de desarrollo/test.
+   */
+  async sendAutomaticReportToSinadef(days?: number): Promise<SinadefReportResult> {
+    const reportUrl = process.env.SINADEF_REPORT_URL;
+    const apiKey = process.env.SINADEF_API_KEY;
+    const report = await this.getEpidemiologicalExport({ days });
+
+    if (!reportUrl) {
+      logger.warn('Envío automático a SINADEF omitido: SINADEF_REPORT_URL no configurado');
+      return { sent: false, skippedReason: 'SINADEF_REPORT_URL no configurado', periodDays: report.periodDays };
+    }
+
+    try {
+      const response = await axios.post(reportUrl, report, {
+        headers: apiKey ? { 'X-API-Key': apiKey, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' },
+        timeout: 15000,
+      });
+
+      logger.info('Reporte epidemiológico enviado automáticamente a SINADEF', {
+        status: response.status,
+        periodDays: report.periodDays,
+        outbreakAlerts: report.outbreakAlerts.length,
+      });
+
+      return { sent: true, status: response.status, sentAt: new Date().toISOString(), periodDays: report.periodDays };
+    } catch (error: any) {
+      logger.error('Error enviando el reporte epidemiológico automático a SINADEF', {
+        error: error.message,
+      });
+      throw new AppError(`Error enviando reporte a SINADEF: ${error.message}`, 502);
+    }
   }
 }
 

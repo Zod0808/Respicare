@@ -68,6 +68,7 @@ import { startAppointmentJobs, stopAppointmentJobs } from './jobs/appointmentJob
 import { startReportJobs, stopReportJobs } from './jobs/reportJobs';
 import { startMlMetricsJobs, stopMlMetricsJobs } from './jobs/mlMetricsJobs';
 import { startLabImportJobs, stopLabImportJobs } from './jobs/labImportJobs';
+import { startInstitutionalReportJobs, stopInstitutionalReportJobs } from './jobs/institutionalReportJobs';
 import { metricsMiddleware, metricsHandler } from './metrics/metrics';
 import { percentileMetricsMiddleware } from './metrics/percentileMetrics';
 import { initMongoDBMonitoring } from './monitoring/mongodbMonitoring';
@@ -398,6 +399,7 @@ class App {
     startReportJobs();
     startMlMetricsJobs();
     startLabImportJobs();
+    startInstitutionalReportJobs();
   }
 
   public listen(): void {
@@ -437,6 +439,7 @@ process.on('SIGTERM', () => {
   stopReportJobs();
   stopMlMetricsJobs();
   stopLabImportJobs();
+  stopInstitutionalReportJobs();
   Promise.all([shutdownTelemetry(), disconnectRedis()]).finally(() => process.exit(0));
 });
 
@@ -447,6 +450,7 @@ process.on('SIGINT', () => {
   stopReportJobs();
   stopMlMetricsJobs();
   stopLabImportJobs();
+  stopInstitutionalReportJobs();
   Promise.all([shutdownTelemetry(), disconnectRedis()]).finally(() => process.exit(0));
 });
 
