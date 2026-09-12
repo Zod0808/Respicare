@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: SHAPDiseaseExplainer
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas / RF-006 - Explicabilidad (SHAP)
+Descripción: Genera explicaciones SHAP de las predicciones de enfermedad,
+mostrando qué síntomas contribuyen más (positiva o negativamente) al diagnóstico;
+consumido por /v1/ml-analyze y por el endpoint de monitoreo de features (RF-006).
+
 SHAP Explainer for Disease Classification
 
 Provides explainability for ML predictions using SHAP values.

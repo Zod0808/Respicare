@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: Analytics
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Página contenedora del módulo de analítica con pestañas
+ * lazy-loaded (dashboard, tendencias, enfermedades, mapas, reportes
+ * automáticos, monitoreo y explicabilidad IA).
+ */
 import React, { Suspense, lazy, useCallback, useMemo, useState } from 'react';
 import './Analytics.css';
 

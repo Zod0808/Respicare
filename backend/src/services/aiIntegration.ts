@@ -1,4 +1,13 @@
 /**
+ * Nombre de Objeto: aiIntegrationService (AIIntegrationService)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+ * Descripción: Cliente HTTP hacia el servicio de IA (ai-services). Implementa
+ * analyzeSymptomsML() (predicción ML con ensemble+SHAP), un circuit breaker
+ * propio y wrappers de monitoreo (métricas, features, fairness) consumidos
+ * por analyticsRoutes (RF-006).
+ *
  * AI Integration Service
  * Connects with RespiCare AI Services for medical processing
  */
@@ -469,6 +478,8 @@ class AIIntegrationService {
     }
   }
 
+  // Obtiene métricas agregadas de monitoreo del modelo ML (RF-006) para el
+  // panel de analítica, desenvolviendo el wrapper {success, data} del ai-service.
   async getMlMonitoringMetrics(params?: { days?: number }) {
     try {
       const response = await this.aiClient.get('/api/v1/ml/monitoring/metrics', {
@@ -501,6 +512,7 @@ class AIIntegrationService {
     }
   }
 
+  // Obtiene la influencia de features (SHAP) más relevantes del modelo (RF-006).
   async getMlFeatureInfluence(params?: { top_n?: number }) {
     try {
       const response = await this.aiClient.get('/api/v1/ml/monitoring/features', {
@@ -519,6 +531,7 @@ class AIIntegrationService {
     }
   }
 
+  // Obtiene métricas de equidad (fairness) del modelo ML entre grupos poblacionales.
   async getMlFairnessMetrics(params?: { group_field?: string; high_confidence_threshold?: number }) {
     try {
       const response = await this.aiClient.get('/api/v1/ml/monitoring/fairness', {

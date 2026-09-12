@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: MedicalHistory (modelo Mongoose)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: Esquema y modelo Mongoose de la historia clínica, con métodos
+ * estáticos de consulta por paciente/doctor/fecha/ubicación y estadísticas
+ * agregadas (top diagnósticos, distribución por edad).
+ */
 import mongoose, { Document, Schema, Model } from 'mongoose';
 import { MedicalHistory as IMedicalHistory, Symptom } from '../types';
 import { applyFieldEncryption } from '../utils/encryption';

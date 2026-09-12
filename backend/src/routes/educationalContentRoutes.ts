@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: educationalContentRoutes
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-011 - Módulo educativo
+ * Descripción: Rutas REST de /api/v1/educational-content para consultar
+ * contenido personalizado y administrar (crear/actualizar/eliminar) el
+ * catálogo de contenido educativo.
+ *
  * Educational Content Routes
  * Módulo educativo (RF-011, CU-007: Consultar información educativa)
  */

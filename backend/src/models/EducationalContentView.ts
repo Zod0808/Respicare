@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: EducationalContentView (modelo Mongoose)
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-011 - Módulo educativo
+ * Descripción: Registra cada consulta de un usuario a un contenido educativo
+ * (userId, contentId, fecha), usado para métricas de consumo del módulo.
+ */
 import mongoose, { Document, Model, Schema } from 'mongoose';
 
 export interface EducationalContentViewDocument extends Document {

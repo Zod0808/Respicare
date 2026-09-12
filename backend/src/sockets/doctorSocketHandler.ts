@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: doctorSocketHandler
+ * Fecha de Creación: 2026-05-07
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-007 - Panel del doctor
+ * Descripción: Servidor WebSocket (/ws/doctor) que autentica al médico y
+ * retransmite en tiempo real las lecturas de signos vitales de los pacientes
+ * suscritos, alimentado por el bus de eventos vitalsEmitter.
+ *
  * WebSocket handler for the doctor real-time monitoring dashboard.
  * Mounts at /ws/doctor on the same httpServer.
  *

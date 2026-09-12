@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: emergencyRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-004 - Reglas clínicas de emergencia
+ * Descripción: Define las rutas HTTP de /api/v1/emergencies (crear, listar
+ * activas, detectar automáticamente, cancelar y consultar información
+ * asociada), con sus validaciones de entrada vía express-validator.
+ *
  * Emergency Routes
  * Rutas para gestión de emergencias médicas
  */

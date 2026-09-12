@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: AutomaticReport (modelo Mongoose)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Esquema Mongoose del reporte automático, con sus métricas
+ * agregadas (pacientes, historias, alertas, citas, análisis de IA) y las
+ * anomalías detectadas respecto a rangos esperados.
+ */
 import mongoose, { Document, Schema, Model } from 'mongoose';
 
 export type ReportType = 'daily' | 'weekly' | 'monthly';

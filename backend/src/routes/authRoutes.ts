@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: authRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Define las rutas HTTP de autenticación y gestión de cuentas
+ * (registro, login, refresh, perfil, cambio de contraseña y administración
+ * de usuarios) bajo /api/v1/auth.
+ */
 import { Router } from 'express';
 import {
   register,
@@ -26,7 +35,7 @@ import {
 
 const router = Router();
 
-// Rutas públicas
+// Rutas públicas: no requieren token
 router.post('/register', validateRequest(registerSchema), register);
 router.post('/login', validateRequest(loginSchema), login);
 router.post('/refresh-token', validateRequest(refreshTokenSchema), refreshToken);

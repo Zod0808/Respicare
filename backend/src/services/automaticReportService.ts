@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: AutomaticReportService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Genera reportes automáticos diarios/semanales/mensuales
+ * agregando métricas de pacientes, historias clínicas, alertas, citas y
+ * análisis de IA, con detección de anomalías y exportación a PDF/CSV/JSON.
+ *
  * Automatic Report Service
  * Genera reportes automáticos diarios, semanales y mensuales
  */

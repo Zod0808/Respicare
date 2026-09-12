@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: CoughAnalysisService
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-003 - Análisis de tos por audio
+Descripción: Servicio que analiza audio de tos (analyze/analyze_base64),
+extrayendo características de la señal y clasificando con un modelo entrenado
+(.pkl) cuando está disponible, con fallback a análisis básico por señal.
+
 Cough Analysis Service - Uses audio features analysis (no dataset needed)
 Analyzes cough characteristics using signal processing and pre-trained audio features
 """

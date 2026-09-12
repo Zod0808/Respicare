@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: HybridRuleMLSystem
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-005 - Validación de coherencia médica
+Descripción: Combina el sistema de reglas de emergencia (prioritario), los
+clasificadores de ML (Random Forest, XGBoost, Redes Neuronales) y las reglas
+de validación médica para producir una predicción final con nivel de confianza.
+
 Hybrid System: Medical Rules + Machine Learning
 
 Combines:

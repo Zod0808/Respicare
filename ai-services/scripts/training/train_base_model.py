@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: train_base_model
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-005 - Validación de coherencia médica
+Descripción: Script de entrenamiento del modelo base Random Forest que además
+implementa el sistema de reglas de emergencia y valida las predicciones con
+MedicalValidationRules antes de guardar el modelo entrenado.
+
 Train Base Model (Random Forest) with Emergency Rules
 
 This script:

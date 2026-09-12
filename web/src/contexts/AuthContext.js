@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: AuthContext
+ * Fecha de Creación: 2026-05-04
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Contexto global de autenticación. Expone login(), register(),
+ * logout() y persiste el token/usuario en localStorage; instala interceptores
+ * Axios para adjuntar el Bearer token y cerrar sesión ante un 401.
+ */
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { API_BASE } from '../utils/apiBase';
@@ -99,6 +108,7 @@ export const AuthProvider = ({ children }) => {
 
   const AUTH_TIMEOUT = 10_000; // 10 s — evita que requests lentos congelen la UI
 
+  // Autentica contra el backend, guarda token+usuario y los devuelve al caller.
   const login = async (email, password) => {
     const res = await axios.post(`${API_BASE}/auth/login`, { email, password }, { timeout: AUTH_TIMEOUT });
     const { token: t, user: u } = res.data.data;
@@ -107,6 +117,7 @@ export const AuthProvider = ({ children }) => {
     return u;
   };
 
+  // Registra un nuevo usuario y arranca la sesión igual que login().
   const register = async (name, email, password, role = 'patient') => {
     const res = await axios.post(`${API_BASE}/auth/register`, { name, email, password, role }, { timeout: AUTH_TIMEOUT });
     const { token: t, user: u } = res.data.data;
@@ -115,6 +126,7 @@ export const AuthProvider = ({ children }) => {
     return u;
   };
 
+  // Limpia token/usuario de localStorage y del estado en memoria.
   const logout = () => {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('auth_user');

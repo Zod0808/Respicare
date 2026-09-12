@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: AIAnalysis
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-007 - Panel del doctor
+ * Descripción: Modelo Mongoose del análisis de IA sobre un paciente, incluyendo
+ * el subdocumento de revisión médica (aprobar/rechazar/ajustar con firma
+ * electrónica) que usa el doctor desde su panel.
+ */
 import mongoose, { Document, Model, Schema } from 'mongoose';
 import { AIAnalysis as IAIAnalysis, Symptom } from '../types';
 import { applyFieldEncryption, getEncryptionKey, encryptString, decryptString } from '../utils/encryption';

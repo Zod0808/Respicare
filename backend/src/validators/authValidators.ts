@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: authValidators
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Esquemas Joi que validan los payloads de registro, login,
+ * refresh token y gestión de perfil/contraseña antes de llegar al controlador.
+ */
 import Joi from 'joi';
 
 export const registerSchema = Joi.object({

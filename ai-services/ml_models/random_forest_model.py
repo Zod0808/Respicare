@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: RandomForestDiseaseClassifier
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Clasificador Random Forest de enfermedades respiratorias a partir
+de síntomas binarizados; incluye reglas de emergencia previas a la predicción
+ML y cálculo de importancia de features.
+
 Random Forest Classifier for Disease Classification
 
 Implements:

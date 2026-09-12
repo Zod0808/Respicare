@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: ml_monitoring
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-006 - Explicabilidad (SHAP)
+Descripción: Endpoints de monitoreo y feedback médico sobre las predicciones
+ML (envío de feedback de doctores, métricas de rendimiento e influencia de
+features), apoyándose en prediction_monitor para la trazabilidad.
+
 ML Monitoring and Feedback API
 
 Endpoints for monitoring ML predictions and collecting medical feedback.

@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: LoginPage
+ * Fecha de Creación: 2026-05-04
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Página de inicio de sesión. Autentica al usuario contra
+ * AuthContext y redirige según su rol (paciente, doctor o admin).
+ */
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -27,6 +35,8 @@ const LoginPage = () => {
     return <Navigate to={dest} replace />;
   }
 
+  // Envía las credenciales a AuthContext.login() y redirige según el rol
+  // devuelto (o a la ruta de origen si el usuario venía de una ruta protegida).
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');

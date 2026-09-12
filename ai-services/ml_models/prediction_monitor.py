@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: prediction_monitor
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-006 - Explicabilidad (SHAP)
+Descripción: Registra cada predicción del modelo en producción (feature
+influence, confianza, feedback médico) para dar trazabilidad y soportar los
+reportes de explicabilidad e influencia de features consumidos por RF-006.
+
 Sistema de Monitoreo de Predicciones ML
 
 Monitorea predicciones del modelo en producción para:

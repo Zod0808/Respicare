@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: useVoiceRecorder
+ * Fecha de Creación: 2026-05-05
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-003 - Análisis de tos por audio
+ * Descripción: Hook React que graba audio del micrófono (MediaRecorder) para
+ * dos flujos del chatbot: transcripción de voz a texto y análisis de tos,
+ * enviando el blob grabado al backend (/chat/transcribe o /chat/analyze-cough).
+ */
 import { useState, useRef } from "react"
 import { toast } from "sonner"
 import { API_CONFIG, getAuthToken } from "@/lib/api/config"
@@ -30,6 +39,8 @@ export function useVoiceRecorder({ sessionId, setIsLoading, onTranscribed, onCou
     setRecordingTime(0)
   }
 
+  // Solicita el micrófono, arma el MediaRecorder y, al detenerse, enruta el
+  // blob grabado a transcripción o a análisis de tos según `type`.
   const startRecording = async (type: 'transcribe' | 'cough') => {
     try {
       // Verificar si el permiso ya fue denegado antes de intentar getUserMedia
@@ -90,6 +101,8 @@ export function useVoiceRecorder({ sessionId, setIsLoading, onTranscribed, onCou
     }
   }
 
+  // Envía el audio grabado a POST /chat/transcribe y pasa el texto resultante
+  // al callback onTranscribed del chatbot.
   const handleTranscribeAudio = async (audioBlob: Blob) => {
     if (!sessionId) { toast.error('No hay sesión activa'); return }
     try {
@@ -125,6 +138,8 @@ export function useVoiceRecorder({ sessionId, setIsLoading, onTranscribed, onCou
     }
   }
 
+  // Envía el audio de tos grabado a POST /chat/analyze-cough (RF-003) y
+  // agrega el resultado del análisis como mensajes del chat.
   const handleAnalyzeCough = async (audioBlob: Blob) => {
     if (!sessionId) { toast.error('No hay sesión activa'); return }
     try {

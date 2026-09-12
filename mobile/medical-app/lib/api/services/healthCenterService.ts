@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: HealthCenterService (cliente móvil)
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-012 - Geolocalización de centros de salud
+ * Descripción: Cliente API móvil que consulta GET /health-centers/nearby
+ * con la ubicación del usuario, consumido por la vista de emergencias.
+ *
  * Servicio de Centros de Salud (búsqueda geolocalizada)
  */
 

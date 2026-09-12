@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: MedicalValidationRules
+Fecha de Creación: 2026-09-02
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-005 - Validación de coherencia médica
+Descripción: Reglas de coherencia clínica (edad, síntomas requeridos, umbrales
+de vitales de wearables) que se aplican sobre la predicción de enfermedad del
+modelo de ML para detectar diagnósticos clínicamente implausibles.
+
 Medical Validation Rules
 
 Coherence checks applied to a predicted disease given the reported symptoms

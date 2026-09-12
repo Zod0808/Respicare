@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: alertController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas y notificaciones
+ * Descripción: Endpoints REST para crear alertas críticas, programar
+ * recordatorios/seguimientos, notificar doctores y consultar el dashboard
+ * y métricas de monitoreo de alertas.
+ *
  * Alert Controller
  * Gestiona la creación, consulta y administración de alertas y notificaciones
  */

@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: medicalHistoryController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: Controlador REST del historial médico electrónico: crear,
+ * listar, actualizar, eliminar, sincronizar registros offline y generar
+ * estadísticas/reportes, con invalidación de caché por operación.
+ */
 import { Response } from 'express';
 import MedicalHistory from '../models/MedicalHistory';
 import AIAnalysis from '../models/AIAnalysis';

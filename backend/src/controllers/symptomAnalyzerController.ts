@@ -1,4 +1,13 @@
 /**
+ * Nombre de Objeto: symptomAnalyzerController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+ * Descripción: Controlador que orquesta el análisis de síntomas: legado
+ * (analyzeSymptoms), ML con ensemble+SHAP (analyzeSymptomsML, persistiendo el
+ * resultado en AIAnalysis para revisión médica de RF-007) y consultas de
+ * tendencias/estadísticas/recomendaciones.
+ *
  * Symptom Analyzer Controller
  * Handles symptom analysis and AI integration
  */

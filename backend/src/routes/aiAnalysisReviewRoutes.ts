@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: aiAnalysisReviewRoutes
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-007 - Panel del doctor
+ * Descripción: Rutas REST para que el doctor liste análisis pendientes y
+ * apruebe, rechace o ajuste predicciones de IA con firma electrónica.
+ *
  * AI Analysis Review Routes
  * Permite al médico revisar, aprobar, rechazar o ajustar predicciones de IA,
  * con firma electrónica (RF-007: Panel del doctor)

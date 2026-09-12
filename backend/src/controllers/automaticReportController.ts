@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: automaticReportController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Endpoints REST para listar, generar y descargar reportes
+ * automáticos, delegando la agregación de métricas a automaticReportService.
+ *
  * Automatic Report Controller
  * Controla las peticiones relacionadas con reportes automáticos
  */

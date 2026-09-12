@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: MedicalHistoryPage
+ * Fecha de Creación: 2026-05-04
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: Página de listado paginado del historial médico electrónico
+ * de pacientes, consumiendo GET /medical-histories del backend.
+ */
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { API_BASE } from '../utils/apiBase';
@@ -14,6 +22,7 @@ const MedicalHistoryPage = () => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
 
+  // Obtiene la página actual del historial médico desde GET /medical-histories.
   const load = useCallback(async () => {
     setLoading(true);
     setError('');

@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: MedicalHistoryController (interface-adapters)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: Controlador de la capa de interfaz (arquitectura hexagonal)
+ * que traduce las peticiones HTTP a llamadas del MedicalHistoryService de
+ * la capa de aplicación y mapea el resultado a DTOs de respuesta.
+ */
 // Controlador de Historial Médico - Capa de Interfaz
 import { Response } from 'express';
 import { AuthenticatedRequest } from '../../types';

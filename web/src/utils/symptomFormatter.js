@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: symptomFormatter
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+ * Descripción: Utilidad de normalización de síntomas (formatSymptoms/normalizeSymptom)
+ * usada para limpiar/deduplicar la entrada antes de enviarla al análisis de IA.
+ *
  * Symptom Formatter Utility
  * Formatea y normaliza síntomas para el sistema.
  * Esta función será desarrollada usando TDD.

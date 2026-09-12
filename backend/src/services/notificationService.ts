@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: NotificationService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas y notificaciones
+ * Descripción: Despacha alertas por múltiples canales (in-app, push, email,
+ * SMS), gestiona la cola de notificaciones programadas en Redis y procesa
+ * reintentos de envíos fallidos.
+ *
  * Notification Service
  * Gestiona el envío y programación de notificaciones multicanal
  */

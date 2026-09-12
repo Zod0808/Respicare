@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: main (ai-services)
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Punto de entrada FastAPI del servicio de IA. Registra los routers
+de análisis (chat, audio, ml-analyze, monitoreo) y expone /api/v1/health,
+/diseases y middlewares transversales (seguridad, rate-limit, logging).
+
 RespiCare AI Services
 Medical analysis and prediction service
 """

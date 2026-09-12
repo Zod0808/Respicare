@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: MedicalHistoryEntity
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: Entidad de dominio (arquitectura hexagonal) que modela una
+ * historia médica: datos del paciente, síntomas, diagnóstico y estado de
+ * sincronización offline, independiente del framework de persistencia.
+ */
 // Entidad de Historial Médico - Capa de Dominio
 import { Symptom } from '../value-objects/Symptom';
 import { Location } from '../value-objects/Location';

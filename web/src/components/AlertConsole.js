@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: AlertConsole
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas y notificaciones
+ * Descripción: Consola administrativa para probar y monitorear el sistema de
+ * alertas: crea alertas críticas manuales y consulta métricas de monitoreo
+ * autenticando con JWT o token de servicio interno.
+ */
 import React, { useState } from 'react';
 import axios from 'axios';
 import './AlertConsole.css';

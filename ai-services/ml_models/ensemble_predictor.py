@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: EnsemblePredictor
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-006 - Explicabilidad (SHAP)
+Descripción: Combina las predicciones de XGBoost, Random Forest y Red Neuronal
+mediante voting ensemble y agrega la explicación SHAP/friendly resultante,
+usada por /v1/ml-analyze para dar transparencia al diagnóstico final.
+
 Ensemble Predictor - Combina múltiples modelos ML
 
 Combina predicciones de:

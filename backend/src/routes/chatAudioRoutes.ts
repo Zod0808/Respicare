@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: chatAudioRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-003 - Análisis de tos por audio
+ * Descripción: Rutas de audio del chatbot. POST /transcribe convierte voz a
+ * texto y POST /analyze-cough reenvía el audio (base64) al ai-service para
+ * análisis de tos, con fallback simulado si el servicio de IA no responde.
+ *
  * Chat Audio Routes (TypeScript)
  * Transcription and cough analysis endpoints
  */

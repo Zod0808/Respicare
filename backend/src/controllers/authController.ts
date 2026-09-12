@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: authController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Controlador de autenticación y gestión de cuentas. Implementa
+ * register(), login(), refreshToken() y las operaciones de perfil/administración
+ * de usuarios (CRUD, activación, estadísticas) consumidas por authRoutes.
+ */
 import { Response, Request } from 'express';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';

@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: EducationalContentManagement
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-011 - Módulo educativo
+ * Descripción: Componente que permite crear, listar y administrar el
+ * contenido educativo preventivo (categorías, condiciones objetivo).
+ *
  * Educational Content Management Component
  * Módulo educativo (RF-011, CU-007: Consultar información educativa)
  */

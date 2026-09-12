@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: Alert (modelo Mongoose)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas y notificaciones
+ * Descripción: Esquema Mongoose de las alertas del sistema: canal, prioridad,
+ * categoría, estado de envío y disparador (trigger), con datos sensibles
+ * cifrados en campos aplicables.
+ */
 import mongoose, { Document, Model, Schema } from 'mongoose';
 import {
   Alert as IAlert,

@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: RegisterPage
+ * Fecha de Creación: 2026-05-04
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Página de registro. Valida la fortaleza de la contraseña en
+ * cliente y crea la cuenta llamando a AuthContext.register() según el rol elegido.
+ */
 import React, { useState } from 'react';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
@@ -39,6 +47,8 @@ const RegisterPage = () => {
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
+  // Valida fortaleza de contraseña en cliente y, si pasa, registra al usuario
+  // llamando a AuthContext.register() con el rol seleccionado.
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (form.password !== form.confirmPassword) {

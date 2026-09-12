@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: healthCenterRoutes
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-012 - Geolocalización de centros de salud
+ * Descripción: Ruta GET /api/v1/health-centers/nearby que valida las
+ * coordenadas recibidas y delega la búsqueda a healthCenterService.
+ *
  * HealthCenter Routes
  * Búsqueda de centros de salud cercanos (RF-012)
  */

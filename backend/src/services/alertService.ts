@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: AlertService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas y notificaciones
+ * Descripción: Orquesta la creación de alertas (síntomas críticos,
+ * recordatorios de medicación, seguimiento, notificación a doctores) y
+ * delega su envío al notificationService.
+ *
  * Alert Service
  * Orquesta la generación de alertas y notificaciones avanzadas
  */

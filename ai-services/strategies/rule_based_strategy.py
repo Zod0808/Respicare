@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: RuleBasedStrategy
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-004 - Reglas clínicas de emergencia
+Descripción: Estrategia de análisis basada en reglas clínicas fijas (sin ML)
+que evalúa síntomas y signos vitales para determinar nivel de urgencia,
+señales de alarma y recomendaciones, sirviendo de motor de reglas de emergencia.
+
 Rule-Based Strategy for AI Analysis
 """
 

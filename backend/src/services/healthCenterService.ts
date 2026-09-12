@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: HealthCenterService
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-012 - Geolocalización de centros de salud
+ * Descripción: Valida coordenadas GPS y ejecuta la búsqueda geoespacial de
+ * centros de salud cercanos, con filtros de tipo y atención respiratoria.
+ *
  * HealthCenter Service
  * Búsqueda geoespacial de centros de salud cercanos (RF-012)
  */

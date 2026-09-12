@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: EmergencyView
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-012 - Geolocalización de centros de salud
+ * Descripción: Vista móvil de emergencias que obtiene la ubicación GPS del
+ * paciente (useGeolocation), crea la solicitud de emergencia y muestra los
+ * centros de salud cercanos obtenidos vía healthCenterService.
+ */
 import { useState } from "react"
 import { AlertTriangle, Phone, MapPin, Loader2, CheckCircle2, Clock, RefreshCw, Navigation, Hospital } from "lucide-react"
 import { ModernButton } from "@/components/ui/ModernButton"

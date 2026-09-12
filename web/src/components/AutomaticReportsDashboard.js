@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: AutomaticReportsDashboard
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Componente que lista los reportes automáticos generados por
+ * el backend (diarios/semanales/mensuales), mostrando estado, métricas y
+ * anomalías detectadas por severidad.
+ */
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';

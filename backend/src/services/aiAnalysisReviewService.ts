@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: AIAnalysisReviewService
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-007 - Panel del doctor
+ * Descripción: Lógica de negocio para que el médico liste, apruebe, rechace o
+ * ajuste predicciones de IA pendientes de revisión, con firma electrónica.
+ *
  * AI Analysis Review Service
  * Permite al médico revisar, aprobar, rechazar o ajustar predicciones de IA (RF-007)
  */

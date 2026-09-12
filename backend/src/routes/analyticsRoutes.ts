@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: analyticsRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-006 - Explicabilidad (SHAP)
+ * Descripción: Rutas de analítica y monitoreo del modelo (dashboard ejecutivo,
+ * tendencias, y métricas de monitoreo/explicabilidad ML expuestas al panel
+ * de administración), delegando agregaciones a los servicios de analytics.
+ */
 import { Router, Request, Response } from 'express';
 import { asyncHandler } from '../utils/asyncHandler';
 import { analyticsService } from '../services/analyticsService';

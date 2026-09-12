@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: symptomAnalyzerRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+ * Descripción: Rutas HTTP de análisis de síntomas (legado y ML/ensemble+SHAP),
+ * tendencias, recomendaciones, historial y estadísticas por paciente.
+ *
  * Symptom Analyzer Routes
  * Routes for symptom analysis and AI integration
  */

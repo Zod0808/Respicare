@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: medicalHistoryRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: Rutas REST de /api/v1/medical-histories (CRUD, estadísticas,
+ * búsqueda por ubicación/fecha, exportación y sincronización offline).
+ */
 import { Router } from 'express';
 import {
   createMedicalHistory,

@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: EducationalContent (modelo Mongoose)
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-011 - Módulo educativo
+ * Descripción: Esquema Mongoose del contenido educativo preventivo
+ * (categoría, condiciones y rango de edad objetivo), con método estático
+ * para hallar contenido relevante según el perfil del paciente.
+ */
 import mongoose, { Document, Model, Schema } from 'mongoose';
 import { EducationalContent as IEducationalContent, EducationalContentCategory } from '../types';
 

@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: emergencyController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-004 - Reglas clínicas de emergencia
+ * Descripción: Expone los endpoints REST de emergencias médicas: creación,
+ * consulta/cancelación de estado, detección automática por síntomas, y
+ * consultas de ambulancia, información médica y hospitales notificados.
+ *
  * Emergency Controller
  * Gestiona los endpoints para emergencias médicas
  */

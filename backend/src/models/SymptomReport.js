@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: SymptomReport (modelo Mongoose)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+ * Descripción: Esquema Mongoose de reportes de síntomas comunitarios con
+ * ubicación geográfica; calcula severidad (calculateSeverity) y expone
+ * agregaciones por distrito (getByDistrict, getAggregatedByDistrict).
+ *
  * Symptom Report Model
  * Model for storing symptom reports with location data
  */

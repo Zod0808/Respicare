@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: auth (middleware)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Middlewares Express de autenticación/autorización: verifica el
+ * JWT (authenticate), valida roles (authorize), permite acceso de servicios
+ * internos o dueño del recurso, y una variante opcional que no bloquea la petición.
+ */
 import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { timingSafeEqual } from 'crypto';
@@ -92,6 +101,9 @@ export const authorize = (...roles: string[]) => {
 
 export const INTERNAL_REQUEST_HEADER = 'x-internal-service-token';
 
+// Permite el paso a llamadas servicio-a-servicio con un token interno válido
+// (header x-internal-service-token), o si el usuario autenticado tiene alguno
+// de los roles indicados.
 export const authorizeInternalOrRoles = (roles: string[], allowedTokens: string[] = []) => {
   return (req: AuthenticatedRequest, _res: Response, next: NextFunction) => {
     const header = req.headers[INTERNAL_REQUEST_HEADER] ?? req.headers[INTERNAL_REQUEST_HEADER.toLowerCase()];

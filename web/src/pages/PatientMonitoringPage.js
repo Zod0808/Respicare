@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: PatientMonitoringPage
+ * Fecha de Creación: 2026-05-07
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-007 - Panel del doctor
+ * Descripción: Panel del doctor con monitoreo en tiempo real de signos
+ * vitales de pacientes vía WebSocket, clasificando severidad según umbrales
+ * clínicos de frecuencia cardíaca, SpO2 y frecuencia respiratoria.
+ */
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';

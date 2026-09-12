@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: educationalContentController
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-011 - Módulo educativo
+ * Descripción: Endpoints REST para consultar contenido educativo
+ * personalizado y para el CRUD administrativo del contenido.
+ *
  * Educational Content Controller
  * Expone el módulo educativo (RF-011, CU-007: Consultar información educativa)
  */

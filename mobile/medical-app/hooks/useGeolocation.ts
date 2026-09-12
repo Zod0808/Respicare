@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: useGeolocation
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-012 - Geolocalización de centros de salud
+ * Descripción: Hook que obtiene y sigue la ubicación GPS del dispositivo
+ * (nativa vía Capacitor o navigator.geolocation en web) usada tanto para
+ * crear emergencias como para buscar centros de salud cercanos.
+ *
  * useGeolocation
  * ═══════════════════════════════════════════════════════════════════
  * Hook de geolocalización nativa para emergencias médicas.

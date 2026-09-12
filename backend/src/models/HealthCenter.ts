@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: HealthCenter (modelo Mongoose)
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-012 - Geolocalización de centros de salud
+ * Descripción: Esquema Mongoose con índice geoespacial de centros de salud
+ * y método findNearby para consultas por proximidad.
+ *
  * HealthCenter Model
  * Directorio geolocalizado de centros de salud (RF-012) para búsqueda de
  * establecimientos cercanos ante una emergencia o consulta de rutina.

@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: MedicalHistoryRoutes (interface-adapters)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: Rutas de la capa de interfaz (arquitectura hexagonal) para
+ * historial médico, resolviendo el controlador vía DependencyContainer.
+ */
 // Rutas de Historial Médico - Capa de Interfaz
 import { Router } from 'express';
 import { DependencyContainer } from '../../infrastructure/container/DependencyContainer';

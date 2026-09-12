@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: symptomReportsRoutes
+ * Fecha de Creación: 2026-07-14
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+ * Descripción: CRUD y agregaciones (heatmap, estadísticas) de reportes de
+ * síntomas comunitarios, fusionando SymptomReport con MedicalHistory por distrito.
+ *
  * Symptom Reports Routes (TS)
  *
  * CRUD + aggregation endpoints for symptom reports. Public by design (the

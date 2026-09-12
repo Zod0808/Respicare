@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: EducationalContentService
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-011 - Módulo educativo
+ * Descripción: Gestiona el CRUD de contenido educativo y personaliza las
+ * recomendaciones según el historial médico (condiciones, edad) del paciente.
+ *
  * Educational Content Service
  * Personaliza y gestiona el contenido educativo preventivo (RF-011, CU-007)
  */

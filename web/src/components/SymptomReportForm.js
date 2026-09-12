@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: SymptomReportForm
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+ * Descripción: Formulario guiado de reporte de síntomas (comunitario/anónimo).
+ * Recolecta ubicación, síntomas con severidad/duración y datos de contacto
+ * opcionales, y los envía a POST /symptom-reports.
+ */
 import React, { useState } from 'react';
 import axios from 'axios';
 import './SymptomReportForm.css';
@@ -102,10 +111,12 @@ function SymptomReportForm({ onClose, onSuccess }) {
     });
   };
 
+  // Construye el payload del reporte (síntomas, categoría dominante, ubicación,
+  // contacto opcional) y lo envía a la API de symptom-reports.
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    
+
     // Validation
     if (!formData.district) {
       setError('Por favor selecciona un distrito');

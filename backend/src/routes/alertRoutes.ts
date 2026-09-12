@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: alertRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas y notificaciones
+ * Descripción: Rutas de /api/v1/alerts con soporte de autenticación dual
+ * (JWT de usuario o token interno de servicio) para creación, reconocimiento
+ * y consulta de alertas críticas y su monitoreo.
+ *
  * Alert Routes
  * Rutas para la gestión avanzada de alertas y notificaciones
  */

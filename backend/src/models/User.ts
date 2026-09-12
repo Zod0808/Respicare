@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: User (modelo Mongoose)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Esquema Mongoose de la colección "users". Cifra el teléfono/nombre
+ * en reposo, hashea la contraseña con bcrypt antes de guardar (pre-save hook) y
+ * expone comparePassword() y métodos estáticos de búsqueda/estadísticas.
+ */
 import mongoose, { Document, Schema, Model } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import { User as IUser } from '../types';

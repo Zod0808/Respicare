@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: symptom_ml_analyzer
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-005 - Validación de coherencia médica / RF-006 - Explicabilidad (SHAP)
+Descripción: Endpoints /v1/ml-analyze, /v1/ml-model-info y /v1/ml-explanation
+que ejecutan el ensemble de modelos ML con explicación SHAP y aplican las
+reglas de validación de coherencia médica (RF-005) antes de responder.
+
 Symptom ML Analyzer API
 
 Integrates ML models (Random Forest, XGBoost) with SHAP explanations

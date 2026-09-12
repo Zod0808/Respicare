@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: EmergencyService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-004 - Reglas clínicas de emergencia / RF-012 - Geolocalización de centros de salud
+ * Descripción: Orquesta la creación y seguimiento de emergencias médicas:
+ * valida las coordenadas GPS recibidas, dispara alertas automáticas, despacha
+ * ambulancias y notifica hospitales y contactos de emergencia.
+ *
  * Emergency Service
  * Gestiona la integración con servicios de emergencia, alertas automáticas y GPS
  */

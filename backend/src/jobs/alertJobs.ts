@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: alertJobs
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas y notificaciones
+ * Descripción: Jobs en segundo plano que procesan periódicamente la cola de
+ * notificaciones programadas y las alertas pendientes de envío/reintento.
+ *
  * Alert Jobs
  * Procesa alertas programadas y pendientes en intervalos regulares
  */
