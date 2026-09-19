@@ -60,46 +60,46 @@ describe('DiseaseReports', () => {
     render(<DiseaseReports />);
     
     await waitFor(() => {
-      expect(screen.getByText(/error/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/no se pudieron cargar los datos de enfermedades/i)
+      ).toBeInTheDocument();
     });
   });
 
   it('should filter by district', async () => {
     render(<DiseaseReports />);
-    
+
     await waitFor(() => {
-      expect(screen.getByText(/distrito/i)).toBeInTheDocument();
+      expect(screen.getByText('Distrito:')).toBeInTheDocument();
     });
-    
-    // Find and click district selector (implementation dependent)
-    const districtSelect = screen.getByRole('combobox', { name: /distrito/i });
-    if (districtSelect) {
-      fireEvent.change(districtSelect, { target: { value: 'Centro de Tacna' } });
-      
-      await waitFor(() => {
-        expect(mockedAxios.get).toHaveBeenCalledWith(
-          expect.any(String),
-          expect.objectContaining({
-            params: expect.objectContaining({
-              district: 'Centro de Tacna'
-            })
+
+    // District is the first of the two <select> controls (Distrito, Período).
+    const [districtSelect] = screen.getAllByRole('combobox');
+    fireEvent.change(districtSelect, { target: { value: 'Centro de Tacna' } });
+
+    await waitFor(() => {
+      expect(mockedAxios.get).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          params: expect.objectContaining({
+            district: 'Centro de Tacna'
           })
-        );
-      });
-    }
+        })
+      );
+    });
   });
 
   it('should filter by period', async () => {
     render(<DiseaseReports />);
-    
-    // Wait for the button to appear, click it, then wait for the axios call.
-    const periodButton = await waitFor(() => {
-      const periodButtons = screen.getAllByRole('button');
-      const btn = periodButtons.find(b => b.textContent.includes('7 días'));
-      if (!btn) throw new Error('period button not yet rendered');
-      return btn;
+
+    await waitFor(() => {
+      expect(screen.getByText(/período/i)).toBeInTheDocument();
     });
-    fireEvent.click(periodButton);
+
+    // Period is the second of the two <select> controls (Distrito, Período).
+    const [, periodSelect] = screen.getAllByRole('combobox');
+    fireEvent.change(periodSelect, { target: { value: '7d' } });
+
     await waitFor(() => {
       expect(mockedAxios.get).toHaveBeenCalledWith(
         expect.any(String),

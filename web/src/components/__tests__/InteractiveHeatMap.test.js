@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import axios from 'axios';
 import InteractiveHeatMap from '../InteractiveHeatMap';
+import { API_BASE } from '../../utils/apiBase';
 
 jest.mock('axios');
 jest.mock('react-leaflet', () => ({
@@ -70,7 +71,7 @@ describe('InteractiveHeatMap component', () => {
       expect(screen.queryByText(/Pocollay/i)).not.toBeInTheDocument();
     });
 
-    expect(axios.get).toHaveBeenCalledWith('http://localhost:3001/api/symptom-reports/heatmap', expect.any(Object));
+    expect(axios.get).toHaveBeenCalledWith(`${API_BASE}/analytics/heatmap`, expect.any(Object));
   });
 
   it('muestra mensaje de error y permite reintentar la carga', async () => {

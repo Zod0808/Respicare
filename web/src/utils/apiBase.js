@@ -30,11 +30,18 @@ const maybeRewriteForBrowser = (rawUrl, fallbackPort) => {
   }
 };
 
+// Fallback used only when no REACT_APP_BACKEND_URL/REACT_APP_API_URL is set
+// (e.g. a `npm start` without a local backend). Rotated alongside the
+// Cloudflare quick tunnel — see `chore(infra): rotate Cloudflare tunnel URL`
+// commits for the sibling updates (backend CORS, mobile .env, capacitor).
+export const DEFAULT_BACKEND_URL = 'https://vhs-significantly-furniture-complicated.trycloudflare.com';
+export const DEFAULT_AI_URL = `${DEFAULT_BACKEND_URL}/ai`;
+
 const resolveBackendBase = () => {
   const raw =
     process.env.REACT_APP_BACKEND_URL ||
     process.env.REACT_APP_API_URL ||
-    'https://vhs-significantly-furniture-complicated.trycloudflare.com';
+    DEFAULT_BACKEND_URL;
 
   const rewritten = maybeRewriteForBrowser(raw, '3001');
   return normalize(rewritten);
@@ -58,7 +65,7 @@ const resolveApiBase = () => {
 };
 
 const resolveAiBase = () => {
-  const raw = process.env.REACT_APP_AI_URL || 'https://vhs-significantly-furniture-complicated.trycloudflare.com/ai';
+  const raw = process.env.REACT_APP_AI_URL || DEFAULT_AI_URL;
   const rewritten = maybeRewriteForBrowser(raw, '8000');
   const base = normalize(rewritten);
 
