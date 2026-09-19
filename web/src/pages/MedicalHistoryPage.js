@@ -8,6 +8,7 @@
  */
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
 import { API_BASE } from '../utils/apiBase';
 import { useAuth } from '../contexts/AuthContext';
 import './clinical.css';
@@ -16,6 +17,8 @@ const LIMIT = 10;
 
 const MedicalHistoryPage = () => {
   const { token } = useAuth();
+  const [searchParams] = useSearchParams();
+  const patientId = searchParams.get('patientId') || undefined;
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -28,7 +31,7 @@ const MedicalHistoryPage = () => {
     setError('');
     try {
       const res = await axios.get(`${API_BASE}/medical-histories`, {
-        params: { page, limit: LIMIT },
+        params: { page, limit: LIMIT, ...(patientId ? { patientId } : {}) },
         headers: { Authorization: `Bearer ${token}` },
       });
       const payload = res.data?.data;
@@ -40,7 +43,7 @@ const MedicalHistoryPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [page, token]);
+  }, [page, token, patientId]);
 
   useEffect(() => { load(); }, [load]);
 

@@ -9,6 +9,16 @@
  */
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from 'recharts';
 import { useAuth } from '../contexts/AuthContext';
 import { API_BASE } from '../utils/apiBase';
 import './PatientMonitoringPage.css';
@@ -27,14 +37,25 @@ const ALERT_POLL_MS = 30_000;
 const THRESHOLDS = {
   hrCriticalHigh: 130,
   hrHigh: 100,
+  hrMediumHighLow: 90, // hr in (90, 100] => medium
   hrCriticalLow: 40,
   hrHighLow: 50,
+  hrMediumLowHigh: 60, // hr in [50, 60) => medium
   spo2Critical: 90,
   spo2High: 94,
+  spo2MediumHigh: 96, // spo2 in [94, 96) => medium
   rrCriticalHigh: 30,
   rrHigh: 25,
   rrCriticalLow: 10,
   rrHighLow: 12,
+};
+
+const RISK_LABELS = {
+  critical: 'Crítico',
+  high: 'Alto',
+  medium: 'Medio',
+  ok: 'Bajo',
+  waiting: 'Esperando',
 };
 
 function statusFor(reading) {
@@ -53,16 +74,34 @@ function statusFor(reading) {
     (rr !== undefined && (rr >= THRESHOLDS.rrHigh || rr <= THRESHOLDS.rrHighLow))
   ) return 'high';
 
+  if (
+    (hr !== undefined && (
+      (hr > THRESHOLDS.hrMediumHighLow && hr <= THRESHOLDS.hrHigh) ||
+      (hr >= THRESHOLDS.hrHighLow && hr < THRESHOLDS.hrMediumLowHigh)
+    )) ||
+    (spo2 !== undefined && spo2 >= THRESHOLDS.spo2High && spo2 < THRESHOLDS.spo2MediumHigh)
+  ) return 'medium';
+
   return 'ok';
 }
 
-function metricSeverity(value, criticalHigh, high, criticalLow, highLow) {
+function metricSeverity(value, criticalHigh, high, criticalLow, highLow, mediumHighEdge, mediumLowEdge) {
   if (value == null) return 'normal';
   if (criticalHigh !== undefined && value >= criticalHigh) return 'critical';
   if (criticalLow !== undefined && value <= criticalLow) return 'critical';
   if (high !== undefined && value > high) return 'high';
   if (highLow !== undefined && value < highLow) return 'high';
+  if (mediumHighEdge !== undefined && high !== undefined && value > mediumHighEdge && value <= high) return 'medium';
+  if (mediumLowEdge !== undefined && highLow !== undefined && value >= highLow && value < mediumLowEdge) return 'medium';
   return 'normal';
+}
+
+function relativeTime(lastSeen, now) {
+  if (!lastSeen) return '—';
+  const diff = Math.round((now - lastSeen) / 1000);
+  if (diff < 60) return `hace ${diff}s`;
+  if (diff < 3600) return `hace ${Math.round(diff / 60)}min`;
+  return `hace ${Math.round(diff / 3600)}h`;
 }
 
 function playBeep(critical = false) {
@@ -86,79 +125,9 @@ function playBeep(critical = false) {
   }
 }
 
-function MetricCell({ icon, value, unit, label, criticalHigh, high, criticalLow, highLow }) {
-  const sev = metricSeverity(value, criticalHigh, high, criticalLow, highLow);
-  return (
-    <div className={`vitals-metric vitals-metric--${sev}`}>
-      <span className="vitals-metric__icon">{icon}</span>
-      <span className="vitals-metric__value">{value != null ? `${value} ${unit}` : '—'}</span>
-      <span className="vitals-metric__label">{label}</span>
-    </div>
-  );
-}
-
-function VitalsCard({ patientId, reading, lastSeen, pendingAlerts, onAcknowledge }) {
-  const status = statusFor(reading);
-  const age = lastSeen ? Math.round((Date.now() - lastSeen) / 1000) : null;
-  const LABEL = { critical: '🆘 CRÍTICO', high: '⚠️ ALERTA', ok: '✅ OK', waiting: 'Esperando...' };
-
-  return (
-    <div className={`vitals-card vitals-card--${status}`}>
-      <div className="vitals-card__header">
-        <span className="vitals-card__id" title={patientId}>Paciente {patientId.slice(-6)}</span>
-        <span className={`vitals-card__badge vitals-card__badge--${status}`}>{LABEL[status]}</span>
-      </div>
-
-      <div className="vitals-card__metrics">
-        <MetricCell
-          icon="❤️" value={reading?.heartRate} unit="bpm" label="Frec. Cardíaca"
-          criticalHigh={THRESHOLDS.hrCriticalHigh} high={THRESHOLDS.hrHigh}
-          criticalLow={THRESHOLDS.hrCriticalLow} highLow={THRESHOLDS.hrHighLow}
-        />
-        <MetricCell
-          icon="🩸" value={reading?.oxygenSaturation} unit="%" label="SpO₂"
-          criticalLow={THRESHOLDS.spo2Critical} highLow={THRESHOLDS.spo2High}
-        />
-        {reading?.respiratoryRate != null && (
-          <MetricCell
-            icon="🫁" value={reading.respiratoryRate} unit="rpm" label="Frec. Resp."
-            criticalHigh={THRESHOLDS.rrCriticalHigh} high={THRESHOLDS.rrHigh}
-            criticalLow={THRESHOLDS.rrCriticalLow} highLow={THRESHOLDS.rrHighLow}
-          />
-        )}
-      </div>
-
-      {age !== null && (
-        <p className="vitals-card__age">
-          Actualizado hace {age < 60 ? `${age}s` : `${Math.round(age / 60)}min`}
-        </p>
-      )}
-
-      {pendingAlerts?.length > 0 && (
-        <div className="vitals-card__db-alerts">
-          {pendingAlerts.map((a) => (
-            <div key={a._id} className={`db-alert db-alert--${a.priority}`}>
-              <div className="db-alert__body">
-                <span className="db-alert__title">{a.title}</span>
-                <span className="db-alert__msg">{a.message}</span>
-              </div>
-              <button
-                className="db-alert__ack"
-                onClick={() => onAcknowledge(a._id)}
-                title="Marcar como revisado"
-              >
-                ✓
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function PatientMonitoringPage() {
   const { token } = useAuth();
+  const navigate = useNavigate();
   const wsRef = useRef(null);
   const reconnectTimer = useRef(null);
   const pollTimer = useRef(null);
@@ -175,6 +144,9 @@ export default function PatientMonitoringPage() {
   const [errors, setErrors] = useState([]);
   const [lastPolled, setLastPolled] = useState(null);
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [patientMeta, setPatientMeta] = useState({});
+  const [spo2Trend, setSpo2Trend] = useState([]);
+  const [now, setNow] = useState(Date.now());
 
   const addError = useCallback((msg) => {
     const id = Date.now();
@@ -224,6 +196,58 @@ export default function PatientMonitoringPage() {
     }
   }, [token, addError]);
 
+  /* ── Patient name/age (denormalised on MedicalHistory) ── */
+  const fetchPatientMeta = useCallback(async () => {
+    if (!token) return;
+    try {
+      const { data } = await axios.get(`${API_BASE}/medical-histories`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { limit: 100 },
+      });
+      const payload = data?.data;
+      const list = Array.isArray(payload) ? payload : payload?.records || payload?.histories || [];
+      setPatientMeta((prev) => {
+        const next = { ...prev };
+        list.forEach((h) => {
+          const pid = h.patientId?._id || h.patientId;
+          if (!pid || next[pid]) return; // list is sorted by date desc: first hit is the most recent
+          next[pid] = { name: h.patientName, age: h.age };
+        });
+        return next;
+      });
+    } catch {
+      // Nombre/edad son un complemento visual; ignorar errores de fetch
+    }
+  }, [token]);
+
+  /* ── 7-day SpO2 trend ── */
+  const fetchSpo2Trend = useCallback(async () => {
+    if (!token) return;
+    try {
+      const startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+      const { data } = await axios.get(`${API_BASE}/wearables/data`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { startDate, limit: 1000 },
+      });
+      const readings = data?.data?.data ?? data?.data ?? [];
+      const byDay = {};
+      readings.forEach((r) => {
+        if (r.oxygenSaturation == null || !r.timestamp) return;
+        const day = new Date(r.timestamp).toISOString().slice(0, 10);
+        if (!byDay[day]) byDay[day] = { sum: 0, count: 0 };
+        byDay[day].sum += r.oxygenSaturation;
+        byDay[day].count += 1;
+      });
+      const days = Object.keys(byDay).sort();
+      setSpo2Trend(days.map((day) => ({
+        day: new Date(`${day}T00:00:00`).toLocaleDateString('es-PE', { weekday: 'short' }),
+        spo2: Math.round((byDay[day].sum / byDay[day].count) * 10) / 10,
+      })));
+    } catch {
+      // El gráfico de tendencia es complementario; ignorar errores de fetch
+    }
+  }, [token]);
+
   /* ── Vitals processing with sound and alert log ── */
   const processVitals = useCallback((patientId, reading) => {
     setPatients((prev) => ({
@@ -238,7 +262,13 @@ export default function PatientMonitoringPage() {
       if (soundEnabledRef.current) playBeep(newStatus === 'critical');
 
       setAlertLog((prev) => [
-        { patientId, reading, status: newStatus, time: new Date().toLocaleTimeString('es-PE') },
+        {
+          patientId,
+          reading,
+          status: newStatus,
+          time: new Date().toLocaleTimeString('es-PE'),
+          date: new Date().toDateString(),
+        },
         ...prev.slice(0, 49),
       ]);
     }
@@ -356,13 +386,22 @@ export default function PatientMonitoringPage() {
     pollWearables();
     pollTimer.current = setInterval(pollWearables, WEARABLE_POLL_MS);
 
+    fetchPatientMeta();
+    fetchSpo2Trend();
+
     return () => {
       clearInterval(ping);
       clearInterval(pollTimer.current);
       clearTimeout(reconnectTimer.current);
       wsRef.current?.close(1000, 'component unmount');
     };
-  }, [connect, pollWearables]);
+  }, [connect, pollWearables, fetchPatientMeta, fetchSpo2Trend]);
+
+  // Tick every 5s so "última lectura" / "conectados en vivo" stay fresh
+  useEffect(() => {
+    const tick = setInterval(() => setNow(Date.now()), 5000);
+    return () => clearInterval(tick);
+  }, []);
 
   // Keep patientsRef current
   useEffect(() => { patientsRef.current = patients; }, [patients]);
@@ -384,25 +423,30 @@ export default function PatientMonitoringPage() {
 
   const patientEntries = Object.entries(patients);
   const criticalCount = patientEntries.filter(([, v]) => statusFor(v.reading) === 'critical').length;
-  const highCount = patientEntries.filter(([, v]) => statusFor(v.reading) === 'high').length;
+  const liveCount = patientEntries.filter(([, v]) => now - v.lastSeen < 60_000).length;
+  const todayStr = new Date().toDateString();
+  const alertsTodayFromLog = alertLog.filter((e) => e.date === todayStr).length;
+  const pendingDbAlertsCount = Object.values(dbAlertsByPatient).reduce((sum, list) => sum + (list?.length || 0), 0);
+  const alertsToday = alertsTodayFromLog + pendingDbAlertsCount;
+
+  const sortedPatientEntries = [...patientEntries].sort(([, a], [, b]) => {
+    const rank = { critical: 0, high: 1, medium: 2, ok: 3, waiting: 4 };
+    const ra = rank[statusFor(a.reading)] ?? 4;
+    const rb = rank[statusFor(b.reading)] ?? 4;
+    return ra - rb || b.lastSeen - a.lastSeen;
+  });
+
+  const pendingAlertsFlat = Object.entries(dbAlertsByPatient)
+    .flatMap(([pid, list]) => (list || []).map((a) => ({ ...a, patientId: pid })))
+    .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
 
   return (
     <div className="monitoring-page">
       <header className="monitoring-header">
-        <h1 className="monitoring-title">Monitoreo de Pacientes en Tiempo Real</h1>
+        <h1 className="monitoring-title">Panel del médico</h1>
         <div className="monitoring-status">
           <span className={`monitoring-dot monitoring-dot--${connected ? 'on' : 'off'}`} />
           {connected ? 'Conectado' : 'Reconectando...'}
-          {criticalCount > 0 && (
-            <span className="monitoring-badge monitoring-badge--critical">
-              🆘 {criticalCount} crítico{criticalCount > 1 ? 's' : ''}
-            </span>
-          )}
-          {highCount > 0 && (
-            <span className="monitoring-badge monitoring-badge--high">
-              ⚠️ {highCount} alerta{highCount > 1 ? 's' : ''}
-            </span>
-          )}
           {lastPolled && (
             <span className="monitoring-poll-info">BD: {lastPolled.toLocaleTimeString('es-PE')}</span>
           )}
@@ -423,54 +467,160 @@ export default function PatientMonitoringPage() {
         </div>
       ))}
 
-      {patientEntries.length === 0 ? (
-        <div className="monitoring-empty">
-          <p>Esperando datos de pacientes...</p>
-          <p className="monitoring-empty__sub">
-            Los pacientes aparecerán aquí cuando envíen datos desde su wearable.
-          </p>
+      <div className="monitoring-stats">
+        <div className="stat-card">
+          <span className="stat-card__value">{patientEntries.length}</span>
+          <span className="stat-card__label">Pacientes activos</span>
         </div>
-      ) : (
-        <div className="monitoring-grid">
-          {patientEntries
-            .sort(([, a], [, b]) => {
-              const rank = { critical: 0, high: 1, ok: 2, waiting: 3 };
-              const ra = rank[statusFor(a.reading)] ?? 3;
-              const rb = rank[statusFor(b.reading)] ?? 3;
-              return ra - rb || b.lastSeen - a.lastSeen;
-            })
-            .map(([pid, { reading, lastSeen }]) => (
-              <VitalsCard
-                key={pid}
-                patientId={pid}
-                reading={reading}
-                lastSeen={lastSeen}
-                pendingAlerts={dbAlertsByPatient[pid]}
-                onAcknowledge={acknowledgeAlert}
-              />
-            ))}
+        <div className="stat-card stat-card--warn">
+          <span className="stat-card__value">{alertsToday}</span>
+          <span className="stat-card__label">Alertas hoy</span>
         </div>
-      )}
+        <div className="stat-card stat-card--critical">
+          <span className="stat-card__value">{criticalCount}</span>
+          <span className="stat-card__label">Riesgo crítico</span>
+        </div>
+        <div className="stat-card stat-card--live">
+          <span className="stat-card__value">{liveCount}</span>
+          <span className="stat-card__label">Conectados en vivo</span>
+        </div>
+      </div>
 
-      {alertLog.length > 0 && (
-        <section className="monitoring-log">
-          <h2 className="monitoring-log__title">Registro de Alertas</h2>
-          <div className="monitoring-log__list">
-            {alertLog.map((entry, i) => (
-              <div key={i} className={`monitoring-log__item monitoring-log__item--${entry.status}`}>
-                <span className={`monitoring-log__sev monitoring-log__sev--${entry.status}`}>
-                  {entry.status === 'critical' ? '🆘' : '⚠️'}
-                </span>
-                <span className="monitoring-log__time">{entry.time}</span>
-                <span>Pac. {entry.patientId.slice(-6)}</span>
-                {entry.reading.heartRate != null && <span>FC: {entry.reading.heartRate} bpm</span>}
-                {entry.reading.oxygenSaturation != null && <span>SpO₂: {entry.reading.oxygenSaturation}%</span>}
-                {entry.reading.respiratoryRate != null && <span>FR: {entry.reading.respiratoryRate} rpm</span>}
-              </div>
-            ))}
+      <section className="monitoring-table-card">
+        <h2 className="monitoring-table-card__title">Pacientes bajo seguimiento</h2>
+        {patientEntries.length === 0 ? (
+          <div className="monitoring-empty">
+            <p>Esperando datos de pacientes...</p>
+            <p className="monitoring-empty__sub">
+              Los pacientes aparecerán aquí cuando envíen datos desde su wearable.
+            </p>
           </div>
+        ) : (
+          <div className="monitoring-table-wrapper">
+            <table className="monitoring-table">
+              <thead>
+                <tr>
+                  <th>Paciente</th>
+                  <th>Edad</th>
+                  <th>SpO₂</th>
+                  <th>FC</th>
+                  <th>Última lectura</th>
+                  <th>Riesgo</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sortedPatientEntries.map(([pid, { reading, lastSeen }]) => {
+                  const status = statusFor(reading);
+                  const meta = patientMeta[pid];
+                  const spo2Sev = metricSeverity(
+                    reading?.oxygenSaturation, undefined, undefined,
+                    THRESHOLDS.spo2Critical, THRESHOLDS.spo2High, undefined, THRESHOLDS.spo2MediumHigh
+                  );
+                  const hrSev = metricSeverity(
+                    reading?.heartRate, THRESHOLDS.hrCriticalHigh, THRESHOLDS.hrHigh,
+                    THRESHOLDS.hrCriticalLow, THRESHOLDS.hrHighLow, THRESHOLDS.hrMediumHighLow, THRESHOLDS.hrMediumLowHigh
+                  );
+                  return (
+                    <tr key={pid} className={`monitoring-row monitoring-row--${status}`}>
+                      <td className="monitoring-table__name" title={pid}>
+                        {meta?.name || `Paciente ${pid.slice(-6)}`}
+                      </td>
+                      <td>{meta?.age ?? '—'}</td>
+                      <td className={`monitoring-table__metric monitoring-table__metric--${spo2Sev}`}>
+                        {reading?.oxygenSaturation != null ? `${reading.oxygenSaturation}%` : '—'}
+                      </td>
+                      <td className={`monitoring-table__metric monitoring-table__metric--${hrSev}`}>
+                        {reading?.heartRate != null ? `${reading.heartRate} bpm` : '—'}
+                      </td>
+                      <td>{relativeTime(lastSeen, now)}</td>
+                      <td>
+                        <span className={`risk-badge risk-badge--${status}`}>{RISK_LABELS[status]}</span>
+                      </td>
+                      <td>
+                        <button
+                          className="monitoring-table__action"
+                          onClick={() => navigate(`/medical-history?patientId=${pid}`)}
+                        >
+                          Ver ficha
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      <div className="monitoring-columns">
+        <section className="monitoring-chart-card">
+          <h2 className="monitoring-chart-card__title">SpO₂ últimos 7 días</h2>
+          {spo2Trend.length === 0 ? (
+            <p className="monitoring-chart-card__empty">Sin datos suficientes todavía.</p>
+          ) : (
+            <ResponsiveContainer width="100%" height={220}>
+              <AreaChart data={spo2Trend}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="day" />
+                <YAxis domain={[80, 100]} unit="%" />
+                <Tooltip />
+                <Area type="monotone" dataKey="spo2" name="SpO₂ promedio" stroke="#0ea5e9" fill="#0ea5e933" />
+              </AreaChart>
+            </ResponsiveContainer>
+          )}
         </section>
-      )}
+
+        <section className="monitoring-feed-card">
+          <h2 className="monitoring-feed-card__title">Últimas alertas</h2>
+          {pendingAlertsFlat.length === 0 && alertLog.length === 0 ? (
+            <p className="monitoring-feed-card__empty">Sin alertas registradas.</p>
+          ) : (
+            <ul className="monitoring-feed">
+              {pendingAlertsFlat.length > 0
+                ? pendingAlertsFlat.slice(0, 5).map((a) => (
+                  <li
+                    key={a._id}
+                    className={`monitoring-feed__item monitoring-feed__item--${a.priority === 'critical' ? 'critical' : 'high'}`}
+                  >
+                    <span className="monitoring-feed__dot" />
+                    <div className="monitoring-feed__body">
+                      <span className="monitoring-feed__patient">
+                        {patientMeta[a.patientId]?.name || `Paciente ${a.patientId.slice(-6)}`}
+                      </span>
+                      <span className="monitoring-feed__msg">{a.title} · {a.message}</span>
+                    </div>
+                    <button
+                      className="monitoring-feed__ack"
+                      onClick={() => acknowledgeAlert(a._id)}
+                      title="Marcar como revisado"
+                    >
+                      ✓
+                    </button>
+                  </li>
+                ))
+                : alertLog.slice(0, 5).map((entry, i) => (
+                  <li key={i} className={`monitoring-feed__item monitoring-feed__item--${entry.status}`}>
+                    <span className="monitoring-feed__dot" />
+                    <div className="monitoring-feed__body">
+                      <span className="monitoring-feed__patient">
+                        {patientMeta[entry.patientId]?.name || `Paciente ${entry.patientId.slice(-6)}`}
+                      </span>
+                      <span className="monitoring-feed__msg">
+                        {entry.status === 'critical' ? 'Lectura crítica' : 'Lectura fuera de rango'}
+                        {entry.reading.heartRate != null && ` · FC ${entry.reading.heartRate} bpm`}
+                        {entry.reading.oxygenSaturation != null && ` · SpO₂ ${entry.reading.oxygenSaturation}%`}
+                      </span>
+                    </div>
+                    <span className="monitoring-feed__time">{entry.time}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          )}
+        </section>
+      </div>
     </div>
   );
 }

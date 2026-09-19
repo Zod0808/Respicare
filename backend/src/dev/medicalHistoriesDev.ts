@@ -87,7 +87,9 @@ router.get('/', async (req: Request, res: Response) => {
       query.patientId = toObjectIdOrPassthrough(authenticatedUserId);
     } else if (patientId) {
       query.patientId = toObjectIdOrPassthrough(patientId);
-    } else if (authenticatedUserId) {
+    } else if (userRole === 'doctor' && authenticatedUserId) {
+      query.doctorId = toObjectIdOrPassthrough(authenticatedUserId);
+    } else if (userRole !== 'admin' && authenticatedUserId) {
       query.patientId = toObjectIdOrPassthrough(authenticatedUserId);
     }
 
