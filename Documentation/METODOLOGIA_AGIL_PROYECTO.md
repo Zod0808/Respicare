@@ -625,12 +625,12 @@ Mejoras:
 
 ---
 
-## 🚧 Extensión Propuesta (Pendiente de Ejecución): Sprint 13
+## ✅ Extensión de Alcance Ejecutada y Cerrada: Sprint 13
 
-> Nota: Los Sprints 0-12 documentados arriba conforman el alcance original cerrado del proyecto (13/13 sprints, 100% completado). El siguiente sprint es una extensión de alcance identificada en una revisión posterior de requerimientos, objetivos y avances frente al SRS/Visión — **no formaba parte del alcance original (FD02/FD03)** y aún no ha sido ejecutada.
+> Nota: Los Sprints 0-12 documentados arriba conforman el alcance original cerrado del proyecto (13/13 sprints, 100% completado). El Sprint 13 es una extensión de alcance identificada en una revisión posterior de requerimientos, objetivos y avances frente al SRS/Visión — **no formaba parte del alcance original (FD02/FD03)** — y ya fue ejecutada y cerrada (ver `Documentation/informes/Plan_Iteracion_Sprint13_RespiCare.md`).
 
 ### **Sprint 13: API de Interoperabilidad MINSA/SINADEF e Integración Wearables-IA**
-**Estado: 🟡 En ejecución (implementación funcional, documentación de cierre pendiente)** | **Semana planificada: 27-28**
+**Estado: 🟢 Cerrado (6/6 entregables aceptados)** | **Semana planificada: 27-28**
 
 **Origen del gap:**
 - El Documento de Visión (FD02, Fase 4) contemplaba "Integración con sistemas del MINSA" como prioridad baja, nunca ejecutada — no existe en el código ninguna conexión real con MINSA/SINADEF, solo el soporte estándar HL7/FHIR interno (`fhirService.ts`, `hl7Parser.ts`) entregado en el Sprint 10.
@@ -643,11 +643,11 @@ Cerrar ambas brechas: exponer una API institucional para que MINSA/DIRESA Tacna 
 
 **Entregables comprometidos:**
 - [x] API de interoperabilidad MINSA/SINADEF: endpoints REST autenticados por API Key (`InstitutionalApiClient`, header `X-API-Key`) para exportación epidemiológica agregada (`GET /api/v1/institutional/epidemiological-export`), sincronización del catálogo de centros de salud (`POST /api/v1/institutional/health-centers/sync`) y recepción de alertas sanitarias regionales (`POST /api/v1/institutional/alerts`)
-- [ ] Documentación OpenAPI 3.0 dedicada para el consumidor externo (portal de integración MINSA/DIRESA) — anotaciones `@swagger` agregadas en `institutionalController.ts`; falta publicar/enlazar un OpenAPI dedicado para el consumidor externo
+- [x] Documentación OpenAPI 3.0 dedicada para el consumidor externo (portal de integración MINSA/DIRESA) — `backend/openapi/institutional-api.yaml`
 - [x] Extensión del pipeline backend → ai-services para transmitir señales de wearables (frecuencia cardíaca, SpO2, frecuencia respiratoria) capturadas vía BLE junto con el reporte de síntomas (`getRecentVitalsForPatient`, ventana de frescura de 6 horas, en `symptomAnalyzerController.ts`)
 - [x] Incorporación de vitales de wearables como capa de validación clínica basada en reglas (no como feature de entrenamiento ML — ver nota de alcance arriba), con fallback automático al modelo actual cuando no haya datos disponibles
 - [x] Tests de integración end-to-end para ambos flujos nuevos (`institutional.integration.test.ts`, `institutionalAuth.test.ts` en backend; `test_medical_validation_rules.py`, `test_symptom_ml_analyzer_endpoints.py` en ai-services)
-- [ ] Actualización de README.md, ROADMAP y Matriz de Trazabilidad con el nuevo alcance
+- [x] Actualización de README.md, ROADMAP y Matriz de Trazabilidad con el nuevo alcance
 
 **Riesgos identificados:**
 
