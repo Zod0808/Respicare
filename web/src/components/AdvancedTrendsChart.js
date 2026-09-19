@@ -28,7 +28,7 @@ import {
   ComposedChart,
 } from 'recharts';
 import './AdvancedTrendsChart.css';
-import { LEGACY_API_BASE, API_BASE } from '../utils/apiBase';
+import { API_BASE } from '../utils/apiBase';
 
 const PERIOD_OPTIONS = [
   { value: '7d', label: 'Últimos 7 días' },
@@ -78,7 +78,7 @@ function AdvancedTrendsChart() {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`${LEGACY_API_BASE}/analytics/temporal-trends`, {
+      const response = await axios.get(`${API_BASE}/analytics/temporal-trends`, {
         params: {
           period: selectedPeriod,
           district: selectedDistrict !== 'all' ? selectedDistrict : undefined,

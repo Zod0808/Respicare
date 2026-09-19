@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './TemporalTrends.css';
-import { LEGACY_API_BASE } from '../utils/apiBase';
+import { API_BASE } from '../utils/apiBase';
 
 function TemporalTrends() {
   const [trendsData, setTrendsData] = useState(null);
@@ -31,7 +31,7 @@ function TemporalTrends() {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`${LEGACY_API_BASE}/analytics/temporal-trends`, {
+      const response = await axios.get(`${API_BASE}/analytics/temporal-trends`, {
         params: {
           period: selectedPeriod,
           district: selectedDistrict !== 'all' ? selectedDistrict : undefined,

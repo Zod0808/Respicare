@@ -4,7 +4,7 @@ import L from 'leaflet';
 import axios from 'axios';
 import VirtualizedList from './VirtualizedList';
 import './InteractiveHeatMap.css';
-import { LEGACY_API_BASE } from '../utils/apiBase';
+import { API_BASE } from '../utils/apiBase';
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -202,7 +202,7 @@ function InteractiveHeatMap() {
       console.log('📅 Fetching heatmap data for period:', selectedPeriod, dateRange);
       
       const response = await axios.get(
-        `${LEGACY_API_BASE}/symptom-reports/heatmap`,
+        `${API_BASE}/analytics/heatmap`,
         {
           params: {
             startDate: dateRange.startDate,

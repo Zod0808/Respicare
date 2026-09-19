@@ -22,7 +22,7 @@ import {
   Cell,
 } from 'recharts';
 import './EpidemiologicalHeatmap.css';
-import { LEGACY_API_BASE } from '../utils/apiBase';
+import { API_BASE } from '../utils/apiBase';
 
 const PERIOD_OPTIONS = [
   { value: '7d', label: 'Últimos 7 días' },
@@ -65,8 +65,8 @@ function EpidemiologicalHeatmap() {
     setError(null);
     try {
       const [heatmapRes, trendsRes] = await Promise.all([
-        axios.get(`${LEGACY_API_BASE}/symptom-reports/heatmap`),
-        axios.get(`${LEGACY_API_BASE}/analytics/temporal-trends`, {
+        axios.get(`${API_BASE}/analytics/heatmap`),
+        axios.get(`${API_BASE}/analytics/temporal-trends`, {
           params: {
             period: selectedPeriod,
             district: selectedDistrict !== 'all' ? selectedDistrict : undefined,
