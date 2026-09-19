@@ -103,6 +103,12 @@ Archivos creados/mejorados (AI v3):
 - ✅ CI con cobertura y artefactos (junit/coverage)
 - ✅ Benchmarks y profiling (p95/p99 objetivos)
 
+## Sprint 13: Validación clínica con vitales de wearables
+- ✅ Umbrales clínicos (SpO2, frecuencia cardíaca, frecuencia respiratoria) aplicados
+  sobre la predicción de enfermedad usando vitales reportados por wearables
+  - `ai-services/services/medical_validation_rules.py`
+  - Tests: `ai-services/tests/services/test_medical_validation_rules.py`
+
 ## Hitos
 - ✅ AI v1 (servicios core + analizador + monitoring)
 - ✅ AI v2 (Advanced ML/NLP/AutoML integrados a pipelines reales)

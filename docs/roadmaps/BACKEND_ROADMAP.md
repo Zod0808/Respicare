@@ -106,7 +106,8 @@ Estado:
 
 ## Calidad
 - Cobertura >90%, tests de seguridad/performance, contratos OpenAPI estrictos
-- ✅ Contratos OpenAPI definidos (archivo `backend/openapi/openapi.yaml`) y rutas alineadas
+- ✅ Contratos OpenAPI definidos (archivo `backend/openapi/respicare-api.yaml`) y rutas alineadas
+- ✅ OpenAPI dedicado para el API institucional MINSA/DIRESA/SINADEF (`backend/openapi/institutional-api.yaml`, Sprint 13)
 
 # 🧰 Roadmap Backend - RespiCare Tacna
 
@@ -176,5 +177,17 @@ Estado:
 - ~~Integración de emergencias~~ ✅ **COMPLETADO**
 - ~~Load balancing~~ ✅ **COMPLETADO**
 - ~~CDN para assets estáticos~~ ✅ **COMPLETADO**
+
+## Sprint 13: Wearables como validación clínica + interoperabilidad institucional
+
+Alcance nuevo (fuera de las fases 1-5/B1-B4 originales), ver
+`Documentation/informes/Plan_Iteracion_Sprint13_RespiCare.md` para el detalle completo.
+
+- ✅ API institucional MINSA/DIRESA Tacna/SINADEF bajo `/api/v1/institutional`
+  (`X-API-Key`, scopes, rate limiting y auditoría propios) — ver Fase 18.4 en
+  `PROJECT_ROADMAP.md` y `backend/openapi/institutional-api.yaml`
+- ✅ Capa de validación de vitales de wearables (`backend/src/services/wearableService.ts`)
+  consumida por el panel del médico rediseñado (`web/src/pages/PatientMonitoringPage.js`)
+- ✅ Cifrado a nivel de campo para datos sensibles de historias médicas (`MedicalHistory.patientName`)
 
 

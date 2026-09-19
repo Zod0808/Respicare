@@ -1,0 +1,413 @@
+openapi: 3.0.3
+info:
+  title: RespiCare — API de Interoperabilidad Institucional (MINSA/DIRESA Tacna / SINADEF)
+  description: |
+    API dedicada para el intercambio de información entre RespiCare y autoridades
+    sanitarias externas (MINSA, DIRESA Tacna, SINADEF). Es un API independiente del
+    API principal de RespiCare (`respicare-api.yaml`, consumida por la app web/móvil
+    con JWT de usuario): usa autenticación por **API Key estática** y tiene su propio
+    rate limiting y log de auditoría, según lo definido en el Sprint 13
+    (`Documentation/informes/Plan_Iteracion_Sprint13_RespiCare.md`).
+
+    **Alcance:**
+    - Exportación epidemiológica agregada por distrito (tendencias + brotes detectados),
+      sin exponer datos clínicos individuales.
+    - Sincronización (upsert) del catálogo de centros de salud de Tacna.
+    - Recepción de alertas sanitarias regionales emitidas por MINSA/SINADEF, que
+      RespiCare distribuye internamente al personal médico/administrativo activo.
+
+    **No incluye:** diagnóstico médico individual, historiales clínicos de pacientes
+    ni ningún dato identificable a nivel de paciente — fuera de alcance por diseño.
+  version: 1.0.0
+  contact:
+    name: RespiCare — Equipo de desarrollo
+    email: support@respicare.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:3001/api/v1/institutional
+    description: Servidor de desarrollo
+  - url: https://api.respicare.com/api/v1/institutional
+    description: Servidor de producción
+
+tags:
+  - name: Institutional (MINSA/SINADEF)
+    description: Interoperabilidad con autoridades sanitarias externas
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /epidemiological-export:
+    get:
+      summary: Exportación epidemiológica agregada por distrito (Tacna)
+      description: >
+        Reutiliza el mismo análisis del panel de analítica interno de RespiCare
+        (tendencias por distrito/categoría y predicción de brotes), agregado a nivel
+        de distrito — sin datos clínicos individuales. Requiere el scope
+        `epidemiological:read`.
+      tags: [Institutional (MINSA/SINADEF)]
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: query
+          name: days
+          schema:
+            type: integer
+            minimum: 1
+            default: 30
+          description: Ventana de días a analizar hacia atrás desde hoy.
+      responses:
+        '200':
+          description: Tendencias por distrito y alertas de brotes detectados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EpidemiologicalExportResponse'
+              example:
+                success: true
+                data:
+                  generatedAt: '2026-09-19T18:00:00.000Z'
+                  source: RespiCare
+                  coverage: Tacna
+                  periodDays: 30
+                  districtTrends:
+                    - district: Tacna
+                      category: respiratory
+                      totalReports: 42
+                      highSeverityPercentage: 19.0
+                      trend: increase
+                  outbreakAlerts:
+                    - district: Alto de la Alianza
+                      category: respiratory
+                      recentTotal: 18
+                      baselineTotal: 9
+                      growthRate: 0.55
+                      severityRate: 0.22
+                      riskLevel: warning
+                      confidence: 0.61
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /health-centers/sync:
+    post:
+      summary: Sincroniza el catálogo de centros de salud (upsert por nombre + distrito)
+      description: >
+        Recibe un lote de centros de salud y hace upsert de cada uno por la combinación
+        `name` + `district`. Los registros individuales inválidos no interrumpen el lote:
+        se reportan en `errors` junto con los conteos de `created`/`updated`. Requiere el
+        scope `health-centers:write`.
+      tags: [Institutional (MINSA/SINADEF)]
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [centers]
+              properties:
+                centers:
+                  type: array
+                  minItems: 1
+                  items:
+                    $ref: '#/components/schemas/HealthCenterInput'
+            example:
+              centers:
+                - name: Hospital Hipólito Unanue
+                  type: hospital
+                  address: Av. Bolognesi 1930
+                  district: Tacna
+                  phone: '052411111'
+                  hasEmergencyServices: true
+                  hasRespiratoryCare: true
+                  latitude: -18.0146
+                  longitude: -70.2536
+      responses:
+        '200':
+          description: Resultado de la sincronización (creados/actualizados/errores por registro)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCenterSyncResponse'
+              example:
+                success: true
+                data:
+                  created: 1
+                  updated: 0
+                  errors: []
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+  /alerts:
+    post:
+      summary: Recibe una alerta sanitaria regional y la distribuye al personal activo
+      description: >
+        RespiCare no modela alertas como broadcast regional único, así que cada alerta
+        recibida se distribuye como una notificación individual (`Alert`, categoría
+        `health_authority`) a todo el personal `doctor`/`admin` activo. Requiere el
+        scope `alerts:write`.
+      tags: [Institutional (MINSA/SINADEF)]
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalAlertInput'
+            example:
+              title: Alerta sanitaria regional — incremento de casos respiratorios
+              message: DIRESA Tacna reporta incremento de casos IRA en el distrito de Gregorio Albarracín.
+              priority: high
+              district: Gregorio Albarracín
+              referenceId: MINSA-2026-0912
+      responses:
+        '201':
+          description: Alerta distribuida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertIngestResponse'
+              example:
+                success: true
+                data:
+                  distributedTo: 6
+        '400':
+          description: Petición inválida (faltan `title` o `message`)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: >
+        API key estática emitida por RespiCare para el cliente institucional
+        (prefijo `rcinst_`, generada vía `backend/src/scripts/generateInstitutionalApiKey.ts`).
+        Cada key tiene scopes granulares (`epidemiological:read`, `health-centers:write`,
+        `alerts:write`) y su propio rate limit (100 solicitudes / 15 min) y log de auditoría,
+        independiente del API principal (JWT) usado por la app web/móvil.
+
+  responses:
+    Unauthorized:
+      description: API key ausente o inválida
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            message: API key requerida (header X-API-Key)
+    Forbidden:
+      description: La API key es válida pero no tiene el scope requerido
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            message: "Scope insuficiente: se requiere 'epidemiological:read'"
+    RateLimited:
+      description: Límite de solicitudes excedido (100 solicitudes / 15 minutos por API key)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            message: Límite de solicitudes excedido para el API de interoperabilidad institucional
+    ServerError:
+      description: Error interno del servidor
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+
+    DistrictTrend:
+      type: object
+      properties:
+        district:
+          type: string
+        category:
+          type: string
+        totalReports:
+          type: integer
+        highSeverityPercentage:
+          type: number
+          format: float
+        trend:
+          type: string
+          enum: [increase, stable, decrease]
+
+    OutbreakAlert:
+      type: object
+      properties:
+        district:
+          type: string
+        category:
+          type: string
+        recentTotal:
+          type: integer
+        baselineTotal:
+          type: integer
+        growthRate:
+          type: number
+          format: float
+        severityRate:
+          type: number
+          format: float
+        riskLevel:
+          type: string
+          enum: [stable, warning, high]
+        confidence:
+          type: number
+          format: float
+
+    EpidemiologicalExportResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            generatedAt:
+              type: string
+              format: date-time
+            source:
+              type: string
+              example: RespiCare
+            coverage:
+              type: string
+              example: Tacna
+            periodDays:
+              type: integer
+            districtTrends:
+              type: array
+              items:
+                $ref: '#/components/schemas/DistrictTrend'
+            outbreakAlerts:
+              type: array
+              description: Subconjunto de districtTrends con riskLevel distinto de "stable"
+              items:
+                $ref: '#/components/schemas/OutbreakAlert'
+
+    HealthCenterInput:
+      type: object
+      required: [name, type, address, district, latitude, longitude]
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum: [hospital, centro_salud, posta_medica, clinica]
+        address:
+          type: string
+        district:
+          type: string
+        phone:
+          type: string
+        hasEmergencyServices:
+          type: boolean
+          default: false
+        hasRespiratoryCare:
+          type: boolean
+          default: false
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+
+    HealthCenterSyncResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            created:
+              type: integer
+            updated:
+              type: integer
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  error:
+                    type: string
+
+    ExternalAlertInput:
+      type: object
+      required: [title, message]
+      properties:
+        title:
+          type: string
+        message:
+          type: string
+        priority:
+          type: string
+          enum: [low, medium, high, critical]
+          default: high
+        district:
+          type: string
+        referenceId:
+          type: string
+          description: Identificador de la alerta en el sistema de origen (MINSA/SINADEF), útil para trazabilidad.
+
+    AlertIngestResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            distributedTo:
+              type: integer
+              description: Número de usuarios (doctor/admin activos) a los que se distribuyó la alerta.

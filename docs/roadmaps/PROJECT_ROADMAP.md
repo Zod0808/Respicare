@@ -48,7 +48,7 @@
 | **19. Engagement del Paciente** | ❌ 0 % | ❌ Comunidad | ❌ Gamificación | ❌ Servicios sociales | ❌ Recomendaciones | ❌ | ❌ Docs engagement | ❌ |
 | **20. Sostenibilidad Operacional** | ❌ 0 % | ❌ | ❌ | ❌ Gestión incidentes | ❌ | ❌ DR/BC | ❌ Runbooks DR | ❌ |
 | **21. Multitenancy** | ❌ 0 % | ❌ UI multi-tenant | ❌ | ❌ Aislamiento tenants | ❌ | ❌ Particionamiento | ❌ Docs multitenancy | ❌ Sharding tenants |
-| **22. Tecnologías Emergentes** | ❌ 0 % | ❌ | ❌ Wearables | ❌ Blockchain/IoT | ❌ Quantum ML | ❌ | ❌ Docs innovación | ❌ |
+| **22. Tecnologías Emergentes** | ⏳ ~15 % | ❌ | ⏳ Wearables (BLE, Health Connect, HealthKit — Sprint 13) | ❌ Blockchain/IoT | ❌ Quantum ML | ❌ | ❌ Docs innovación | ❌ |
 
 ---
 
@@ -1421,6 +1421,24 @@
 **Documentación:**
 - `docs/interoperability/SNOMED_LOINC_IMPLEMENTATION.md`
 
+#### **18.4 Interoperabilidad Institucional (MINSA/DIRESA Tacna/SINADEF)** ✅ (Sprint 13)
+
+> Nota de alcance: esta interoperabilidad es distinta de 18.1-18.3 (IHE/DICOM/SNOMED,
+> orientada a estándares clínicos internacionales). Es un API REST propio de
+> RespiCare para intercambio con autoridades sanitarias regionales/nacionales.
+
+**Backend:** ✅
+- API REST dedicada bajo `/api/v1/institutional`, autenticación por `X-API-Key`
+  (independiente del JWT de usuario), scopes granulares, rate limiting y
+  auditoría propios (`backend/src/middleware/institutionalAuth.ts`,
+  `backend/src/controllers/institutionalController.ts`,
+  `backend/src/services/institutionalIntegrationService.ts`)
+- Exportación epidemiológica agregada por distrito, sincronización del catálogo
+  de centros de salud, e ingesta de alertas sanitarias regionales
+
+**Documentación:** ✅
+- `backend/openapi/institutional-api.yaml` (OpenAPI 3.0.3 dedicado)
+
 ---
 
 ### **Fase 19: Experiencia del Paciente y Engagement** ❌ 0%
@@ -1638,27 +1656,25 @@
 **Documentación:**
 - `docs/innovation/BLOCKCHAIN_MEDICAL_RECORDS.md`
 
-#### **22.2 Wearables y IoT Médico** ❌
+#### **22.2 Wearables y IoT Médico** ⏳ ~40% (parcial, Sprint 13)
 
-**Backend:**
-- Integración con dispositivos wearables (Apple Health, Google Fit)
-- Integración con dispositivos IoT (espirómetros, oxímetros)
-- Streaming de datos en tiempo real
-- **Archivos a crear:**
-  - `backend/src/services/wearableService.ts`
-  - `backend/src/services/iotService.ts`
-  - `backend/src/models/WearableData.ts`
+**Backend:** ✅
+- Integración con dispositivos wearables (Health Connect / HealthKit / BLE) implementada
+- Capa de validación clínica que consume vitales de wearables como insumo del panel del médico
+- `backend/src/services/wearableService.ts`, `backend/src/models/WearableData.ts` — ya existen
 
-**Mobile:**
-- Sincronización con sensores
-- **Archivos a crear:**
-  - `mobile/src/services/wearableIntegrationService.ts`
+**Mobile:** ✅
+- Sincronización con sensores vía BLE, Health Connect (Android) y HealthKit (iOS) — `mobile/src/services/wearableIntegrationService.ts`
 
-**MongoDB:**
-- Colección `wearabledata` con índices
+**MongoDB:** ✅
+- Colección `wearabledata` con índices — ya existe
+
+**Pendiente:**
+- ❌ Integración con dispositivos IoT dedicados (espirómetros, oxímetros de pulso independientes)
+- ❌ Streaming de datos en tiempo real (hoy es sincronización periódica, no streaming continuo)
 
 **Documentación:**
-- `docs/innovation/WEARABLES_IOT_GUIDE.md`
+- `docs/innovation/WEARABLES_IOT_GUIDE.md` (pendiente); ver mientras tanto `Documentation/informes/Plan_Iteracion_Sprint13_RespiCare.md`
 
 #### **22.3 Quantum Computing para ML (Exploratorio)** ❌
 

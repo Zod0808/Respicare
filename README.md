@@ -84,10 +84,11 @@
 - **Prescripciones** — Gestión y seguimiento de medicamentos
 - **Referidos** — Flujo completo de derivaciones entre especialistas
 - **Resultados de Laboratorio** — Registro y consulta de análisis
-- **Wearables** — Métricas en tiempo real vía WebSocket (FC, SpO₂, pasos)
+- **Wearables** — Métricas en tiempo real vía WebSocket (FC, SpO₂, pasos); vitales recientes (BLE) se envían al motor de IA como capa adicional de validación clínica basada en reglas, con degradación automática si no hay datos
 - **Analytics Ejecutivo** — KPIs clínicos, epidemiología por distritos, predicción de brotes
 - **Consentimientos Informados** — Gestión y auditoría GDPR/LOPD
 - **HL7 FHIR** — Interoperabilidad con estándares internacionales de salud
+- **API Institucional MINSA/DIRESA/SINADEF** — Interoperabilidad para autoridades sanitarias externas: exportación epidemiológica agregada, sincronización del catálogo de centros de salud y recepción de alertas sanitarias regionales, autenticada por API Key (`X-API-Key`) con scopes, rate limiting y auditoría dedicados — ver [`backend/openapi/institutional-api.yaml`](./backend/openapi/institutional-api.yaml)
 - **Chat Conversacional** — Historial médico-paciente persistente
 - **Swagger UI** — Documentación interactiva en `/api/docs`
 
@@ -106,7 +107,7 @@
 
 - **Dashboard de Estado** — Monitoreo en tiempo real de servicios, conexiones y health checks
 - **Panel de Administración** — Gestión de usuarios, estadísticas por rol, creación/edición inline
-- **Monitoreo de Pacientes** — WebSocket para datos de wearables en tiempo real con umbrales clínicos
+- **Panel del Médico / Monitoreo de Pacientes** — WebSocket para datos de wearables en tiempo real con umbrales clínicos de 4 niveles (crítico/alto/medio/bajo), tabla de pacientes bajo seguimiento, tendencia de SpO₂ de 7 días y feed de alertas
 - **Analytics Dashboard** — Gráficos interactivos (Recharts), dashboard ejecutivo con KPIs
 - **Agenda Médica** — Calendario de citas con filtros por doctor y paciente
 - **Consola de Alertas** — Visualización y reconocimiento de alertas críticas
@@ -418,6 +419,13 @@ NEXT_PUBLIC_AI_SERVICE_URL=https://TUNNEL.trycloudflare.com/ai/api/v1
 ## Versión Actual
 
 **v2.1.5** — Ver [CHANGELOG.md](./CHANGELOG.md) para el historial completo.
+
+### Sprint 13 — Interoperabilidad institucional y wearables como validación clínica
+- ✅ API de interoperabilidad MINSA/DIRESA/SINADEF autenticada por API Key, con scopes granulares, rate limiting y auditoría dedicados (`backend/src/controllers/institutionalController.ts`)
+- ✅ OpenAPI 3.0 dedicado para el consumidor externo — [`backend/openapi/institutional-api.yaml`](./backend/openapi/institutional-api.yaml)
+- ✅ Vitales de wearables (FC, SpO₂, frecuencia respiratoria) incorporados como capa de validación clínica basada en reglas en el motor de IA, con fallback automático si no hay datos recientes
+- ✅ Panel del médico rediseñado (`/monitoring`): stat cards, tabla de pacientes con riesgo de 4 niveles, tendencia de SpO₂ y feed de alertas
+- ✅ Tests de integración e2e en verde para ambos flujos (`institutional.integration.test.ts`, `institutionalAuth.test.ts`, `test_medical_validation_rules.py`)
 
 ### Últimas mejoras de infraestructura
 - ✅ Migración de datos reales desde máquina física a Docker (2.306 documentos)

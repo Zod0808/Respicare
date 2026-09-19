@@ -63,11 +63,11 @@ Entregables comprometidos para el Sprint 13 (avance a la fecha):
 | Entregable | Descripción | Aceptado |
 |---|---|---|
 | API de interoperabilidad MINSA/SINADEF | Endpoints REST autenticados por API Key (`InstitutionalApiClient` + header `X-API-Key`, scopes granulares) para exportación epidemiológica agregada, sincronización del catálogo de centros de salud y recepción de alertas sanitarias regionales | Sí |
-| Documentación OpenAPI 3.0 dedicada para el consumidor externo (portal de integración MINSA/DIRESA) | Anotaciones `@swagger` agregadas en `institutionalController.ts` (autodescubiertas por `config/swagger.ts`); falta publicar/enlazar un documento OpenAPI dedicado para el consumidor externo | Parcial |
+| Documentación OpenAPI 3.0 dedicada para el consumidor externo (portal de integración MINSA/DIRESA) | Publicado `backend/openapi/institutional-api.yaml` (OpenAPI 3.0.3 independiente del spec interno, cubre los 3 endpoints con esquemas, ejemplos y respuestas de error) | Sí |
 | Extensión del pipeline backend → ai-services para transmitir señales de wearables (frecuencia cardíaca, SpO2, frecuencia respiratoria) capturadas vía BLE junto con el reporte de síntomas | Implementado en `symptomAnalyzerController.ts` (`getRecentVitalsForPatient`, ventana de frescura de 6 horas) y `aiIntegration.ts` | Sí |
 | Incorporación de features de wearables en el feature engineering de los modelos ML (Random Forest/XGBoost/MLP), con fallback automático al modelo actual si no hay datos disponibles | Incorporados como capa de validación clínica basada en reglas (`MedicalValidationRules.validate_vitals`), no como feature de entrenamiento ML — ver nota de alcance arriba. Fallback automático (`vitals=None`) verificado por tests | Sí (alcance ajustado) |
 | Tests de integración end-to-end para ambos flujos nuevos | `institutional.integration.test.ts` (10 tests), `institutionalAuth.test.ts` (8 tests) en backend; `test_medical_validation_rules.py`, `test_symptom_ml_analyzer_endpoints.py` en ai-services — todos en verde | Sí |
-| Actualización de README.md, ROADMAP y Matriz de Trazabilidad con el nuevo alcance | Pendiente | Pendiente |
+| Actualización de README.md, ROADMAP y Matriz de Trazabilidad con el nuevo alcance | README.md (secciones de backend/frontend + nueva subsección "Sprint 13"), `docs/roadmaps/PROJECT_ROADMAP.md` (Fase 18.4 nueva, Fase 22.2 actualizada), `docs/roadmaps/BACKEND_ROADMAP.md` y `docs/roadmaps/AI_SERVICES_ROADMAP.md` (sección Sprint 13 agregada), `Documentation/trazabilidad/Matriz_Trazabilidad_RespiCare.xlsx` (RF-002/RF-005/RF-007/RF-008/RF-009 ampliados con el alcance de Sprint 13) | Sí |
 
 ## 5. Cronograma y Actividades
 
@@ -172,18 +172,22 @@ Métricas que evidenciarán el resultado del Sprint 13 una vez ejecutado:
 
 | Indicador | Meta | Resultado | Estado |
 |---|---|---|---|
-| Entregables completados | 6/6 | 4/6 completos, 1 parcial, 1 pendiente (67%) | 🟡 En ejecución |
+| Entregables completados | 6/6 | 6/6 completos (100%) | 🟢 Cerrado |
 | Story Points | Por estimar en Sprint Planning | N/A | 🔲 Pendiente |
-| Definition of Done | Todos los criterios de DoD cumplidos | Tests de integración e2e en verde para ambos flujos; documentación de cierre (OpenAPI dedicado, README/ROADMAP/Matriz) aún pendiente | 🟡 En ejecución |
+| Definition of Done | Todos los criterios de DoD cumplidos | Tests de integración e2e en verde para ambos flujos; documentación de cierre (OpenAPI dedicado, README/ROADMAP/Matriz de Trazabilidad) completa | 🟢 Cerrado |
 
 ## 11. Seguimiento y Control
 
 Ceremonias Scrum planificadas para este Sprint, siguiendo el mismo formato usado en los Sprints 0-12: Daily Standups (15 min, diarios), Sprint Review (demo del incremento) y Retrospectiva (formato Start-Stop-Continue) al cierre del Sprint.
 
-Sprint iniciado: implementación funcional de ambos flujos completa (backend + ai-services), con tests de integración en verde. Pendiente antes del cierre formal: (1) gestionar el contrato de datos con MINSA/DIRESA Tacna, dependencia externa no controlada por el equipo de desarrollo, y (2) completar la documentación de cierre (OpenAPI dedicado para el consumidor externo, README, ROADMAP, Matriz de Trazabilidad).
+Sprint cerrado: implementación funcional de ambos flujos completa (backend + ai-services), con tests de integración en verde, y documentación de cierre completa (OpenAPI dedicado para el consumidor externo, README, ROADMAP, Matriz de Trazabilidad). Queda como dependencia externa, fuera del control del equipo de desarrollo y no bloqueante para este cierre: gestionar el contrato de datos formal con MINSA/DIRESA Tacna para la puesta en producción del consumo real del API (el endpoint ya está implementado, documentado y probado contra el contrato de datos asumido en este Sprint).
 
 ## 12. Lecciones Aprendidas y Cierre
 
-Cierre del Sprint 13 y aprendizajes a incorporar (a completar tras el cierre formal, cuando la documentación pendiente esté lista):
+Cierre del Sprint 13:
 
 Sprint identificado como extensión de alcance tras una revisión de requerimientos, objetivos y avances del proyecto frente al SRS/Visión original (FD02/FD03), una vez cerrados los 13 sprints originales (Sprint 0 a Sprint 12, 100% completados). Durante la ejecución se ajustó el mecanismo técnico del entregable de wearables-IA: en vez de reentrenar los modelos ML con vitales como feature (lo cual hubiera requerido rediseñar el pipeline de un clasificador de texto a uno tabular), se optó por una capa de validación clínica basada en reglas que cumple el mismo objetivo funcional (enriquecer la predicción con datos de wearables, con fallback controlado) sin ese costo. Lección: al planificar sprints de integración de nuevas señales en un modelo ML existente, verificar primero la naturaleza del modelo (texto vs. tabular) antes de comprometer "feature engineering" como entregable literal.
+
+Como parte del cierre de documentación se rediseñó también el Panel del médico (`web/src/pages/PatientMonitoringPage.js`) sobre la infraestructura de tiempo real ya existente (WebSocket `/ws/doctor`, `vitalsEmitter.ts`), añadiendo clasificación clínica de 4 niveles (crítico/alto/medio/bajo), tabla de pacientes bajo seguimiento y tendencia de SpO2 de 7 días — verificado extremo a extremo contra una base de datos real. Ese trabajo expuso y corrigió un bug real en `backend/src/dev/medicalHistoriesDev.ts`: el filtrado de `GET /api/v1/medical-histories` para el rol `doctor` usaba incorrectamente el id del propio médico como `patientId`, devolviendo siempre una lista vacía. Lección: la verificación end-to-end contra datos reales (no solo contra mocks) sigue siendo la forma más efectiva de encontrar este tipo de bug de filtrado silencioso.
+
+Con este entregable, el Sprint 13 queda formalmente cerrado: 6/6 entregables aceptados, ambos flujos (interoperabilidad institucional y wearables-IA) probados en verde, y documentación de cierre (OpenAPI dedicado, README, ROADMAP, Matriz de Trazabilidad) completa.
