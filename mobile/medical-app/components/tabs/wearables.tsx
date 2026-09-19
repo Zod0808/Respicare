@@ -39,6 +39,7 @@ export function WearablesView({ t, isLoading, setIsLoading }: WearablesViewProps
     bleStatus,
     isLive,
     hcAvailable,
+    hkAvailable,
     startLive,
     stopLive,
     connectBle,
@@ -184,17 +185,18 @@ export function WearablesView({ t, isLoading, setIsLoading }: WearablesViewProps
               {isLive
                 ? source === 'ble'          ? 'En vivo · BLE Wearable'
                 : source === 'healthconnect' ? 'En vivo · Health Connect'
+                : source === 'healthkit'     ? 'En vivo · Apple Health'
                 :                             'En vivo · Emulador'
                 : 'Pausado'}
             </p>
             {/* Indicador fuente A+B+C */}
             <span className={`flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-full ${
               source === 'ble'           ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
-              : source === 'healthconnect' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
+              : source === 'healthconnect' || source === 'healthkit' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
               :                             'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
             }`}>
               {source === 'ble' ? <BluetoothConnected className="w-2.5 h-2.5" /> : <Watch className="w-2.5 h-2.5" />}
-              {source === 'ble' ? 'BLE' : source === 'healthconnect' ? 'HC' : 'EMU'}
+              {source === 'ble' ? 'BLE' : source === 'healthconnect' ? 'HC' : source === 'healthkit' ? 'Health' : 'EMU'}
             </span>
             {/* Indicador WebSocket */}
             <span className={`flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-full ${
@@ -270,7 +272,10 @@ export function WearablesView({ t, isLoading, setIsLoading }: WearablesViewProps
                 ? <BluetoothConnected className="w-5 h-5 text-blue-300" />
                 : <Watch className="w-5 h-5 text-blue-300" />}
               <span className="text-[9px] text-blue-300 font-medium text-center leading-tight">
-                {source === 'ble' ? 'BLE\nGATT' : source === 'healthconnect' ? 'Health\nConnect' : 'Wear OS\nEmu'}
+                {source === 'ble' ? 'BLE\nGATT'
+                  : source === 'healthconnect' ? 'Health\nConnect'
+                  : source === 'healthkit' ? 'Apple\nHealth'
+                  : 'Wear OS\nEmu'}
               </span>
             </div>
 
@@ -353,6 +358,8 @@ export function WearablesView({ t, isLoading, setIsLoading }: WearablesViewProps
           Conexión directa GATT — Heart Rate (0x2A37) + SpO₂ (0x2A5F).
           {hcAvailable
             ? ' Health Connect activo como respaldo (Opción B).'
+            : hkAvailable
+            ? ' Apple Health activo como respaldo (Opción B).'
             : ' Emulador activo como respaldo (Opción C).'}
         </p>
 

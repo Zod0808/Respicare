@@ -5,22 +5,25 @@
  *
  * Cadena de prioridad para obtener signos vitales en tiempo real:
  *
- *   A) BLE Wearable  →  conexión GATT directa, notificaciones ~1-3 s
- *   B) Health Connect →  polling Android health platform cada 5 s
- *   C) Emulador       →  datos sintéticos con escenarios clínicos (fallback)
+ *   A) BLE Wearable        →  conexión GATT directa, notificaciones ~1-3 s
+ *   B) Plataforma nativa   →  Health Connect (Android) o HealthKit (iOS),
+ *                             polling cada 5 s (una sola está disponible
+ *                             por dispositivo — son mutuamente excluyentes)
+ *   C) Emulador            →  datos sintéticos con escenarios clínicos (fallback)
  *
  * Reglas:
- *   - Si BLE se conecta, sus lecturas reemplazan a HC y al emulador.
- *   - Si BLE se desconecta, regresa automáticamente a HC (si disponible) o emulador.
- *   - HC puede estar activo en paralelo con BLE; si BLE entrega datos, HC se ignora.
+ *   - Si BLE se conecta, sus lecturas reemplazan a la plataforma nativa y al emulador.
+ *   - Si BLE se desconecta, regresa automáticamente a la plataforma nativa (si disponible) o emulador.
+ *   - La plataforma nativa puede estar activa en paralelo con BLE; si BLE entrega datos, se ignora.
  *   - El emulador siempre genera ticks (usado como fallback visual cuando A y B fallan).
  *
  * Expone:
  *   - metrics          lecturas actuales
- *   - source           fuente activa: 'ble' | 'healthconnect' | 'emulator'
+ *   - source           fuente activa: 'ble' | 'healthconnect' | 'healthkit' | 'emulator'
  *   - bleStatus        estado BLE detallado
  *   - isLive           si el modo en vivo está activo
- *   - hcAvailable      si Health Connect está disponible en el dispositivo
+ *   - hcAvailable      si Health Connect está disponible en el dispositivo (Android)
+ *   - hkAvailable      si HealthKit está disponible en el dispositivo (iOS)
  *   - startLive()      inicia todos los listeners
  *   - stopLive()       detiene todos los listeners
  *   - connectBle()     inicia escaneo BLE manualmente
@@ -31,10 +34,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { emulatorSensors, type SensorReading, type Scenario } from './emulatorSensors'
 import { healthConnect } from './healthConnectService'
+import { healthKit } from './healthKitService'
 import { bleWearable, type BleStatus } from './bleWearableService'
 import { wearableWs } from './wearableWebSocket'
 
-export type VitalsSource = 'ble' | 'healthconnect' | 'emulator'
+export type VitalsSource = 'ble' | 'healthconnect' | 'healthkit' | 'emulator'
 
 export interface VitalsMetrics {
   heartRate: number | null
@@ -53,14 +57,21 @@ export function useVitalsSource() {
   const [bleStatus, setBleStatus]   = useState<BleStatus>('idle')
   const [isLive, setIsLive]         = useState(false)
   const [hcAvailable, setHcAvailable] = useState(false)
+  const [hkAvailable, setHkAvailable] = useState(false)
 
   const tickRef   = useRef<ReturnType<typeof setInterval> | null>(null)
   const hcRef     = useRef<ReturnType<typeof setInterval> | null>(null)
   const bleActive = useRef(false)   // true cuando BLE está entregando datos
 
-  // ── Detectar Health Connect al montar ──────────────────────────────────────
+  // Health Connect (Android) y HealthKit (iOS) son mutuamente excluyentes en
+  // un mismo dispositivo; HC tiene prioridad si por algún motivo ambas resolvieran true.
+  const nativeAvailable = hcAvailable || hkAvailable
+  const nativeSource: 'healthconnect' | 'healthkit' = hcAvailable ? 'healthconnect' : 'healthkit'
+
+  // ── Detectar plataforma de salud nativa al montar ──────────────────────────
   useEffect(() => {
     healthConnect.isAvailable().then(setHcAvailable)
+    healthKit.isAvailable().then(setHkAvailable)
   }, [])
 
   // ── Listener de estado BLE ────────────────────────────────────────────────
@@ -73,11 +84,11 @@ export function useVitalsSource() {
       } else if (s === 'error' || s === 'idle') {
         bleActive.current = false
         // Regresar a la fuente inferior disponible
-        setSource(hcAvailable ? 'healthconnect' : 'emulator')
+        setSource(nativeAvailable ? nativeSource : 'emulator')
       }
     })
     return unsub
-  }, [hcAvailable])
+  }, [nativeAvailable, nativeSource])
 
   // ── Listener de lecturas BLE ──────────────────────────────────────────────
   useEffect(() => {
@@ -108,32 +119,33 @@ export function useVitalsSource() {
   const startLive = useCallback(() => {
     setIsLive(true)
 
-    // Emulador tick (siempre corre como base; se ignora si BLE o HC aportan datos)
+    // Emulador tick (siempre corre como base; se ignora si BLE o la plataforma nativa aportan datos)
     if (tickRef.current) clearInterval(tickRef.current)
     tickRef.current = setInterval(() => {
       if (bleActive.current) return    // BLE tiene prioridad
       const r = emulatorSensors.tick()
-      if (source === 'emulator' || !hcAvailable) {
+      if (source === 'emulator' || !nativeAvailable) {
         setSource('emulator')
         setMetrics({ heartRate: r.heartRate, spO2: r.spO2, steps: r.steps, lastSync: r.lastSync, provider: r.provider })
         wearableWs.sendReading(r)
       }
     }, EMULATOR_TICK_MS)
 
-    // Health Connect polling (si disponible)
-    if (hcAvailable) {
+    // Polling de la plataforma nativa (Health Connect en Android, HealthKit en iOS — si disponible)
+    if (nativeAvailable) {
+      const nativeClient = hcAvailable ? healthConnect : healthKit
       if (hcRef.current) clearInterval(hcRef.current)
       hcRef.current = setInterval(async () => {
         if (bleActive.current) return   // BLE tiene prioridad
-        const hcReading = await healthConnect.getLatestReading(1)
-        if (hcReading) {
-          setSource('healthconnect')
-          setMetrics({ heartRate: hcReading.heartRate, spO2: hcReading.spO2, steps: hcReading.steps, lastSync: hcReading.lastSync, provider: hcReading.provider })
-          wearableWs.sendReading(hcReading)
+        const reading = await nativeClient.getLatestReading(1)
+        if (reading) {
+          setSource(nativeSource)
+          setMetrics({ heartRate: reading.heartRate, spO2: reading.spO2, steps: reading.steps, lastSync: reading.lastSync, provider: reading.provider })
+          wearableWs.sendReading(reading)
         }
       }, HC_POLL_MS)
     }
-  }, [hcAvailable, source])
+  }, [hcAvailable, nativeAvailable, nativeSource, source])
 
   // ── Detener modo en vivo ──────────────────────────────────────────────────
   const stopLive = useCallback(() => {
@@ -153,8 +165,8 @@ export function useVitalsSource() {
   const disconnectBle = useCallback(async () => {
     await bleWearable.disconnect()
     bleActive.current = false
-    setSource(hcAvailable ? 'healthconnect' : 'emulator')
-  }, [hcAvailable])
+    setSource(nativeAvailable ? nativeSource : 'emulator')
+  }, [nativeAvailable, nativeSource])
 
   // ── Escenario emulador ────────────────────────────────────────────────────
   const applyScenario = useCallback((id: Scenario) => {
@@ -170,6 +182,7 @@ export function useVitalsSource() {
     bleStatus,
     isLive,
     hcAvailable,
+    hkAvailable,
     startLive,
     stopLive,
     connectBle,

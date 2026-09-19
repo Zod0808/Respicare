@@ -8,39 +8,24 @@
  *                Garmin (vía Health Connect), y cualquier wearable que
  *                sincronice con Health Connect.
  *
- * Requisito: El dispositivo debe tener instalado "Health Connect" de Google
- * y el usuario debe haber concedido permisos READ_HEART_RATE y READ_OXYGEN_SATURATION.
+ * Usa el plugin real `capacitor-health-connect` (https://github.com/ubie-oss/capacitor-health-connect),
+ * registrado bajo el nombre nativo "HealthConnect". Requiere que el dispositivo
+ * tenga instalada la app "Health Connect" de Google y que el usuario haya
+ * concedido permisos de lectura de FC, SpO2 y pasos.
  *
- * En dispositivos sin Health Connect o con permisos denegados, los métodos
- * retornan null y el sistema usará el EmuladorSensorService como fallback.
+ * En dispositivos sin Health Connect, con permisos denegados, o en web (donde
+ * el plugin nativo no está implementado), los métodos retornan null y el
+ * sistema usará el EmuladorSensorService como fallback.
  */
 
 import type { SensorReading } from './emulatorSensors'
+import { HealthConnect } from 'capacitor-health-connect'
+import type { HealthConnectPlugin, RecordType } from 'capacitor-health-connect'
 
-// Capacitor Health Connect plugin — disponible si está instalado
-// Si no está instalado, todos los métodos retornan null (graceful degradation)
-type HealthConnectPlugin = {
-  checkAvailability(): Promise<{ availability: 'Available' | 'NotInstalled' | 'NotSupported' }>
-  requestHealthPermissions(opts: { read: string[] }): Promise<{ granted: boolean }>
-  readHeartRate(opts: { startTime: string; endTime: string }): Promise<{ records: Array<{ beatsPerMinute: number; time: string }> }>
-  readOxygenSaturation(opts: { startTime: string; endTime: string }): Promise<{ records: Array<{ percentage: number; time: string }> }>
-  readStepCount(opts: { startTime: string; endTime: string }): Promise<{ records: Array<{ count: number; startTime: string; endTime: string }> }>
-}
+// `StoredRecord` isn't exported by the plugin — derive it from readRecords' own return type.
+type StoredRecord = Awaited<ReturnType<HealthConnectPlugin['readRecords']>>['records'][number]
 
-let _plugin: HealthConnectPlugin | null = null
-
-async function getPlugin(): Promise<HealthConnectPlugin | null> {
-  if (_plugin !== null) return _plugin
-  try {
-    // Dynamic import — solo disponible en apps Capacitor con el plugin instalado
-    const { Plugins } = await import('@capacitor/core')
-    const p = (Plugins as any).HealthConnect as HealthConnectPlugin | undefined
-    _plugin = p ?? null
-  } catch {
-    _plugin = null
-  }
-  return _plugin
-}
+const READ_TYPES: RecordType[] = ['HeartRateSeries', 'OxygenSaturation', 'Steps']
 
 export class HealthConnectService {
   private _available: boolean | null = null
@@ -49,13 +34,8 @@ export class HealthConnectService {
   /** Verifica si Health Connect está disponible en este dispositivo */
   async isAvailable(): Promise<boolean> {
     if (this._available !== null) return this._available
-    const plugin = await getPlugin()
-    if (!plugin) {
-      this._available = false
-      return false
-    }
     try {
-      const { availability } = await plugin.checkAvailability()
+      const { availability } = await HealthConnect.checkAvailability()
       this._available = availability === 'Available'
     } catch {
       this._available = false
@@ -66,14 +46,13 @@ export class HealthConnectService {
   /** Solicita permisos de lectura de salud al usuario */
   async requestPermissions(): Promise<boolean> {
     if (!(await this.isAvailable())) return false
-    const plugin = await getPlugin()
-    if (!plugin) return false
     try {
-      const { granted } = await plugin.requestHealthPermissions({
-        read: ['HeartRate', 'OxygenSaturation', 'Steps'],
+      const { hasAllPermissions } = await HealthConnect.requestHealthPermissions({
+        read: READ_TYPES,
+        write: [],
       })
-      this._permissionsGranted = granted
-      return granted
+      this._permissionsGranted = hasAllPermissions
+      return hasAllPermissions
     } catch {
       return false
     }
@@ -87,33 +66,20 @@ export class HealthConnectService {
     if (!(await this.isAvailable())) return null
     if (!this._permissionsGranted && !(await this.requestPermissions())) return null
 
-    const plugin = await getPlugin()
-    if (!plugin) return null
-
-    const endTime = new Date().toISOString()
-    const startTime = new Date(Date.now() - windowMinutes * 60_000).toISOString()
+    const endTime = new Date()
+    const startTime = new Date(Date.now() - windowMinutes * 60_000)
+    const timeRangeFilter = { type: 'between' as const, startTime, endTime }
 
     try {
       const [hrResult, spo2Result, stepsResult] = await Promise.allSettled([
-        plugin.readHeartRate({ startTime, endTime }),
-        plugin.readOxygenSaturation({ startTime, endTime }),
-        plugin.readStepCount({ startTime, endTime }),
+        HealthConnect.readRecords({ type: 'HeartRateSeries', timeRangeFilter }),
+        HealthConnect.readRecords({ type: 'OxygenSaturation', timeRangeFilter }),
+        HealthConnect.readRecords({ type: 'Steps', timeRangeFilter }),
       ])
 
-      const heartRate =
-        hrResult.status === 'fulfilled' && hrResult.value.records.length > 0
-          ? hrResult.value.records[hrResult.value.records.length - 1].beatsPerMinute
-          : null
-
-      const spO2 =
-        spo2Result.status === 'fulfilled' && spo2Result.value.records.length > 0
-          ? spo2Result.value.records[spo2Result.value.records.length - 1].percentage
-          : null
-
-      const steps =
-        stepsResult.status === 'fulfilled'
-          ? stepsResult.value.records.reduce((acc, r) => acc + r.count, 0)
-          : null
+      const heartRate = latestHeartRate(hrResult)
+      const spO2 = latestOxygenSaturation(spo2Result)
+      const steps = totalSteps(stepsResult)
 
       if (heartRate === null && spO2 === null) return null
 
@@ -121,7 +87,7 @@ export class HealthConnectService {
         heartRate: heartRate ?? 0,
         spO2: spO2 ?? 0,
         steps: steps ?? 0,
-        lastSync: endTime,
+        lastSync: endTime.toISOString(),
         provider: 'Health Connect',
         scenario: undefined,
       }
@@ -129,6 +95,30 @@ export class HealthConnectService {
       return null
     }
   }
+}
+
+function latestHeartRate(result: PromiseSettledResult<{ records: StoredRecord[] }>): number | null {
+  if (result.status !== 'fulfilled') return null
+  const samples = result.value.records
+    .filter((r): r is Extract<StoredRecord, { type: 'HeartRateSeries' }> => r.type === 'HeartRateSeries')
+    .flatMap((r) => r.samples)
+    .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())
+  return samples.length > 0 ? samples[samples.length - 1].beatsPerMinute : null
+}
+
+function latestOxygenSaturation(result: PromiseSettledResult<{ records: StoredRecord[] }>): number | null {
+  if (result.status !== 'fulfilled') return null
+  const records = result.value.records
+    .filter((r): r is Extract<StoredRecord, { type: 'OxygenSaturation' }> => r.type === 'OxygenSaturation')
+    .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())
+  return records.length > 0 ? records[records.length - 1].percentage.value : null
+}
+
+function totalSteps(result: PromiseSettledResult<{ records: StoredRecord[] }>): number | null {
+  if (result.status !== 'fulfilled') return null
+  return result.value.records
+    .filter((r): r is Extract<StoredRecord, { type: 'Steps' }> => r.type === 'Steps')
+    .reduce((acc, r) => acc + r.count, 0)
 }
 
 export const healthConnect = new HealthConnectService()
