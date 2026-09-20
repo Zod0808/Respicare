@@ -35,6 +35,7 @@
     "seed:alerts": "ts-node src/scripts/seedAlerts.ts",
     "seed:health-centers": "ts-node src/scripts/seedHealthCenters.ts",
     "institutional:generate-key": "ts-node src/scripts/generateInstitutionalApiKey.ts",
+    "rotate:encryption-key": "ts-node --transpile-only src/scripts/rotateFieldEncryptionKey.ts",
     "generate": "bash scripts/generate-code.sh",
     "generate:dtos": "ts-node src/generators/dto-generator.ts",
     "generate:repositories": "ts-node src/generators/repository-generator.ts",

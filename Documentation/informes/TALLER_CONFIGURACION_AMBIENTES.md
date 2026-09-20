@@ -248,7 +248,7 @@ JWT_REFRESH_EXPIRE=30d
 
 # --- CIFRADO DE CAMPOS (AES-256) ---
 # Generar con: node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
-FIELD_ENCRYPTION_KEY=08Slv/UdXHuRefzQoP/URYfW9D01LZX2ONA/X1riCts=
+FIELD_ENCRYPTION_KEY=Kyt8wribxKkJ++NfSPZW3d75TbZgWuefrOHbjdg31DM=
 
 # --- IA / OPENAI ---
 OPENAI_API_KEY=sk-your-test-key-here

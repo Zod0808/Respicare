@@ -1560,8 +1560,8 @@
     "semantic_hash": ""
   },
   "backend/src/dev/medicalHistoriesDev.ts": {
-    "mtime": 1785106956.6847029,
-    "ast_hash": "e2678b4c3a02f3e8adce63a35f57a2d8",
+    "mtime": 1789840799.721252,
+    "ast_hash": "32d46ca3a7659ee372d1410ffe9f6663",
     "semantic_hash": ""
   },
   "backend/src/dev/mlMonitoringDev.ts": {
@@ -1985,8 +1985,8 @@
     "semantic_hash": ""
   },
   "backend/src/routes/analyticsRoutes.ts": {
-    "mtime": 1789241729.4606779,
-    "ast_hash": "19908bfa60d61f6dbb1742933b2180a3",
+    "mtime": 1789860190.1457844,
+    "ast_hash": "80c03c24c0d154e9064402d312b04144",
     "semantic_hash": ""
   },
   "backend/src/routes/appointmentsRoutes.ts": {
@@ -3555,8 +3555,8 @@
     "semantic_hash": ""
   },
   "mobile/medical-app/__tests__/services/healthConnectService.test.ts": {
-    "mtime": 1789164784.0145109,
-    "ast_hash": "2d3dda6f4e8352f934e741507342a036",
+    "mtime": 1789586383.1213424,
+    "ast_hash": "04067ba4abf7a8f196e3ac32f8e86265",
     "semantic_hash": ""
   },
   "mobile/medical-app/__tests__/services/nativeStorage.test.ts": {
@@ -3785,8 +3785,8 @@
     "semantic_hash": ""
   },
   "mobile/medical-app/components/tabs/wearables.tsx": {
-    "mtime": 1785106956.8277302,
-    "ast_hash": "e8c383a7aea97193bef6b515d4b00f0e",
+    "mtime": 1789586696.2308605,
+    "ast_hash": "d93775e66653063e219f5b4e3778f001",
     "semantic_hash": ""
   },
   "mobile/medical-app/components/theme-provider.tsx": {
@@ -4335,8 +4335,8 @@
     "semantic_hash": ""
   },
   "mobile/medical-app/lib/services/healthConnectService.ts": {
-    "mtime": 1785106956.8361773,
-    "ast_hash": "403835082e43039e08fd4b78616902bb",
+    "mtime": 1789586453.7665994,
+    "ast_hash": "441290d18ac2212ad5a1accecac7bb12",
     "semantic_hash": ""
   },
   "mobile/medical-app/lib/services/nativeStorage.ts": {
@@ -4370,8 +4370,8 @@
     "semantic_hash": ""
   },
   "mobile/medical-app/lib/services/useVitalsSource.ts": {
-    "mtime": 1785432244.7136858,
-    "ast_hash": "2fac51e97f863524452ad3a4e148b111",
+    "mtime": 1789586635.7742527,
+    "ast_hash": "b0b50b5a604884d6c14d743a81485168",
     "semantic_hash": ""
   },
   "mobile/medical-app/lib/services/wearableWebSocket.ts": {
@@ -4425,8 +4425,8 @@
     "semantic_hash": ""
   },
   "mobile/medical-app/package.json": {
-    "mtime": 1789164792.323296,
-    "ast_hash": "c9fbf9a63dea929933379b5838f71bf7",
+    "mtime": 1789586506.0997443,
+    "ast_hash": "77d898d9b255cfe1b29ad4c14b2d8e6d",
     "semantic_hash": ""
   },
   "mobile/medical-app/postcss.config.mjs": {
@@ -4760,8 +4760,8 @@
     "semantic_hash": ""
   },
   "web/src/components/AdvancedTrendsChart.js": {
-    "mtime": 1785106956.8701034,
-    "ast_hash": "e8beec89a19b3831ef9c1b08db9bd57c",
+    "mtime": 1789860190.1459236,
+    "ast_hash": "ff935113f69571fbc774ae54157213ab",
     "semantic_hash": ""
   },
   "web/src/components/AlertConsole.js": {
@@ -4805,8 +4805,8 @@
     "semantic_hash": ""
   },
   "web/src/components/DiseaseReports.js": {
-    "mtime": 1785106956.8713865,
-    "ast_hash": "b5842836e45d7784cc5de32f3a4f6e8e",
+    "mtime": 1789860190.146043,
+    "ast_hash": "9369edfa5a408447bd00a7039ce4ab51",
     "semantic_hash": ""
   },
   "web/src/components/EducationalContentManagement.js": {
@@ -4815,8 +4815,8 @@
     "semantic_hash": ""
   },
   "web/src/components/EpidemiologicalHeatmap.js": {
-    "mtime": 1785106956.8715522,
-    "ast_hash": "0fffa0285be83c9b3ef07413bed86173",
+    "mtime": 1789860190.1461463,
+    "ast_hash": "68f7c9c3e486a692e9061e0be9f3e2bf",
     "semantic_hash": ""
   },
   "web/src/components/ExecutiveDashboard.js": {
@@ -4850,8 +4850,8 @@
     "semantic_hash": ""
   },
   "web/src/components/InteractiveHeatMap.js": {
-    "mtime": 1785106956.8724988,
-    "ast_hash": "18e29025bcbf0af142d279c04382aee6",
+    "mtime": 1789860190.1462612,
+    "ast_hash": "a2aeaf74329ee132a15fb7e1b2eb2ec9",
     "semantic_hash": ""
   },
   "web/src/components/LanguageSelector.js": {
@@ -4905,8 +4905,8 @@
     "semantic_hash": ""
   },
   "web/src/components/TemporalTrends.js": {
-    "mtime": 1785106956.8740935,
-    "ast_hash": "e55b61e75d53c74a179c4fc72c9ccfce",
+    "mtime": 1789860190.1463852,
+    "ast_hash": "413e2466b96045859c63696f1f9e9e38",
     "semantic_hash": ""
   },
   "web/src/components/ThemeProvider.js": {
@@ -4985,8 +4985,8 @@
     "semantic_hash": ""
   },
   "web/src/components/__tests__/DiseaseReports.test.js": {
-    "mtime": 1785106956.8754303,
-    "ast_hash": "5d24cc989e6e6fa3a0cb265c4b4efaae",
+    "mtime": 1789860772.59545,
+    "ast_hash": "3f475046d20c9bbf35bed38773ea0371",
     "semantic_hash": ""
   },
   "web/src/components/__tests__/EpidemiologicalHeatmap.test.js": {
@@ -5030,8 +5030,8 @@
     "semantic_hash": ""
   },
   "web/src/components/__tests__/InteractiveHeatMap.test.js": {
-    "mtime": 1785106956.8760586,
-    "ast_hash": "079a9b5f30c06ed5e15da078974a5d99",
+    "mtime": 1789860772.595643,
+    "ast_hash": "55f164d0d1c4c82fe07405897b354c2a",
     "semantic_hash": ""
   },
   "web/src/components/__tests__/LanguageSelector.enhanced.test.js": {
@@ -5105,8 +5105,8 @@
     "semantic_hash": ""
   },
   "web/src/components/__tests__/TemporalTrends.enhanced.test.js": {
-    "mtime": 1785106956.8771,
-    "ast_hash": "ac8be2cf5bcd9311b079a5e2ef90b4b3",
+    "mtime": 1789860772.5958533,
+    "ast_hash": "e96811d3b181f27955758e9cc74c2183",
     "semantic_hash": ""
   },
   "web/src/components/__tests__/TemporalTrends.test.js": {
@@ -5220,13 +5220,13 @@
     "semantic_hash": ""
   },
   "web/src/pages/MedicalHistoryPage.js": {
-    "mtime": 1789241791.2710137,
-    "ast_hash": "a3d86b6b3d1ecad81fee80ecbbdd0dd4",
+    "mtime": 1789838240.0046425,
+    "ast_hash": "8cca26dd9da4e2e3a84843c927d90948",
     "semantic_hash": ""
   },
   "web/src/pages/PatientMonitoringPage.js": {
-    "mtime": 1789241750.7153955,
-    "ast_hash": "676333fdf33703f4c9303f2c7b8497d3",
+    "mtime": 1789838240.005022,
+    "ast_hash": "6fd3e1ce90bcf83a5ba918c3f5af715f",
     "semantic_hash": ""
   },
   "web/src/pages/PrescriptionsPage.js": {
@@ -5450,8 +5450,8 @@
     "semantic_hash": ""
   },
   "web/src/utils/__tests__/apiBase.test.js": {
-    "mtime": 1785106956.8834884,
-    "ast_hash": "3a1d61dfa26bcfd7269fea33596785d7",
+    "mtime": 1789860772.596038,
+    "ast_hash": "854992a5d32ee86d8b529628f652ed4c",
     "semantic_hash": ""
   },
   "web/src/utils/__tests__/cspEnforcer.test.js": {
@@ -5480,8 +5480,8 @@
     "semantic_hash": ""
   },
   "web/src/utils/apiBase.js": {
-    "mtime": 1785106956.8838599,
-    "ast_hash": "2f9b513c986b9e86976661ad783da499",
+    "mtime": 1789860772.5962124,
+    "ast_hash": "14824782e69b18d028b675a9361366be",
     "semantic_hash": ""
   },
   "web/src/utils/cspEnforcer.js": {
@@ -6725,8 +6725,8 @@
     "semantic_hash": ""
   },
   "Documentation/METODOLOGIA_AGIL_PROYECTO.md": {
-    "mtime": 1789186725.0963037,
-    "ast_hash": "d62e151256426a40a7d068b17685e49c",
+    "mtime": 1789859246.9210153,
+    "ast_hash": "2aec92db08677cf36ed6dda3ea54cf4d",
     "semantic_hash": ""
   },
   "Documentation/PENDIENTES_CORRECCION_TESTS.md": {
@@ -6800,8 +6800,8 @@
     "semantic_hash": ""
   },
   "Documentation/informes/Plan_Iteracion_Sprint13_RespiCare.md": {
-    "mtime": 1789243972.7180028,
-    "ast_hash": "cf2582136d9cce512a675870f507ddbb",
+    "mtime": 1789858714.4767208,
+    "ast_hash": "505c61ffac2cf6ad16285eb1f18f8de5",
     "semantic_hash": ""
   },
   "Documentation/informes/Plan_Iteracion_Sprint1_RespiCare.md": {
@@ -6855,8 +6855,8 @@
     "semantic_hash": ""
   },
   "Documentation/informes/TALLER_CONFIGURACION_AMBIENTES.md": {
-    "mtime": 1785106956.614047,
-    "ast_hash": "185f78aec1aed642088c3dbf4aa34762",
+    "mtime": 1789861579.5956883,
+    "ast_hash": "ed9aeaf3994539e0c44e3509bd35761f",
     "semantic_hash": ""
   },
   "Documentation/informes/VERSIONAMIENTO_SISTEMA.md": {
@@ -6870,8 +6870,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1785106956.62486,
-    "ast_hash": "fc179b273aca1f5959968acfa4b7f3c1",
+    "mtime": 1789861517.1090624,
+    "ast_hash": "81895cde8f6ccf82ee8b97b2d24368f4",
     "semantic_hash": ""
   },
   "RESUMEN_PRESENTACION.md": {
@@ -7070,8 +7070,8 @@
     "semantic_hash": ""
   },
   "docker-compose.dev.yml": {
-    "mtime": 1785106956.7494664,
-    "ast_hash": "237384d3fd1101b415d91984bc7cfc78",
+    "mtime": 1789861538.0018728,
+    "ast_hash": "d1bc27c8478e248d6949fbe2b523d53a",
     "semantic_hash": ""
   },
   "docker-compose.prod.yml": {
@@ -7505,13 +7505,13 @@
     "semantic_hash": ""
   },
   "docs/roadmaps/AI_SERVICES_ROADMAP.md": {
-    "mtime": 1785106956.7812269,
-    "ast_hash": "a0c21a452cbebcc873a75a2a669efb3d",
+    "mtime": 1789858615.753745,
+    "ast_hash": "533a10e829aa6db5b32f3e5df4f2810f",
     "semantic_hash": ""
   },
   "docs/roadmaps/BACKEND_ROADMAP.md": {
-    "mtime": 1785106956.7813215,
-    "ast_hash": "0d052d1c9b4d9ff1e9af7bccb41890d0",
+    "mtime": 1789858580.234804,
+    "ast_hash": "fa2032d2ed0e89766d82478c90380378",
     "semantic_hash": ""
   },
   "docs/roadmaps/INDEX.md": {
@@ -7530,8 +7530,8 @@
     "semantic_hash": ""
   },
   "docs/roadmaps/PROJECT_ROADMAP.md": {
-    "mtime": 1785106956.7816565,
-    "ast_hash": "bf6c90df31447f29cac7509ce06163e6",
+    "mtime": 1789858559.628842,
+    "ast_hash": "10c7626eb0ad48457bf4b98f11e908f4",
     "semantic_hash": ""
   },
   "docs/roadmaps/TESTS_ROADMAP.md": {
@@ -8287,6 +8287,26 @@
   "mobile/medical-app/screen.png": {
     "mtime": 1785106956.8399343,
     "ast_hash": "3dea59d63207175aa51ad406d0096cad",
+    "semantic_hash": ""
+  },
+  "mobile/medical-app/__tests__/services/healthKitService.test.ts": {
+    "mtime": 1789586556.9095705,
+    "ast_hash": "107d811886368df3ce0013770a74ccf2",
+    "semantic_hash": ""
+  },
+  "mobile/medical-app/lib/services/healthKitService.ts": {
+    "mtime": 1789586526.2437158,
+    "ast_hash": "921633efc1d889d3379973c18c000a2d",
+    "semantic_hash": ""
+  },
+  "Documentation/informes/Informe_Ejecutivo_RespiCare.md": {
+    "mtime": 1789782520.4567742,
+    "ast_hash": "010e4fd669f76434073f2dc60a90693d",
+    "semantic_hash": ""
+  },
+  "backend/openapi/institutional-api.yaml": {
+    "mtime": 1789858252.8857808,
+    "ast_hash": "5702a2028e70eb3b6e4dc8a75823a849",
     "semantic_hash": ""
   }
 }

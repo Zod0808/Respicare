@@ -117,7 +117,7 @@ services:
       # ADVERTENCIA: los valores por defecto siguientes son SOLO para desarrollo local.
       # Siempre define JWT_SECRET, FIELD_ENCRYPTION_KEY y JWT_REFRESH_SECRET en produccion via .env
       JWT_SECRET: ${JWT_SECRET:-dev-secret-key-change-in-production}
-      FIELD_ENCRYPTION_KEY: ${FIELD_ENCRYPTION_KEY:-08Slv/UdXHuRefzQoP/URYfW9D01LZX2ONA/X1riCts=}
+      FIELD_ENCRYPTION_KEY: ${FIELD_ENCRYPTION_KEY:-Kyt8wribxKkJ++NfSPZW3d75TbZgWuefrOHbjdg31DM=}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-dev-refresh-secret-change-in-production}
       JWT_EXPIRE: ${JWT_EXPIRE:-7d}
       JWT_REFRESH_EXPIRE: ${JWT_REFRESH_EXPIRE:-30d}

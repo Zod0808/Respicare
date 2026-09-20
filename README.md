@@ -182,7 +182,7 @@ MONGO_PASSWORD=password_seguro
 REDIS_PASSWORD=redis_password
 JWT_SECRET=$(openssl rand -base64 64)
 JWT_REFRESH_SECRET=$(openssl rand -base64 64)
-FIELD_ENCRYPTION_KEY=08Slv/UdXHuRefzQoP/URYfW9D01LZX2ONA/X1riCts=  # 32 bytes base64
+FIELD_ENCRYPTION_KEY=<genera con: openssl rand -base64 32>  # 32 bytes base64, único por entorno, no reutilizar
 CORS_ORIGINS=https://tu-frontend.vercel.app
 OPENAI_API_KEY=sk-...   # opcional, para chatbot con IA
 ```
