@@ -11,13 +11,19 @@ import React, { createContext, useContext, useState, useEffect, useRef } from 'r
 import axios from 'axios';
 import { API_BASE } from '../utils/apiBase';
 
-const AuthContext = createContext(null);
-
-export const useAuth = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used within AuthProvider');
-  return ctx;
+const DEFAULT_AUTH_CONTEXT = {
+  user: null,
+  token: null,
+  loading: false,
+  isAuthenticated: false,
+  login: () => Promise.reject(new Error('AuthProvider is not mounted')),
+  register: () => Promise.reject(new Error('AuthProvider is not mounted')),
+  logout: () => {},
 };
+
+const AuthContext = createContext(DEFAULT_AUTH_CONTEXT);
+
+export const useAuth = () => useContext(AuthContext);
 
 const readCachedUser = () => {
   try {
@@ -66,6 +72,7 @@ export const AuthProvider = ({ children }) => {
   // Interceptor global de REQUEST: adjunta el Bearer token de localStorage a toda
   // request salvo que el caller ya haya seteado su propio Authorization.
   useEffect(() => {
+    if (!axios.interceptors?.request?.use) return undefined;
     const reqId = axios.interceptors.request.use((config) => {
       const t = localStorage.getItem('auth_token');
       if (t && !config.headers?.Authorization) {
@@ -74,13 +81,14 @@ export const AuthProvider = ({ children }) => {
       }
       return config;
     });
-    return () => axios.interceptors.request.eject(reqId);
+    return () => axios.interceptors.request.eject?.(reqId);
   }, []);
 
   // Interceptor global: cierra sesión si cualquier request recibe 401 durante la sesión activa
   useEffect(() => {
+    if (!axios.interceptors?.response?.use) return undefined;
     if (interceptorRef.current !== null) {
-      axios.interceptors.response.eject(interceptorRef.current);
+      axios.interceptors.response.eject?.(interceptorRef.current);
     }
     interceptorRef.current = axios.interceptors.response.use(
       (response) => response,
@@ -96,7 +104,7 @@ export const AuthProvider = ({ children }) => {
     );
     return () => {
       if (interceptorRef.current !== null) {
-        axios.interceptors.response.eject(interceptorRef.current);
+        axios.interceptors.response.eject?.(interceptorRef.current);
       }
     };
   }, []);

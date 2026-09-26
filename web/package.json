@@ -44,8 +44,10 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "^axios$": "axios/dist/node/axios.cjs"
+      "^axios$": "<rootDir>/src/__mocks__/axios.js"
     },
+    "resetMocks": false,
+    "clearMocks": true,
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts",

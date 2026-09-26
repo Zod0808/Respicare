@@ -41,14 +41,14 @@ const ReferralManagement = () => {
     return localStorage.getItem('auth_token');
   };
 
-  const apiClient = axios.create({
+  const apiClient = axios.create?.({
     baseURL: `${API_URL}/api/v1`,
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+  }) || axios;
 
-  apiClient.interceptors.request.use((config) => {
+  apiClient.interceptors?.request?.use?.((config) => {
     const token = getAuthToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
