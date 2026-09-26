@@ -1,5 +1,5 @@
 version: "2"
-authtoken: 362CNKhwU0O1pxDWaGwDJzOzRec_NpxTqYPMF8fgK7gdpQ12
+authtoken: ${NGROK_AUTHTOKEN}
 tunnels:
   backend:
     addr: 3001

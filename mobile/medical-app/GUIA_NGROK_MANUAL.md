@@ -24,7 +24,7 @@ mobile/medical-app/ngrok-config.yml
 Contenido:
 ```yaml
 version: "2"
-authtoken: 362CNKhwU0O1pxDWaGwDJzOzRec_NpxTqYPMF8fgK7gdpQ12
+authtoken: <TU_NGROK_AUTHTOKEN>  # reemplaza con el authtoken obtenido en dashboard.ngrok.com
 tunnels:
   backend:
     addr: 3001
@@ -124,7 +124,7 @@ $ai.tunnels[0].public_url
 
 **Solución:**
 ```powershell
-& "C:\Users\User\Downloads\ngrok.exe" config add-authtoken 362CNKhwU0O1pxDWaGwDJzOzRec_NpxTqYPMF8fgK7gdpQ12
+& "C:\Users\User\Downloads\ngrok.exe" config add-authtoken <TU_NGROK_AUTHTOKEN>
 ```
 
 ### Solo aparece un túnel en el panel
