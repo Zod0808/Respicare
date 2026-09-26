@@ -34,7 +34,9 @@ yarn-error.log*
 next-env.d.ts
 
 # Capacitor
-android/
+android/*
+!android/build.gradle
+!android/variables.gradle
 ios/
 .capacitor/
 

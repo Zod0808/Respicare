@@ -1,0 +1,55 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.3.2'
+        classpath 'com.google.gms:google-services:4.4.0'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+apply from: "variables.gradle"
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'org.bouncycastle' &&
+                details.requested.name == 'bcprov-jdk18on') {
+                details.useVersion '1.77'
+            }
+        }
+    }
+}
+
+// Pin both Java and Kotlin JVM targets to 17 so plugins bundling Kotlin < 1.9
+// don't inherit JDK 21 as their target (Kotlin 1.8.x tops out at "17").
+subprojects {
+    afterEvaluate { proj ->
+        proj.tasks.matching { it.name.startsWith('compile') && it.name.contains('Kotlin') }.configureEach {
+            if (it.hasProperty('kotlinOptions')) {
+                it.kotlinOptions.jvmTarget = '17'
+            }
+        }
+        if (proj.extensions.findByName('android')) {
+            proj.android.compileOptions {
+                sourceCompatibility JavaVersion.VERSION_17
+                targetCompatibility JavaVersion.VERSION_17
+            }
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
