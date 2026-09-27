@@ -73,7 +73,25 @@ RespiCare Testing Architecture
   - Utils (Helpers, validators, formatters)
   - Pages (Dashboard, Patient Management, Reports)
 
-### 2. Pruebas de Integración (Integration Tests)
+### 2. Pruebas de Componente (Component Tests)
+
+A diferencia de las pruebas unitarias de la sección 1 (funciones puras, servicios, utils), las pruebas de componente renderizan el árbol de un componente de UI real con `@testing-library/react` (tanto en web como en mobile, que es una app React sobre Next.js + Capacitor), verificando su salida DOM, props, estado interno e interacción del usuario, con los servicios de backend/API siempre mockeados (nunca se levanta un servidor real).
+
+#### Web Frontend — React
+- **Framework**: Jest + `@testing-library/react` + `@testing-library/user-event`
+- **Cobertura real**: 41 archivos en `web/src/components/__tests__/*.test.js` (p.ej. `Navbar.test.js`, `ChatBotEnhanced.test.js`, `AnalyticsDashboard.test.js`, `SHAPVisualization.test.js`, `AlertConsole.test.js`) más 9 en `web/src/pages/__tests__/`, para un total de 60 archivos de prueba a nivel de componente/página.
+- **Qué verifican**: renderizado condicional, manejo de estados de carga/error, interacciones (`fireEvent`/`userEvent`), atributos ARIA, y mocking de `axios` para aislar el componente del backend real.
+- **Detalle por componente**: ver `docs/testing/WEB_UNIT_TESTS_SUMMARY.md`.
+
+#### Mobile App — React (Next.js + Capacitor)
+- **Framework**: Jest + `@testing-library/react`
+- **Cobertura real**: `mobile/__tests__/components/symptomAnalyzer.test.tsx` (renderizado, selección de síntomas y flujo de análisis del componente `SymptomAnalyzer`), `mobile/__tests__/components/audioPermissions.test.tsx`, y `mobile/medical-app/__tests__/tabs/wearables.test.tsx` (renderizado del tab `WearablesView` con `wearableService`, `useVitalsSource` y estados BLE mockeados).
+- **Qué verifican**: renderizado de vistas/tabs con dependencias nativas (iconos, hooks de sensores, servicios de wearables) mockeadas, para aislar el componente de hardware real o del backend.
+
+#### Backend API — Node.js/TypeScript
+- El backend no expone componentes de UI; su nivel equivalente de "component testing" (ISO/IEC/IEEE 29119-3) queda cubierto por las pruebas unitarias de controllers/services/models de la sección 1, cada uno probado de forma aislada con sus dependencias (MongoDB, servicios externos) mockeadas.
+
+### 3. Pruebas de Integración (Integration Tests)
 
 #### API Integration Tests
 - **Endpoints**: Todos los endpoints REST
@@ -88,7 +106,7 @@ RespiCare Testing Architecture
 - **Performance**: Tiempos de respuesta y throughput
 - **Analytics/Monitoring**: Endpoints `/api/v1/analytics/*` y `/api/v1/analytics/ml/*` verifican KPIs, predicciones, explicabilidad SHAP y métricas de fairness
 
-### 3. Pruebas de Patrones de Diseño
+### 4. Pruebas de Patrones de Diseño
 
 #### Strategy Pattern Tests
 - **Intercambiabilidad**: Cambio dinámico de estrategias
@@ -114,7 +132,7 @@ RespiCare Testing Architecture
 - **Error Propagation**: Propagación de errores
 - **Composition**: Combinación de decoradores
 
-### 4. Pruebas de Rendimiento (Performance Tests)
+### 5. Pruebas de Rendimiento (Performance Tests)
 
 #### Load Testing
 - **Concurrent Users**: 100+ usuarios simultáneos
@@ -128,7 +146,7 @@ RespiCare Testing Architecture
 - **Degradation**: Degradación gradual
 - **Recovery**: Recuperación post-stress
 
-### 5. Pruebas de Seguridad (Security Tests)
+### 6. Pruebas de Seguridad (Security Tests)
 
 #### Authentication & Authorization
 - **JWT Validation**: Validación de tokens
@@ -142,7 +160,7 @@ RespiCare Testing Architecture
 - **XSS Protection**: Protección contra XSS
 - **Data Encryption**: Encriptación de datos
 
-### 6. Pruebas End-to-End (E2E Tests)
+### 7. Pruebas End-to-End (E2E Tests)
 
 #### User Journeys
 - **Patient Registration**: Registro de pacientes
@@ -161,17 +179,17 @@ RespiCare Testing Architecture
 
 ---
 
-### 7. Pruebas de Regresión
+### 8. Pruebas de Regresión
 - **Objetivo**: Detectar regresiones funcionales tras nuevas features o reentrenamiento ML.
 - **Cobertura**: Suites web/mobile/backend/ML completas ejecutadas en cada pull request y nightly.
 - **Herramientas**: GitHub Actions matrices, snapshots de respuestas ML, pruebas de smoke post-deploy.
 
-### 8. Pruebas de Aceptación de Usuario (UAT)
+### 9. Pruebas de Aceptación de Usuario (UAT)
 - **Participantes**: Personal médico (neumólogos, epidemiólogos) y administradores.
 - **Enfoque**: Validar requisitos clínicos, protocolos de emergencia y usabilidad del dashboard ejecutivo.
 - **Evidencia**: Actas UAT y checklist médico anexados al backlog.
 
-### 9. Pruebas Específicas de ML/IA
+### 10. Pruebas Específicas de ML/IA
 - **Drift Detection**: Monitoreo estadístico (KS-test, PSI) de entradas y salidas.
 - **Fairness Testing**: Métricas segmentadas por edad, género y distrito.
 - **Model Validation**: Comparación de modelos nuevos vs producción (t-test de accuracy, curvas ROC).
@@ -180,40 +198,40 @@ RespiCare Testing Architecture
 - **Suite dedicada**: `ml_tests/test_fairness_and_drift.py` cubre PSI, fairness por cohortes, anomalías y exportaciones.
 - **Explicabilidad visual**: Verificación de API `ml-explanation` y dashboard `ShapDashboard` (React) para consistencia de factores positivos/negativos y confianza reportada.
 
-### 10. Pruebas de Accesibilidad (A11y)
+### 11. Pruebas de Accesibilidad (A11y)
 - **Estándar**: WCAG 2.1 nivel AA.
 - **Cobertura**: Navegación por teclado, lectores de pantalla, contraste, labels en visualizaciones.
 - **Herramientas**: axe-core, Lighthouse, NVDA/VoiceOver.
 
-### 11. Pruebas de Compatibilidad
+### 12. Pruebas de Compatibilidad
 - **Navegadores**: Chrome, Firefox, Edge, Safari.
 - **Dispositivos**: iOS 15+, Android 11+, tablets.
 - **Resoluciones**: 1280×720 hasta 2560×1440, modo oscuro/claro.
 
-### 12. Pruebas de Carga y Estrés Extendidas
+### 13. Pruebas de Carga y Estrés Extendidas
 - **Escenarios**:
   - 100 usuarios concurrentes (objetivo mínimo) y 250 en estrés.
   - 1000 predicciones ML por minuto.
   - 500 sincronizaciones móviles simultáneas.
 - **KPIs**: Redis hit rate > 90%, respuesta API < 500 ms p95, AI Services < 800 ms p95.
 
-### 13. Pruebas de Recuperación ante Desastres
+### 14. Pruebas de Recuperación ante Desastres
 - **Casos**:
   - Caída de MongoDB → Redis y colas offline sostienen operaciones.
   - Falla de AI Services → Backend entrega fallback y alerta interna.
   - Pérdida de conectividad móvil → Persistencia local y reintentos programados.
 - **Objetivos**: RTO < 10 min, RPO < 5 min.
 
-### 14. Pruebas de Interoperabilidad
+### 15. Pruebas de Interoperabilidad
 - **HL7 v2/v3**: Parser `hl7Parser.ts` evaluado con mensajes reales/malformados.
 - **FHIR**: Cliente `fhirService.ts` probado contra servidores HAPI y bundles transaccionales.
 - **Integraciones externas**: Pruebas contractuales con hospitales asociados.
 
-### 15. Pruebas de Cumplimiento Normativo
+### 16. Pruebas de Cumplimiento Normativo
 - **Regulaciones**: HIPAA (si aplica), Ley de Protección de Datos Personales (Perú), estándares médicos locales.
 - **Chequeos**: Encriptación, auditoría de accesos, consentimiento informado, retención y purga de datos.
 
-### 16. Pruebas de Usabilidad
+### 17. Pruebas de Usabilidad
 - **Métricas**: Tiempo de tarea (<2 min promedio), tasa de error, System Usability Scale ≥ 80.
 - **Metodologías**: Sesiones “think aloud”, encuestas, pruebas remotas con personal médico.
 

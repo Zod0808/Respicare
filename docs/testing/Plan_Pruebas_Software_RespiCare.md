@@ -232,7 +232,7 @@ La norma ISO/IEC/IEEE 29119-3 define una jerarquía de **tres niveles** para la 
 | Artefacto ISO 29119-3 | Contenido RespiCare | Ubicación |
 |---|---|---|
 | Test Policy | Política de calidad del software RespiCare: toda funcionalidad clínica debe tener cobertura ≥ 80% antes de producción. | `CLAUDE.md` + `docs/testing/TESTING_STRATEGY.md` |
-| Organizational Test Strategy | Estrategia multi-nivel: Unit → Integration → E2E → Performance → Security. Pirámide de pruebas con 70/20/10. | `docs/testing/TESTING_STRATEGY.md` |
+| Organizational Test Strategy | Estrategia multi-nivel: Unit → Component → Integration → E2E → Performance → Security. Pirámide de pruebas con 70/20/10. | `docs/testing/TESTING_STRATEGY.md` |
 
 ### 6.2 Nivel de Gestión — Plan y Seguimiento
 
