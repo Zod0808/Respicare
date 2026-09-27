@@ -179,17 +179,24 @@ A diferencia de las pruebas unitarias de la sección 1 (funciones puras, servici
 
 ---
 
-### 8. Pruebas de Regresión
+### 8. Pruebas de Humo (Smoke Tests)
+- **Objetivo**: Validación rápida de "¿sigue vivo el sistema?" tras cada deploy, antes de correr las suites completas o de promover tráfico.
+- **AI Services**: `ai-services/tests/ml_models/test_advanced_ml_smoke.py` — `TestAdvancedNLPSmoke` (procesamiento de texto, resumen médico, traducción de términos, sentimiento, extracción de entidades) y `TestAutoMLSmoke` (selección de modelo, tuning de hiperparámetros, selección de features, detección de drift, reentrenamiento automático), más `TestFederatedLearningSmoke` (registro de clientes y ronda FedAvg).
+- **Staging (CI/CD)**: job `smoke-tests` en `.github/workflows/deploy-staging.yml` — health check de Backend y de AI Services, y "Run API Smoke Tests" contra endpoints básicos, ejecutado post-deploy antes de habilitar el job `rollback-on-failure`.
+- **Producción (CI/CD)**: job `production-smoke-tests` en `.github/workflows/deploy-production.yml` — health checks de Backend/AI Services con reintentos (5 intentos, backoff de 10s) y verificación del endpoint crítico de autenticación, condición previa al blue-green promote; su fallo dispara `rollback-production`.
+- **Alcance**: intencionalmente superficial (sin datos ni escenarios complejos) para dar una señal go/no-go en segundos, a diferencia de la sección 9 (Regresión), que sí corre las suites completas.
+
+### 9. Pruebas de Regresión
 - **Objetivo**: Detectar regresiones funcionales tras nuevas features o reentrenamiento ML.
 - **Cobertura**: Suites web/mobile/backend/ML completas ejecutadas en cada pull request y nightly.
 - **Herramientas**: GitHub Actions matrices, snapshots de respuestas ML, pruebas de smoke post-deploy.
 
-### 9. Pruebas de Aceptación de Usuario (UAT)
+### 10. Pruebas de Aceptación de Usuario (UAT)
 - **Participantes**: Personal médico (neumólogos, epidemiólogos) y administradores.
 - **Enfoque**: Validar requisitos clínicos, protocolos de emergencia y usabilidad del dashboard ejecutivo.
 - **Evidencia**: Actas UAT y checklist médico anexados al backlog.
 
-### 10. Pruebas Específicas de ML/IA
+### 11. Pruebas Específicas de ML/IA
 - **Drift Detection**: Monitoreo estadístico (KS-test, PSI) de entradas y salidas.
 - **Fairness Testing**: Métricas segmentadas por edad, género y distrito.
 - **Model Validation**: Comparación de modelos nuevos vs producción (t-test de accuracy, curvas ROC).
@@ -198,40 +205,40 @@ A diferencia de las pruebas unitarias de la sección 1 (funciones puras, servici
 - **Suite dedicada**: `ml_tests/test_fairness_and_drift.py` cubre PSI, fairness por cohortes, anomalías y exportaciones.
 - **Explicabilidad visual**: Verificación de API `ml-explanation` y dashboard `ShapDashboard` (React) para consistencia de factores positivos/negativos y confianza reportada.
 
-### 11. Pruebas de Accesibilidad (A11y)
+### 12. Pruebas de Accesibilidad (A11y)
 - **Estándar**: WCAG 2.1 nivel AA.
 - **Cobertura**: Navegación por teclado, lectores de pantalla, contraste, labels en visualizaciones.
 - **Herramientas**: axe-core, Lighthouse, NVDA/VoiceOver.
 
-### 12. Pruebas de Compatibilidad
+### 13. Pruebas de Compatibilidad
 - **Navegadores**: Chrome, Firefox, Edge, Safari.
 - **Dispositivos**: iOS 15+, Android 11+, tablets.
 - **Resoluciones**: 1280×720 hasta 2560×1440, modo oscuro/claro.
 
-### 13. Pruebas de Carga y Estrés Extendidas
+### 14. Pruebas de Carga y Estrés Extendidas
 - **Escenarios**:
   - 100 usuarios concurrentes (objetivo mínimo) y 250 en estrés.
   - 1000 predicciones ML por minuto.
   - 500 sincronizaciones móviles simultáneas.
 - **KPIs**: Redis hit rate > 90%, respuesta API < 500 ms p95, AI Services < 800 ms p95.
 
-### 14. Pruebas de Recuperación ante Desastres
+### 15. Pruebas de Recuperación ante Desastres
 - **Casos**:
   - Caída de MongoDB → Redis y colas offline sostienen operaciones.
   - Falla de AI Services → Backend entrega fallback y alerta interna.
   - Pérdida de conectividad móvil → Persistencia local y reintentos programados.
 - **Objetivos**: RTO < 10 min, RPO < 5 min.
 
-### 15. Pruebas de Interoperabilidad
+### 16. Pruebas de Interoperabilidad
 - **HL7 v2/v3**: Parser `hl7Parser.ts` evaluado con mensajes reales/malformados.
 - **FHIR**: Cliente `fhirService.ts` probado contra servidores HAPI y bundles transaccionales.
 - **Integraciones externas**: Pruebas contractuales con hospitales asociados.
 
-### 16. Pruebas de Cumplimiento Normativo
+### 17. Pruebas de Cumplimiento Normativo
 - **Regulaciones**: HIPAA (si aplica), Ley de Protección de Datos Personales (Perú), estándares médicos locales.
 - **Chequeos**: Encriptación, auditoría de accesos, consentimiento informado, retención y purga de datos.
 
-### 17. Pruebas de Usabilidad
+### 18. Pruebas de Usabilidad
 - **Métricas**: Tiempo de tarea (<2 min promedio), tasa de error, System Usability Scale ≥ 80.
 - **Metodologías**: Sesiones “think aloud”, encuestas, pruebas remotas con personal médico.
 
