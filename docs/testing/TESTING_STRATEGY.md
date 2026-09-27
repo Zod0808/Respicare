@@ -188,8 +188,9 @@ A diferencia de las pruebas unitarias de la sección 1 (funciones puras, servici
 
 ### 9. Pruebas de Regresión
 - **Objetivo**: Detectar regresiones funcionales tras nuevas features o reentrenamiento ML.
-- **Cobertura**: Suites web/mobile/backend/ML completas ejecutadas en cada pull request y nightly.
-- **Herramientas**: GitHub Actions matrices, snapshots de respuestas ML, pruebas de smoke post-deploy.
+- **Disparo real**: GitHub Actions ejecuta las suites completas por servicio en cada `push`/`pull_request` a `main`/`develop` filtrado por paths (`backend-tests.yml`, `web-tests.yml`, `ai-services-tests.yml`, `mobile-ci.yml`, `testing.yml`). No existe actualmente un job `schedule:` (nightly) para estas suites funcionales — el `schedule:` solo está configurado en los workflows de seguridad (`dast-scan.yml`, `sast-scan.yml`, `scorecard.yml`, `security-zap.yml`, `static-code-analysis.yml`); esta ausencia queda registrada explícitamente en vez de asumida.
+- **Suite dedicada de regresión de prompts LLM**: `ai-services/tests/llm/test_prompt_regression.py` — captura snapshots de prompts (`TestPromptSnapshots`), compatibilidad de parsers hacia atrás (`TestParserBackwardCompatibility`), extracción de JSON (`TestJsonExtractionRegression`), consistencia de idioma (`TestPromptLanguageConsistency`) y formato de síntomas (`TestSymptomFormattingRegression`), para detectar cambios no intencionales en el comportamiento del LLM tras ajustes de prompt o de modelo.
+- **Herramientas**: snapshots de Jest (web/backend) y pytest (AI Services), matrices de GitHub Actions por servicio.
 
 ### 10. Pruebas de Aceptación de Usuario (UAT)
 - **Participantes**: Personal médico (neumólogos, epidemiólogos) y administradores.
