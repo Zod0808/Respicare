@@ -1,32 +1,14 @@
 import dotenv from 'dotenv';
 import { AppConfig } from '../types';
+import { validateEnv } from './envSchema';
 
 // Cargar variables de entorno
 dotenv.config();
 
-// Solo validar las variables sin valor por defecto en el código
-const requiredEnvVars = [
-  'MONGODB_URI',
-  'JWT_SECRET',
-  'JWT_REFRESH_SECRET',
-];
-
-for (const envVar of requiredEnvVars) {
-  if (!process.env[envVar]) {
-    throw new Error(`Variable de entorno requerida no encontrada: ${envVar}`);
-  }
-}
-
-const MIN_SECRET_LENGTH = 32;
-for (const secretVar of ['JWT_SECRET', 'JWT_REFRESH_SECRET']) {
-  const val = process.env[secretVar] || '';
-  if (val.length < MIN_SECRET_LENGTH) {
-    throw new Error(
-      `${secretVar} debe tener al menos ${MIN_SECRET_LENGTH} caracteres (actual: ${val.length}). ` +
-      'Genera uno seguro con: node -e "console.log(require(\'crypto\').randomBytes(48).toString(\'base64\'))"'
-    );
-  }
-}
+// Falla el arranque si falta un secreto requerido o si detecta un valor de
+// ejemplo/placeholder (ver envSchema.ts) — evita repetir un despliegue con
+// credenciales de demo expuestas.
+validateEnv();
 
 const parseCommaSeparated = (value?: string): string[] | undefined => {
   if (!value) {
