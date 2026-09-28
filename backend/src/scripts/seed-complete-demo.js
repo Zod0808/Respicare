@@ -17,6 +17,14 @@ const { v4: uuidv4 } = require('uuid');
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/respicare_dev';
 
+// La contraseña del admin no tiene un valor por defecto débil: debe
+// suministrarse explícitamente para evitar credenciales adivinables en
+// cualquier entorno accesible públicamente (p. ej. detrás de un túnel).
+const ADMIN_SEED_PASSWORD = process.env.ADMIN_SEED_PASSWORD;
+if (!ADMIN_SEED_PASSWORD) {
+  throw new Error('ADMIN_SEED_PASSWORD es requerida para sembrar el usuario admin');
+}
+
 // Load models
 const SymptomReportModel = require('../models/SymptomReport');
 const ChatConversationModel = require('../models/ChatConversation');
@@ -237,7 +245,7 @@ async function seedUsers() {
     { name: 'Ana López', email: 'ana.lopez@demo.com', password: 'demo1234', role: 'patient' },
     { name: 'Dr. Roberto Silva', email: 'doctor@demo.com', password: 'demo1234', role: 'doctor' },
     { name: 'Dr. Laura Martínez', email: 'laura.martinez@demo.com', password: 'demo1234', role: 'doctor' },
-    { name: 'Admin RespiCare', email: 'admin@demo.com', password: 'admin1234', role: 'admin' }
+    { name: 'Admin RespiCare', email: 'admin@demo.com', password: ADMIN_SEED_PASSWORD, role: 'admin' }
   ];
 
   const createdUsers = [];
@@ -788,7 +796,7 @@ async function seedCompleteDemo() {
     console.log('\n🔑 Credenciales de acceso:');
     console.log('   Pacientes: paciente@demo.com, juan.perez@demo.com, etc. / demo1234');
     console.log('   Doctores: doctor@demo.com, laura.martinez@demo.com / demo1234');
-    console.log('   Admin: admin@demo.com / admin1234');
+    console.log('   Admin: admin@demo.com / (contraseña definida en ADMIN_SEED_PASSWORD)');
 
     process.exit(0);
   } catch (error) {

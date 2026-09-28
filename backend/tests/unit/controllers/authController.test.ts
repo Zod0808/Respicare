@@ -9,6 +9,7 @@ const app = appInstance.app;
 import { testUtils } from '../../setup';
 import User, { UserDocument } from '../../../src/models/User';
 import jwt from 'jsonwebtoken';
+import { config } from '../../../src/config/config';
 
 describe('Auth Controller', () => {
   beforeEach(async () => {
@@ -202,6 +203,41 @@ describe('Auth Controller', () => {
 
       expect(response.body.success).toBe(false);
       expect(response.body.message).toContain('Datos de entrada inválidos');
+    });
+
+    it('should lock the account after exceeding the failed login threshold', async () => {
+      const wrongLogin = { email: 'login@test.com', password: 'WrongPassword123!' };
+
+      for (let i = 0; i < config.security.loginLockoutThreshold; i++) {
+        const response = await request(app)
+          .post('/api/v1/auth/login')
+          .send(wrongLogin);
+        expect(response.status).toBe(401);
+      }
+
+      const lockedResponse = await request(app)
+        .post('/api/v1/auth/login')
+        .send({ email: 'login@test.com', password: 'Password123!' })
+        .expect(423);
+
+      expect(lockedResponse.body.success).toBe(false);
+      expect(lockedResponse.body.message).toContain('bloqueada temporalmente');
+    });
+
+    it('should reset the failed attempts counter after a successful login', async () => {
+      await request(app)
+        .post('/api/v1/auth/login')
+        .send({ email: 'login@test.com', password: 'WrongPassword123!' })
+        .expect(401);
+
+      await request(app)
+        .post('/api/v1/auth/login')
+        .send({ email: 'login@test.com', password: 'Password123!' })
+        .expect(200);
+
+      const userAfterLogin = await User.findOne({ email: 'login@test.com' }).select('+failedLoginAttempts +lockUntil');
+      expect(userAfterLogin?.failedLoginAttempts).toBe(0);
+      expect(userAfterLogin?.lockUntil).toBeNull();
     });
   });
 

@@ -8,6 +8,14 @@ const bcrypt = require('bcryptjs');
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://admin:password123@mongodb:27017/respicare_dev?authSource=admin';
 
+// La contraseña del admin no tiene un valor por defecto débil: debe
+// suministrarse explícitamente para evitar credenciales adivinables en
+// cualquier entorno accesible públicamente (p. ej. detrás de un túnel).
+const ADMIN_SEED_PASSWORD = process.env.ADMIN_SEED_PASSWORD;
+if (!ADMIN_SEED_PASSWORD) {
+  throw new Error('ADMIN_SEED_PASSWORD es requerida para sembrar el usuario admin');
+}
+
 // Load models
 const SymptomReportModel = require('../models/SymptomReport');
 let UserModel;
@@ -152,7 +160,7 @@ async function seedUsers() {
     {
       name: 'Admin RespiCare',
       email: 'admin@demo.com',
-      password: 'admin1234',
+      password: ADMIN_SEED_PASSWORD,
       role: 'admin',
       isActive: true
     }
@@ -249,7 +257,7 @@ async function seedDatabase() {
     console.log('\n🔑 Demo User Credentials:');
     console.log('   Patient: paciente@demo.com / demo1234');
     console.log('   Doctor: doctor@demo.com / demo1234');
-    console.log('   Admin: admin@demo.com / admin1234');
+    console.log('   Admin: admin@demo.com / (contraseña definida en ADMIN_SEED_PASSWORD)');
     
     console.log('\n✅ Database seeded successfully!');
 

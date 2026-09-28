@@ -16,6 +16,7 @@ import { asyncHandler } from '../utils/asyncHandler';
 import { AppError } from '../utils/AppError';
 import { logger } from '../utils/logger';
 import { setSentryUser } from '../utils/sentry';
+import { config } from '../config/config';
 
 // Generar JWT token
 const generateToken = (userId: string): string => {
@@ -103,8 +104,8 @@ export const register = asyncHandler(async (req: Request<{}, ApiResponse<AuthRes
 export const login = asyncHandler(async (req: Request<{}, ApiResponse<AuthResponse>, LoginRequest>, res: Response) => {
   const { email, password } = req.body;
 
-  // Buscar usuario y incluir contraseña
-  const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+  // Buscar usuario y incluir contraseña + estado de bloqueo
+  const user = await User.findOne({ email: email.toLowerCase() }).select('+password +failedLoginAttempts +lockUntil');
   if (!user) {
     logger.warn('Login fallido: email no encontrado', { email });
     throw new AppError('Credenciales inválidas', 401);
@@ -116,10 +117,31 @@ export const login = asyncHandler(async (req: Request<{}, ApiResponse<AuthRespon
     throw new AppError('La cuenta está desactivada', 401);
   }
 
+  // Verificar si la cuenta está temporalmente bloqueada por intentos fallidos
+  if (user.lockUntil && user.lockUntil.getTime() > Date.now()) {
+    const retryAfterSeconds = Math.ceil((user.lockUntil.getTime() - Date.now()) / 1000);
+    logger.warn('Login fallido: cuenta bloqueada temporalmente', { email, retryAfterSeconds });
+    throw new AppError(
+      'Cuenta bloqueada temporalmente por múltiples intentos fallidos. Intenta más tarde.',
+      423
+    );
+  }
+
   // Verificar contraseña
   const isPasswordValid = await user.comparePassword(password);
   if (!isPasswordValid) {
-    logger.warn('Login fallido: contraseña incorrecta', { email });
+    user.failedLoginAttempts = (user.failedLoginAttempts ?? 0) + 1;
+
+    if (user.failedLoginAttempts >= config.security.loginLockoutThreshold) {
+      user.lockUntil = new Date(Date.now() + config.security.loginLockoutMs);
+      user.failedLoginAttempts = 0;
+      await user.save();
+      logger.warn('Cuenta bloqueada temporalmente por exceso de intentos fallidos', { email });
+    } else {
+      await user.save();
+      logger.warn('Login fallido: contraseña incorrecta', { email, failedLoginAttempts: user.failedLoginAttempts });
+    }
+
     throw new AppError('Credenciales inválidas', 401);
   }
 
@@ -127,7 +149,9 @@ export const login = asyncHandler(async (req: Request<{}, ApiResponse<AuthRespon
   const token = generateToken((user._id as mongoose.Types.ObjectId).toString());
   const refreshToken = generateRefreshToken((user._id as mongoose.Types.ObjectId).toString());
 
-  // Actualizar lastLogin
+  // Login exitoso: reiniciar contador de intentos fallidos y actualizar lastLogin
+  user.failedLoginAttempts = 0;
+  user.lockUntil = null;
   user.lastLogin = new Date();
   await user.save();
 

@@ -96,6 +96,10 @@ export const config: AppConfig = {
     bcryptRounds: parseInt(process.env.BCRYPT_ROUNDS || '12'),
     rateLimitWindow: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000'), // 15 minutos
     rateLimitMax: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100'),
+    loginRateLimitWindow: parseInt(process.env.LOGIN_RATE_LIMIT_WINDOW_MS || '900000'), // 15 minutos
+    loginRateLimitMax: parseInt(process.env.LOGIN_RATE_LIMIT_MAX_ATTEMPTS || '5'),
+    loginLockoutThreshold: parseInt(process.env.LOGIN_LOCKOUT_THRESHOLD || '5'),
+    loginLockoutMs: parseInt(process.env.LOGIN_LOCKOUT_MS || '900000'), // 15 minutos
     internalTokens: parseCommaSeparated(process.env.INTERNAL_SERVICE_TOKENS),
     criticalAlertRoles: parseCriticalRoles(process.env.CRITICAL_ALERT_ROLES),
   },

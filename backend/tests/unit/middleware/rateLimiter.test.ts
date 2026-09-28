@@ -76,9 +76,14 @@ const loadRateLimiter = (redisClient: RedisMock | null) => {
 
   jest.doMock('../../../src/config/config', () => ({
     config: {
+      server: {
+        env: 'test'
+      },
       security: {
         rateLimitWindow: 1000,
-        rateLimitMax: 3
+        rateLimitMax: 3,
+        loginRateLimitWindow: 2000,
+        loginRateLimitMax: 5
       }
     }
   }));
@@ -93,10 +98,11 @@ const loadRateLimiter = (redisClient: RedisMock | null) => {
     logger: loggerMock
   }));
 
-  const { smartRateLimiter } = require('../../../src/middleware/rateLimiter') as typeof import('../../../src/middleware/rateLimiter');
+  const { smartRateLimiter, loginRateLimiter } = require('../../../src/middleware/rateLimiter') as typeof import('../../../src/middleware/rateLimiter');
 
   return {
     smartRateLimiter,
+    loginRateLimiter,
     rateLimitMock,
     fallbackHandler,
     loggerMock,
@@ -206,6 +212,92 @@ describe('smartRateLimiter middleware', () => {
 
     expect(loggerMock.warn).toHaveBeenCalledWith(
       'Fallo al aplicar rate limit inteligente, utilizando fallback',
+      expect.objectContaining({ error: expect.any(Error) })
+    );
+    expect(fallbackHandler).toHaveBeenCalledTimes(1);
+    expect(res.__fallbackCalled).toBe(true);
+    expect(next).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('loginRateLimiter middleware', () => {
+  afterEach(() => {
+    jest.resetModules();
+    jest.clearAllMocks();
+  });
+
+  it('allows the request when usage is under the login limit', async () => {
+    const redisMock = createRedisMock();
+    redisMock.incr.mockResolvedValue(1);
+    redisMock.expire.mockResolvedValue(true);
+
+    const { loginRateLimiter, getRedisClientMock } = loadRateLimiter(redisMock);
+
+    const req = createMockRequest({ path: '/api/v1/auth/login', user: undefined });
+    const res = createMockResponse();
+    const next = createNext();
+
+    await loginRateLimiter(req, res, next);
+
+    expect(getRedisClientMock).toHaveBeenCalled();
+    expect(redisMock.incr).toHaveBeenCalledWith(expect.stringContaining('login-ip'));
+    expect(redisMock.expire).toHaveBeenCalled();
+    expect(next).toHaveBeenCalledTimes(1);
+  });
+
+  it('returns 429 once a single IP exceeds the login attempt limit', async () => {
+    const redisMock = createRedisMock();
+    redisMock.incr.mockResolvedValue(6); // por encima del máximo (5)
+    redisMock.ttl.mockResolvedValue(120);
+
+    const { loginRateLimiter, loggerMock } = loadRateLimiter(redisMock);
+
+    const req = createMockRequest({ path: '/api/v1/auth/login', user: undefined });
+    const res = createMockResponse();
+    const next = createNext();
+
+    await loginRateLimiter(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(429);
+    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
+      success: false,
+      limit: 5
+    }));
+    expect(res.setHeader).toHaveBeenCalledWith('Retry-After', '120');
+    expect(loggerMock.warn).toHaveBeenCalledWith('Rate limit de login excedido', expect.objectContaining({
+      identifier: '127.0.0.1'
+    }));
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('falls back to express-rate-limit when Redis is unavailable', async () => {
+    const { loginRateLimiter, fallbackHandler } = loadRateLimiter(null);
+
+    const req = createMockRequest({ path: '/api/v1/auth/login', user: undefined });
+    const res = createMockResponse();
+    const next = createNext();
+
+    await loginRateLimiter(req, res, next);
+
+    expect(fallbackHandler).toHaveBeenCalledTimes(1);
+    expect(res.__fallbackCalled).toBe(true);
+    expect(next).toHaveBeenCalledTimes(1);
+  });
+
+  it('falls back to express-rate-limit when Redis fails mid-request', async () => {
+    const redisMock = createRedisMock();
+    redisMock.incr.mockRejectedValue(new Error('redis down'));
+
+    const { loginRateLimiter, fallbackHandler, loggerMock } = loadRateLimiter(redisMock);
+
+    const req = createMockRequest({ path: '/api/v1/auth/login', user: undefined });
+    const res = createMockResponse();
+    const next = createNext();
+
+    await loginRateLimiter(req, res, next);
+
+    expect(loggerMock.warn).toHaveBeenCalledWith(
+      'Fallo al aplicar rate limit de login, utilizando fallback',
       expect.objectContaining({ error: expect.any(Error) })
     );
     expect(fallbackHandler).toHaveBeenCalledTimes(1);

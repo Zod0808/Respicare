@@ -35,6 +35,14 @@ const MONGODB_URI =
   process.env.MONGODB_URI ||
   'mongodb://admin:password123@mongodb:27017/respicare_dev?authSource=admin';
 
+// La contraseña del admin no tiene un valor por defecto débil: debe
+// suministrarse explícitamente para evitar credenciales adivinables en
+// cualquier entorno accesible públicamente (p. ej. detrás de un túnel).
+const ADMIN_SEED_PASSWORD = process.env.ADMIN_SEED_PASSWORD;
+if (!ADMIN_SEED_PASSWORD) {
+  throw new Error('ADMIN_SEED_PASSWORD es requerida para sembrar el usuario admin');
+}
+
 // ─── Modelos JS (no dependen de TypeScript) ───────────────────────────────────
 let SymptomReportModel, ChatConversationModel;
 try { SymptomReportModel   = require('../models/SymptomReport');   } catch (_) { SymptomReportModel   = null; }
@@ -154,7 +162,7 @@ async function seedUsers() {
     {
       name: 'Admin RespiCare',
       email: 'admin@demo.com',
-      password: await hash('admin1234'),
+      password: await hash(ADMIN_SEED_PASSWORD),
       role: 'admin',
       phone: '+51999000000',
       isActive: true,
@@ -1055,7 +1063,7 @@ async function seedCompleteSystem() {
     console.log('');
     console.log('   ROL      │ EMAIL                        │ CONTRASEÑA');
     console.log('   ─────────┼──────────────────────────────┼───────────');
-    console.log('   admin    │ admin@demo.com               │ admin1234');
+    console.log('   admin    │ admin@demo.com               │ (contraseña definida en ADMIN_SEED_PASSWORD)');
     console.log('   doctor   │ doctor@demo.com              │ demo1234');
     console.log('   doctor   │ laura.martinez@demo.com      │ demo1234');
     console.log('   doctor   │ roberto.condori@demo.com     │ demo1234');

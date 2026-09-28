@@ -10,6 +10,14 @@ import MedicalHistory from '../models/MedicalHistory';
 import { config } from '../config/config';
 import { logger } from '../utils/logger';
 
+// La contraseña del admin no tiene un valor por defecto débil: debe
+// suministrarse explícitamente para evitar credenciales adivinables en
+// cualquier entorno accesible públicamente (p. ej. detrás de un túnel).
+const ADMIN_SEED_PASSWORD = process.env.ADMIN_SEED_PASSWORD;
+if (!ADMIN_SEED_PASSWORD) {
+  throw new Error('ADMIN_SEED_PASSWORD es requerida para sembrar el usuario admin');
+}
+
 // Sample users data
 const sampleUsers = [
   {
@@ -27,7 +35,7 @@ const sampleUsers = [
   {
     name: 'Admin RespiCare',
     email: 'admin@respicare.com',
-    password: 'admin123',
+    password: ADMIN_SEED_PASSWORD,
     role: 'admin'
   },
   {
@@ -274,7 +282,7 @@ async function seedDatabase(): Promise<void> {
 
     // Display login credentials
     logger.info('🔑 Credenciales de acceso:');
-    logger.info('   Admin: admin@respicare.com / admin123');
+    logger.info('   Admin: admin@respicare.com / (contraseña definida en ADMIN_SEED_PASSWORD)');
     logger.info('   Doctor: doctor@respicare.com / password123');
     logger.info('   Paciente: ana.lopez@email.com / password123');
 

@@ -24,6 +24,7 @@ import {
   adminToggleUserActive
 } from '../controllers/authController';
 import { authenticate, authorize } from '../middleware/auth';
+import { loginRateLimiter } from '../middleware/rateLimiter';
 import { validateRequest } from '../middleware/validation';
 import { 
   registerSchema, 
@@ -37,7 +38,7 @@ const router = Router();
 
 // Rutas públicas: no requieren token
 router.post('/register', validateRequest(registerSchema), register);
-router.post('/login', validateRequest(loginSchema), login);
+router.post('/login', loginRateLimiter, validateRequest(loginSchema), login);
 router.post('/refresh-token', validateRequest(refreshTokenSchema), refreshToken);
 
 // Rutas protegidas

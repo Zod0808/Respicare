@@ -12,6 +12,8 @@ export interface User {
   phone?: string; // Número de teléfono en formato E.164 (ej: +51987654321)
   isActive: boolean;
   lastLogin?: Date;
+  failedLoginAttempts?: number;
+  lockUntil?: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -548,6 +550,10 @@ export interface AppConfig {
     bcryptRounds: number;
     rateLimitWindow: number;
     rateLimitMax: number;
+    loginRateLimitWindow: number;
+    loginRateLimitMax: number;
+    loginLockoutThreshold: number;
+    loginLockoutMs: number;
     internalTokens?: string[];
     criticalAlertRoles?: Array<'doctor' | 'admin'>;
   };
