@@ -15,6 +15,8 @@ import {
 } from '../controllers/automaticReportController';
 import { auth } from '../middleware/auth';
 import { requirePermission, requireRole } from '../middleware/rbac';
+import { validateRequest } from '../middleware/validation';
+import { generateReportSchema, exportReportSchema } from '../validators/automaticReportValidators';
 
 const router = Router();
 
@@ -61,14 +63,24 @@ router.get('/:id', requirePermission('reports:read'), getReportById);
  * @desc    Genera un reporte automático manualmente
  * @access  Private (Admin only)
  */
-router.post('/generate', requirePermission('reports:generate'), generateReport);
+router.post(
+  '/generate',
+  requirePermission('reports:generate'),
+  validateRequest(generateReportSchema),
+  generateReport,
+);
 
 /**
  * @route   POST /api/v1/reports/automatic/:id/export
  * @desc    Exporta un reporte a un formato específico
  * @access  Private (Admin, Doctor)
  */
-router.post('/:id/export', requirePermission('reports:export'), exportReport);
+router.post(
+  '/:id/export',
+  requirePermission('reports:export'),
+  validateRequest(exportReportSchema),
+  exportReport,
+);
 
 export default router;
 

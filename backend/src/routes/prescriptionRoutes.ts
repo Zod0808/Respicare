@@ -7,7 +7,7 @@ import { Router } from 'express';
 import { body, param, query } from 'express-validator';
 import { auth, authorize } from '../middleware/auth';
 import { requireRole, requirePermission } from '../middleware/rbac';
-import { validate } from '../middleware/validation';
+import { validate, checkExactBody } from '../middleware/validation';
 import { asyncHandler } from '../utils/asyncHandler';
 import { AppError } from '../utils/AppError';
 import { ApiResponse, AuthenticatedRequest } from '../types';
@@ -31,6 +31,8 @@ const medicationValidation = [
     .withMessage('La duración debe estar entre 1 y 365 días'),
   body('medications.*.instructions').optional().isString().isLength({ max: 1000 }),
   body('medications.*.notes').optional().isString().isLength({ max: 1000 }),
+  body('medications.*.form').optional().isString(),
+  body('medications.*.startDate').optional().isISO8601(),
   body('medications.*.reminderTimes').optional().isArray({ max: 10 }),
   body('medications.*.reminderTimes.*')
     .optional()
@@ -38,11 +40,29 @@ const medicationValidation = [
     .withMessage('Los recordatorios deben tener formato HH:MM'),
 ];
 
+// authorize('doctor', 'admin') solo verifica el rol; un doctor podría mutar la
+// prescripción de otro doctor cambiando el prescriptionId en la URL si no se
+// confirma además que la prescripción le pertenece.
+async function ensureDoctorOwnsPrescription(req: AuthenticatedRequest, prescriptionId: string) {
+  if (req.user?.role !== 'doctor') {
+    return;
+  }
+  const prescription = await prescriptionService.getPrescriptionById(prescriptionId);
+  if (!prescription) {
+    throw new AppError('La prescripción no existe', 404);
+  }
+  if (prescription.doctorId !== req.user._id) {
+    throw new AppError('No tiene acceso a esta prescripción', 403);
+  }
+}
+
 const patientContextValidation = [
   body('patientContext').optional().isObject(),
   body('patientContext.age').optional().isInt({ min: 0, max: 120 }),
   body('patientContext.weightKg').optional().isFloat({ min: 0, max: 400 }),
   body('patientContext.allergies').optional().isArray({ max: 20 }),
+  body('patientContext.renalImpairment').optional().isBoolean(),
+  body('patientContext.hepaticImpairment').optional().isBoolean(),
 ];
 
 router.post(
@@ -53,9 +73,11 @@ router.post(
     body('doctorId').isString().notEmpty().withMessage('El doctor es obligatorio'),
     body('diagnosis').optional().isString().isLength({ max: 2000 }),
     body('observations').optional().isString().isLength({ max: 4000 }),
+    body('metadata').optional().isObject(),
     ...medicationValidation,
     ...patientContextValidation,
   ],
+  checkExactBody,
   validate,
   asyncHandler(async (req: AuthenticatedRequest, res) => {
     if (req.user?.role === 'doctor' && req.body.doctorId !== req.user._id) {
@@ -155,8 +177,10 @@ router.patch(
     body('status').isIn(['draft', 'pending_validation', 'active', 'completed', 'cancelled', 'rejected']),
     body('notes').optional().isString(),
   ],
+  checkExactBody,
   validate,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req: AuthenticatedRequest, res) => {
+    await ensureDoctorOwnsPrescription(req, req.params.prescriptionId);
     const prescription = await prescriptionService.updateStatus(req.params.prescriptionId, req.body.status, {
       validatedBy: req.user?._id,
       notes: req.body.notes,
@@ -180,10 +204,26 @@ router.post(
     body('medication.dosage').isString().notEmpty(),
     body('medication.frequencyPerDay').isInt({ min: 1, max: 12 }),
     body('medication.durationDays').isInt({ min: 1, max: 365 }),
+    body('medication.instructions').optional().isString().isLength({ max: 1000 }),
+    body('medication.notes').optional().isString().isLength({ max: 1000 }),
+    body('medication.form').optional().isString(),
+    body('medication.startDate').optional().isISO8601(),
+    body('medication.reminderTimes').optional().isArray({ max: 10 }),
+    body('medication.reminderTimes.*')
+      .optional()
+      .matches(/^\d{2}:\d{2}$/)
+      .withMessage('Los recordatorios deben tener formato HH:MM'),
     body('patientContext').optional().isObject(),
+    body('patientContext.age').optional().isInt({ min: 0, max: 120 }),
+    body('patientContext.weightKg').optional().isFloat({ min: 0, max: 400 }),
+    body('patientContext.allergies').optional().isArray({ max: 20 }),
+    body('patientContext.renalImpairment').optional().isBoolean(),
+    body('patientContext.hepaticImpairment').optional().isBoolean(),
   ],
+  checkExactBody,
   validate,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req: AuthenticatedRequest, res) => {
+    await ensureDoctorOwnsPrescription(req, req.params.prescriptionId);
     const prescription = await prescriptionService.appendMedication(
       req.params.prescriptionId,
       req.body.medication,

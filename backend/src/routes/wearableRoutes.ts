@@ -11,7 +11,7 @@ import {
   getWearableMetrics
 } from '../controllers/wearableController';
 import { auth } from '../middleware/auth';
-import { validate } from '../middleware/validation';
+import { validate, checkExactBody } from '../middleware/validation';
 
 const router = Router();
 
@@ -89,7 +89,7 @@ const queryValidation = [
  * @desc    Sincronizar datos de wearables
  * @access  Private (Patient, Doctor, Admin)
  */
-router.post('/sync', syncValidation, validate, syncWearableData);
+router.post('/sync', syncValidation, checkExactBody, validate, syncWearableData);
 
 /**
  * @route   GET /api/v1/wearables/data/:patientId?

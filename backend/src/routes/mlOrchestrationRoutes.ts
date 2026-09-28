@@ -9,6 +9,14 @@ import { AuthenticatedRequest } from '../types';
 import { asyncHandler } from '../utils/asyncHandler';
 import { authenticate } from '../middleware/auth';
 import { requireRole } from '../middleware/rbac';
+import { validateRequest } from '../middleware/validation';
+import {
+  startRLSessionSchema,
+  trainRLSessionSchema,
+  getRLActionSchema,
+  startFLRoundSchema,
+  runFLRoundSchema,
+} from '../validators/mlOrchestrationValidators';
 import mlOrchestrationService from '../services/mlOrchestrationService';
 import { logger } from '../utils/logger';
 
@@ -26,6 +34,7 @@ router.use(authenticate);
 router.post(
   '/rl/session/start',
   requireRole('doctor'),
+  validateRequest(startRLSessionSchema),
   asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const { envName, config, patientId } = req.body;
     const userId = req.user?._id?.toString();
@@ -52,6 +61,7 @@ router.post(
 router.post(
   '/rl/session/:sessionId/train',
   requireRole('doctor'),
+  validateRequest(trainRLSessionSchema),
   asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const { sessionId } = req.params;
     const { episodes } = req.body;
@@ -73,16 +83,10 @@ router.post(
 router.post(
   '/rl/session/:sessionId/act',
   requireRole('patient'),
+  validateRequest(getRLActionSchema),
   asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const { sessionId } = req.params;
     const { state } = req.body;
-
-    if (!state) {
-      return res.status(400).json({
-        success: false,
-        message: 'State is required'
-      });
-    }
 
     const action = await mlOrchestrationService.getRLAction(sessionId, state);
 
@@ -101,15 +105,9 @@ router.post(
 router.post(
   '/fl/round/start',
   requireRole('admin'),
+  validateRequest(startFLRoundSchema),
   asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const { clientIds, roundNumber, aggregationMethod } = req.body;
-
-    if (!clientIds || !Array.isArray(clientIds) || clientIds.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: 'clientIds array is required'
-      });
-    }
 
     const result = await mlOrchestrationService.startFLRound({
       clientIds,
@@ -132,16 +130,10 @@ router.post(
 router.post(
   '/fl/round/:roundId/run',
   requireRole('admin'),
+  validateRequest(runFLRoundSchema),
   asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     const { roundId } = req.params;
     const { clientUpdates } = req.body;
-
-    if (!clientUpdates || !Array.isArray(clientUpdates) || clientUpdates.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: 'clientUpdates array is required'
-      });
-    }
 
     const result = await mlOrchestrationService.runFLRound(roundId, clientUpdates);
 

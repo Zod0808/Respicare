@@ -6,6 +6,8 @@
 import { Router, Request, Response } from 'express';
 import axios from 'axios';
 import { authenticate } from '../middleware/auth';
+import { validateRequest } from '../middleware/validation';
+import { analyzeImageSchema } from '../validators/chatImageValidators';
 import { AuthenticatedRequest } from '../types';
 import { logger } from '../utils/logger';
 
@@ -19,11 +21,8 @@ const FORMAT_MAP: Record<string, string> = {
 };
 
 // POST /api/v1/chat/analyze-image
-router.post('/analyze-image', authenticate, async (req: AuthenticatedRequest, res: Response) => {
+router.post('/analyze-image', authenticate, validateRequest(analyzeImageSchema), async (req: AuthenticatedRequest, res: Response) => {
   const { image, image_type, sessionId } = req.body;
-
-  if (!image) return res.status(400).json({ success: false, message: 'No se proporcionó imagen' });
-  if (!image_type) return res.status(400).json({ success: false, message: 'Tipo de imagen es requerido' });
 
   try {
     let imageData: string = image;

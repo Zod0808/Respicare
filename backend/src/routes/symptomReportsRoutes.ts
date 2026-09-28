@@ -73,6 +73,39 @@ const MOCK_STATISTICS = {
 
 const isDbAvailable = (): boolean => mongoose.connection.readyState === 1;
 
+// Campos que un cliente puede enviar al crear un reporte. Excluye campos
+// calculados (overallSeverity, medicalAttentionRequired) y de sistema
+// (_id, createdAt, updatedAt) para evitar mass assignment vía req.body.
+const CREATABLE_FIELDS = [
+  'patientId',
+  'location',
+  'symptoms',
+  'category',
+  'suspectedDisease',
+  'temperature',
+  'oxygenSaturation',
+  'hasPreexistingConditions',
+  'preexistingConditions',
+  'contactInfo',
+  'notes',
+  'reportedBy',
+  'source',
+  'isAnonymous',
+  'reportedAt',
+] as const;
+
+const UPDATABLE_FIELDS = [...CREATABLE_FIELDS, 'status', 'medicalAttentionReceived'] as const;
+
+const pick = (source: Record<string, any>, fields: readonly string[]): Record<string, any> => {
+  const result: Record<string, any> = {};
+  for (const field of fields) {
+    if (Object.prototype.hasOwnProperty.call(source, field)) {
+      result[field] = source[field];
+    }
+  }
+  return result;
+};
+
 // ---------------------------------------------------------------------------
 // GET / — list reports with filters
 // ---------------------------------------------------------------------------
@@ -340,7 +373,7 @@ router.post('/', async (req: Request, res: Response) => {
     }
     if (!category) return res.status(400).json({ success: false, message: 'Category is required' });
 
-    const report = new SymptomReport(req.body);
+    const report = new SymptomReport(pick(req.body, CREATABLE_FIELDS));
     report.calculateSeverity();
     await report.save();
 
@@ -359,7 +392,11 @@ router.put('/:id', async (req: Request, res: Response) => {
     if (!isDbAvailable()) {
       return res.status(503).json({ success: false, message: 'Database not available' });
     }
-    const report = await SymptomReport.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    const report = await SymptomReport.findByIdAndUpdate(
+      req.params.id,
+      pick(req.body, UPDATABLE_FIELDS),
+      { new: true, runValidators: true }
+    );
     if (!report) return res.status(404).json({ success: false, message: 'Symptom report not found' });
     res.json({ success: true, message: 'Symptom report updated successfully', data: report });
   } catch (err: any) {

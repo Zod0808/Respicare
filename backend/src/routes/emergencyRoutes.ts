@@ -14,7 +14,7 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
 import { authenticate } from '../middleware/auth';
-import { validate } from '../middleware/validation';
+import { validate, checkExactBody } from '../middleware/validation';
 import {
   createEmergency,
   getEmergencyStatus,
@@ -32,6 +32,9 @@ const router = Router();
 
 // Validaciones
 const emergencyValidation = [
+  body('patientId').optional().isString(),
+  body('patientName').optional().isString(),
+  body('metadata').optional().isObject(),
   body('emergencyType')
     .isIn([
       'medical',
@@ -62,10 +65,12 @@ const emergencyValidation = [
     .withMessage('location.longitude debe ser un número entre -180 y 180'),
   body('location.address').optional().isString(),
   body('location.district').optional().isString(),
+  body('location.accuracy').optional().isFloat(),
   body('symptoms').optional().isArray(),
   body('symptoms.*').optional().isString(),
   body('vitalSigns.heartRate').optional().isInt({ min: 0, max: 300 }),
   body('vitalSigns.oxygenSaturation').optional().isFloat({ min: 0, max: 100 }),
+  body('vitalSigns.respiratoryRate').optional().isFloat({ min: 0, max: 100 }),
   body('vitalSigns.temperature').optional().isFloat({ min: 30, max: 45 }),
   body('vitalSigns.bloodPressure.systolic').optional().isInt({ min: 50, max: 250 }),
   body('vitalSigns.bloodPressure.diastolic').optional().isInt({ min: 30, max: 150 }),
@@ -74,6 +79,7 @@ const emergencyValidation = [
 ];
 
 const detectEmergencyValidation = [
+  body('patientId').optional().isString(),
   body('symptoms')
     .isArray({ min: 1 })
     .withMessage('symptoms es requerido y debe ser un array con al menos un elemento'),
@@ -92,6 +98,7 @@ router.post(
   '/',
   authenticate,
   emergencyValidation,
+  checkExactBody,
   validate,
   createEmergency
 );
@@ -110,6 +117,7 @@ router.post(
   '/detect',
   authenticate,
   detectEmergencyValidation,
+  checkExactBody,
   validate,
   detectEmergency
 );
@@ -126,6 +134,7 @@ router.post(
   '/:emergencyId/cancel',
   authenticate,
   body('reason').optional().isString(),
+  checkExactBody,
   validate,
   cancelEmergency
 );
@@ -170,6 +179,7 @@ router.post(
   authenticate,
   body('hospitalId').isString().notEmpty().withMessage('hospitalId es requerido'),
   body('patientId').isString().notEmpty().withMessage('patientId es requerido'),
+  checkExactBody,
   validate,
   transferToHospital
 );

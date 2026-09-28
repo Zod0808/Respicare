@@ -9,6 +9,8 @@ import {
   requireInstitutionalScope,
   institutionalRateLimiter,
 } from '../middleware/institutionalAuth';
+import { validateRequest } from '../middleware/validation';
+import { syncHealthCentersSchema, ingestAlertSchema } from '../validators/institutionalValidators';
 
 const router = Router();
 
@@ -25,12 +27,14 @@ router.get(
 router.post(
   '/health-centers/sync',
   requireInstitutionalScope('health-centers:write'),
+  validateRequest(syncHealthCentersSchema),
   syncHealthCenters
 );
 
 router.post(
   '/alerts',
   requireInstitutionalScope('alerts:write'),
+  validateRequest(ingestAlertSchema),
   ingestAlert
 );
 

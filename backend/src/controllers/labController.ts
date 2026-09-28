@@ -13,6 +13,18 @@ import { requirePermission } from '../middleware/rbac';
  */
 
 /**
+ * LabResult no tiene un campo doctorId (ver modelo), así que solo se puede
+ * acotar el acceso de pacientes a sus propios resultados; los doctores quedan
+ * sin restricción de ownership hasta que exista un modelo de asignación
+ * doctor-paciente. Limitación conocida y documentada, no un descuido.
+ */
+function ensurePatientAccess(req: AuthenticatedRequest, patientId: string): void {
+  if (req.user?.role === 'patient' && patientId !== req.user._id?.toString()) {
+    throw new AppError('No tiene acceso a los resultados de este paciente', 403);
+  }
+}
+
+/**
  * GET /api/v1/lab/results
  * Obtener resultados de laboratorio con filtros
  */
@@ -40,8 +52,17 @@ export const getLabResults = asyncHandler(
         if (isNaN(parsedEndDate.getTime())) throw new AppError('endDate no es una fecha válida', 400);
       }
 
+      // Un paciente solo puede consultar sus propios resultados: si no manda
+      // patientId no se le devuelve el listado completo, y si manda uno ajeno
+      // se rechaza en vez de ignorarlo silenciosamente.
+      let effectivePatientId = patientId as string | undefined;
+      if (req.user?.role === 'patient') {
+        ensurePatientAccess(req, effectivePatientId ?? req.user._id!.toString());
+        effectivePatientId = req.user._id!.toString();
+      }
+
       const results = await labService.getResults({
-        patientId: patientId as string | undefined,
+        patientId: effectivePatientId,
         testCode: testCode as string | undefined,
         status: status as 'normal' | 'abnormal' | 'critical' | undefined,
         flagged: flagged === 'true' ? true : flagged === 'false' ? false : undefined,
@@ -85,6 +106,8 @@ export const getPatientHistory = asyncHandler(
     if (!patientId) {
       throw new AppError('patientId es requerido', 400);
     }
+
+    ensurePatientAccess(req, patientId);
 
     try {
       const history = await labService.getPatientHistory(
@@ -130,6 +153,8 @@ export const getAbnormalResults = asyncHandler(
     if (!patientId) {
       throw new AppError('patientId es requerido', 400);
     }
+
+    ensurePatientAccess(req, patientId);
 
     try {
       const results = await labService.getAbnormalResults(
@@ -177,6 +202,8 @@ export const getCriticalResults = asyncHandler(
     if (!patientId) {
       throw new AppError('patientId es requerido', 400);
     }
+
+    ensurePatientAccess(req, patientId);
 
     try {
       const results = await labService.getCriticalResults(
@@ -266,6 +293,8 @@ export const getLatestResult = asyncHandler(
       throw new AppError('patientId y testCode son requeridos', 400);
     }
 
+    ensurePatientAccess(req, patientId);
+
     try {
       const result = await labService.getLatestResult(patientId, testCode);
 
@@ -301,6 +330,8 @@ export const getPatientSummary = asyncHandler(
     if (!patientId) {
       throw new AppError('patientId es requerido', 400);
     }
+
+    ensurePatientAccess(req, patientId);
 
     try {
       const summary = await labService.getPatientSummary(

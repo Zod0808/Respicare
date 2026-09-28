@@ -14,7 +14,8 @@ const loadValidationModule = (options: ValidationOptions = {}) => {
   }));
 
   jest.doMock('express-validator', () => ({
-    validationResult: validationResultMock
+    validationResult: validationResultMock,
+    checkExact: jest.fn(() => (_req: unknown, _res: unknown, next: () => void) => next())
   }));
 
   const module = require('../../../src/middleware/validation') as typeof import('../../../src/middleware/validation');

@@ -10,8 +10,17 @@ import {
   handleMessageBirdWebhook,
   verifyTwilioWebhook,
 } from '../controllers/smsWebhookController';
+import { validateRequest } from '../middleware/validation';
+import {
+  twilioWebhookSchema,
+  awsSnsWebhookSchema,
+  messageBirdWebhookSchema,
+} from '../validators/smsWebhookValidators';
 
 const router = Router();
+
+// allowUnknown: true porque el proveedor controla la forma del payload, no nosotros
+const webhookValidationOptions = { allowUnknown: true, stripUnknown: false };
 
 // Middleware para parsear body como texto/xml para Twilio
 router.use('/twilio', (req, res, next) => {
@@ -30,13 +39,25 @@ router.use('/twilio', (req, res, next) => {
 });
 
 // Webhook de Twilio
-router.post('/twilio', handleTwilioWebhook);
+router.post(
+  '/twilio',
+  validateRequest(twilioWebhookSchema, webhookValidationOptions),
+  handleTwilioWebhook,
+);
 
 // Webhook de AWS SNS
-router.post('/aws-sns', handleAWSSNSWebhook);
+router.post(
+  '/aws-sns',
+  validateRequest(awsSnsWebhookSchema, webhookValidationOptions),
+  handleAWSSNSWebhook,
+);
 
 // Webhook de MessageBird
-router.post('/messagebird', handleMessageBirdWebhook);
+router.post(
+  '/messagebird',
+  validateRequest(messageBirdWebhookSchema, webhookValidationOptions),
+  handleMessageBirdWebhook,
+);
 
 export default router;
 

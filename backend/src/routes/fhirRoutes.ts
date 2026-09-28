@@ -16,6 +16,13 @@ import {
 } from '../controllers/fhirController';
 import { authenticate } from '../middleware/auth';
 import { requirePermission } from '../middleware/rbac';
+import { validateRequest } from '../middleware/validation';
+import {
+  syncFromHospitalSchema,
+  syncToHospitalSchema,
+  syncBidirectionalSchema,
+  parseHl7Schema,
+} from '../validators/fhirValidators';
 
 const router = Router();
 
@@ -59,6 +66,7 @@ router.post(
   '/sync/from/:hospitalName',
   authenticate,
   requirePermission('fhir:read'),
+  validateRequest(syncFromHospitalSchema),
   syncFromHospital,
 );
 
@@ -66,6 +74,7 @@ router.post(
   '/sync/to/:hospitalName',
   authenticate,
   requirePermission('fhir:create'),
+  validateRequest(syncToHospitalSchema),
   syncToHospital,
 );
 
@@ -73,6 +82,7 @@ router.post(
   '/sync/bidirectional/:hospitalName',
   authenticate,
   requirePermission('fhir:create'),
+  validateRequest(syncBidirectionalSchema),
   syncBidirectional,
 );
 
@@ -89,6 +99,7 @@ router.post(
   '/hl7/parse',
   authenticate,
   requirePermission('fhir:create'),
+  validateRequest(parseHl7Schema),
   parseHl7ToFhir,
 );
 

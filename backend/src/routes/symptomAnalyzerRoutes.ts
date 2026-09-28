@@ -22,7 +22,7 @@ import {
   getSymptomStatistics
 } from '../controllers/symptomAnalyzerController';
 import { auth } from '../middleware/auth';
-import { validate } from '../middleware/validation';
+import { validate, checkExactBody } from '../middleware/validation';
 
 const router = Router();
 
@@ -89,7 +89,7 @@ const paginationValidation = [
  * @desc    Analyze symptoms with AI (Legacy endpoint)
  * @access  Private (Patient, Doctor, Admin)
  */
-router.post('/analyze', symptomAnalysisValidation, validate, analyzeSymptoms);
+router.post('/analyze', symptomAnalysisValidation, checkExactBody, validate, analyzeSymptoms);
 
 // ML Analysis validation (simpler format - just array of strings)
 const mlAnalysisValidation = [
@@ -130,7 +130,7 @@ const mlAnalysisValidation = [
  * @desc    Analyze symptoms with ML models (Ensemble + SHAP + Personalization)
  * @access  Private (Patient, Doctor, Admin)
  */
-router.post('/ml-analyze', mlAnalysisValidation, validate, analyzeSymptomsML);
+router.post('/ml-analyze', mlAnalysisValidation, checkExactBody, validate, analyzeSymptomsML);
 
 /**
  * @route   GET /api/v1/symptom-analyzer/trends/:patientId

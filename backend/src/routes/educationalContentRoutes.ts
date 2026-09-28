@@ -22,7 +22,7 @@ import {
   updateContent,
 } from '../controllers/educationalContentController';
 import { auth, authorize } from '../middleware/auth';
-import { validate } from '../middleware/validation';
+import { validate, checkExactBody } from '../middleware/validation';
 
 const router = Router();
 
@@ -71,8 +71,8 @@ router.get('/', getPersonalizedContent);
 
 // Gestión de contenido (roles clínicos/administrativos)
 router.get('/manage', authorize('doctor', 'admin'), listValidation, validate, listContent);
-router.post('/', authorize('doctor', 'admin'), contentValidation, validate, createContent);
-router.patch('/:id', authorize('doctor', 'admin'), idValidation, updateContentValidation, validate, updateContent);
+router.post('/', authorize('doctor', 'admin'), contentValidation, checkExactBody, validate, createContent);
+router.patch('/:id', authorize('doctor', 'admin'), idValidation, updateContentValidation, checkExactBody, validate, updateContent);
 router.delete('/:id', authorize('admin'), idValidation, validate, deleteContent);
 
 // Detalle de contenido: registra la consulta en el historial de actividad del usuario (CU-007)

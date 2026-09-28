@@ -7,7 +7,7 @@ import { Router } from 'express';
 import { body, param, query } from 'express-validator';
 import { auth, authorize } from '../middleware/auth';
 import { requireRole, requirePermission } from '../middleware/rbac';
-import { validate } from '../middleware/validation';
+import { validate, checkExactBody } from '../middleware/validation';
 import { asyncHandler } from '../utils/asyncHandler';
 import { parsePagination } from '../utils/pagination';
 import consentService from '../services/consentService';
@@ -35,6 +35,11 @@ const consentValidation = [
   body('expiresAt').optional().isISO8601(),
   body('appointmentId').optional().isString(),
   body('medicalHistoryId').optional().isString(),
+  body('version').optional().isString(),
+  body('language').optional().isString(),
+  body('procedureId').optional().isString(),
+  body('attachments').optional().isArray(),
+  body('metadata').optional().isObject(),
 ];
 
 // Crear consentimiento
@@ -42,6 +47,7 @@ router.post(
   '/',
   authorize('doctor', 'admin'),
   consentValidation,
+  checkExactBody,
   validate,
   asyncHandler(async (req: AuthenticatedRequest, res) => {
     if (req.user?.role === 'doctor' && req.body.doctorId !== req.user._id) {
@@ -161,6 +167,8 @@ router.patch(
   body('benefits').optional().isArray(),
   body('alternatives').optional().isArray(),
   body('expiresAt').optional().isISO8601(),
+  body('metadata').optional().isObject(),
+  checkExactBody,
   validate,
   asyncHandler(async (req: AuthenticatedRequest, res) => {
     const consent = await consentService.getConsentById(req.params.id);
@@ -197,6 +205,7 @@ router.post(
   '/:id/present',
   authorize('doctor', 'admin'),
   param('id').isMongoId().withMessage('ID de consentimiento inválido'),
+  checkExactBody,
   validate,
   asyncHandler(async (req: AuthenticatedRequest, res) => {
     const consent = await consentService.presentConsent(
@@ -226,6 +235,8 @@ router.post(
   body('signatureMethod')
     .isIn(['digital', 'biometric', 'click_to_sign', 'typed'])
     .withMessage('Método de firma inválido'),
+  body('certificateHash').optional().isString(),
+  checkExactBody,
   validate,
   asyncHandler(async (req: AuthenticatedRequest, res) => {
     const consent = await consentService.getConsentById(req.params.id);
@@ -269,6 +280,7 @@ router.post(
   authorize('doctor', 'admin', 'patient'),
   param('id').isMongoId().withMessage('ID de consentimiento inválido'),
   body('reason').isString().notEmpty().isLength({ max: 1000 }).withMessage('La razón de revocación es obligatoria'),
+  checkExactBody,
   validate,
   asyncHandler(async (req: AuthenticatedRequest, res) => {
     const consent = await consentService.getConsentById(req.params.id);

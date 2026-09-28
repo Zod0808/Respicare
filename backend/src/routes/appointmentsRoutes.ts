@@ -7,7 +7,7 @@ import { Router } from 'express';
 import { body, param, query } from 'express-validator';
 import { auth, authorize } from '../middleware/auth';
 import { requireRole, requirePermission } from '../middleware/rbac';
-import { validate } from '../middleware/validation';
+import { validate, checkExactBody } from '../middleware/validation';
 import { asyncHandler } from '../utils/asyncHandler';
 import appointmentService from '../services/appointmentService';
 import { ApiResponse, AuthenticatedRequest } from '../types';
@@ -16,6 +16,22 @@ import { AppError } from '../utils/AppError';
 const router = Router();
 
 router.use(auth);
+
+// authorize('doctor', 'admin') solo verifica el rol; un doctor podría mutar la
+// cita de otro doctor cambiando el appointmentId en la URL si no se confirma
+// además que la cita le pertenece.
+async function ensureDoctorOwnsAppointment(req: AuthenticatedRequest, appointmentId: string) {
+  if (req.user?.role !== 'doctor') {
+    return;
+  }
+  const appointment = await appointmentService.getAppointmentById(appointmentId);
+  if (!appointment) {
+    throw new AppError('La cita médica no existe', 404);
+  }
+  if (appointment.doctorId !== req.user._id) {
+    throw new AppError('No tiene acceso a esta cita', 403);
+  }
+}
 
 const appointmentValidation = [
   body('patientId').isString().notEmpty().withMessage('El paciente es obligatorio'),
@@ -35,12 +51,15 @@ const appointmentValidation = [
     .optional()
     .isInt({ min: 5, max: 24 * 60 })
     .withMessage('El recordatorio debe estar entre 5 y 1440 minutos'),
+  body('tags').optional().isArray(),
+  body('metadata').optional().isObject(),
 ];
 
 router.post(
   '/',
   authorize('doctor', 'admin', 'patient'),
   appointmentValidation,
+  checkExactBody,
   validate,
   asyncHandler(async (req: AuthenticatedRequest, res) => {
     if (req.user?.role === 'patient' && req.body.patientId !== req.user._id) {
@@ -205,9 +224,12 @@ router.put(
     body('location').optional().isObject(),
     body('reminderMinutesBefore').optional().isInt({ min: 5, max: 24 * 60 }),
     body('tags').optional().isArray(),
+    body('metadata').optional().isObject(),
   ],
+  checkExactBody,
   validate,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req: AuthenticatedRequest, res) => {
+    await ensureDoctorOwnsAppointment(req, req.params.appointmentId);
     const appointment = await appointmentService.updateAppointment(req.params.appointmentId, req.body);
     const response: ApiResponse = {
       success: true,
@@ -218,7 +240,8 @@ router.put(
   })
 );
 
-const cancelHandler = asyncHandler(async (req, res) => {
+const cancelHandler = asyncHandler(async (req: AuthenticatedRequest, res) => {
+  await ensureDoctorOwnsAppointment(req, req.params.appointmentId);
   const appointment = await appointmentService.cancelAppointment(req.params.appointmentId, req.body.reason);
   const response: ApiResponse = {
     success: true,
@@ -232,6 +255,7 @@ router.patch(
   '/:appointmentId/cancel',
   authorize('doctor', 'admin'),
   [param('appointmentId').isMongoId(), body('reason').optional().isString()],
+  checkExactBody,
   validate,
   cancelHandler
 );
@@ -241,6 +265,7 @@ router.post(
   '/:appointmentId/cancel',
   authorize('doctor', 'admin'),
   [param('appointmentId').isMongoId(), body('reason').optional().isString()],
+  checkExactBody,
   validate,
   cancelHandler
 );
@@ -252,9 +277,12 @@ router.patch(
     param('appointmentId').isMongoId(),
     body('scheduledAt').isISO8601().withMessage('La nueva fecha es obligatoria'),
     body('durationMinutes').optional().isInt({ min: 15, max: 240 }),
+    body('metadata').optional().isObject(),
   ],
+  checkExactBody,
   validate,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req: AuthenticatedRequest, res) => {
+    await ensureDoctorOwnsAppointment(req, req.params.appointmentId);
     const appointment = await appointmentService.rescheduleAppointment(req.params.appointmentId, {
       scheduledAt: new Date(req.body.scheduledAt),
       durationMinutes: req.body.durationMinutes,
@@ -274,8 +302,10 @@ router.patch(
   '/:appointmentId/complete',
   authorize('doctor', 'admin'),
   [param('appointmentId').isMongoId(), body('notes').optional().isString()],
+  checkExactBody,
   validate,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req: AuthenticatedRequest, res) => {
+    await ensureDoctorOwnsAppointment(req, req.params.appointmentId);
     const appointment = await appointmentService.completeAppointment(req.params.appointmentId, req.body.notes);
     const response: ApiResponse = {
       success: true,

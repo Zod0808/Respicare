@@ -7,7 +7,7 @@ import { Router } from 'express';
 import { body, param, query } from 'express-validator';
 import { auth, authorize } from '../middleware/auth';
 import { requireRole, requirePermission } from '../middleware/rbac';
-import { validate } from '../middleware/validation';
+import { validate, checkExactBody } from '../middleware/validation';
 import { asyncHandler } from '../utils/asyncHandler';
 import { parsePagination } from '../utils/pagination';
 import referralService from '../services/referralService';
@@ -34,6 +34,8 @@ const referralValidation = [
   body('requestedDate').optional().isISO8601(),
   body('appointmentId').optional().isString(),
   body('medicalHistoryId').optional().isString(),
+  body('attachments').optional().isArray(),
+  body('metadata').optional().isObject(),
 ];
 
 // Crear referido
@@ -41,6 +43,7 @@ router.post(
   '/',
   authorize('doctor', 'admin'),
   referralValidation,
+  checkExactBody,
   validate,
   asyncHandler(async (req: AuthenticatedRequest, res) => {
     if (req.user?.role === 'doctor' && req.body.referringDoctorId !== req.user._id) {
@@ -169,6 +172,8 @@ router.patch(
   body('priority').optional().isIn(['low', 'medium', 'high', 'urgent']),
   body('referredToDoctorId').optional().isString(),
   body('referredToSpecialty').optional().isString(),
+  body('metadata').optional().isObject(),
+  checkExactBody,
   validate,
   asyncHandler(async (req: AuthenticatedRequest, res) => {
     const referral = await referralService.getReferralById(req.params.id);
@@ -207,6 +212,7 @@ router.post(
   param('id').isMongoId().withMessage('ID de referido inválido'),
   body('referredToDoctorId').isString().notEmpty().withMessage('El doctor destino es obligatorio'),
   body('notes').optional().isString().isLength({ max: 5000 }),
+  checkExactBody,
   validate,
   asyncHandler(async (req: AuthenticatedRequest, res) => {
     const referral = await referralService.getReferralById(req.params.id);
@@ -245,6 +251,7 @@ router.post(
   authorize('doctor', 'admin'),
   param('id').isMongoId().withMessage('ID de referido inválido'),
   body('reason').isString().notEmpty().withMessage('La razón del rechazo es obligatoria'),
+  checkExactBody,
   validate,
   asyncHandler(async (req: AuthenticatedRequest, res) => {
     const referral = await referralService.getReferralById(req.params.id);
@@ -282,6 +289,7 @@ router.post(
   authorize('doctor', 'admin'),
   param('id').isMongoId().withMessage('ID de referido inválido'),
   body('notes').optional().isString().isLength({ max: 5000 }),
+  checkExactBody,
   validate,
   asyncHandler(async (req: AuthenticatedRequest, res) => {
     const referral = await referralService.getReferralById(req.params.id);

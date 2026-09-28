@@ -8,6 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 import mongoose from 'mongoose';
 import axios from 'axios';
 import { authenticate, optionalAuth } from '../middleware/auth';
+import { validateRequest } from '../middleware/validation';
+import { createConversationSchema, addMessageSchema } from '../validators/chatConversationsValidators';
 import { AuthenticatedRequest } from '../types';
 import { logger } from '../utils/logger';
 
@@ -55,7 +57,7 @@ const normalizeStringArray = (items: unknown): string[] => {
 // ---------------------------------------------------------------------------
 // POST /api/chat-conversations — create new session
 // ---------------------------------------------------------------------------
-router.post('/', optionalAuth, async (req: AuthenticatedRequest, res: Response) => {
+router.post('/', optionalAuth, validateRequest(createConversationSchema), async (req: AuthenticatedRequest, res: Response) => {
   try {
     const Model = getModel();
     const { userId, userInfo, location, metadata } = req.body;
@@ -85,15 +87,11 @@ router.post('/', optionalAuth, async (req: AuthenticatedRequest, res: Response) 
 // ---------------------------------------------------------------------------
 // POST /api/chat-conversations/:sessionId/messages — send message + get AI reply
 // ---------------------------------------------------------------------------
-router.post('/:sessionId/messages', optionalAuth, async (req: AuthenticatedRequest, res: Response) => {
+router.post('/:sessionId/messages', optionalAuth, validateRequest(addMessageSchema), async (req: AuthenticatedRequest, res: Response) => {
   try {
     const Model = getModel();
     const { sessionId } = req.params;
     const { role, content, metadata } = req.body;
-
-    if (!role || !content) {
-      return res.status(400).json({ success: false, message: 'Role and content are required' });
-    }
 
     const conversation = await Model.findOne({ sessionId });
     if (!conversation) {

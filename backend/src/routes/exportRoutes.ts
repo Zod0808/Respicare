@@ -12,7 +12,7 @@ import {
   getExportHistory
 } from '../controllers/exportController';
 import { auth } from '../middleware/auth';
-import { validate } from '../middleware/validation';
+import { validate, checkExactBody } from '../middleware/validation';
 
 const router = Router();
 
@@ -68,14 +68,14 @@ const paginationValidation = [
  * @desc    Export medical histories in various formats
  * @access  Private (Patient, Doctor, Admin)
  */
-router.post('/medical-histories', exportMedicalHistoriesValidation, validate, exportMedicalHistories);
+router.post('/medical-histories', exportMedicalHistoriesValidation, checkExactBody, validate, exportMedicalHistories);
 
 /**
  * @route   POST /api/v1/export/user-statistics
  * @desc    Export user statistics
  * @access  Private (Admin only)
  */
-router.post('/user-statistics', exportUserStats);
+router.post('/user-statistics', checkExactBody, exportUserStats);
 
 /**
  * @route   GET /api/v1/export/formats

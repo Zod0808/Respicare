@@ -107,9 +107,15 @@ export const createFhirResource = asyncHandler(
     // Asegurar resourceType
     resource.resourceType = resourceType;
 
-    // Validar estructura básica FHIR
-    if (!resource.resourceType) {
-      throw new AppError('resourceType es requerido en el body', 400);
+    // Validar el recurso contra las reglas de fhirValidator antes de persistir;
+    // sin esto, el endpoint solo comprobaba el resourceType y guardaba
+    // cualquier estructura, aunque le faltaran campos requeridos por FHIR.
+    const validationResult = validateFhirResource(resource);
+    if (!validationResult.valid) {
+      throw new AppError(
+        `Recurso FHIR inválido: ${validationResult.errors.map((e) => e.message).join(', ')}`,
+        400,
+      );
     }
 
     try {
@@ -195,6 +201,22 @@ export const patchFhirResource = asyncHandler(
       throw new AppError('patchOperations debe ser un array de operaciones JSON Patch', 400);
     }
 
+    const validOps = ['add', 'remove', 'replace', 'move', 'copy', 'test'];
+    const invalidOperation = patchOperations.find((operation) => {
+      const op = operation as Record<string, unknown>;
+      const hasValidOp = typeof op.op === 'string' && validOps.includes(op.op);
+      const hasValidPath = typeof op.path === 'string' && op.path.startsWith('/');
+      const needsFrom = op.op === 'move' || op.op === 'copy';
+      const hasValidFrom = !needsFrom || (typeof op.from === 'string' && (op.from as string).startsWith('/'));
+      return !hasValidOp || !hasValidPath || !hasValidFrom;
+    });
+    if (invalidOperation) {
+      throw new AppError(
+        'patchOperations debe seguir el formato JSON Patch (RFC 6902): { op, path, value? }',
+        400,
+      );
+    }
+
     try {
       const updatedResource = await fhirService.patchResource<FhirResource>(
         resourceType,
@@ -236,6 +258,15 @@ export const processFhirBundle = asyncHandler(
 
     if (!['transaction', 'batch'].includes(bundle.type)) {
       throw new AppError('Bundle type debe ser "transaction" o "batch"', 400);
+    }
+
+    const entryResources = (bundle.entry || []).map((entry) => entry.resource);
+    const validationResult = validateFhirResources(entryResources);
+    if (!validationResult.valid) {
+      throw new AppError(
+        `Bundle contiene recursos FHIR inválidos: ${validationResult.errors.map((e) => `${e.path}: ${e.message}`).join(', ')}`,
+        400,
+      );
     }
 
     try {

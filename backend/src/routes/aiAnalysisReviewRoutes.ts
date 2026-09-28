@@ -14,7 +14,7 @@
 import { Router } from 'express';
 import { body, param } from 'express-validator';
 import { auth, authorize } from '../middleware/auth';
-import { validate } from '../middleware/validation';
+import { validate, checkExactBody } from '../middleware/validation';
 import { asyncHandler } from '../utils/asyncHandler';
 import { parsePagination } from '../utils/pagination';
 import { aiAnalysisReviewService } from '../services/aiAnalysisReviewService';
@@ -86,6 +86,7 @@ router.post(
   body('signature.signatureMethod')
     .isIn(['digital', 'typed', 'click_to_sign'])
     .withMessage('Método de firma inválido'),
+  checkExactBody,
   validate,
   asyncHandler(async (req: AuthenticatedRequest, res) => {
     if (req.body.decision === 'adjusted' && !req.body.adjustedDiagnosis && !req.body.adjustedUrgency) {

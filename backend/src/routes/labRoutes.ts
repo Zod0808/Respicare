@@ -17,7 +17,7 @@ import {
 import { authorize } from '../middleware/auth';
 import { authenticate } from '../middleware/auth';
 import { requirePermission } from '../middleware/rbac';
-import { validate } from '../middleware/validation';
+import { validate, checkExactBody } from '../middleware/validation';
 
 const router = Router();
 
@@ -39,6 +39,17 @@ const patientIdValidation = [
 
 const resultIdValidation = [
   param('resultId').isMongoId().withMessage('resultId debe ser un ObjectId válido'),
+];
+
+const flagForReviewValidation = [
+  ...resultIdValidation,
+  body('reason').optional().isString(),
+];
+
+const importExternalValidation = [
+  body('patientId').isString().notEmpty().withMessage('patientId es requerido'),
+  body('startDate').optional().isISO8601(),
+  body('endDate').optional().isISO8601(),
 ];
 
 const importValidation = [
@@ -67,11 +78,12 @@ router.get(
   getLabResults,
 );
 
-// List all abnormal results (any patient)
+// List all abnormal results across all patients (solo doctor/admin: un
+// paciente con permiso fhir:read no debe poder ver resultados de otros)
 router.get(
   '/results/abnormal',
   authenticate,
-  requirePermission('fhir:read'),
+  authorize('doctor', 'admin'),
   listAbnormalResults,
 );
 
@@ -152,6 +164,7 @@ router.post(
   authenticate,
   requirePermission('fhir:update'),
   resultIdValidation,
+  checkExactBody,
   validate,
   markAsReviewed,
 );
@@ -161,7 +174,8 @@ router.post(
   '/results/:resultId/flag',
   authenticate,
   requirePermission('fhir:update'),
-  resultIdValidation,
+  flagForReviewValidation,
+  checkExactBody,
   validate,
   flagForReview,
 );
@@ -172,6 +186,7 @@ router.post(
   authenticate,
   requirePermission('fhir:create'),
   importValidation,
+  checkExactBody,
   validate,
   bulkImportResults,
 );
@@ -181,6 +196,9 @@ router.post(
   '/results/import/external',
   authenticate,
   requirePermission('integrations:manage'),
+  importExternalValidation,
+  checkExactBody,
+  validate,
   importAndSaveResults,
 );
 

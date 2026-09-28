@@ -25,7 +25,7 @@ import {
   scheduleMedicationReminder,
 } from '../controllers/alertController';
 import { auth, authenticate, authorize, authorizeInternalOrRoles, INTERNAL_REQUEST_HEADER } from '../middleware/auth';
-import { validate } from '../middleware/validation';
+import { validate, checkExactBody } from '../middleware/validation';
 import { config } from '../config/config';
 
 const router = Router();
@@ -59,6 +59,7 @@ const criticalSymptomValidation = [
   body('patientId').optional().isString(),
   body('doctorId').optional().isString(),
   body('analysisId').optional().isString(),
+  body('metadata').optional().isObject(),
 ];
 
 const medicationReminderValidation = [
@@ -95,6 +96,7 @@ const doctorNotificationValidation = [
   body('triggeredBy')
     .isIn(['symptom_analysis', 'medication_schedule', 'follow_up_rule', 'manual', 'system', 'doctor_portal'])
     .withMessage('triggeredBy no es válido'),
+  body('metadata').optional().isObject(),
 ];
 
 const acknowledgeValidation = [param('alertId').isMongoId().withMessage('alertId inválido')];
@@ -142,6 +144,7 @@ router.post(
   authOrInternal,
   authorizeInternalOrRoles(criticalRoles, allowedInternalTokens),
   criticalSymptomValidation,
+  checkExactBody,
   validate,
   createCriticalSymptomAlert
 );
@@ -150,15 +153,17 @@ router.post(
   auth,
   authorize('doctor', 'patient', 'admin'),
   medicationReminderValidation,
+  checkExactBody,
   validate,
   scheduleMedicationReminder
 );
-router.post('/follow-up', auth, authorize('doctor', 'admin'), followUpValidation, validate, scheduleFollowUpAlert);
+router.post('/follow-up', auth, authorize('doctor', 'admin'), followUpValidation, checkExactBody, validate, scheduleFollowUpAlert);
 router.post(
   '/doctor-notifications',
   authOrInternal,
   authorizeInternalOrRoles(['doctor', 'admin'], allowedInternalTokens),
   doctorNotificationValidation,
+  checkExactBody,
   validate,
   notifyDoctorForCriticalCase
 );

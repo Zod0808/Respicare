@@ -7,6 +7,8 @@
 import { Router, Request, Response } from 'express';
 import ConsentLog from '../models/ConsentLog';
 import { authenticate } from '../middleware/auth';
+import { validateRequest } from '../middleware/validation';
+import { registerConsentSchema, revokeConsentSchema } from '../validators/consentLogValidators';
 import { logger } from '../utils/logger';
 import { AuthenticatedRequest } from '../types';
 
@@ -16,7 +18,7 @@ const router = Router();
  * POST /api/v1/consent
  * Registrar consentimiento de usuario
  */
-router.post('/', authenticate, async (req: Request, res: Response) => {
+router.post('/', authenticate, validateRequest(registerConsentSchema), async (req: Request, res: Response) => {
   try {
     const user = (req as AuthenticatedRequest).user;
     if (!user) {
@@ -24,13 +26,6 @@ router.post('/', authenticate, async (req: Request, res: Response) => {
     }
 
     const { consents, version } = req.body;
-
-    if (!consents || !Array.isArray(consents)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Los consentimientos son obligatorios y deben ser un array',
-      });
-    }
 
     const consentLog = new ConsentLog({
       userId: user._id?.toString(),
@@ -144,7 +139,7 @@ router.get('/:userId', authenticate, async (req: Request, res: Response) => {
  * POST /api/v1/consent/revoke
  * Revocar consentimiento del usuario
  */
-router.post('/revoke', authenticate, async (req: Request, res: Response) => {
+router.post('/revoke', authenticate, validateRequest(revokeConsentSchema), async (req: Request, res: Response) => {
   try {
     const user = (req as AuthenticatedRequest).user;
     if (!user) {

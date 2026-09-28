@@ -1,15 +1,18 @@
 import { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
-import { validationResult } from 'express-validator';
+import { validationResult, checkExact } from 'express-validator';
 import { AppError } from '../utils/AppError';
 
 // Middleware para validar requests con Joi
-export const validateRequest = (schema: Joi.ObjectSchema) => {
+// `options` permite relajar allowUnknown/stripUnknown para payloads de terceros
+// (p.ej. webhooks de proveedores SMS) cuya forma no controlamos.
+export const validateRequest = (schema: Joi.ObjectSchema, options?: Joi.ValidationOptions) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const { error } = schema.validate(req.body, {
       abortEarly: false, // Mostrar todos los errores
       stripUnknown: true, // Eliminar campos no definidos en el schema
-      allowUnknown: false // No permitir campos desconocidos
+      allowUnknown: false, // No permitir campos desconocidos
+      ...options
     });
 
     if (error) {
@@ -71,6 +74,14 @@ export const validateParams = (schema: Joi.ObjectSchema) => {
     next();
   };
 };
+
+// Rechaza cualquier campo del body no cubierto por los body() de express-validator
+// que se hayan ejecutado antes en la misma cadena de middlewares. Debe colocarse
+// después de los body()/param() de la ruta y antes de `validate`.
+export const checkExactBody = checkExact(undefined, {
+  locations: ['body'],
+  message: 'Se encontraron campos no reconocidos en el cuerpo de la solicitud'
+});
 
 // Middleware para validar con express-validator
 export const validate = (req: Request, res: Response, next: NextFunction) => {

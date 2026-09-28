@@ -17,7 +17,6 @@ import { logger } from '../utils/logger';
 import {
   CACHE_NAMESPACES,
   buildCacheKey,
-  deleteCachedValue,
   getCachedValue,
   invalidateCacheByPattern,
   setCachedValue,
@@ -198,7 +197,9 @@ export const getMedicalHistories = asyncHandler(async (req: AuthenticatedRequest
 export const getMedicalHistoryById = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
   const { id } = req.params;
 
-  const cacheKey = `${CACHE_NAMESPACES.MEDICAL_HISTORY}:${id}`;
+  // Namespaced por usuario: el registro completo (nombre, diagnóstico, síntomas) solo
+  // puede quedar en cache para quien tiene permiso de verlo, nunca compartido entre usuarios.
+  const cacheKey = `${CACHE_NAMESPACES.MEDICAL_HISTORY}:${id}:${req.user?._id?.toString() ?? 'anonymous'}`;
   const cachedHistory = await getCachedValue<ApiResponse>(cacheKey);
   if (cachedHistory) {
     res.setHeader('X-Cache-Status', 'HIT');
@@ -262,7 +263,7 @@ export const updateMedicalHistory = asyncHandler(async (req: AuthenticatedReques
 
   await invalidateCacheByPattern(`${CACHE_NAMESPACES.MEDICAL_HISTORIES}:${req.user?._id ?? '*'}:*`);
   await invalidateCacheByPattern(`${CACHE_NAMESPACES.MEDICAL_HISTORIES}:anonymous:*`);
-  await deleteCachedValue(`${CACHE_NAMESPACES.MEDICAL_HISTORY}:${id}`);
+  await invalidateCacheByPattern(`${CACHE_NAMESPACES.MEDICAL_HISTORY}:${id}:*`);
   await invalidateCacheByPattern(`${CACHE_NAMESPACES.MEDICAL_HISTORY_STATS}:${req.user?._id ?? '*'}:*`);
   await invalidateCacheByPattern(`${CACHE_NAMESPACES.MEDICAL_HISTORY_DIAGNOSES}:${req.user?._id ?? '*'}:*`);
   await invalidateCacheByPattern(`${CACHE_NAMESPACES.MEDICAL_HISTORY_AGE_STATS}:${req.user?._id ?? '*'}:*`);
@@ -300,7 +301,7 @@ export const deleteMedicalHistory = asyncHandler(async (req: AuthenticatedReques
 
   await invalidateCacheByPattern(`${CACHE_NAMESPACES.MEDICAL_HISTORIES}:${req.user?._id ?? '*'}:*`);
   await invalidateCacheByPattern(`${CACHE_NAMESPACES.MEDICAL_HISTORIES}:anonymous:*`);
-  await deleteCachedValue(`${CACHE_NAMESPACES.MEDICAL_HISTORY}:${id}`);
+  await invalidateCacheByPattern(`${CACHE_NAMESPACES.MEDICAL_HISTORY}:${id}:*`);
   await invalidateCacheByPattern(`${CACHE_NAMESPACES.MEDICAL_HISTORY_STATS}:${req.user?._id ?? '*'}:*`);
   await invalidateCacheByPattern(`${CACHE_NAMESPACES.MEDICAL_HISTORY_DIAGNOSES}:${req.user?._id ?? '*'}:*`);
   await invalidateCacheByPattern(`${CACHE_NAMESPACES.MEDICAL_HISTORY_AGE_STATS}:${req.user?._id ?? '*'}:*`);
@@ -455,11 +456,19 @@ export const getMedicalHistoriesByLocation = asyncHandler(async (req: Authentica
     throw new AppError('Latitud y longitud son requeridas', 400);
   }
 
-  const histories = await MedicalHistory.findByLocation(
+  let histories = await MedicalHistory.findByLocation(
     Number(latitude),
     Number(longitude),
     Number(radius)
   );
+
+  // Un doctor solo puede ver historias de sus propios pacientes; no existe un
+  // modelo de asignación doctor-paciente, así que el ownership se filtra aquí.
+  if (req.user?.role !== 'admin') {
+    histories = histories.filter(
+      (history) => history.doctorId?.toString() === req.user?._id?.toString()
+    );
+  }
 
   const response: ApiResponse = {
     success: true,
@@ -478,10 +487,16 @@ export const getMedicalHistoriesByDateRange = asyncHandler(async (req: Authentic
     throw new AppError('Fecha de inicio y fecha de fin son requeridas', 400);
   }
 
-  const histories = await MedicalHistory.findByDateRange(
+  let histories = await MedicalHistory.findByDateRange(
     new Date(startDate as string),
     new Date(endDate as string)
   );
+
+  if (req.user?.role !== 'admin') {
+    histories = histories.filter(
+      (history) => history.doctorId?.toString() === req.user?._id?.toString()
+    );
+  }
 
   const response: ApiResponse = {
     success: true,
@@ -504,6 +519,12 @@ export const exportMedicalHistories = asyncHandler(async (req: AuthenticatedRequ
     );
   } else {
     histories = await MedicalHistory.find().sort({ date: -1 });
+  }
+
+  if (req.user?.role !== 'admin') {
+    histories = histories.filter(
+      (history) => history.doctorId?.toString() === req.user?._id?.toString()
+    );
   }
 
   if (format === 'csv') {

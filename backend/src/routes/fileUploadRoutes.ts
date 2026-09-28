@@ -15,7 +15,7 @@ import {
 import { uploadFiles } from '../services/fileUploadService';
 import { auth } from '../middleware/auth';
 import { requireRole } from '../middleware/rbac';
-import { validate } from '../middleware/validation';
+import { validate, checkExactBody } from '../middleware/validation';
 
 const router = Router();
 
@@ -79,6 +79,6 @@ router.get('/stats', getUploadStats);
  * @desc    Clean up old files
  * @access  Private (Admin only)
  */
-router.post('/cleanup', cleanupValidation, validate, cleanupOldFiles);
+router.post('/cleanup', cleanupValidation, checkExactBody, validate, cleanupOldFiles);
 
 export default router;

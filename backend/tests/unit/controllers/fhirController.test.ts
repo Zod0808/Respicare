@@ -72,7 +72,12 @@ const expectStatusError = (next: jest.Mock, code: number) => {
 };
 
 describe('fhirController', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => {
+    jest.clearAllMocks();
+    // Por defecto los recursos son válidos; los tests de rechazo sobreescriben este mock.
+    validateFhirResource.mockReturnValue({ valid: true, errors: [], warnings: [] });
+    validateFhirResources.mockReturnValue({ valid: true, errors: [], warnings: [] });
+  });
 
   describe('getFhirResource', () => {
     it('retorna 200 con el recurso', async () => {
