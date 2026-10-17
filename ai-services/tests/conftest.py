@@ -51,6 +51,10 @@ if 'torch' not in sys.modules:
         torch_mock.__version__ = "1.0.0"
         torch_mock.optim = MagicMock()
         torch_mock.nn = MagicMock()
+        # Needs a real ModuleSpec for the same reason as librosa/soundfile above:
+        # transformers calls importlib.util.find_spec("torch"), which raises
+        # ValueError if the mocked module has no __spec__.
+        torch_mock.__spec__ = _machinery.ModuleSpec('torch', None)
         sys.modules['torch'] = torch_mock
         # Also mock common torch submodules
         sys.modules['torch.cuda'] = torch_mock.cuda
