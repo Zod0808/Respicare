@@ -1,3 +1,23 @@
+/**
+ * CP-004 | Motor de Reglas de Emergencia Clinica (RF-004)
+ * Tipo   : Prueba Unitaria - EmergencyController
+ *
+ * Entorno de prueba:
+ *   Framework : Jest (mocks de EmergencyService, logger y modelos)
+ *   Alcance   : emergencyController.ts - createEmergency, getStatus, cancelEmergency,
+ *               getActiveEmergencies, detectEmergency, getAmbulanceInfo,
+ *               getMedicalInfo, getNotifications, transferPatient
+ *
+ * Que se verifica:
+ *   [1] createEmergency retorna 201 con datos validos y 400 con campos faltantes/invalidos
+ *   [2] getStatus retorna 200 con emergencia existente y 404 si no existe
+ *   [3] cancelEmergency retorna 200 al cancelar y 500 si el servicio falla
+ *   [4] getActiveEmergencies retorna 200 solo si hay userId autenticado
+ *   [5] detectEmergency retorna 201 ante sintomas criticos y 200 si no son criticos
+ *   [6] getAmbulanceInfo retorna lista de ambulancias despachadas
+ *   [7] getMedicalInfo retorna 404 si la emergencia no existe o no tiene paciente
+ *   [8] transferPatient valida hospitalId y patientId antes de procesar
+ */
 import * as controller from '../../../src/controllers/emergencyController';
 
 jest.mock('../../../src/utils/logger', () => ({

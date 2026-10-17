@@ -1,5 +1,19 @@
 /**
- * Unit tests for authValidators (Joi schemas)
+ * CP-001 | Registro y Autenticacion de Usuarios (RF-001)
+ * Tipo   : Prueba Unitaria - Validadores Joi
+ *
+ * Entorno de prueba:
+ *   Framework : Jest (sin servidor HTTP, validacion en memoria)
+ *   Alcance   : authValidators.ts - registerSchema, loginSchema, refreshSchema,
+ *               updateProfileSchema, changePasswordSchema
+ *
+ * Que se verifica:
+ *   [1] registerSchema acepta datos validos y asigna rol "patient" por defecto
+ *   [2] registerSchema rechaza email invalido, contrasena debil y campos faltantes
+ *   [3] loginSchema acepta credenciales validas y rechaza campos faltantes
+ *   [4] refreshSchema valida presencia y formato del refresh token
+ *   [5] updateProfileSchema acepta name y avatar URL valida; rechaza URLs malformadas
+ *   [6] changePasswordSchema impone politica de seguridad en nueva contrasena
  */
 
 import {

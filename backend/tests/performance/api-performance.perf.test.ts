@@ -1,9 +1,27 @@
 /**
- * API Performance Tests — SLA de Tiempos de Respuesta
+ * CP-001 / CP-004 / CP-007 / CP-009 | SLA de Tiempos de Respuesta (RF-001, RF-004, RF-007, RF-009)
+ * Tipo   : Prueba de Rendimiento — Umbrales SLA por endpoint
+ *
+ * Entorno de prueba:
+ *   Framework : Jest + Supertest
+ *   Base datos: MongoDB real en contenedor Docker (respicare-test)
+ *   Servidor  : Express completo con middlewares activos
+ *   Metrica   : mean (tiempo medio) y p95 (percentil 95) sobre N repeticiones
+ *
+ * Casos y SLA cubiertos:
+ *   CP-001 — POST /auth/login:       mean < 300ms, p95 < 500ms
+ *   CP-001 — POST /auth/register:    mean < 300ms, p95 < 500ms
+ *   CP-001 — GET  /auth/profile:     mean < 200ms, p95 < 400ms
+ *   CP-004 — POST /emergency:        mean < 350ms, p95 < 600ms
+ *   CP-004 — GET  /emergency/active: mean < 200ms, p95 < 400ms
+ *   CP-007 — GET  /analytics/dashboard: mean < 400ms, p95 < 700ms
+ *   CP-007 — GET  /analytics/ml:     mean < 400ms, p95 < 700ms
+ *   CP-009 — GET  /alerts:           mean < 200ms, p95 < 400ms
+ *   CP-009 — POST /alerts/critical-symptom: mean < 350ms, p95 < 600ms
  *
  * Estrategia:
  * - Mide tiempos de respuesta reales con supertest contra Express + MongoDB en memoria
- * - Verifica que cada endpoint crítico cumple los umbrales SLA definidos
+ * - Verifica que cada endpoint critico cumple los umbrales SLA definidos
  * - Prueba N repeticiones y computa mean, p95, p99
  * - No depende de servicios externos (AI, SMS, Redis real) — todos mockeados en setup.ts
  *

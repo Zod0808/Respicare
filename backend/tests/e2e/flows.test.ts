@@ -1,6 +1,30 @@
 /**
- * End-to-End Tests - Flujos Completos
- * Tests que verifican flujos completos de usuario desde inicio hasta fin
+ * CP-001 / CP-007 | Flujos Completos de Usuario (RF-001, RF-006, RF-007)
+ * Tipo   : Prueba E2E (Extremo a Extremo)
+ *
+ * Entorno de prueba:
+ *   Framework : Jest + Supertest
+ *   Base datos: MongoDB real en contenedor Docker (respicare-test)
+ *   Servidor  : Express completo con todos los middlewares activos
+ *   Alcance   : Flujos completos de usuario de principio a fin sin mocks de capa HTTP
+ *
+ * Casos cubiertos:
+ *   CP-001 — Registro -> login -> historia medica -> dashboard
+ *   CP-001 — Autenticacion con renovacion de access token (refresh)
+ *   CP-001 — Gestion de perfil, cambio de contrasena, desactivacion de cuenta
+ *   CP-001 — Administrador gestiona usuarios del sistema
+ *   CP-007 — Medico recibe diagnostico IA con explicacion SHAP y lo firma electronicamente
+ *   CP-007 — Analisis de sintomas con integracion al servicio de IA
+ *   CP-007 — Validacion de coherencia medica ante sintomas contradictorios
+ *
+ * Que se verifica:
+ *   [1] Flujo completo: registro -> login -> creacion de historia medica -> consulta dashboard
+ *   [2] Flujo de autenticacion con renovacion de access token via refresh token
+ *   [3] Gestion de perfil: actualizacion de datos y cambio de contrasena
+ *   [4] Recuperacion de contrasena por correo electronico
+ *   [5] Desactivacion de cuenta bloquea accesos posteriores
+ *   [6] Medico recibe diagnostico con factores SHAP y lo aprueba con firma electronica
+ *   [7] Sistema rechaza prediccion con incoherencia clinica y exige revision medica
  */
 
 import request from 'supertest';

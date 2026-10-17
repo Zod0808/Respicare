@@ -1,3 +1,24 @@
+/**
+ * CP-004 | Motor de Reglas de Emergencia Clinica (RF-004)
+ * Tipo   : Prueba Unitaria - EmergencyService
+ *
+ * Entorno de prueba:
+ *   Framework : Jest (mocks de axios, SMS service y logger)
+ *   Alcance   : emergencyService.ts - createEmergency, getStatus, cancelEmergency,
+ *               getActiveEmergencies, detectEmergencyFromSymptoms,
+ *               dispatchToEmergencyService, notifySMSContacts
+ *
+ * Que se verifica:
+ *   [1] Inicializacion con configuracion por defecto y parcial
+ *   [2] createEmergency valida coordenadas GPS (lat -90/90, lng -180/180)
+ *   [3] createEmergency en modo simulado cuando no hay cliente HTTP externo
+ *   [4] Despacho automatico de ambulancia y notificacion a hospitales
+ *   [5] Continua sin interrumpir si falla despacho de ambulancia o notificacion
+ *   [6] getStatus retorna null para emergencias que no existen en el mapa interno
+ *   [7] cancelEmergency actualiza estado a "cancelled" de forma idempotente
+ *   [8] detectEmergencyFromSymptoms crea emergencia ante disnea+cianosis criticos
+ *   [9] Envio de SMS a contactos configurados; atrapa error sin bloquear creacion
+ */
 import { EmergencyService, EmergencyRequest } from '../../../src/services/emergencyService';
 
 jest.mock('../../../src/utils/logger', () => ({

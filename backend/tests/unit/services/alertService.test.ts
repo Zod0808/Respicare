@@ -1,3 +1,23 @@
+/**
+ * CP-009 | Sistema de Alertas y Notificaciones (RF-009)
+ * Tipo   : Prueba Unitaria - AlertService
+ *
+ * Entorno de prueba:
+ *   Framework : Jest (mocks de Alert model, notificationService y cacheService)
+ *   Alcance   : alertService.ts - createAlert, dispatchAlert, acknowledgeAlert,
+ *               getAlertSummary, processAlert
+ *
+ * Que se verifica:
+ *   [1] createAlert crea alerta critica y la despacha inmediatamente
+ *   [2] createAlert programa recordatorio de medicamento en cola (urgencia no critica)
+ *   [3] createAlert programa seguimiento medico con canales preferidos del usuario
+ *   [4] dispatchAlert despacha de inmediato cuando la urgencia es critica
+ *   [5] dispatchAlert encola cuando la urgencia no es critica
+ *   [6] acknowledgeAlert marca la alerta como reconocida y limpia la cache asociada
+ *   [7] getAlertSummary retorna resumen desde cache si esta disponible
+ *   [8] getAlertSummary consulta el modelo cuando no hay cache y almacena el resultado
+ *   [9] processAlert delega el procesamiento al notificationService
+ */
 import alertService from '../../../src/services/alertService';
 import { notificationService } from '../../../src/services/notificationService';
 import AlertModel from '../../../src/models/Alert';

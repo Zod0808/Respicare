@@ -1,5 +1,22 @@
 /**
- * Integration tests for alert endpoints
+ * CP-009 | Sistema de Alertas y Notificaciones (RF-009)
+ * Tipo   : Prueba de Integracion
+ *
+ * Entorno de prueba:
+ *   Framework : Jest + Supertest
+ *   Base datos: MongoDB real en contenedor Docker (respicare-test)
+ *   Servidor  : Express completo con todos los middlewares activos
+ *   Alcance   : /api/v1/alerts - alerta critica, recordatorio medicamento, listar, reconocer
+ *
+ * Que se verifica:
+ *   [1] POST /alerts/critical-symptom crea alerta critica con categoria y prioridad correctas
+ *   [2] POST /alerts/critical-symptom rechaza rol patient con 403
+ *   [3] POST /alerts/critical-symptom acepta solicitudes internas sin JWT (INTERNAL_REQUEST_HEADER)
+ *   [4] POST /alerts/medication-reminders programa alerta con status scheduled y scheduledAt
+ *   [5] GET /alerts retorna alertas del usuario autenticado
+ *   [6] GET /alerts permite a admin filtrar por userId y prioridad
+ *   [7] PUT /alerts/:id/acknowledge marca alerta como reconocida por su dueno
+ *   [8] GET /alerts/summary retorna resumen de alertas (solo admin)
  */
 
 import request from 'supertest';

@@ -1,6 +1,21 @@
 /**
- * Integration tests for emergency endpoints
- * Tests emergency dispatch and hospital notification flow
+ * CP-004 | Motor de Reglas de Emergencia Clinica (RF-004)
+ * Tipo   : Prueba de Integracion
+ *
+ * Entorno de prueba:
+ *   Framework : Jest + Supertest
+ *   Base datos: MongoDB real en contenedor Docker (respicare-test)
+ *   Servidor  : Express completo con todos los middlewares activos
+ *   Alcance   : /api/v1/emergency - crear, detectar, listar activas, estado, ambulancia
+ *
+ * Que se verifica:
+ *   [1] POST /emergency con datos validos retorna 201 y persiste en MongoDB
+ *   [2] POST /emergency retorna 401 sin autenticacion
+ *   [3] Validacion de emergencyType, severity y description (400 en cada caso)
+ *   [4] POST /emergency/detect detecta emergencia desde sintomas criticos con ubicacion
+ *   [5] GET /emergency/active lista emergencias activas (solo admin)
+ *   [6] GET /emergency/:id retorna estado de emergencia existente
+ *   [7] GET /emergency/:id/ambulance-info retorna informacion de ambulancia despachada
  */
 
 import request from 'supertest';

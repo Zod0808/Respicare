@@ -1,3 +1,20 @@
+/**
+ * CP-001 | Registro y Autenticacion de Usuarios (RF-001)
+ * Tipo   : Prueba Unitaria - Middleware de Autenticacion
+ *
+ * Entorno de prueba:
+ *   Framework : Jest (mocks de User model y JWT)
+ *   Alcance   : middleware/auth.ts - authenticate, authorize, authorizeOwnerOrAdmin, optionalAuth
+ *
+ * Que se verifica:
+ *   [1] authenticate lanza AppError si no hay token en la cabecera
+ *   [2] authenticate rechaza token invalido o expirado (JWT errors)
+ *   [3] authenticate lanza AppError si el usuario no existe o esta inactivo
+ *   [4] authenticate adjunta el usuario al request cuando el token es valido
+ *   [5] authorize bloquea roles no permitidos y permite los autorizados
+ *   [6] authorizeOwnerOrAdmin permite acceso al propietario del recurso y al admin
+ *   [7] optionalAuth adjunta usuario si el token es valido, continua sin el si no lo hay
+ */
 import { AppError } from '../../../src/utils/AppError';
 import { authenticate, authorize, authorizeOwnerOrAdmin, optionalAuth } from '../../../src/middleware/auth';
 

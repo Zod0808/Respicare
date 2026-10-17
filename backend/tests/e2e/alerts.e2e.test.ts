@@ -1,6 +1,19 @@
 /**
- * E2E Tests - Flujo de Alertas y Notificaciones Médicas
- * Verifica el ciclo completo: creación → distribución → reconocimiento → resolución
+ * CP-009 | Sistema de Alertas y Notificaciones (RF-009)
+ * Tipo   : Prueba E2E (Extremo a Extremo)
+ *
+ * Entorno de prueba:
+ *   Framework : Jest + Supertest
+ *   Base datos: MongoDB real en contenedor Docker (respicare-test)
+ *   Servidor  : Express completo con todos los middlewares activos
+ *   Alcance   : Ciclo completo alerta -> distribucion -> reconocimiento -> resolucion
+ *
+ * Que se verifica:
+ *   [1] Ciclo completo de alerta: creacion -> despacho multicanal -> reconocimiento por medico
+ *   [2] Alerta epidemiologica generada ante brote de casos en zona geografica
+ *   [3] Alerta automatica por metrica de wearable fuera de rango normal (saturacion O2, FC)
+ *   [4] Notificacion SMS enviada y confirmada para alertas de nivel critico
+ *   [5] Recuperacion del historial completo de alertas con paginacion correcta
  */
 
 import request from 'supertest';

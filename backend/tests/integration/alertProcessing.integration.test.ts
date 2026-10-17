@@ -1,5 +1,18 @@
 /**
- * Integration tests for alert scheduling and dispatch pipelines
+ * CP-009 | Sistema de Alertas y Notificaciones - Pipeline de Despacho (RF-009)
+ * Tipo   : Prueba de Integracion
+ *
+ * Entorno de prueba:
+ *   Framework : Jest (stub de Redis en memoria, MongoDB Memory Server)
+ *   Base datos: MongoDB + Redis stub (zAdd/zRangeByScore/zRem simulados en array)
+ *   Servidor  : Servicios directos (alertService, notificationService) sin HTTP
+ *   Alcance   : Pipeline Redis→MongoDB: programar, procesar cola, despachar pendientes
+ *
+ * Que se verifica:
+ *   [1] scheduleMedicationReminder agrega entrada a la cola Redis con score = scheduleTime
+ *   [2] processScheduledQueue despacha la alerta vencida y la marca como delivered en MongoDB
+ *   [3] processPendingAlerts despacha alertas en estado pending directamente desde MongoDB
+ *   [4] Alertas futuras no son procesadas por processScheduledQueue (permanecen en cola)
  */
 
 import mongoose from 'mongoose';

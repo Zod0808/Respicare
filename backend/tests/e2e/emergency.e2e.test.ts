@@ -1,6 +1,19 @@
 /**
- * E2E Tests - Flujo de Emergencias Médicas
- * Verifica el ciclo completo: creación → escalación → ambulancia → resolución
+ * CP-004 | Motor de Reglas de Emergencia Clinica (RF-004)
+ * Tipo   : Prueba E2E (Extremo a Extremo)
+ *
+ * Entorno de prueba:
+ *   Framework : Jest + Supertest
+ *   Base datos: MongoDB real en contenedor Docker (respicare-test)
+ *   Servidor  : Express completo con todos los middlewares activos
+ *   Alcance   : Ciclo completo emergencia -> despacho ambulancia -> hospital -> resolucion
+ *
+ * Que se verifica:
+ *   [1] Ciclo completo: reporte de emergencia -> escalacion -> despacho de ambulancia -> resolucion
+ *   [2] Flujo de comunicacion con hospital: transferencia de paciente critico
+ *   [3] Consulta de informacion medica de emergencia en tiempo real
+ *   [4] Acceso publico a endpoints de emergencia (sin autenticacion requerida)
+ *   [5] Escenario de emergencia masiva: multiples casos simultaneos sin conflictos
  */
 
 import request from 'supertest';

@@ -1,5 +1,22 @@
 /**
- * Unit tests for Authentication Controller
+ * CP-001 | Registro y Autenticacion de Usuarios (RF-001)
+ * Tipo   : Prueba Unitaria - AuthController
+ *
+ * Entorno de prueba:
+ *   Framework : Jest + Supertest
+ *   Base datos: MongoDB en contenedor Docker (respicare-test)
+ *   Servidor  : Express levantado por appInstance (puerto dinamico)
+ *   Alcance   : POST /register, /login, /refresh-token, /logout, GET+PUT /profile,
+ *               PUT /change-password, PUT /deactivate, GET /stats, GET /users
+ *
+ * Que se verifica:
+ *   [1] Registro crea usuario, cifra contrasena y devuelve JWT (201)
+ *   [2] Login retorna access token + refresh token con credenciales validas (200)
+ *   [3] Login rechaza contrasena incorrecta y bloquea cuenta tras N intentos fallidos
+ *   [4] Refresh token valido emite nuevo access token; invalido/expirado retorna 401
+ *   [5] Logout invalida la sesion activa
+ *   [6] Endpoints protegidos rechazan peticiones sin token (401)
+ *   [7] Endpoints admin rechazan roles no autorizados (403)
  */
 
 import request from 'supertest';

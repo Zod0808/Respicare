@@ -1,10 +1,27 @@
 /**
- * Rate Limiter Performance Tests — Todos los Scopes y Comportamientos
+ * CP-001 | Rate Limiting por Scope y Rol (RF-001)
+ * Tipo   : Prueba de Rendimiento — Rate Limiter
+ *
+ * Entorno de prueba:
+ *   Framework : Jest + Supertest
+ *   Base datos: MongoDB real en contenedor Docker (respicare-test)
+ *   Servidor  : Express completo con middleware rateLimiter activo
+ *   Alcance   : rateLimiter.ts — todos los scopes y comportamientos de limitacion
+ *
+ * Que se verifica:
+ *   [1] Scope AUTH (/auth/*): limite = 40% del base, minimo 20 peticiones por ventana
+ *   [2] Scope EXPORT (/export/*): limite = 25% del base, minimo 10 peticiones por ventana
+ *   [3] Limites por rol: admin y doctor con multiplicadores superiores al paciente
+ *   [4] Retorna 429 con cabecera Retry-After al superar el limite del scope
+ *   [5] X-RateLimit-Remaining refleja correctamente las peticiones restantes en la ventana
+ *   [6] Identificador: usa userId cuando el usuario esta autenticado, IP cuando no lo esta
+ *   [7] Fallback sin Redis: usa limitador en memoria cuando Redis no esta disponible
+ *   [8] Continua sirviendo peticiones cuando Redis lanza error interno
  *
  * Cubre:
- * - Cálculo correcto de límites por scope (auth, export, admin, doctor, patient, anonymous)
+ * - Calculo correcto de limites por scope (auth, export, admin, doctor, patient, anonymous)
  * - Headers de respuesta (X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After)
- * - Bloqueo 429 al superar el límite
+ * - Bloqueo 429 al superar el limite
  * - Comportamiento con Redis disponible vs. no disponible (fallback)
  * - Identificador por userId vs. IP (usuarios autenticados vs. anónimos)
  * - Clave de ventana temporal (windowBucket)

@@ -1,8 +1,22 @@
 /**
- * Unit tests for AIAnalysisReviewService (RF-007: Panel del doctor)
+ * CP-007 | Panel del Doctor: Revision y Firma de Prediccion IA (RF-007)
+ * Tipo   : Prueba Unitaria - AIAnalysisReviewService
  *
- * Cierra el gap documentado en Documentation/pruebas/Catalogo_de_Pruebas_RespiCare.xlsx (CP-007):
- * previamente solo existía AIAnalysis.test.ts (modelo), sin prueba del servicio de revisión.
+ * Entorno de prueba:
+ *   Framework : Jest (mocks de AIAnalysis model, User model y alertService)
+ *   Alcance   : aiAnalysisReviewService.ts - getPendingAnalyses, getAnalysisById, reviewPrediction
+ *
+ * Que se verifica:
+ *   [1] getPendingAnalyses lista con paginacion por defecto y aplica filtros (patientId, urgency)
+ *   [2] getAnalysisById retorna el analisis cuando existe; lanza AppError 404 si no existe
+ *   [3] reviewPrediction lanza 400 si el medico no existe o no tiene rol doctor/admin
+ *   [4] reviewPrediction lanza 404 si el analisis no existe
+ *   [5] reviewPrediction lanza 400 si el analisis ya fue revisado (doble revision bloqueada)
+ *   [6] Aprueba prediccion, dispara alerta al paciente y registra el log de decision
+ *   [7] Rechaza prediccion correctamente sin permitir doble revision posterior
+ *   [8] Ajusta diagnostico y urgencia corregidos por el medico
+ *   [9] Permite que un usuario con rol admin revise la prediccion
+ *   [10] No crea alerta si el analisis no tiene patientId asociado
  */
 
 import { aiAnalysisReviewService } from '../../../src/services/aiAnalysisReviewService';

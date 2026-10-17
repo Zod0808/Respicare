@@ -1,11 +1,28 @@
 /**
- * Concurrency Performance Tests — Peticiones Paralelas y Carga Mixta
+ * CP-001 / CP-004 / CP-007 / CP-009 | Concurrencia y Carga Mixta (RF-001, RF-004, RF-007, RF-009)
+ * Tipo   : Prueba de Rendimiento — Concurrencia y Race Conditions
+ *
+ * Entorno de prueba:
+ *   Framework : Jest + Supertest
+ *   Base datos: MongoDB real en contenedor Docker (respicare-test)
+ *   Servidor  : Express completo con todos los middlewares activos
+ *   Metrica   : Tiempo total de N peticiones simultaneas (Promise.all), throughput req/s
+ *
+ * Que se verifica:
+ *   CP-001 — 10 POST /auth/register paralelos no crean duplicados de email
+ *   CP-004 — 5 POST /alerts paralelos no generan IDs duplicados (sin race conditions)
+ *   CP-007 — 10 GET /medical-histories simultaneos responden correctamente (< 8s)
+ *   CP-007 — 3 roles distintos (admin + doctor + patient) consultando en paralelo
+ *   CP-009 — Mix de 5 GET + 5 POST /medical-histories completan sin errores de servidor
+ *   CP-009 — Rafaga de 15 peticiones consecutivas completa en menos de 10 segundos
+ *   CP-009 — 3 batches de 5 peticiones paralelas mantienen tiempos estables
+ *   TODOS  — Throughput minimo >= 5 req/s en lecturas de historial medico
  *
  * Estrategia:
- * - Lanza N peticiones simultáneas (Promise.all) contra la misma instancia Express
- * - Verifica que no haya race conditions en creación de recursos
- * - Mide throughput: cuántas req/s puede atender el servidor bajo carga paralela
- * - Prueba carga mixta (lecturas + escrituras simultáneas)
+ * - Lanza N peticiones simultaneas (Promise.all) contra la misma instancia Express
+ * - Verifica que no haya race conditions en creacion de recursos
+ * - Mide throughput: cuantas req/s puede atender el servidor bajo carga paralela
+ * - Prueba carga mixta (lecturas + escrituras simultaneas)
  * - Verifica aislamiento: respuestas correctas bajo concurrencia
  *
  * Umbrales:

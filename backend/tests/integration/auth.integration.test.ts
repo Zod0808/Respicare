@@ -1,3 +1,21 @@
+/**
+ * CP-001 | Registro y Autenticacion de Usuarios (RF-001)
+ * Tipo   : Prueba de Integracion
+ *
+ * Entorno de prueba:
+ *   Framework : Jest + Supertest
+ *   Base datos: MongoDB real en contenedor Docker (respicare-test)
+ *   Servidor  : Express completo con todos los middlewares activos
+ *   Alcance   : /api/v1/auth/* - registro, login, refresh-token, logout, perfil, contrasena
+ *
+ * Que se verifica:
+ *   [1] POST /register crea usuario real en MongoDB y retorna JWT valido
+ *   [2] POST /login con credenciales correctas retorna access + refresh token
+ *   [3] POST /login con contrasena incorrecta retorna 401
+ *   [4] POST /refresh-token con token valido emite nuevo access token
+ *   [5] POST /logout invalida la sesion activa del usuario
+ *   [6] Endpoints protegidos rechazan peticiones sin cabecera Authorization (401)
+ */
 import request from 'supertest';
 import jwt from 'jsonwebtoken';
 import appInstance from '../../src/index';
