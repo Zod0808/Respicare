@@ -31,3 +31,13 @@ process.env.PUSH_PROVIDER = 'none';
 process.env.FIELD_ENCRYPTION_KEY = 'dGVzdC1lbmNyeXB0aW9uLWtleS10ZXN0LTMyYnl0ZXM=';
 // Sentry — disabled in tests
 process.env.SENTRY_ENABLED = 'false';
+
+// When running inside Docker (USE_REAL_MONGO=true), bypass MongoMemoryServer and
+// use the real MongoDB container instead — MongoMemoryServer cannot download a
+// binary on Alpine Linux (no glibc / unsupported distro detection).
+if (process.env.USE_REAL_MONGO === 'true') {
+  const uri = process.env.TEST_MONGODB_URI || 'mongodb://admin:password123@mongodb:27017/respicare-test?authSource=admin';
+  (globalThis as any).__MONGOD = { stop: async () => {} };
+  (globalThis as any).__MONGO_URI = uri;
+  process.env.MONGODB_URI = uri;
+}
