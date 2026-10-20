@@ -223,3 +223,13 @@ metro.config.js.bak
 .turbo
 *.local
 .vercel
+
+# Datos locales de monitoreo AI (generados en esta máquina, no se comparten)
+.claude/scheduled_tasks.lock
+ai-services/monitoring/performance/perf_*.jsonl
+ai-services/monitoring/test_feedback/training_examples.jsonl
+ai-services/monitoring/test_feedback/feedback_*.jsonl
+ai-services/monitoring/test_predictions_export.csv
+ai-services/monitoring/test_training_data.csv
+ai-services/monitoring/test_predictions/predictions_*.jsonl
+backend/reports/automatic/

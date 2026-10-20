@@ -1,3 +1,0 @@
-symptoms,disease,urgency,severity,source,feedback_id,timestamp
-"tos, fatiga, dificultad respiratoria",asma bronquial,high,moderate,medical_feedback,fb_20260912_102521_563491,2026-09-12T10:25:21.563520
-"fiebre alta, escalofríos, tos con esputo, dolor toracico",neumonía,high,,medical_feedback,fb_20260912_102521_563838,2026-09-12T10:25:21.563876
