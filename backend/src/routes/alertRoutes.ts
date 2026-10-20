@@ -15,12 +15,14 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { body, param, query } from 'express-validator';
 import {
   acknowledgeAlert,
+  createAlert,
   createCriticalSymptomAlert,
   getAlertDashboardSummary,
   getAlertMonitoringMetrics,
   getUserAlerts,
   notifyDoctorForCriticalCase,
   processAlertsNow,
+  resolveAlert,
   scheduleFollowUpAlert,
   scheduleMedicationReminder,
 } from '../controllers/alertController';
@@ -99,14 +101,37 @@ const doctorNotificationValidation = [
   body('metadata').optional().isObject(),
 ];
 
+const createAlertValidation = [
+  body('title').optional().isString(),
+  body('message').optional().isString(),
+  body('userId').optional().isString(),
+  body('patientId').optional().isString(),
+  body('doctorId').optional().isString(),
+  body('category').optional().isString(),
+  body('type').optional().isString(),
+  body('priority').optional().isIn(['low', 'medium', 'high', 'critical']).withMessage('priority debe ser low, medium, high o critical'),
+  body('severity').optional().isIn(['low', 'medium', 'high', 'critical']).withMessage('severity debe ser low, medium, high o critical'),
+  body('channels').optional().isArray(),
+  body('notificationChannels').optional().isArray(),
+  body('scheduledAt').optional().isISO8601(),
+  body('expiresAt').optional().isISO8601(),
+  body('metadata').optional().isObject(),
+];
+
 const acknowledgeValidation = [param('alertId').isMongoId().withMessage('alertId inválido')];
+
+const resolveValidation = [
+  param('alertId').isMongoId().withMessage('alertId inválido'),
+  body('resolution').optional().isString(),
+  body('notes').optional().isString(),
+];
 
 const queryValidation = [
   query('status')
     .optional()
     .custom((value) => {
       const values = Array.isArray(value) ? value : [value];
-      const allowed = ['pending', 'scheduled', 'sent', 'delivered', 'failed', 'acknowledged', 'expired'];
+      const allowed = ['pending', 'scheduled', 'sent', 'delivered', 'failed', 'acknowledged', 'resolved', 'expired', 'active'];
       if (!values.every((item) => allowed.includes(item))) {
         throw new Error('status inválido');
       }
@@ -129,6 +154,16 @@ const queryValidation = [
       const allowed = ['low', 'medium', 'high', 'critical'];
       if (!values.every((item) => allowed.includes(item))) {
         throw new Error('priority inválida');
+      }
+      return true;
+    }),
+  query('severity')
+    .optional()
+    .custom((value) => {
+      const values = Array.isArray(value) ? value : [value];
+      const allowed = ['low', 'medium', 'high', 'critical'];
+      if (!values.every((item) => allowed.includes(item))) {
+        throw new Error('severity inválida');
       }
       return true;
     }),
@@ -168,6 +203,16 @@ router.post(
   notifyDoctorForCriticalCase
 );
 
+// Endpoint genérico de creación de alertas (RF-009, especificación CP-009)
+router.post(
+  '/',
+  authOrInternal,
+  authorizeInternalOrRoles(criticalRoles, allowedInternalTokens),
+  createAlertValidation,
+  validate,
+  createAlert
+);
+
 // Ruta de prueba para verificar que las rutas están registradas (sin autenticación)
 router.get('/test', (_req, res) => {
   res.json({ success: true, message: 'Alert routes are working' });
@@ -176,6 +221,8 @@ router.get('/test', (_req, res) => {
 // IMPORTANTE: Las rutas GET específicas deben ir ANTES de las rutas con parámetros
 router.get('/dashboard/summary', auth, authorize('admin'), getAlertDashboardSummary);
 router.get('/monitoring', auth, authorize('admin'), getAlertMonitoringMetrics);
+// Alias de /dashboard/summary conforme a la especificación formal CP-009
+router.get('/stats', auth, authorize('admin'), getAlertDashboardSummary);
 router.get('/', auth, queryValidation, validate, getUserAlerts);
 
 // Rutas POST específicas
@@ -183,6 +230,8 @@ router.post('/admin/process', auth, authorize('admin'), processAlertsNow);
 
 // Rutas con parámetros deben ir al final
 router.post('/:alertId/acknowledge', auth, authorize('patient', 'doctor', 'admin'), acknowledgeValidation, validate, acknowledgeAlert);
+router.put('/:alertId/acknowledge', auth, authorize('patient', 'doctor', 'admin'), acknowledgeValidation, validate, acknowledgeAlert);
+router.put('/:alertId/resolve', auth, authorize('doctor', 'admin'), resolveValidation, validate, resolveAlert);
 
 export default router;
 

@@ -254,23 +254,59 @@ class AlertService {
     return alert;
   }
 
-  async acknowledgeAlert(alertId: string, userId: string): Promise<AlertDocument> {
+  async acknowledgeAlert(
+    alertId: string,
+    userId: string,
+    options: { notes?: string; actorRole?: string } = {}
+  ): Promise<AlertDocument> {
     const alert = await AlertModel.findById(alertId);
     if (!alert) {
       throw new AppError('La alerta no existe', 404);
     }
 
-    if (alert.userId !== userId) {
+    const isOwner = alert.userId === userId;
+    const isPrivileged = options.actorRole === 'doctor' || options.actorRole === 'admin';
+    if (!isOwner && !isPrivileged) {
       throw new AppError('No tiene permisos para reconocer esta alerta', 403);
     }
 
-    await alert.markAsAcknowledged();
-    await invalidateCacheByPattern(`${CACHE_NAMESPACES.ALERTS}:${userId}*`);
+    await alert.markAsAcknowledged(userId, options.notes);
+    await invalidateCacheByPattern(`${CACHE_NAMESPACES.ALERTS}:${alert.userId}*`);
     await invalidateCacheByPattern(`${CACHE_NAMESPACES.ALERT_SUMMARY}:*`);
 
     logger.info('Alert acknowledged', {
       alertId,
       userId,
+      actorRole: options.actorRole,
+    });
+
+    return alert;
+  }
+
+  async resolveAlert(
+    alertId: string,
+    userId: string,
+    options: { notes?: string; actorRole?: string } = {}
+  ): Promise<AlertDocument> {
+    const alert = await AlertModel.findById(alertId);
+    if (!alert) {
+      throw new AppError('La alerta no existe', 404);
+    }
+
+    const isOwner = alert.userId === userId;
+    const isPrivileged = options.actorRole === 'doctor' || options.actorRole === 'admin';
+    if (!isOwner && !isPrivileged) {
+      throw new AppError('No tiene permisos para resolver esta alerta', 403);
+    }
+
+    await alert.markAsResolved(userId, options.notes);
+    await invalidateCacheByPattern(`${CACHE_NAMESPACES.ALERTS}:${alert.userId}*`);
+    await invalidateCacheByPattern(`${CACHE_NAMESPACES.ALERT_SUMMARY}:*`);
+
+    logger.info('Alert resolved', {
+      alertId,
+      userId,
+      actorRole: options.actorRole,
     });
 
     return alert;

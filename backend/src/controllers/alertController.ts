@@ -39,6 +39,74 @@ const parseDate = (value: string | undefined, field: string): Date | undefined =
   return date;
 };
 
+const ALLOWED_CHANNELS = ['in_app', 'push', 'email', 'sms'];
+
+const sanitizeChannels = (value: unknown): string[] | undefined => {
+  if (!Array.isArray(value)) {
+    return undefined;
+  }
+  const filtered = value.filter((item) => typeof item === 'string' && ALLOWED_CHANNELS.includes(item));
+  return filtered.length > 0 ? filtered : undefined;
+};
+
+export const createAlert = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+  const {
+    userId,
+    patientId,
+    doctorId,
+    title,
+    message,
+    category,
+    type,
+    priority,
+    severity,
+    channels,
+    notificationChannels,
+    scheduledAt,
+    expiresAt,
+    metadata,
+    ...extra
+  } = req.body ?? {};
+
+  if (!title && !message) {
+    throw new AppError('El campo title o message es obligatorio', 400);
+  }
+
+  const targetUserId = userId ?? patientId ?? req.user?._id;
+  if (!targetUserId) {
+    throw new AppError('No fue posible determinar el destinatario de la alerta', 400);
+  }
+
+  const alert = await alertService.createAlert(
+    {
+      userId: targetUserId,
+      patientId,
+      doctorId: doctorId ?? (req.user?.role === 'doctor' ? req.user._id : undefined),
+      title: title ?? String(message).slice(0, 140),
+      message: message ?? title,
+      category,
+      priority,
+      channels: sanitizeChannels(channels ?? notificationChannels),
+      scheduledAt: parseDate(scheduledAt, 'scheduledAt'),
+      expiresAt: parseDate(expiresAt, 'expiresAt'),
+      trigger: { source: 'manual' },
+      metadata: { ...metadata, ...extra },
+      // `type`/`severity` son alias heredados soportados como virtuals del modelo
+      ...(type !== undefined ? { type } : {}),
+      ...(severity !== undefined ? { severity } : {}),
+    } as any,
+    true
+  );
+
+  const response: ApiResponse = {
+    success: true,
+    message: 'Alerta registrada correctamente',
+    data: alert,
+  };
+
+  res.status(201).json(response);
+});
+
 export const createCriticalSymptomAlert = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
   const {
     userId,
@@ -173,11 +241,39 @@ export const acknowledgeAlert = asyncHandler(async (req: AuthenticatedRequest, r
     throw new AppError('El identificador de la alerta es inválido', 400);
   }
 
-  const alert = await alertService.acknowledgeAlert(alertId, req.user._id);
+  const alert = await alertService.acknowledgeAlert(alertId, req.user._id, {
+    notes: req.body?.notes,
+    actorRole: req.user?.role,
+  });
 
   const response: ApiResponse = {
     success: true,
     message: 'Alerta reconocida correctamente',
+    data: alert,
+  };
+
+  res.status(200).json(response);
+});
+
+export const resolveAlert = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+  if (!req.user?._id) {
+    throw new AppError('No autenticado', 401);
+  }
+
+  const { alertId } = req.params;
+
+  if (!Types.ObjectId.isValid(alertId)) {
+    throw new AppError('El identificador de la alerta es inválido', 400);
+  }
+
+  const alert = await alertService.resolveAlert(alertId, req.user._id, {
+    notes: req.body?.resolution ?? req.body?.notes,
+    actorRole: req.user?.role,
+  });
+
+  const response: ApiResponse = {
+    success: true,
+    message: 'Alerta resuelta correctamente',
     data: alert,
   };
 
@@ -193,6 +289,7 @@ export const getUserAlerts = asyncHandler(async (req: AuthenticatedRequest, res:
     status,
     category,
     priority,
+    severity,
     doctorId,
     userId: queryUserId,
     patientId,
@@ -221,8 +318,13 @@ export const getUserAlerts = asyncHandler(async (req: AuthenticatedRequest, res:
     to?: Date;
   } = {};
 
+  const ACTIVE_STATUSES: AlertStatus[] = ['pending', 'scheduled', 'sent', 'delivered'];
+
   if (status) {
-    filters.status = Array.isArray(status) ? status.map(String) as AlertStatus[] : [String(status) as AlertStatus];
+    const requestedStatuses = Array.isArray(status) ? status.map(String) : [String(status)];
+    filters.status = requestedStatuses.flatMap((item) =>
+      item === 'active' ? ACTIVE_STATUSES : [item as AlertStatus]
+    );
   }
 
   if (category) {
@@ -231,10 +333,13 @@ export const getUserAlerts = asyncHandler(async (req: AuthenticatedRequest, res:
       : [String(category) as AlertCategory];
   }
 
-  if (priority) {
-    filters.priority = Array.isArray(priority)
-      ? priority.map(String) as AlertPriority[]
-      : [String(priority) as AlertPriority];
+  // `severity` es un alias heredado de `priority` en las consultas, igual que
+  // en el cuerpo de creación de alertas.
+  const priorityValue = priority ?? severity;
+  if (priorityValue) {
+    filters.priority = Array.isArray(priorityValue)
+      ? priorityValue.map(String) as AlertPriority[]
+      : [String(priorityValue) as AlertPriority];
   }
 
   if (doctorId) {

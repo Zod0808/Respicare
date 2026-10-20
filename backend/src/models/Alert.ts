@@ -26,6 +26,7 @@ const ALERT_STATUSES: AlertStatus[] = [
   'delivered',
   'failed',
   'acknowledged',
+  'resolved',
   'expired',
 ];
 const ALERT_CATEGORIES: AlertCategory[] = [
@@ -53,7 +54,8 @@ export interface AlertDocument extends Omit<IAlert, '_id'>, Document {
   priorityWeight: number;
   markAsDispatched(): Promise<void>;
   markAsFailed(error: string): Promise<void>;
-  markAsAcknowledged(): Promise<void>;
+  markAsAcknowledged(acknowledgedBy?: string, notes?: string): Promise<void>;
+  markAsResolved(resolvedBy?: string, resolution?: string): Promise<void>;
   isDue(referenceDate?: Date): boolean;
 }
 
@@ -164,6 +166,27 @@ const AlertSchema = new Schema<AlertDocument, AlertModel>(
     acknowledgedAt: {
       type: Date,
     },
+    acknowledgedBy: {
+      type: String,
+      trim: true,
+    },
+    acknowledgedNotes: {
+      type: String,
+      trim: true,
+      maxlength: [2000, 'Las notas de reconocimiento no pueden exceder 2000 caracteres'],
+    },
+    resolvedAt: {
+      type: Date,
+    },
+    resolvedBy: {
+      type: String,
+      trim: true,
+    },
+    resolution: {
+      type: String,
+      trim: true,
+      maxlength: [2000, 'La resolución no puede exceder 2000 caracteres'],
+    },
     expiresAt: {
       type: Date,
       index: true,
@@ -194,7 +217,9 @@ const AlertSchema = new Schema<AlertDocument, AlertModel>(
 applyFieldEncryption(AlertSchema, [
   'title',
   'message',
-  'lastError'
+  'lastError',
+  'acknowledgedNotes',
+  'resolution',
 ]);
 
 AlertSchema.index({ status: 1, scheduledAt: 1, priorityWeight: -1 });
@@ -237,8 +262,12 @@ AlertSchema.pre<AlertDocument>('validate', function fillLegacyFields(next) {
       self.category = legacyType;
     } else if (legacyType === 'medication') {
       self.category = 'medication_reminder';
-    } else if (legacyType === 'symptom') {
+    } else if (legacyType === 'symptom' || legacyType === 'clinical') {
       self.category = 'critical_symptom';
+    } else if (legacyType === 'outbreak') {
+      self.category = 'health_authority';
+    } else if (legacyType === 'appointment') {
+      self.category = 'follow_up';
     }
   }
   // `priority` always carries its schema default by the time this hook runs,
@@ -270,6 +299,7 @@ AlertSchema.methods.isDue = function isDue(this: AlertDocument, referenceDate: D
     this.status === 'failed' ||
     this.status === 'delivered' ||
     this.status === 'acknowledged' ||
+    this.status === 'resolved' ||
     this.status === 'expired' ||
     this.status === 'sent'
   ) {
@@ -301,9 +331,35 @@ AlertSchema.methods.markAsFailed = async function markAsFailed(this: AlertDocume
   await this.save();
 };
 
-AlertSchema.methods.markAsAcknowledged = async function markAsAcknowledged(this: AlertDocument): Promise<void> {
+AlertSchema.methods.markAsAcknowledged = async function markAsAcknowledged(
+  this: AlertDocument,
+  acknowledgedBy?: string,
+  notes?: string
+): Promise<void> {
   this.status = 'acknowledged';
   this.acknowledgedAt = new Date();
+  if (acknowledgedBy) {
+    this.acknowledgedBy = acknowledgedBy;
+  }
+  if (notes) {
+    this.acknowledgedNotes = notes;
+  }
+  await this.save();
+};
+
+AlertSchema.methods.markAsResolved = async function markAsResolved(
+  this: AlertDocument,
+  resolvedBy?: string,
+  resolution?: string
+): Promise<void> {
+  this.status = 'resolved';
+  this.resolvedAt = new Date();
+  if (resolvedBy) {
+    this.resolvedBy = resolvedBy;
+  }
+  if (resolution) {
+    this.resolution = resolution;
+  }
   await this.save();
 };
 
