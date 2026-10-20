@@ -233,3 +233,6 @@ ai-services/monitoring/test_predictions_export.csv
 ai-services/monitoring/test_training_data.csv
 ai-services/monitoring/test_predictions/predictions_*.jsonl
 backend/reports/automatic/
+
+# Graphify — snapshots fechados (regenerables vía `graphify update .`), no el grafo vivo
+graphify-out/[0-9][0-9][0-9][0-9]-*/
