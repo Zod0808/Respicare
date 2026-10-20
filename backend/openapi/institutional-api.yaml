@@ -1,3 +1,10 @@
+# Nombre de Objeto: institutional-api.yaml
+# Fecha de Creación: 2026-09-19
+# Propietario: Cesar Fabian Chavez Linares
+# Requerimiento: RF-013 - Interoperabilidad institucional (MINSA/DIRESA/SINADEF)
+# Descripción: Contrato OpenAPI del API institucional autenticado por API Key
+# (x-api-key), expuesto en /api/v1/institutional para MINSA, DIRESA y SINADEF.
+
 openapi: 3.0.3
 info:
   title: RespiCare — API de Interoperabilidad Institucional (MINSA/DIRESA Tacna / SINADEF)

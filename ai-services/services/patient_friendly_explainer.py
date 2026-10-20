@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: PatientFriendlyExplainer (services/patient_friendly_explainer.py)
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RNF-011 - Explicabilidad (transparencia de las predicciones de IA)
+Descripción: Traduce las explicaciones técnicas de SHAP (shap_explainer.py) a
+lenguaje simple para pacientes sin conocimientos médicos, haciendo transparente
+el "por qué" de una predicción sin exponer jerga técnica de ML.
+
 Patient-Friendly Explanation Service
 
 Convierte explicaciones técnicas de SHAP a lenguaje simple y comprensible

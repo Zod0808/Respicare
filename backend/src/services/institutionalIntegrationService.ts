@@ -1,4 +1,13 @@
 /**
+ * Nombre de Objeto: InstitutionalIntegrationService
+ * Fecha de Creación: 2026-09-12
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-013 - Interoperabilidad institucional (MINSA/DIRESA/SINADEF)
+ * Descripción: getEpidemiologicalExport() reutiliza epidemiologicalService.
+ * getDistrictTrends()/predictOutbreaks(); syncHealthCenters() hace upsert por
+ * nombre+distrito; ingestExternalAlert() crea un Alert (categoría health_authority)
+ * por cada médico/admin activo.
+ *
  * Institutional Integration Service (Sprint 13)
  *
  * Lógica de negocio para el API de interoperabilidad institucional consumido

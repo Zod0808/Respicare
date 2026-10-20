@@ -2,7 +2,8 @@
  * Nombre de Objeto: auth (middleware)
  * Fecha de Creación: 2026-04-25
  * Propietario: Cesar Fabian Chavez Linares
- * Requerimiento: RF-001 - Gestión de usuarios
+ * Requerimiento: RF-001 - Gestión de usuarios / RNF-004 - Seguridad (protección
+ * de datos médicos sensibles)
  * Descripción: Middlewares Express de autenticación/autorización: verifica el
  * JWT (authenticate), valida roles (authorize), permite acceso de servicios
  * internos o dueño del recurso, y una variante opcional que no bloquea la petición.

@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: smsRateLimiter
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RNF-004 - Seguridad (protección de datos médicos sensibles)
+ * Descripción: Limita la tasa de envío de SMS por número/ventana contra los
+ * límites del proveedor, evitando abuso del canal de notificaciones.
+ *
  * SMS Rate Limiter
  * Gestiona límites de envío de SMS basado en límites de proveedores
  */

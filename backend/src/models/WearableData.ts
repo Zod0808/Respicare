@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: WearableData (modelo Mongoose)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-014 - Wearables como validación clínica
+ * Descripción: Esquema Mongoose de la colección wearabledata: heartRate,
+ * oxygenSaturation, respiratoryRate, steps, distance, sleepHours y source
+ * (apple_health/google_fit/manual/android_sensor), con validación de rangos.
+ *
  * Wearable Data Model
  * Modelo para almacenar datos de wearables (HealthKit/Google Fit)
  */

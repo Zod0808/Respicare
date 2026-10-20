@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: App
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal — enrutamiento raíz y providers globales (Auth, Theme,
+ * i18n) usados por todos los RF del frontend web
+ * Descripción: Componente raíz de la SPA: define el árbol de rutas protegidas/
+ * públicas, envuelve la app con los providers globales e inicializa accesibilidad.
+ */
+
 import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './components/ThemeProvider';

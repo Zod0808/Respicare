@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: validate_models_performance (scripts/validation)
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RNF-007 - Precisión (exactitud del modelo de clasificación)
+Descripción: Script que evalúa comparativamente la exactitud de los 3 modelos
+del ensemble (Random Forest, XGBoost, Neural Network) sobre el dataset
+completo de 307,295 casos, verificando la precisión antes de producción.
+
 Script de Validación Comparativa de Modelos ML
 
 Evalúa el rendimiento de los 3 modelos (Random Forest, XGBoost, Neural Network)

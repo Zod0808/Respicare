@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: jest.config (web)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RNF-012 - Cobertura de pruebas (calidad verificable del código)
+ * Descripción: Configuración de Jest para la app web (entorno jsdom, patrones
+ * de test, cobertura), que hace medible la calidad del código vía pruebas
+ * automatizadas.
+ */
+
 module.exports = {
   // Test environment
   testEnvironment: 'jsdom',

@@ -1,6 +1,15 @@
 "use client"
 
 /**
+ * Nombre de Objeto: HealthConnectService
+ * Fecha de Creación: 2026-05-05
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-014 - Wearables como validación clínica (Android, vía Health
+ * Connect API; variante no listada por nombre en la Matriz de Trazabilidad, que
+ * referencia la capa de orquestación lib/api/services/wearableService.ts)
+ * Descripción: Lee frecuencia cardíaca y SpO2 reales desde Health Connect usando el
+ * plugin capacitor-health-connect (Samsung Galaxy Watch, Pixel Watch, Fitbit, Garmin).
+ *
  * Health Connect Service — Android 14+
  *
  * Lee datos reales de frecuencia cardíaca y SpO2 desde Health Connect API.

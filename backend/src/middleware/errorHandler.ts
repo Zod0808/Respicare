@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: errorHandler (middleware)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RNF-010 - Confiabilidad (consistencia en el funcionamiento)
+ * Descripción: Normaliza cualquier error (validación de Mongoose, duplicados,
+ * JWT, AppError) a una respuesta HTTP consistente, con logging y reporte a
+ * Sentry, evitando comportamiento inconsistente entre rutas ante fallos.
+ */
+
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../utils/AppError';
 import { logger } from '../utils/logger';

@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: rateLimiter (middleware)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RNF-004 - Seguridad (protección de datos médicos sensibles)
+ * Descripción: Limitadores de tasa (Redis-backed) por ruta — más estrictos en
+ * /api/v1/auth — que mitigan fuerza bruta y abuso de la API, parte del
+ * endurecimiento de seguridad transversal del backend.
+ */
+
 import { NextFunction, Request, Response } from 'express';
 import rateLimit, { RateLimitRequestHandler } from 'express-rate-limit';
 import { getRedisClient } from '../config/redisClient';

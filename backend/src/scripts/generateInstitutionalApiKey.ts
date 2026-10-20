@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: generateInstitutionalApiKey (script CLI)
+ * Fecha de Creación: 2026-09-12
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-013 - Interoperabilidad institucional (MINSA/DIRESA/SINADEF)
+ * Descripción: Script de aprovisionamiento de API Keys institucionales: crea un
+ * InstitutionalApiClient con los scopes indicados y muestra la clave en texto
+ * plano una única vez (solo se persiste el hash bcrypt).
+ *
  * CLI script to register an institutional API client (Sprint 13) and print its
  * plaintext API key ONCE. Only the bcrypt hash is persisted, so the key must
  * be captured now and stored securely (e.g. handed off to MINSA/SINADEF or a

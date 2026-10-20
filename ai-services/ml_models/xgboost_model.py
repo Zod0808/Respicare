@@ -2,7 +2,8 @@
 Nombre de Objeto: XGBoost disease classifier (ml_models/xgboost_model.py)
 Fecha de Creación: 2026-04-25
 Propietario: Cesar Fabian Chavez Linares
-Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas / RNF-007 - Precisión
+(exactitud del modelo de clasificación)
 Descripción: Clasificador XGBoost de enfermedades respiratorias, uno de los
 modelos del ensemble consumido por /v1/ml-analyze; provee las features de
 entrada para la explicabilidad SHAP (RF-006).

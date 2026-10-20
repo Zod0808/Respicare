@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: cacheService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RNF-002 - Rendimiento (tiempo de respuesta)
+ * Descripción: Cachea respuestas en Redis con claves derivadas (hash) del
+ * cuerpo/params de la petición y TTL configurable, reduciendo la latencia de
+ * endpoints consultados con frecuencia.
+ */
+
 import { createHash } from 'crypto';
 import { getRedisClient } from '../config/redisClient';
 import { logger } from '../utils/logger';

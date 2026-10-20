@@ -2,7 +2,8 @@
 Nombre de Objeto: MultiTaskNeuralNetwork
 Fecha de Creación: 2026-04-25
 Propietario: Cesar Fabian Chavez Linares
-Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas / RNF-007 - Precisión
+(exactitud del modelo de clasificación)
 Descripción: Red neuronal multi-tarea que clasifica en paralelo enfermedad,
 urgencia, severidad y categoría a partir de los síntomas; forma parte del
 ensemble de modelos de /v1/ml-analyze.

@@ -5,6 +5,16 @@ const nextJest = (() => {
 
 const createJestConfig = nextJest({ dir: './' })
 
+/**
+ * Nombre de Objeto: jest.config (mobile/medical-app)
+ * Fecha de Creación: 2026-05-07
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RNF-012 - Cobertura de pruebas (calidad verificable del código)
+ * Descripción: Configuración de Jest sobre next/jest para la app móvil,
+ * delimitando qué módulos se miden en cobertura y haciendo verificable la
+ * calidad del código vía pruebas automatizadas.
+ */
+
 /** @type {import('jest').Config} */
 const config = {
   testEnvironment: 'jest-environment-jsdom',

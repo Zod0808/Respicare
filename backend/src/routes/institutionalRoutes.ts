@@ -1,3 +1,14 @@
+/**
+ * Nombre de Objeto: institutionalRoutes
+ * Fecha de Creación: 2026-09-12
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-013 - Interoperabilidad institucional (MINSA/DIRESA/SINADEF) /
+ * RNF-008 - Interoperabilidad (integración con sistemas de salud)
+ * Descripción: GET /epidemiological-export, POST /health-centers/sync y
+ * POST /alerts, montadas en /api/v1/institutional (index.ts:297), protegidas por
+ * authenticateInstitutional/requireInstitutionalScope/institutionalRateLimiter.
+ */
+
 import { Router } from 'express';
 import {
   getEpidemiologicalExport,

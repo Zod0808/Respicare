@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: institutionalAuth (middleware)
+ * Fecha de Creación: 2026-09-12
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-013 - Interoperabilidad institucional (MINSA/DIRESA/SINADEF)
+ * Descripción: authenticateInstitutional() valida el header x-api-key contra
+ * InstitutionalApiClient.verifyKey(); requireInstitutionalScope(scope) verifica el
+ * alcance autorizado; institutionalRateLimiter limita solicitudes por API Key.
+ *
  * Institutional Authentication Middleware (Sprint 13)
  *
  * Authenticates external institutional consumers (MINSA/DIRESA Tacna, SINADEF)

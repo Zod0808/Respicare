@@ -1,4 +1,14 @@
 /**
+ * Nombre de Objeto: index.ts (entry point)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal — arranque y configuración del servidor para RF-001 a
+ * RF-014 / RNF-003 - Disponibilidad (expone GET /health en línea 216)
+ * Descripción: Entry point de producción del backend: registra middleware global,
+ * telemetría/observabilidad, todas las rutas (incluye /api/v1/institutional, RF-013,
+ * montada en línea 297) y arranca el servidor HTTP/WebSocket. El endpoint /health
+ * permite verificar disponibilidad continua del sistema (probes externos).
+ *
  * ENTRY POINT DE PRODUCCIÓN — RespiCare Backend API
  * Contiene todas las rutas, middleware, jobs, telemetría y observabilidad.
  * Scripts: "npm start" (prod) | "npm run dev:original" (dev con nodemon)

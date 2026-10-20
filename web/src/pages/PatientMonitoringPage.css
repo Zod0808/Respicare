@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: PatientMonitoringPage.css
+ * Fecha de Creación: 2026-05-07
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-007 - Panel del doctor (rediseño Sprint 13: stat-cards, tabla
+ * de pacientes con badge de riesgo de 4 niveles, gráfico de tendencia SpO2 y feed
+ * de alertas) / RF-014 - Wearables como validación clínica
+ * Descripción: Estilos del Panel del médico rediseñado.
+ */
+
 .monitoring-page {
   padding: 1.5rem;
   max-width: 1400px;

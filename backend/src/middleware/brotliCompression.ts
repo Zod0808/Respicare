@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: brotliCompression (middleware)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RNF-002 - Rendimiento (tiempo de respuesta)
+ * Descripción: Comprime respuestas por encima de un umbral con Brotli cuando
+ * el cliente lo soporta, reduciendo el tamaño de payload y el tiempo de
+ * transferencia.
+ */
+
 import { NextFunction, Request, Response } from 'express';
 import { brotliCompressSync, constants } from 'zlib';
 

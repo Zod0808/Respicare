@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: enforceHttps (middleware)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RNF-004 - Seguridad (protección de datos médicos sensibles)
+ * Descripción: Redirige tráfico HTTP a HTTPS en producción (excepto el probe
+ * /health), evitando que datos médicos viajen sin cifrar en tránsito.
+ */
+
 import { Request, Response, NextFunction } from 'express';
 
 export function enforceHttps(req: Request, res: Response, next: NextFunction) {

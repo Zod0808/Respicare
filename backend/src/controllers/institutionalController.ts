@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: institutionalController
+ * Fecha de Creación: 2026-09-12
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-013 - Interoperabilidad institucional (MINSA/DIRESA/SINADEF)
+ * Descripción: getEpidemiologicalExport(), syncHealthCenters() e ingestAlert():
+ * orquestan las tres operaciones expuestas por el API institucional, delegando la
+ * lógica de negocio a institutionalIntegrationService.
+ *
  * Institutional Controller (Sprint 13)
  *
  * Endpoints del API de interoperabilidad institucional para MINSA/DIRESA

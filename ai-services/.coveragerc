@@ -1,3 +1,11 @@
+# Nombre de Objeto: .coveragerc (ai-services)
+# Fecha de Creación: 2026-04-25
+# Propietario: Cesar Fabian Chavez Linares
+# Requerimiento: RNF-012 - Cobertura de pruebas (calidad verificable del código)
+# Descripción: Reglas de exclusión de coverage.py que delimitan qué módulos
+# cuentan para el umbral de cobertura, evitando que dependencias externas
+# pesadas o scripts no-prod distorsionen la métrica.
+#
 # ai-services coverage config
 #
 # Política de exclusiones (2026-07-15, honesta):

@@ -1,6 +1,15 @@
 "use client"
 
 /**
+ * Nombre de Objeto: HealthKitService
+ * Fecha de Creación: 2026-09-18
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-014 - Wearables como validación clínica (iOS, vía Apple
+ * HealthKit; variante no listada por nombre en la Matriz de Trazabilidad, que
+ * referencia la capa de orquestación lib/api/services/wearableService.ts)
+ * Descripción: Lee frecuencia cardíaca, SpO2 y pasos reales desde Apple HealthKit
+ * usando el plugin @perfood/capacitor-healthkit (Apple Watch y wearables de iOS).
+ *
  * HealthKit Service — iOS
  *
  * Lee datos reales de frecuencia cardíaca, SpO2 y pasos desde Apple HealthKit.

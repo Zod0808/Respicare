@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: RootLayout
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal — layout raíz de la app móvil (Capacitor + Next.js),
+ * provee contexto de Capacitor/sincronización offline/performance para todos los RF
+ * Descripción: Root layout de Next.js: define fuentes y metadata, y envuelve la app
+ * con CapacitorProvider, OfflineSyncProvider y PerformanceProvider.
+ */
+
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'

@@ -291,7 +291,7 @@ const InformedConsentSchema = new Schema<InformedConsentDocument, InformedConsen
     timestamps: true,
     toJSON: {
       transform: (doc, ret) => {
-        ret._id = String(ret._id);
+        (ret as Record<string, unknown>)._id = String(ret._id);
         return ret;
       },
     },

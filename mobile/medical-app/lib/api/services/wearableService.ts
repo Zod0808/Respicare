@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: WearableService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-014 - Wearables como validación clínica
+ * Descripción: Capa de orquestación que sincroniza lecturas de wearables
+ * (emulador Wear OS → teléfono → backend) hacia POST /wearables/sync.
+ *
  * Servicio de wearables — emulador Wear OS → teléfono → backend
  */
 

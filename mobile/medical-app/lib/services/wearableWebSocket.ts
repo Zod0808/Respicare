@@ -1,6 +1,13 @@
 "use client"
 
 /**
+ * Nombre de Objeto: WearableWebSocketService
+ * Fecha de Creación: 2026-05-05
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-014 - Wearables como validación clínica
+ * Descripción: Conexión WebSocket persistente con el backend para envío de
+ * datos de wearables en tiempo real y recepción de alertas clínicas.
+ *
  * WearableWebSocketService
  *
  * Conexión WebSocket persistente con el backend para envío de datos de

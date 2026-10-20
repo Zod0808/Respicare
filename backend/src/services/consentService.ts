@@ -1,9 +1,19 @@
 /**
+ * Nombre de Objeto: ConsentService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RNF — Cumplimiento legal de datos de salud (consentimiento informado
+ * digital, Ley N.º 29733 de Protección de Datos Personales); no tiene un RF numerado
+ * propio en el SRS.
+ * Descripción: Gestiona el ciclo de vida del consentimiento informado digital:
+ * creación, firma electrónica, consulta filtrada (listConsents) y estadísticas
+ * agregadas (getConsentStats).
+ *
  * Consent Service
  * Gestiona consentimientos informados digitales y firmas electrónicas
  */
 
-import mongoose from 'mongoose';
+import mongoose, { FilterQuery } from 'mongoose';
 import { AppError } from '../utils/AppError';
 import { logger } from '../utils/logger';
 import InformedConsentModel, {
@@ -237,7 +247,7 @@ class ConsentService {
     limit: number;
     totalPages: number;
   }> {
-    const query: any = {};
+    const query: FilterQuery<InformedConsentDocument> = {};
 
     if (filters.patientId) {
       query.patientId = filters.patientId;
@@ -369,7 +379,7 @@ class ConsentService {
     expired: number;
     byType: Record<ConsentType, number>;
   }> {
-    const query: any = {};
+    const query: FilterQuery<InformedConsentDocument> = {};
     if (doctorId) {
       query.doctorId = doctorId;
     }

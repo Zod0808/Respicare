@@ -138,6 +138,7 @@ export type AlertStatus =
   | 'delivered'
   | 'failed'
   | 'acknowledged'
+  | 'resolved'
   | 'expired';
 
 export type AlertTriggerSource =
@@ -177,6 +178,11 @@ export interface Alert {
   scheduledAt?: Date;
   dispatchedAt?: Date;
   acknowledgedAt?: Date;
+  acknowledgedBy?: string;
+  acknowledgedNotes?: string;
+  resolvedAt?: Date;
+  resolvedBy?: string;
+  resolution?: string;
   expiresAt?: Date;
   retries: number;
   lastError?: string;

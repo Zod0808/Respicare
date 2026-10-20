@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: InstitutionalAuditLog (modelo Mongoose)
+ * Fecha de Creación: 2026-09-12
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-013 - Interoperabilidad institucional (MINSA/DIRESA/SINADEF)
+ * Descripción: Colección institutionalauditlogs: bitácora independiente de todo
+ * el tráfico institucional (clientId, método, ruta, statusCode), separada de los
+ * logs regulares de la aplicación para permitir auditoría externa.
+ *
  * Institutional Audit Log Model (Sprint 13)
  *
  * Dedicated audit trail for traffic coming from external institutional clients

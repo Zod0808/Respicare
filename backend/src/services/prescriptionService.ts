@@ -1,4 +1,13 @@
 /**
+ * Nombre de Objeto: PrescriptionService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-007 - Panel del doctor (gestión de prescripciones asociadas a la
+ * revisión/ajuste de diagnósticos por el médico); no aparece como objeto propio en
+ * la Matriz de Trazabilidad.
+ * Descripción: Gestiona prescripciones médicas: creación, validación de
+ * interacciones/dosis, recordatorios y dosificación inteligente.
+ *
  * Prescription Service
  * Gestiona prescripciones médicas, validación, recordatorios y dosificación inteligente
  */

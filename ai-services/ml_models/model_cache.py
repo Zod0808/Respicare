@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: ModelCache (ml_models/model_cache.py)
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RNF-002 - Rendimiento (tiempo de respuesta del análisis de IA)
+Descripción: Caché LRU en memoria para modelos ML con carga diferida (lazy
+loading), evitando recargar desde disco en cada predicción y acelerando el
+tiempo de respuesta de /v1/ml-analyze.
+
 Model Cache with LRU eviction
 Sistema de caché LRU para modelos ML cargados con lazy loading
 """

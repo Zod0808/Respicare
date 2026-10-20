@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: wearableRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-014 - Wearables como validación clínica
+ * Descripción: POST /sync, GET /data/:patientId? y GET /metrics/:patientId? para
+ * sincronizar y consultar los signos vitales capturados por wearables.
+ *
  * Wearable Routes
  * Rutas para datos de wearables (HealthKit/Google Fit)
  */

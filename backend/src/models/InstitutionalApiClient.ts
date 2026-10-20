@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: InstitutionalApiClient (modelo Mongoose)
+ * Fecha de Creación: 2026-09-12
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-013 - Interoperabilidad institucional (MINSA/DIRESA/SINADEF)
+ * Descripción: Colección institutionalapiclients: keyHash, scopes[]
+ * (epidemiological:read, health-centers:write, alerts:write) y verifyKey() para
+ * validar la API Key enviada por los consumidores externos.
+ *
  * Institutional API Client Model (Sprint 13)
  *
  * Represents an external institutional consumer (e.g. MINSA/DIRESA Tacna, SINADEF)

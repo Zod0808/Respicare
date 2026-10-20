@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: jest.config (backend)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RNF-012 - Cobertura de pruebas (calidad verificable del código)
+ * Descripción: Configuración de Jest para el backend (patrones de test,
+ * entorno Node, recolección de cobertura), que hace medible la calidad del
+ * código mediante pruebas automatizadas.
+ */
+
 module.exports = {
   // Test environment
   testEnvironment: 'node',

@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: WearableController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-014 - Wearables como validación clínica
+ * Descripción: syncWearableData() persiste cada lectura de wearable y emite
+ * vitalsEmitter.emit('vitals', ...) para que el panel del médico la reciba en
+ * tiempo real.
+ *
  * Wearable Controller
  * Controlador para manejar datos de wearables
  */

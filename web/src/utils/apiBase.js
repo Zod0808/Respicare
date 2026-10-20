@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: apiBase
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal — resolución de la URL base del API consumida por todos
+ * los módulos del frontend web
+ * Descripción: Normaliza y resuelve en tiempo de ejecución la URL base del backend,
+ * reescribiéndola para el navegador en entornos de desarrollo/túnel cuando aplica.
+ */
+
 const normalize = (value) => {
   if (!value) return '';
   return value.endsWith('/') ? value.slice(0, -1) : value;

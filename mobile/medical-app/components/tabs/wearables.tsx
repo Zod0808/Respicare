@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: WearablesTab
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-014 - Wearables como validación clínica
+ * Descripción: Pestaña móvil de wearables: captura BLE/Health Connect/HealthKit,
+ * controla el emulador Wear OS y muestra el estado de sincronización en vivo.
+ */
+
 import { useState, useEffect, useRef, useCallback } from "react"
 import {
   HeartPulse, Activity, Moon, RefreshCw, Zap, Bed, AlertTriangle,

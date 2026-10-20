@@ -1,6 +1,16 @@
 "use client"
 
 /**
+ * Nombre de Objeto: BleWearableService
+ * Fecha de Creación: 2026-05-07
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-014 - Wearables como validación clínica (captura directa vía
+ * Bluetooth Low Energy; variante no listada por nombre en la Matriz de Trazabilidad,
+ * que referencia la capa de orquestación lib/api/services/wearableService.ts)
+ * Descripción: Conexión BLE GATT estándar con los servicios Heart Rate (0x180D) y
+ * Pulse Oximeter (0x1822) para capturar signos vitales reales desde wearables
+ * compatibles, usando @capacitor-community/bluetooth-le con dynamic import.
+ *
  * BLE Wearable Service — Opción A
  *
  * Conexión directa vía Bluetooth Low Energy usando GATT estándar:

@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: capacitor.config
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RNF-006 - Compatibilidad (web y móvil multiplataforma)
+ * Descripción: Configuración de Capacitor que empaqueta la misma app Next.js
+ * como app nativa Android/iOS, permitiendo que RespiCare corra en web y móvil
+ * desde una única base de código.
+ */
+
 import { CapacitorConfig } from '@capacitor/cli';
 import { KeyboardResize } from '@capacitor/keyboard';
 

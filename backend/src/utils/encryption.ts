@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: encryption (utils)
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RNF-004 - Seguridad (protección de datos médicos sensibles)
+ * Descripción: Cifrado/descifrado simétrico AES-256-GCM para campos sensibles
+ * en Mongoose (field-level encryption), con soporte de rotación de clave vía
+ * scripts/rotateFieldEncryptionKey.ts.
+ */
+
 import crypto from 'crypto';
 import { Schema } from 'mongoose';
 

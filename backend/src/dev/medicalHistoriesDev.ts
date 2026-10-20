@@ -1,4 +1,13 @@
 /**
+ * Nombre de Objeto: medicalHistoriesDev
+ * Fecha de Creación: 2026-07-14
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: GET /api/v1/medical-histories (shim de desarrollo). Corregido en
+ * Sprint 13: filtraba por patientId=id del propio médico cuando el rol
+ * autenticado era "doctor" (devolvía siempre 0 resultados); ahora filtra
+ * correctamente por doctorId cuando no se recibe patientId.
+ *
  * Medical Histories endpoints (dev-only)
  *
  * JWT-verified list + read handlers with role-aware filtering (patients
