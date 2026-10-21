@@ -13,7 +13,7 @@ export async function initTelemetry(): Promise<void> {
     }
 
     // Imports dinámicos para evitar fallas cuando no están instalados
-    const [{ NodeSDK }, { getNodeAutoInstrumentations }, { Resource }, { SemanticResourceAttributes }] = await Promise.all([
+    const [{ NodeSDK }, { getNodeAutoInstrumentations }, { resourceFromAttributes }, { SemanticResourceAttributes }] = await Promise.all([
       import('@opentelemetry/sdk-node'),
       import('@opentelemetry/auto-instrumentations-node'),
       import('@opentelemetry/resources'),
@@ -39,7 +39,7 @@ export async function initTelemetry(): Promise<void> {
     }
 
     const serviceName = process.env.OTEL_SERVICE_NAME || 'respicare-backend';
-    const resource = new Resource({
+    const resource = resourceFromAttributes({
       [SemanticResourceAttributes.SERVICE_NAME]: serviceName,
       [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: process.env.NODE_ENV || 'development'
     });

@@ -42,9 +42,7 @@ declare module '@opentelemetry/auto-instrumentations-node' {
 }
 
 declare module '@opentelemetry/resources' {
-  export class Resource {
-    constructor(attributes?: any);
-  }
+  export function resourceFromAttributes(attributes?: any): any;
 }
 
 declare module '@opentelemetry/semantic-conventions' {

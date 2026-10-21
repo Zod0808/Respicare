@@ -48,7 +48,7 @@ export async function initOpenTelemetry(): Promise<void> {
     const [
       { NodeSDK },
       { getNodeAutoInstrumentations },
-      { Resource },
+      { resourceFromAttributes },
       { SemanticResourceAttributes },
       { OTLPTraceExporter },
       { OTLPMetricExporter },
@@ -63,7 +63,7 @@ export async function initOpenTelemetry(): Promise<void> {
       import('@opentelemetry/semantic-conventions'),
       import('@opentelemetry/exporter-trace-otlp-http'),
       import('@opentelemetry/exporter-metrics-otlp-http'),
-      import('@opentelemetry/sdk-trace-base'),
+      import('@opentelemetry/sdk-trace'),
       import('@opentelemetry/sdk-metrics'),
       import('@opentelemetry/api'),
       import('@opentelemetry/api')
@@ -74,7 +74,7 @@ export async function initOpenTelemetry(): Promise<void> {
     const environment = process.env.NODE_ENV || 'development';
 
     // Configurar Resource con atributos semánticos
-    const resource = new Resource({
+    const resource = resourceFromAttributes({
       [SemanticResourceAttributes.SERVICE_NAME]: serviceName,
       [SemanticResourceAttributes.SERVICE_VERSION]: serviceVersion,
       [SemanticResourceAttributes.DEPLOYMENT_ENVIRONMENT]: environment,
@@ -110,7 +110,8 @@ export async function initOpenTelemetry(): Promise<void> {
     }
 
     // Configurar procesador de spans con batching
-    const spanProcessor = new BatchSpanProcessor(traceExporter, {
+    const spanProcessor = new BatchSpanProcessor({
+      exporter: traceExporter,
       maxExportBatchSize: 512,
       exportTimeoutMillis: 30000,
       scheduledDelayMillis: 5000
@@ -136,8 +137,7 @@ export async function initOpenTelemetry(): Promise<void> {
     // Configurar SDK de Node.js
     sdk = new NodeSDK({
       resource,
-      traceExporter,
-      spanProcessor,
+      spanProcessors: [spanProcessor],
       instrumentations: [
         getNodeAutoInstrumentations({
           // Configurar instrumentaciones específicas
@@ -159,7 +159,7 @@ export async function initOpenTelemetry(): Promise<void> {
           }
         })
       ],
-      metricReader
+      metricReaders: [metricReader]
     });
 
     await sdk.start();
