@@ -2,7 +2,6 @@
   "dependencies": {
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
-    "expo-dev-client": "^6.0.18",
     "headroom-ai": "^0.22.4"
   }
 }
