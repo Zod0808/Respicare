@@ -30,7 +30,11 @@
     "@typescript-eslint/no-base-to-string": "warn",
     "@typescript-eslint/restrict-template-expressions": "warn",
     "@typescript-eslint/no-unsafe-enum-comparison": "warn",
-    "@typescript-eslint/ban-types": "warn",
+    "@typescript-eslint/no-require-imports": "warn",
+    "@typescript-eslint/no-empty-object-type": "warn",
+    "@typescript-eslint/no-unsafe-function-type": "warn",
+    "@typescript-eslint/only-throw-error": "warn",
+    "@typescript-eslint/prefer-promise-reject-errors": "warn",
     "no-useless-escape": "warn"
   },
   "ignorePatterns": [
