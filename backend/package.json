@@ -104,7 +104,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@stryker-mutator/core": "^8.0.0",
+    "@stryker-mutator/core": "^10.0.0",
     "@stryker-mutator/jest-runner": "^8.0.0",
     "@stryker-mutator/typescript-checker": "^8.0.0",
     "@types/bcryptjs": "^3.0.0",
