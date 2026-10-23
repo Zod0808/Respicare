@@ -103,12 +103,22 @@ describe('TemporalTrends', () => {
     });
 
     const user = userEvent.setup();
-    const [periodSelect, districtSelect, categorySelect] = screen.getAllByRole('combobox');
 
-    await user.selectOptions(periodSelect, '7d');
-    await user.selectOptions(districtSelect, 'Gregorio Albarracín');
-    await user.selectOptions(categorySelect, 'respiratory');
+    // Each select is re-queried right before use (rather than cached once up front)
+    // because under React 19, a stale element reference held across an awaited async
+    // state update (the fetchTrendsData effect triggered by the previous selection) no
+    // longer receives subsequent change events reliably.
+    await user.selectOptions(screen.getAllByRole('combobox')[0], '7d');
+    await waitFor(() => {
+      expect(screen.queryByText(/Cargando datos de tendencias/i)).not.toBeInTheDocument();
+    });
 
+    await user.selectOptions(screen.getAllByRole('combobox')[1], 'Gregorio Albarracín');
+    await waitFor(() => {
+      expect(screen.queryByText(/Cargando datos de tendencias/i)).not.toBeInTheDocument();
+    });
+
+    await user.selectOptions(screen.getAllByRole('combobox')[2], 'respiratory');
     await waitFor(() => {
       expect(screen.queryByText(/Cargando datos de tendencias/i)).not.toBeInTheDocument();
     });
