@@ -11,13 +11,10 @@
 module.exports = {
   // Package manager
   packageManager: 'npm',
-  
-  // Project root
-  projectRoot: '.',
-  
+
   // Test runner
   testRunner: 'jest',
-  testRunnerNodeOptions: ['--max-old-space-size=4096'],
+  testRunnerNodeArgs: ['--max-old-space-size=4096'],
   
   // Coverage analysis
   coverageAnalysis: 'perTest',
@@ -49,20 +46,11 @@ module.exports = {
     '!src/scripts/**',
   ],
   
-  // Test files
-  testMatch: [
-    'tests/**/*.test.ts',
-    'tests/**/*.spec.ts',
-  ],
-  
   // Timeout per test
   timeoutMS: 10000,
   
   // Timeout factor (multiplier for slow tests)
   timeoutFactor: 2,
-  
-  // Maximum concurrent test runners
-  maxConcurrentTestRunners: 2,
   
   // Log level
   logLevel: 'info',
@@ -97,17 +85,12 @@ module.exports = {
   checkers: ['typescript'],
   tsconfigFile: 'tsconfig.json',
   
-  // Ignore patterns
+  // Ignore patterns (node_modules, .git, etc. are always ignored by Stryker).
+  // 'tests' and '*.config.js' must stay out of this list: the sandbox needs
+  // the test files and jest.config.js to actually run the suite.
   ignorePatterns: [
-    'node_modules',
     'dist',
     'coverage',
-    '.git',
-    'tests',
-    '*.config.js',
-    '*.config.ts',
-    'package.json',
-    'package-lock.json',
   ],
   
   // Concurrency

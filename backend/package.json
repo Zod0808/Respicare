@@ -19,7 +19,7 @@
     "test:security": "jest tests/security",
     "test:database": "jest tests/database",
     "test:mutation": "stryker run",
-    "test:mutation:dry": "stryker run --dry-run",
+    "test:mutation:dry": "stryker run --dryRunOnly",
     "test:mutation:incremental": "stryker run --incremental",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
@@ -104,9 +104,9 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@stryker-mutator/core": "^8.0.0",
-    "@stryker-mutator/jest-runner": "^8.0.0",
-    "@stryker-mutator/typescript-checker": "^8.0.0",
+    "@stryker-mutator/core": "^10.0.0",
+    "@stryker-mutator/jest-runner": "^10.0.0",
+    "@stryker-mutator/typescript-checker": "^10.0.0",
     "@types/bcryptjs": "^3.0.0",
     "@types/compression": "^1.7.5",
     "@types/cors": "^2.8.17",
