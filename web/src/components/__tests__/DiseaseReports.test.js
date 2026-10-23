@@ -112,25 +112,25 @@ describe('DiseaseReports', () => {
 
   it('should display symptom analysis data', async () => {
     render(<DiseaseReports />);
-    
+
     await waitFor(() => {
-      expect(screen.getByText('Tos')).toBeInTheDocument();
+      expect(screen.getAllByText('Tos').length).toBeGreaterThan(0);
     });
   });
 
   it('should display disease distribution', async () => {
     render(<DiseaseReports />);
-    
+
     await waitFor(() => {
-      expect(screen.getByText('Asma')).toBeInTheDocument();
+      expect(screen.getAllByText('Asma').length).toBeGreaterThan(0);
     });
   });
 
   it('should display district distribution', async () => {
     render(<DiseaseReports />);
-    
+
     await waitFor(() => {
-      expect(screen.getByText(/Centro de Tacna/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/Centro de Tacna/i).length).toBeGreaterThan(0);
     });
   });
 

@@ -1,6 +1,17 @@
 import React, { memo } from 'react';
-import AutoSizer from 'react-virtualized-auto-sizer';
-import { FixedSizeList as List } from 'react-window';
+import { List } from 'react-window';
+
+function Row({ index, style, items, renderItem }) {
+  const item = items[index];
+  if (!item) {
+    return null;
+  }
+  return (
+    <div style={style}>
+      {renderItem(item, index)}
+    </div>
+  );
+}
 
 function VirtualizedList({
   items,
@@ -21,30 +32,14 @@ function VirtualizedList({
       className={`virtualized-list ${className}`}
       style={{ height: containerHeight }}
     >
-      <AutoSizer>
-        {({ height, width }) => (
-          <List
-            height={height}
-            width={width}
-            itemCount={items.length}
-            itemSize={itemHeight}
-            overscanCount={overscanCount}
-            itemData={{ items, renderItem }}
-          >
-            {({ index, style, data }) => {
-              const item = data.items[index];
-              if (!item) {
-                return null;
-              }
-              return (
-                <div style={style}>
-                  {data.renderItem(item, index)}
-                </div>
-              );
-            }}
-          </List>
-        )}
-      </AutoSizer>
+      <List
+        style={{ height: '100%' }}
+        rowComponent={Row}
+        rowCount={items.length}
+        rowHeight={itemHeight}
+        rowProps={{ items, renderItem }}
+        overscanCount={overscanCount}
+      />
     </div>
   );
 }

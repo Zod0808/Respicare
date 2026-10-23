@@ -3,17 +3,12 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import VirtualizedList from '../VirtualizedList';
 
-jest.mock('react-virtualized-auto-sizer', () => ({
-  __esModule: true,
-  default: ({ children }) => children({ height: 200, width: 300 }),
-}));
-
 jest.mock('react-window', () => ({
-  FixedSizeList: ({ itemCount, itemData, children, height, width }) => (
-    <div data-testid="mock-react-window" data-height={height} data-width={width}>
-      {Array.from({ length: itemCount }).map((_, index) =>
-        children({ index, style: { top: index * 10 }, data: itemData })
-      )}
+  List: ({ rowComponent: RowComponent, rowCount, rowProps, style }) => (
+    <div data-testid="mock-react-window" data-height={style?.height}>
+      {Array.from({ length: rowCount }).map((_, index) => (
+        <RowComponent key={index} index={index} style={{ top: index * 10 }} {...rowProps} />
+      ))}
     </div>
   ),
 }));
@@ -44,7 +39,7 @@ describe('VirtualizedList', () => {
       />
     );
 
-    expect(screen.getByTestId('mock-react-window')).toHaveAttribute('data-height', '200');
+    expect(screen.getByTestId('mock-react-window')).toHaveAttribute('data-height', '100%');
     expect(renderItem).toHaveBeenCalledTimes(items.length);
     expect(screen.getAllByTestId('item')).toHaveLength(items.length);
     expect(container.firstChild).toHaveClass('virtualized-list');
