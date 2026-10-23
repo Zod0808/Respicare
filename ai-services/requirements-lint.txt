@@ -1,7 +1,7 @@
 # Static code analysis tools for AI Services
 pylint==3.0.3
 flake8==6.1.0
-black==23.12.1
+black==26.10.1
 mypy==1.7.1
 bandit==1.7.5
 # pip-audit es la alternativa moderna a safety (sin conflictos de dependencias)
