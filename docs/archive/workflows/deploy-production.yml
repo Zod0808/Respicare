@@ -1,3 +1,18 @@
+# ARCHIVADO — no es la estrategia de despliegue vigente.
+#
+# Este workflow asume un clúster Kubernetes de producción (namespace
+# respicare-production, blue-green con kubectl, dominios *.respicare.dev,
+# secret KUBECONFIG_PRODUCTION) que nunca se configuró: 0 ejecuciones
+# registradas, 0 tags v*.*.* en el repo, secret inexistente, e imágenes
+# ghcr.io/your-org/... con el placeholder sin personalizar.
+#
+# El despliegue real a producción es VM + Docker Compose (docker-compose.vm.yml,
+# scripts/deploy-vm.sh) + túnel Cloudflare a nivel de host (scripts/tunnel-manager.sh)
+# + frontend en Vercel. Ver Documentation/PLAN_DE_DESPLIEGUE.md.
+#
+# Se movió aquí (fuera de .github/workflows/) para que GitHub Actions deje de
+# listarlo como workflow activo, sin perder el historial del archivo.
+
 name: Deploy to Production
 
 on:

@@ -10,7 +10,7 @@
 
 - [x] **Objetivo y alcance documentados** — `Documentation/CRONOGRAMA_PROYECTO.md` cubre fases, pero no hay un documento específico "Plan de Despliegue" con objetivo/alcance en esos términos.
   - [ ] Redactar `Documentation/PLAN_DE_DESPLIEGUE.md` que declare explícitamente: objetivo (llevar cada versión a producción de forma controlada y repetible) y alcance (componentes, BD, configuración, dependencias).
-- [x] **Automatización CI/CD** — ya existe: `.github/workflows/deploy-staging.yml`, `deploy-production.yml`, `ci-cd-complete.yml`, `docker-build.yml`, `docker-build-tags.yml`.
+- [x] **Automatización CI/CD** — ya existe: `.github/workflows/deploy-staging.yml`, `ci-cd-complete.yml`, `docker-build.yml`, `docker-build-tags.yml` (`deploy-production.yml` se archivó en `docs/archive/workflows/`, ver abajo).
 - [ ] **Cronograma, ventanas de mantenimiento y responsables** del propio despliegue (no del proyecto completo) — falta un apartado corto tipo "quién aprueba y cuánd se despliega a producción".
 - [ ] **Criterios de aceptación y de reversión acordados antes de liberar** — no están formalizados como checklist propio (ver punto de reversión más abajo).
 - [x] **Áreas de sistemas involucradas identificadas**:
@@ -18,7 +18,7 @@
   - QA → `Documentation/CATALOGO_PRUEBAS.md` (5,326 casos, 4 módulos).
   - Infraestructura → `docker-compose.vm.yml`, `docker-compose.prod.yml`, `docker-compose.tunnel.yml`.
   - Seguridad/soporte → `.github/workflows/dast-scan.yml`, `sast-scan.yml`, `security-scan.yml`, `security-zap.yml`.
-- [ ] **Confirmar cuál es el flujo de despliegue real a usar**: `deploy-production.yml` apunta a Kubernetes (`KUBERNETES_NAMESPACE: respicare-production`), pero la decisión vigente del equipo es `docker-compose.vm.yml` + Cloudflare Tunnel. **Hay que decidir y documentar cuál es la fuente de verdad** antes de la entrega final, para no presentar dos estrategias contradictorias.
+- [x] **Confirmar cuál es el flujo de despliegue real a usar** — resuelto: la fuente de verdad es `docker-compose.vm.yml` + `scripts/deploy-vm.sh` + túnel Cloudflare a nivel de host + Vercel para el web (documentado en `PLAN_DE_DESPLIEGUE.md`). `deploy-production.yml` (Kubernetes) nunca se ejecutó y se archivó en `docs/archive/workflows/` para eliminar la contradicción.
 
 ### Ambientes de sistemas
 
@@ -75,13 +75,13 @@ Criterios del documento, aplicados al proyecto real:
 
 - [x] **Cobertura**: ya trackeada y cumplida en los 4 módulos (≥80% en backend/web/mobile/ai-services, ver `CATALOGO_PRUEBAS.md`).
 - [x] **Defectos**: hay cantidad/severidad registrada (ej. backend 26 fail, web 271 fail, ai-services 344 fail/77 err) — **pendiente real**: reducir o justificar por qué quedan tantos fails en web y ai-services antes del cierre.
-- [ ] **Criterio de salida formal**: "sin defectos críticos abiertos y pruebas aprobadas" — no está declarado como gate explícito en ningún workflow (ej. que `deploy-production.yml` falle si hay fails críticos pendientes). Verificar/agregar ese gate.
+- [ ] **Criterio de salida formal**: "sin defectos críticos abiertos y pruebas aprobadas" — no está declarado como gate explícito en ningún workflow (ej. que `scripts/smoke-test-vm.sh` o el pipeline de CI fallen si hay fails críticos pendientes). Verificar/agregar ese gate.
 
 ---
 
 ## Resumen: lo que falta antes de fin de ciclo
 
-1. Decidir y documentar de una vez la estrategia real de despliegue a producción (Compose+Tunnel vs. K8s en `deploy-production.yml`) — ahora mismo son contradictorios.
+1. ~~Decidir y documentar la estrategia real de despliegue a producción~~ — **resuelto**: Compose+Tunnel+Vercel es la fuente de verdad (`PLAN_DE_DESPLIEGUE.md`); `deploy-production.yml` (K8s) se archivó.
 2. Crear `Documentation/PLAN_DE_DESPLIEGUE.md` formal con: objetivo/alcance, responsables, criterios de aceptación/reversión, estrategia de despliegue nombrada explícitamente.
 3. Agregar smoke tests post-despliegue y proceso de backup pre-deploy (no existen hoy).
 4. Formalizar un gate de salida de QA (sin críticos abiertos) antes de producción.
