@@ -58,6 +58,12 @@ module.exports = {
   
   // Test timeout
   testTimeout: 10000,
+
+  // Cada test suite levanta su propia instancia de mongodb-memory-server (un
+  // mongod real). Con el default de Jest (núcleos-1 workers) eso dispara
+  // demasiados procesos mongod en paralelo y provoca OOM/SIGSEGV intermitente
+  // en máquinas de muchos núcleos. Se limita a la mitad de los núcleos.
+  maxWorkers: '50%',
   
   // Clear mocks between tests
   clearMocks: true,
