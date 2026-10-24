@@ -1,3 +1,15 @@
+# ARCHIVADO — no es un ambiente real.
+#
+# Igual que deploy-production.yml: asume un clúster Kubernetes de staging
+# (namespace respicare-staging, dominios *.staging.respicare.dev, secret
+# KUBECONFIG_STAGING) que nunca se configuró: 0 ejecuciones registradas y
+# secret inexistente. No hay ambiente de preproducción real desplegado hoy
+# en el proyecto — solo dev (docker-compose.dev.yml) y producción (VM).
+# Ver Documentation/CHECKLIST_DESPLIEGUE_TESTABILIDAD_QA.md.
+#
+# Se movió aquí (fuera de .github/workflows/) para que GitHub Actions deje
+# de listarlo como workflow activo, sin perder el historial del archivo.
+
 name: Deploy to Staging
 
 on:
