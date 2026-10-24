@@ -113,7 +113,17 @@ Despliegue gradual por ambiente: **Desarrollo** (`docker-compose.dev.yml`) → *
 - **Funcionalidad**: login/autenticación JWT, registro de síntomas, análisis IA, dashboard epidemiológico completan pruebas de humo manuales o automatizadas.
 - **Datos**: si hubo migración de esquema en MongoDB, conciliar conteos de colecciones antes/después.
 - **Seguridad**: `CORS_ORIGINS` restringido al dominio real, JWT/encryption secrets no expuestos en logs, `security-scan.yml`/`sast-scan.yml` sin hallazgos críticos nuevos.
-- **Rendimiento**: sin umbrales formales definidos aún — **gap**: definir al menos latencia aceptable para `/analytics` y el endpoint de análisis IA.
+- **Rendimiento**: umbrales SLA ya definidos y verificados en CI contra MongoDB real (`backend/tests/performance/api-performance.perf.test.ts`), por tipo de endpoint:
+
+  | Tipo de endpoint | mean | p95 | p99 |
+  |---|---|---|---|
+  | Auth (login/register) | < 300ms | < 500ms | < 800ms |
+  | Lectura (list/get) | < 200ms | < 400ms | < 600ms |
+  | Escritura (create/update) | < 350ms | < 600ms | < 900ms |
+  | Analytics/Dashboard | < 400ms | < 700ms | < 1000ms |
+  | Búsqueda/filtro | < 250ms | < 450ms | < 700ms |
+
+  Además, `concurrency.perf.test.ts` exige un throughput mínimo de **≥ 5 req/s** en lecturas de historial médico bajo carga paralela, y una degradación bajo carga sostenida **< 3x** respecto al tiempo base. Criterio de aceptación para el despliegue: estos tests de performance deben pasar en CI (`npm run test:performance` en `backend/`) antes de autorizar el paso a producción; `scripts/smoke-test-vm.sh` no mide latencia, solo disponibilidad — si se requiere validar el SLA ya en la VM, correrlo manualmente con `ab`/`autocannon` contra `/health` y `/api/v1/*` tras el despliegue.
 - **Operación**: logs rotando correctamente, acceso a `mongo-express`/`redis-commander` solo si es necesario (son herramientas de administración, no deberían quedar expuestas públicamente sin protección).
 
 **Criterio de aceptación final**: Cesar Fabian Chavez Linares (como responsable único de QA y despliegue) confirma resultados antes de dar por cerrada la liberación. Registrar evidencias en este archivo o en la bitácora del sprint vigente.
@@ -183,6 +193,6 @@ Despliegue gradual por ambiente: **Desarrollo** (`docker-compose.dev.yml`) → *
 1. ~~No existe script de respaldo pre-despliegue automatizado~~ — **resuelto**: `scripts/backup-vm.sh` (mongodump + RDB de Redis + copia de `.env`/`.env.vm`, con retención de 14 días).
 2. ~~No existe script de smoke test funcional consolidado~~ — **resuelto**: `scripts/smoke-test-vm.sh` (healthchecks + endpoints vía nginx + flujo mínimo de `auth/login`).
 3. ~~`deploy-production.yml` (Kubernetes) desalineado con la infraestructura real~~ — **resuelto**: nunca se ejecutó (0 corridas, 0 tags, sin secret `KUBECONFIG_PRODUCTION`) y se archivó en `docs/archive/workflows/deploy-production.yml` con una nota explicando por qué.
-4. **No hay umbrales de rendimiento definidos** (latencia, tasa de error) para el criterio de aceptación de la sección 9.
+4. ~~No hay umbrales de rendimiento definidos~~ — **resuelto**: la sección 9 ahora documenta el SLA real ya verificado en CI (`backend/tests/performance/api-performance.perf.test.ts` y `concurrency.perf.test.ts`): mean/p95/p99 por tipo de endpoint y throughput mínimo ≥ 5 req/s.
 5. **El túnel de Cloudflare es efímero** (`*.trycloudflare.com`, no un túnel nombrado/persistente): la URL pública rota en cada reinicio de `cloudflared`/VM, y `tunnel-manager.sh` reacciona con un **commit + push automático a `fabian`** que reescribe `.env`, `nginx.vm.conf`, configs de mobile y `web/src/utils/apiBase.js`. Es una automatización sin revisión humana que debería, como mínimo, quedar documentada como tal (y evaluarse si conviene migrar a un túnel nombrado de Cloudflare para tener una URL estable).
 6. ~~Discrepancia de IP~~ — **resuelto**: `nginx/nginx.vm.conf` tenía `38.250.158.226` desactualizado; se corrigió a `38.250.158.233`, consistente con `.env.vm`, `nginx/nginx.server.conf` y lo que imprime `scripts/deploy-vm.sh`.
