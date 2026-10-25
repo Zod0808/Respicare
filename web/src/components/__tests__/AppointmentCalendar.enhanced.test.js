@@ -46,75 +46,71 @@ describe('AppointmentCalendar Enhanced Tests', () => {
       }
     });
 
-    it('should handle create appointment', async () => {
-      render(<AppointmentCalendar />);
-      
-      const createButton = screen.getByText(/crear|create|nueva|new/i);
-      fireEvent.click(createButton);
-      
-      // Should open create modal or form
-      expect(screen.getByText(/nueva cita|new appointment/i)).toBeInTheDocument();
-    });
-
-    it('should handle edit appointment', async () => {
+    it('should render appointment rows with patient, doctor and status from the API', async () => {
       mockedAxios.get.mockResolvedValueOnce({
         data: {
           data: [{
-            id: '1',
-            date: '2024-01-15',
-            patientName: 'Test Patient',
+            _id: '1',
+            scheduledAt: '2024-01-15T10:00:00Z',
+            patientId: 'patient-1',
+            doctorId: 'doctor-1',
+            status: 'scheduled',
+            reason: 'Chequeo',
           }]
         }
       });
-      
+
       render(<AppointmentCalendar />);
-      
+
       await waitFor(() => {
-        const editButton = screen.getByText(/editar|edit/i);
-        if (editButton) {
-          fireEvent.click(editButton);
-          expect(screen.getByText(/editar cita|edit appointment/i)).toBeInTheDocument();
-        }
+        expect(screen.getByText('patient-1')).toBeInTheDocument();
+        expect(screen.getByText('doctor-1')).toBeInTheDocument();
+        expect(screen.getByText('scheduled')).toHaveClass('status-scheduled');
       });
     });
 
-    it('should handle delete appointment', async () => {
+    it('should show a dash when an appointment has no reason', async () => {
       mockedAxios.get.mockResolvedValueOnce({
         data: {
           data: [{
-            id: '1',
-            date: '2024-01-15',
-            patientName: 'Test Patient',
+            _id: '1',
+            scheduledAt: '2024-01-15T10:00:00Z',
+            patientId: 'patient-1',
+            doctorId: 'doctor-1',
+            status: 'scheduled',
           }]
         }
       });
-      
+
       render(<AppointmentCalendar />);
-      
+
       await waitFor(() => {
-        const deleteButton = screen.getByText(/eliminar|delete/i);
-        if (deleteButton) {
-          fireEvent.click(deleteButton);
-          // Should show confirmation
-          expect(screen.getByText(/confirmar|confirm/i)).toBeInTheDocument();
-        }
+        expect(screen.getByText('—')).toBeInTheDocument();
       });
     });
 
-    it('should filter appointments by date range', () => {
+    it('should re-fetch appointments when clicking Refrescar citas', async () => {
       render(<AppointmentCalendar />);
-      
-      const startDateInput = screen.getByLabelText(/fecha inicio|start date/i);
-      const endDateInput = screen.getByLabelText(/fecha fin|end date/i);
-      
-      if (startDateInput && endDateInput) {
-        fireEvent.change(startDateInput, { target: { value: '2024-01-01' } });
-        fireEvent.change(endDateInput, { target: { value: '2024-01-31' } });
-        
-        // Should filter appointments
-        expect(startDateInput.value).toBe('2024-01-01');
-        expect(endDateInput.value).toBe('2024-01-31');
-      }
+
+      // Esperar a que termine la carga inicial (botón deja de estar disabled={loading})
+      await waitFor(() => expect(screen.getByText(/Citas cargadas correctamente/i)).toBeInTheDocument());
+
+      fireEvent.click(screen.getByRole('button', { name: /Refrescar citas/i }));
+
+      await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(2));
+    });
+
+    it('should include patientId filter in the appointments request', async () => {
+      render(<AppointmentCalendar />);
+
+      const patientInput = screen.getByPlaceholderText(/patient-456/i);
+      fireEvent.change(patientInput, { target: { value: 'patient-9' } });
+      fireEvent.click(screen.getByRole('button', { name: /Refrescar citas/i }));
+
+      await waitFor(() => {
+        const lastCall = mockedAxios.get.mock.calls[mockedAxios.get.mock.calls.length - 1];
+        expect(lastCall[0]).toContain('patientId=patient-9');
+      });
     });
 
     it('should handle API errors gracefully', async () => {

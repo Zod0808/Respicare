@@ -11,7 +11,7 @@ const localStorageMock = {
   removeItem: jest.fn(),
   clear: jest.fn(),
 };
-global.localStorage = localStorageMock;
+Object.defineProperty(window, 'localStorage', { value: localStorageMock, writable: true, configurable: true });
 
 describe('i18nService', () => {
   beforeEach(() => {
@@ -40,7 +40,9 @@ describe('i18nService', () => {
     });
 
     it('should return saved language from localStorage', () => {
-      localStorageMock.getItem.mockReturnValue('en');
+      // currentLanguage solo cambia explícitamente vía setLanguage(), no leyendo
+      // localStorage en cada llamada a getCurrentLanguage()
+      setLanguage('en');
       const lang = getCurrentLanguage();
       expect(lang).toBe('en');
     });
@@ -55,7 +57,7 @@ describe('i18nService', () => {
   describe('setLanguage', () => {
     it('should set language and save to localStorage', () => {
       setLanguage('en');
-      expect(localStorageMock.setItem).toHaveBeenCalledWith('app-language', 'en');
+      expect(localStorageMock.setItem).toHaveBeenCalledWith('i18n-language', 'en');
     });
 
     it('should dispatch languageChanged event', () => {
@@ -124,7 +126,9 @@ describe('i18nService', () => {
     });
 
     it('should load language from localStorage on initialization', () => {
-      localStorageMock.getItem.mockReturnValue('pt');
+      // currentLanguage solo cambia explícitamente vía setLanguage(), no leyendo
+      // localStorage en cada llamada a getCurrentLanguage()
+      setLanguage('pt');
       const lang = getCurrentLanguage();
       expect(lang).toBe('pt');
     });
@@ -150,14 +154,14 @@ describe('i18nService', () => {
 
   describe('Edge cases', () => {
     it('should handle null localStorage gracefully', () => {
-      const originalLocalStorage = global.localStorage;
-      delete global.localStorage;
-      
+      const originalLocalStorage = window.localStorage;
+      delete window.localStorage;
+
       expect(() => {
         getCurrentLanguage();
       }).not.toThrow();
-      
-      global.localStorage = originalLocalStorage;
+
+      Object.defineProperty(window, 'localStorage', { value: originalLocalStorage, writable: true, configurable: true });
     });
 
     it('should handle localStorage errors gracefully', () => {

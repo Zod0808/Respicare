@@ -122,7 +122,8 @@ describe('ExecutiveDashboard', () => {
 
     await waitFor(() => {
       expect(screen.getByText(/Pacientes/i)).toBeInTheDocument();
-      expect(screen.getByText(/1500/)).toBeInTheDocument();
+      // (1500).toLocaleString() en jsdom/Node produce "1,500", no "1500"
+      expect(screen.getByText(/1,500/)).toBeInTheDocument();
       expect(screen.getByText(/Índice de satisfacción/i)).toBeInTheDocument();
       expect(screen.getByText(/91.2%/)).toBeInTheDocument();
     });

@@ -10,7 +10,9 @@ import * as i18nService from '../../services/i18nService';
 
 // Mock i18n service
 jest.mock('../../services/i18nService', () => ({
-  t: jest.fn((key) => key),
+  // El componente usa t('common.selectLanguage') como aria-label del botón;
+  // el mock debe traducirlo para que los tests lo encuentren por accesibilidad.
+  t: jest.fn((key) => (key === 'common.selectLanguage' ? 'Seleccionar idioma' : key)),
   setLanguage: jest.fn(),
   getCurrentLanguage: jest.fn(() => 'es'),
   SUPPORTED_LANGUAGES: {
@@ -63,8 +65,9 @@ describe('LanguageSelector Enhanced Tests', () => {
       const button = screen.getByRole('button', { name: /seleccionar idioma/i });
       fireEvent.click(button);
       
-      // All languages should be available
-      expect(screen.getByText('Español')).toBeInTheDocument();
+      // All languages should be available. "Español" aparece tanto en el
+      // texto del botón (idioma actual) como en la opción del dropdown.
+      expect(screen.getAllByText('Español').length).toBeGreaterThan(0);
       expect(screen.getByText('English')).toBeInTheDocument();
       expect(screen.getByText('Português')).toBeInTheDocument();
       expect(screen.getByText('Français')).toBeInTheDocument();
@@ -83,7 +86,7 @@ describe('LanguageSelector Enhanced Tests', () => {
       fireEvent.click(button);
       
       // Should not crash
-      expect(screen.getByText('Español')).toBeInTheDocument();
+      expect(screen.getAllByText('Español').length).toBeGreaterThan(0);
     });
   });
 

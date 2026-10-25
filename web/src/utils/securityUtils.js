@@ -23,9 +23,13 @@ export function sanitizeHTML(html) {
     });
   }
 
-  // Fallback: sanitización básica
+  // Fallback: sanitización básica. `temp.textContent = html` es un no-op
+  // (guarda y devuelve el string literal sin tocarlo) — hay que parsear como
+  // HTML (innerHTML no ejecuta <script>), quitar los <script> explícitamente
+  // y recién ahí leer textContent para quedarnos solo con el texto plano.
   const temp = document.createElement('div');
-  temp.textContent = html; // Usar textContent para evitar ejecución de scripts
+  temp.innerHTML = html;
+  temp.querySelectorAll('script').forEach((script) => script.remove());
   return temp.textContent;
 }
 

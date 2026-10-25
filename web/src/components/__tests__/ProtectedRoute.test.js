@@ -28,6 +28,7 @@ const renderRoute = (authState, roles) =>
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<div>Main Dashboard</div>} />
+        <Route path="/" element={<div>Home</div>} />
       </Routes>
     </MemoryRouter>
   );
@@ -64,10 +65,23 @@ describe('ProtectedRoute', () => {
 
   // ── role-based access ─────────────────────────────────────────────────────
 
-  it('redirects to /dashboard when user role is not allowed', () => {
+  it('redirects to / when a patient role is not allowed', () => {
+    // El fallback real es '/dashboard' solo para roles doctor/admin;
+    // para cualquier otro rol (p. ej. patient) cae a '/'.
     useAuth.mockReturnValue({
       isAuthenticated: true,
       user: { name: 'Alice', role: 'patient' },
+      loading: false,
+    });
+    renderRoute(null, ['admin']);
+    expect(screen.getByText('Home')).toBeInTheDocument();
+    expect(screen.queryByText('Dashboard')).not.toBeInTheDocument();
+  });
+
+  it('redirects to /dashboard when a doctor/admin role is not allowed', () => {
+    useAuth.mockReturnValue({
+      isAuthenticated: true,
+      user: { name: 'Bob', role: 'doctor' },
       loading: false,
     });
     renderRoute(null, ['admin']);

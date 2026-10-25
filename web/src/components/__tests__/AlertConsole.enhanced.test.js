@@ -27,7 +27,7 @@ describe('AlertConsole Enhanced Tests', () => {
     it('should handle empty JWT token', async () => {
       render(<AlertConsole />);
       
-      const loadButton = screen.getByText(/cargar alertas|load alerts/i);
+      const loadButton = screen.getByRole('button', { name: /cargar alertas|load alerts/i });
       fireEvent.click(loadButton);
       
       await waitFor(() => {
@@ -38,7 +38,7 @@ describe('AlertConsole Enhanced Tests', () => {
     it('should handle empty internal token', async () => {
       render(<AlertConsole />);
       
-      const loadButton = screen.getByText(/cargar alertas|load alerts/i);
+      const loadButton = screen.getByRole('button', { name: /cargar alertas|load alerts/i });
       fireEvent.click(loadButton);
       
       await waitFor(() => {
@@ -55,7 +55,7 @@ describe('AlertConsole Enhanced Tests', () => {
       fireEvent.change(jwtInput, { target: { value: 'jwt_token' } });
       fireEvent.change(internalInput, { target: { value: 'internal_token' } });
       
-      const loadButton = screen.getByText(/cargar alertas|load alerts/i);
+      const loadButton = screen.getByRole('button', { name: /cargar alertas|load alerts/i });
       fireEvent.click(loadButton);
       
       await waitFor(() => {
@@ -77,7 +77,7 @@ describe('AlertConsole Enhanced Tests', () => {
       const jwtInput = screen.getByLabelText(/jwt|authorization/i);
       fireEvent.change(jwtInput, { target: { value: '  jwt_token  ' } });
       
-      const loadButton = screen.getByText(/cargar alertas|load alerts/i);
+      const loadButton = screen.getByRole('button', { name: /cargar alertas|load alerts/i });
       fireEvent.click(loadButton);
       
       await waitFor(() => {
@@ -99,7 +99,7 @@ describe('AlertConsole Enhanced Tests', () => {
       
       render(<AlertConsole />);
       
-      const monitoringButton = screen.getByText(/monitoreo|monitoring/i);
+      const monitoringButton = screen.getByRole('button', { name: /monitoreo|monitoring/i });
       fireEvent.click(monitoringButton);
       
       await waitFor(() => {
@@ -117,11 +117,11 @@ describe('AlertConsole Enhanced Tests', () => {
       
       render(<AlertConsole />);
       
-      const loadButton = screen.getByText(/cargar alertas|load alerts/i);
+      const loadButton = screen.getByRole('button', { name: /cargar alertas|load alerts/i });
       fireEvent.click(loadButton);
       
       await waitFor(() => {
-        const acknowledgeButton = screen.getByText(/reconocer|acknowledge/i);
+        const acknowledgeButton = screen.getByRole('button', { name: /reconocer|acknowledge/i });
         if (acknowledgeButton) {
           fireEvent.click(acknowledgeButton);
           
@@ -141,7 +141,7 @@ describe('AlertConsole Enhanced Tests', () => {
       
       render(<AlertConsole />);
       
-      const loadButton = screen.getByText(/cargar alertas|load alerts/i);
+      const loadButton = screen.getByRole('button', { name: /cargar alertas|load alerts/i });
       fireEvent.click(loadButton);
       
       await waitFor(() => {
@@ -156,7 +156,7 @@ describe('AlertConsole Enhanced Tests', () => {
       
       render(<AlertConsole />);
       
-      const loadButton = screen.getByText(/cargar alertas|load alerts/i);
+      const loadButton = screen.getByRole('button', { name: /cargar alertas|load alerts/i });
       fireEvent.click(loadButton);
       
       await waitFor(() => {
@@ -171,11 +171,11 @@ describe('AlertConsole Enhanced Tests', () => {
       
       render(<AlertConsole />);
       
-      const loadButton = screen.getByText(/cargar alertas|load alerts/i);
+      const loadButton = screen.getByRole('button', { name: /cargar alertas|load alerts/i });
       fireEvent.click(loadButton);
       
       await waitFor(() => {
-        expect(screen.getByText(/2.*alertas|alerts/i)).toBeInTheDocument();
+        expect(screen.getByText(/se cargaron 2 alertas/i)).toBeInTheDocument();
       });
     });
 
@@ -186,11 +186,11 @@ describe('AlertConsole Enhanced Tests', () => {
       
       render(<AlertConsole />);
       
-      const loadButton = screen.getByText(/cargar alertas|load alerts/i);
+      const loadButton = screen.getByRole('button', { name: /cargar alertas|load alerts/i });
       fireEvent.click(loadButton);
       
       await waitFor(() => {
-        expect(screen.getByText(/0.*alertas|alerts/i)).toBeInTheDocument();
+        expect(screen.getByText(/se cargaron 0 alertas/i)).toBeInTheDocument();
       });
     });
   });

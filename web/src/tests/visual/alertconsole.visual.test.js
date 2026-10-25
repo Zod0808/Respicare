@@ -107,7 +107,7 @@ describe('AlertConsole — Estado Visual de Carga', () => {
     );
 
     render(<AlertConsole />);
-    const loadButton = screen.getByText(/cargar alertas|obtener alertas|load/i);
+    const loadButton = screen.getByRole('button', { name: /cargar alertas/i });
     fireEvent.click(loadButton);
 
     // Check for loading state
@@ -136,7 +136,7 @@ describe('AlertConsole — Visual con Alertas Cargadas', () => {
 
   it('should render alert list after loading', async () => {
     render(<AlertConsole />);
-    const loadButton = screen.getByText(/cargar alertas|obtener alertas/i);
+    const loadButton = screen.getByRole('button', { name: /cargar alertas/i });
     fireEvent.click(loadButton);
 
     await waitFor(() => {
@@ -146,7 +146,7 @@ describe('AlertConsole — Visual con Alertas Cargadas', () => {
 
   it('should render all 3 alerts in the list', async () => {
     render(<AlertConsole />);
-    const loadButton = screen.getByText(/cargar alertas|obtener alertas/i);
+    const loadButton = screen.getByRole('button', { name: /cargar alertas/i });
     fireEvent.click(loadButton);
 
     await waitFor(() => {
@@ -158,7 +158,7 @@ describe('AlertConsole — Visual con Alertas Cargadas', () => {
 
   it('matches DOM snapshot with alerts loaded', async () => {
     const { asFragment } = render(<AlertConsole />);
-    const loadButton = screen.getByText(/cargar alertas|obtener alertas/i);
+    const loadButton = screen.getByRole('button', { name: /cargar alertas/i });
     fireEvent.click(loadButton);
 
     await waitFor(() => {
@@ -179,7 +179,7 @@ describe('AlertConsole — Visual de Mensajes de Feedback', () => {
     });
 
     render(<AlertConsole />);
-    const loadButton = screen.getByText(/cargar alertas|obtener alertas/i);
+    const loadButton = screen.getByRole('button', { name: /cargar alertas/i });
     fireEvent.click(loadButton);
 
     await waitFor(() => {
@@ -203,7 +203,7 @@ describe('AlertConsole — Visual de Mensajes de Feedback', () => {
     });
 
     render(<AlertConsole />);
-    const loadButton = screen.getByText(/cargar alertas|obtener alertas/i);
+    const loadButton = screen.getByRole('button', { name: /cargar alertas/i });
     fireEvent.click(loadButton);
 
     await waitFor(() => {
@@ -227,7 +227,7 @@ describe('AlertConsole — Visual de Reconocimiento de Alerta', () => {
     });
 
     render(<AlertConsole />);
-    const loadButton = screen.getByText(/cargar alertas|obtener alertas/i);
+    const loadButton = screen.getByRole('button', { name: /cargar alertas/i });
     fireEvent.click(loadButton);
 
     await waitFor(() => {

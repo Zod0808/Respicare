@@ -45,7 +45,7 @@
   margin-bottom: 40px;
 }
 
-.services-section h3 {
+.services-section h2 {
   color: #000000;
   margin-bottom: 20px;
   font-size: 1.5rem;
@@ -140,7 +140,7 @@
   box-shadow: 0 0 10px #f44336;
 }
 
-.service-card h4 {
+.service-card h3 {
   color: #000000;
   margin-bottom: 10px;
   font-size: 1.3rem;
@@ -214,7 +214,7 @@
   border: 1px solid #e3f2fd;
 }
 
-.info-section h3 {
+.info-section h2 {
   color: #000000;
   margin-bottom: 20px;
   font-size: 1.5rem;
@@ -276,7 +276,7 @@
   margin-bottom: 40px;
 }
 
-.admin-tools h3 {
+.admin-tools h2 {
   color: #000000;
   margin-bottom: 20px;
   font-size: 1.5rem;
@@ -311,7 +311,7 @@
   margin-bottom: 15px;
 }
 
-.tool-card h4 {
+.tool-card h3 {
   margin-bottom: 10px;
   font-size: 1.3rem;
 }
@@ -373,10 +373,10 @@
 
 .theme-dark .dashboard-header h1,
 .theme-dark .dashboard-subtitle,
-.theme-dark .services-section h3,
-.theme-dark .info-section h3,
-.theme-dark .admin-tools h3,
-.theme-dark .service-card h4 {
+.theme-dark .services-section h2,
+.theme-dark .info-section h2,
+.theme-dark .admin-tools h2,
+.theme-dark .service-card h3 {
   color: rgba(255,255,255,0.87);
   text-shadow: none;
 }

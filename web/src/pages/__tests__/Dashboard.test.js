@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import axios from 'axios';
 import Dashboard from '../Dashboard';
+import { BACKEND_BASE_URL, AI_BASE_URL } from '../../utils/apiBase';
 
 jest.mock('axios');
 jest.mock('../../components/AlertConsole', () => ({
@@ -40,14 +41,17 @@ describe('Dashboard page', () => {
     expect(screen.getByText(/Verificando servicios/i)).toBeInTheDocument();
 
     await waitFor(() => {
-      expect(screen.getByText(/✅ Operativo/i)).toBeInTheDocument();
+      // "✅ Operativo" aparece en ambas tarjetas (Backend API y AI Services).
       expect(screen.getAllByText(/✅ Operativo/i)).toHaveLength(2);
     });
 
     expect(screen.getByTestId('mock-alert-console')).toBeInTheDocument();
     expect(screen.getByTestId('mock-appointment-calendar')).toBeInTheDocument();
-    expect(axios.get).toHaveBeenCalledWith('http://localhost:3001/api/health');
-    expect(axios.get).toHaveBeenCalledWith('http://localhost:8000/api/v1/health');
+    // CRA no carga .env.local en modo test, así que BACKEND_BASE_URL/AI_BASE_URL
+    // resuelven al fallback real de apiBase.js, no a localhost. Ambas llamadas
+    // además pasan un AbortSignal como segundo argumento.
+    expect(axios.get).toHaveBeenCalledWith(`${BACKEND_BASE_URL}/health`, expect.anything());
+    expect(axios.get).toHaveBeenCalledWith(`${AI_BASE_URL}/health`, expect.anything());
   });
 
   it('muestra mensaje de error y permite reintentar', async () => {

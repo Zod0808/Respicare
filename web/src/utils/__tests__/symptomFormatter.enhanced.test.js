@@ -7,45 +7,51 @@ import { formatSymptoms, normalizeSymptom } from '../symptomFormatter';
 
 describe('symptomFormatter Enhanced Tests', () => {
   describe('formatSymptoms Edge Cases', () => {
+    // `formatSymptoms` devuelve un array (no un string) de síntomas
+    // normalizados (minúsculas, trim), deduplicados y ordenados
+    // alfabéticamente — ver `src/utils/symptomFormatter.js`. Además, lanza
+    // un Error ante entrada null/undefined en vez de devolver un valor vacío.
     it('should handle empty array', () => {
-      expect(formatSymptoms([])).toBe('');
+      expect(formatSymptoms([])).toEqual([]);
     });
 
     it('should handle null input', () => {
-      expect(formatSymptoms(null)).toBe('');
+      expect(() => formatSymptoms(null)).toThrow('La lista de síntomas es requerida');
     });
 
     it('should handle undefined input', () => {
-      expect(formatSymptoms(undefined)).toBe('');
+      expect(() => formatSymptoms(undefined)).toThrow('La lista de síntomas es requerida');
     });
 
     it('should handle array with null values', () => {
-      expect(formatSymptoms([null, undefined, 'tos'])).toBe('tos');
+      expect(formatSymptoms([null, undefined, 'tos'])).toEqual(['tos']);
     });
 
     it('should handle array with empty strings', () => {
-      expect(formatSymptoms(['', 'tos', ''])).toBe('tos');
+      expect(formatSymptoms(['', 'tos', ''])).toEqual(['tos']);
     });
 
     it('should handle very long symptom names', () => {
       const longSymptom = 'A'.repeat(1000);
-      expect(formatSymptoms([longSymptom])).toBe(longSymptom);
+      expect(formatSymptoms([longSymptom])).toEqual([longSymptom.toLowerCase()]);
     });
 
     it('should handle special characters in symptoms', () => {
+      // normalizeSymptom solo hace trim + lowercase, no sanitiza HTML/entities
       const specialSymptoms = ['tos <script>', 'fiebre & dolor'];
       const result = formatSymptoms(specialSymptoms);
-      expect(result).toContain('tos');
-      expect(result).toContain('fiebre');
+      expect(result).toContain('tos <script>');
+      expect(result).toContain('fiebre & dolor');
     });
 
     it('should handle symptoms with numbers', () => {
-      expect(formatSymptoms(['tos', 'fiebre 38°C'])).toContain('tos');
-      expect(formatSymptoms(['tos', 'fiebre 38°C'])).toContain('fiebre');
+      const result = formatSymptoms(['tos', 'fiebre 38°C']);
+      expect(result).toContain('tos');
+      expect(result).toContain('fiebre 38°c');
     });
 
     it('should handle unicode characters', () => {
-      expect(formatSymptoms(['tos', 'fiebre', 'dificultad respiratoria'])).toContain('dificultad');
+      expect(formatSymptoms(['tos', 'fiebre', 'dificultad respiratoria'])).toContain('dificultad respiratoria');
     });
   });
 

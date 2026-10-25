@@ -13,7 +13,7 @@ const localStorageMock = {
   removeItem: jest.fn(),
   clear: jest.fn(),
 };
-global.localStorage = localStorageMock;
+Object.defineProperty(window, 'localStorage', { value: localStorageMock, writable: true });
 
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {

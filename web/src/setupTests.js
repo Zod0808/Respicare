@@ -22,6 +22,10 @@ if (typeof global.MessagePort === 'undefined') {
   global.MessagePort = MessagePort;
 }
 
+if (typeof window !== 'undefined' && !window.Element.prototype.scrollIntoView) {
+  window.Element.prototype.scrollIntoView = jest.fn();
+}
+
 if (typeof window !== 'undefined' && !window.matchMedia) {
   Object.defineProperty(window, 'matchMedia', {
     writable: true,

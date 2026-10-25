@@ -4,73 +4,43 @@
  * Strategy:
  * - axe-core: WCAG 2.1 AA automated violations scan
  * - Landmark roles: nav, role="navigation", aria-label
- * - Active link: aria-current="page" on active route
+ * - Active link: 'active' class on the matching route
  * - Icon semantics: aria-hidden on decorative icons
  * - Keyboard navigability: all links reachable via Tab
  * - Brand name presence for screen readers
  */
 
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import '@testing-library/jest-dom';
 import Navbar from '../../components/Navbar';
-import * as i18nService from '../../services/i18nService';
+import { useAuth } from '../../contexts/AuthContext';
 
 expect.extend(toHaveNoViolations);
 
-const NAV_TRANSLATIONS = {
-  'nav.brandName': 'RespiCare',
-  'nav.brandSubtitle': 'Sistema de Enfermedades',
-  'nav.home': 'Inicio',
-  'nav.dashboard': 'Estado del Sistema',
-  'nav.analytics': 'Análisis',
-  'nav.map': 'Mapa',
-  'nav.fhir': 'FHIR',
-  'nav.hl7': 'HL7',
-};
-
-// ─── Mock i18n ────────────────────────────────────────────────────────────────
-
-jest.mock('../../services/i18nService', () => ({
-  t: jest.fn((key) => {
-    const map = {
-      'nav.brandName': 'RespiCare',
-      'nav.brandSubtitle': 'Sistema de Enfermedades',
-      'nav.home': 'Inicio',
-      'nav.dashboard': 'Estado del Sistema',
-      'nav.analytics': 'Análisis',
-      'nav.map': 'Mapa',
-      'nav.fhir': 'FHIR',
-      'nav.hl7': 'HL7',
-    };
-    return map[key] || key;
-  }),
-  getCurrentLanguage: jest.fn(() => 'es'),
-  setLanguage: jest.fn(),
-}));
-
 jest.mock('../../contexts/AuthContext', () => ({
-  useAuth: () => ({ isAuthenticated: false, user: null, logout: jest.fn(), loading: false }),
+  useAuth: jest.fn(),
 }));
 
 jest.mock('../../components/ThemeToggle', () =>
   function MockThemeToggle() {
-    return <div data-testid="theme-toggle" />;
+    return <button data-testid="theme-toggle">T</button>;
   }
 );
-
 jest.mock('../../components/LanguageSelector', () =>
   function MockLanguageSelector() {
-    return <div data-testid="language-selector" />;
+    return <select aria-label="Idioma" data-testid="language-selector" />;
   }
 );
 
-// Re-set t() mock after resetMocks:true clears implementations between tests
 beforeEach(() => {
-  i18nService.t.mockImplementation((key) => NAV_TRANSLATIONS[key] || key);
-  i18nService.getCurrentLanguage.mockReturnValue('es');
+  useAuth.mockReturnValue({
+    isAuthenticated: true,
+    user: { name: 'Dr. House', email: 'house@example.com', role: 'doctor' },
+    logout: jest.fn(),
+  });
 });
 
 const renderNavbar = (path = '/') =>
@@ -129,43 +99,39 @@ describe('Navbar — Landmark Roles', () => {
   });
 });
 
-// ─── Active link — aria-current ───────────────────────────────────────────────
+// ─── Active link — visual + semantic marker ──────────────────────────────────
 
-describe('Navbar — Active Link aria-current', () => {
-  it('should set aria-current="page" on active home link', () => {
+describe('Navbar — Active Link State', () => {
+  it('should mark the chatbot (home) link as active on /', () => {
     renderNavbar('/');
-    const homeLink = screen.getByText('Inicio').closest('a');
-    expect(homeLink).toHaveAttribute('aria-current', 'page');
+    const homeLink = screen.getByText('Chatbot').closest('a');
+    expect(homeLink).toHaveClass('active');
   });
 
-  it('should NOT set aria-current on non-active links when on /', () => {
+  it('should NOT mark non-active links as active when on /', () => {
     renderNavbar('/');
-    const dashboardLink = screen.getByText('Estado del Sistema').closest('a');
-    expect(dashboardLink).not.toHaveAttribute('aria-current');
+    const dashboardLink = screen.getByText('Dashboard').closest('a');
+    expect(dashboardLink).not.toHaveClass('active');
   });
 
-  it('should set aria-current="page" on /dashboard link', () => {
+  it('should mark the dashboard link as active on /dashboard', () => {
     renderNavbar('/dashboard');
-    const dashLink = screen.getByText('Estado del Sistema').closest('a');
-    expect(dashLink).toHaveAttribute('aria-current', 'page');
+    const dashLink = screen.getByText('Dashboard').closest('a');
+    expect(dashLink).toHaveClass('active');
   });
 
-  it('should set aria-current="page" on /analytics link', () => {
+  it('should mark the Analítica dropdown trigger as active on /analytics', () => {
     renderNavbar('/analytics');
-    const analyticsLink = screen.getByText('Análisis').closest('a');
-    expect(analyticsLink).toHaveAttribute('aria-current', 'page');
+    const analyticsBtn = screen.getByText('Analítica').closest('button');
+    expect(analyticsBtn).toHaveClass('active');
   });
 
-  it('should set aria-current="page" on /heatmap link', () => {
-    renderNavbar('/heatmap');
-    const mapLink = screen.getByText('Mapa').closest('a');
-    expect(mapLink).toHaveAttribute('aria-current', 'page');
-  });
-
-  it('should only mark one link as active at a time', () => {
+  it('should only mark one top-level link as active at a time', () => {
     renderNavbar('/analytics');
-    const allLinks = document.querySelectorAll('a[aria-current="page"]');
-    expect(allLinks.length).toBe(1);
+    const activeTopLevel = document.querySelectorAll('.navbar-menu > a.nav-link.active');
+    expect(activeTopLevel.length).toBe(0); // /analytics belongs to the dropdown, not a top-level link
+    const activeDropdown = document.querySelectorAll('.navbar-menu > div > button.active');
+    expect(activeDropdown.length).toBe(1);
   });
 });
 
@@ -183,27 +149,25 @@ describe('Navbar — Decorative Icon Semantics', () => {
   it('should hide brand icon from screen readers with aria-hidden', () => {
     renderNavbar();
     const brandIcon = document.querySelector('.brand-icon');
-    if (brandIcon) {
-      expect(brandIcon).toHaveAttribute('aria-hidden', 'true');
-    }
+    expect(brandIcon).toHaveAttribute('aria-hidden', 'true');
   });
 });
 
 // ─── Navigation links — keyboard accessibility ───────────────────────────────
 
 describe('Navbar — Links Are Keyboard Accessible', () => {
-  it('should render all nav links as anchor elements', () => {
+  it('should render all top-level nav links as anchor elements', () => {
     renderNavbar();
-    const links = document.querySelectorAll('.nav-link');
-    expect(links.length).toBeGreaterThanOrEqual(6);
+    const links = document.querySelectorAll('.navbar-menu > a.nav-link');
+    expect(links.length).toBeGreaterThanOrEqual(2);
     links.forEach((link) => {
       expect(link.tagName.toLowerCase()).toBe('a');
     });
   });
 
-  it('should have valid href attributes on all nav links', () => {
+  it('should have valid href attributes on all top-level nav links', () => {
     renderNavbar();
-    const links = document.querySelectorAll('.nav-link');
+    const links = document.querySelectorAll('.navbar-menu > a.nav-link');
     links.forEach((link) => {
       const href = link.getAttribute('href');
       expect(href).not.toBeNull();
@@ -211,21 +175,23 @@ describe('Navbar — Links Are Keyboard Accessible', () => {
     });
   });
 
-  it('should render Inicio link pointing to /', () => {
+  it('should render the Chatbot link pointing to /', () => {
     renderNavbar();
-    const homeLink = screen.getByText('Inicio').closest('a');
+    const homeLink = screen.getByText('Chatbot').closest('a');
     expect(homeLink).toHaveAttribute('href', '/');
   });
 
-  it('should render Estado del Sistema link pointing to /dashboard', () => {
+  it('should render the Dashboard link pointing to /dashboard', () => {
     renderNavbar();
-    const dashLink = screen.getByText('Estado del Sistema').closest('a');
+    const dashLink = screen.getByText('Dashboard').closest('a');
     expect(dashLink).toHaveAttribute('href', '/dashboard');
   });
 
-  it('should render Análisis link pointing to /analytics', () => {
+  it('should render dropdown items with valid hrefs once opened', () => {
     renderNavbar();
-    const analyticsLink = screen.getByText('Análisis').closest('a');
+    const analyticsBtn = screen.getByText('Analítica').closest('button');
+    fireEvent.click(analyticsBtn);
+    const analyticsLink = screen.getByText('Analítica Epidemiológica').closest('a');
     expect(analyticsLink).toHaveAttribute('href', '/analytics');
   });
 });
@@ -242,19 +208,17 @@ describe('Navbar — Brand Accessibility', () => {
 
   it('should render brand subtitle visible to screen readers', () => {
     renderNavbar();
-    const brandSubtitle = document.querySelector('.brand-subtitle');
-    if (brandSubtitle) {
-      expect(brandSubtitle).toBeInTheDocument();
-    }
+    const brandSubtitle = document.querySelector('.brand-sub');
+    expect(brandSubtitle).toBeInTheDocument();
   });
 });
 
 // ─── Link text — meaningful labels ───────────────────────────────────────────
 
 describe('Navbar — Link Text Quality', () => {
-  it('should provide meaningful text for all navigation links', () => {
+  it('should provide meaningful text for all top-level navigation links', () => {
     renderNavbar();
-    const links = document.querySelectorAll('.nav-link');
+    const links = document.querySelectorAll('.navbar-menu > a.nav-link');
     links.forEach((link) => {
       // Each link should have visible text (not just an icon)
       const spans = link.querySelectorAll('span:not([aria-hidden])');

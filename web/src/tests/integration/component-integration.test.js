@@ -22,11 +22,6 @@ jest.mock('../../contexts/AuthContext', () => ({
   AuthProvider: ({ children }) => children,
 }));
 
-jest.mock('../../components/ThemeProvider', () => ({
-  ThemeProvider: ({ children }) => children,
-  useThemeContext: () => ({ theme: 'light', toggleTheme: jest.fn(), setTheme: jest.fn() }),
-}));
-
 // Mock axios
 jest.mock('axios');
 const mockedAxios = axios;
@@ -35,7 +30,13 @@ const mockedAxios = axios;
 jest.mock('../../services/i18nService', () => ({
   t: jest.fn((key) => key),
   getCurrentLanguage: jest.fn(() => 'es'),
-  setLanguage: jest.fn(),
+  // El real i18nService.setLanguage despacha un CustomEvent 'languageChanged'
+  // que LanguageSelector escucha para actualizar su texto sin esperar al
+  // window.location.reload() real (que jsdom no ejecuta). Un mock no-op
+  // dejaba el selector mostrando siempre "Español" tras elegir otro idioma.
+  setLanguage: jest.fn((lang) => {
+    global.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: lang } }));
+  }),
   SUPPORTED_LANGUAGES: {
     es: 'Español',
     en: 'English'
@@ -89,7 +90,7 @@ describe('Component Integration Tests', () => {
         </div>
       );
       
-      const langButton = screen.getByRole('button', { name: /seleccionar idioma/i });
+      const langButton = screen.getByRole('button', { name: /selectLanguage/i });
       fireEvent.click(langButton);
       
       const englishOption = screen.getByRole('button', { name: /seleccionar english/i });
@@ -200,16 +201,27 @@ describe('Component Integration Tests', () => {
 
   describe('Analytics Integration', () => {
     it('should render Analytics with multiple dashboard components', async () => {
-      mockedAxios.get.mockResolvedValue({
-        data: {
-          success: true,
-          data: {
-            overview: { totalReports: 100 },
-            distributions: { severity: [] }
-          }
+      // AnalyticsDashboard llama a varios endpoints (`/analytics/dashboard`,
+      // `/analytics/ml/monitoring`, `/ml/experiments`, etc.) y cada uno espera
+      // una forma distinta de `response.data.data` (objeto vs. array). Un mock
+      // genérico con `data: { overview, distributions }` para TODAS las
+      // llamadas rompe `/ml/experiments` porque `mlExperiments` termina siendo
+      // ese objeto (no es falsy, así que `|| []` no aplica) y `.map()` explota.
+      mockedAxios.get.mockImplementation((url) => {
+        if (typeof url === 'string' && url.includes('/ml/experiments')) {
+          return Promise.resolve({ data: { success: true, data: [] } });
         }
+        return Promise.resolve({
+          data: {
+            success: true,
+            data: {
+              overview: { totalReports: 100 },
+              distributions: { severity: [] }
+            }
+          }
+        });
       });
-      
+
       renderWithProviders(<Analytics />);
       
       await waitFor(() => {
@@ -233,23 +245,34 @@ describe('Component Integration Tests', () => {
     });
 
     it('should allow retry after error', async () => {
-      mockedAxios.get
-        .mockRejectedValueOnce({
-          response: { data: { message: 'API Error' } }
-        })
-        .mockResolvedValueOnce({
-          data: { status: 'healthy' }
-        });
-      
+      // Dashboard.checkServices hace `setError(err.message)`; un rejected
+      // value sin `.message` (como un objeto plano `{ response: {...} }`)
+      // deja `error` en `undefined` (falsy) y el bloque de error/botón
+      // "Reintentar" nunca se renderiza. Además `AppointmentCalendar` (hijo
+      // de Dashboard) comparte el mismo `axios.get` global, así que hay que
+      // distinguir la llamada de salud del backend del resto de llamadas en
+      // vez de depender del orden con `mockRejectedValueOnce`.
+      let backendHealthCalls = 0;
+      mockedAxios.get.mockImplementation((url) => {
+        if (typeof url === 'string' && url.includes('/health') && !url.includes('/ai')) {
+          backendHealthCalls += 1;
+          if (backendHealthCalls === 1) {
+            return Promise.reject(new Error('API Error'));
+          }
+          return Promise.resolve({ data: { status: 'healthy' } });
+        }
+        return Promise.resolve({ data: { success: true, data: [] } });
+      });
+
       renderWithProviders(<Dashboard />);
-      
+
       await waitFor(() => {
         const retryButton = screen.getByText(/reintentar/i);
         fireEvent.click(retryButton);
       });
-      
+
       await waitFor(() => {
-        expect(mockedAxios.get).toHaveBeenCalledTimes(2);
+        expect(screen.queryByText(/reintentar/i)).not.toBeInTheDocument();
       });
     });
   });
@@ -264,7 +287,7 @@ describe('Component Integration Tests', () => {
       );
       
       // Change language
-      const langButton = screen.getByRole('button', { name: /seleccionar idioma/i });
+      const langButton = screen.getByRole('button', { name: /selectLanguage/i });
       fireEvent.click(langButton);
       const englishOption = screen.getByRole('button', { name: /seleccionar english/i });
       fireEvent.click(englishOption);

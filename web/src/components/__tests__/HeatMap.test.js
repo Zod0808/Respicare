@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import axios from 'axios';
 import HeatMap from '../HeatMap';
+import { LEGACY_API_BASE } from '../../utils/apiBase';
 
 jest.mock('axios');
 
@@ -55,7 +56,8 @@ describe('HeatMap component', () => {
     expect(screen.getByText(/Cargando datos/i)).toBeInTheDocument();
 
     await waitFor(() => {
-      expect(screen.getByText('40')).toBeInTheDocument(); // Casos Totales
+      // "40" aparece tanto en el SVG del mapa como en la tarjeta de zona
+      expect(screen.getAllByText('40').length).toBeGreaterThan(0);
       expect(screen.getByText(/Centro de Tacna/i)).toBeInTheDocument();
       expect(screen.getByText(/Gregorio Albarracín/i)).toBeInTheDocument();
     });
@@ -68,22 +70,30 @@ describe('HeatMap component', () => {
       expect(screen.queryByText(/Centro de Tacna/i)).not.toBeInTheDocument();
     });
 
-    expect(axios.get).toHaveBeenCalledWith('http://localhost:3001/api/symptom-reports/heatmap');
+    expect(axios.get).toHaveBeenCalledWith(`${LEGACY_API_BASE}/symptom-reports/heatmap`);
   });
 
-  it('usa datos de ejemplo cuando el backend falla', async () => {
+  it('muestra un mensaje de error y permite reintentar cuando el backend falla', async () => {
+    // El componente no usa datos mockeados ante un fallo (ver comentario
+    // "No usar datos mockeados - solo mostrar error" en HeatMap.js); solo
+    // muestra el mensaje de error y deja la lista de zonas vacía.
     axios.get.mockRejectedValueOnce(new Error('Network error'));
 
     render(<HeatMap />);
 
     await waitFor(() => {
-      expect(screen.getByText(/Usando datos de ejemplo/i)).toBeInTheDocument();
-      expect(screen.getByText(/Centro de Tacna/i)).toBeInTheDocument();
+      expect(screen.getByText(/Error al cargar datos del mapa de calor/i)).toBeInTheDocument();
     });
+    expect(screen.queryByText(/Centro de Tacna/i)).not.toBeInTheDocument();
 
+    axios.get.mockResolvedValueOnce(buildHeatmapPayload());
     const user = userEvent.setup();
     await user.click(screen.getByRole('button', { name: /Actualizar/i }));
+
     expect(axios.get).toHaveBeenCalledTimes(2);
+    await waitFor(() => {
+      expect(screen.getByText(/Centro de Tacna/i)).toBeInTheDocument();
+    });
   });
 });
 

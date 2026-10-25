@@ -6,14 +6,27 @@
 
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
-import { ThemeProvider } from '../../components/ThemeProvider';
 import App from '../../App';
 import axios from 'axios';
 
 // Mock axios
 jest.mock('axios');
 const mockedAxios = axios;
+
+// `/dashboard` está detrás de `ProtectedRoute roles={['doctor', 'admin']}`
+// (ver App.js); sin mockear useAuth, el usuario no autenticado rebota a
+// `/login` y el flujo de "Error Recovery" nunca llega a montar <Dashboard />.
+jest.mock('../../contexts/AuthContext', () => ({
+  useAuth: () => ({
+    user: { role: 'doctor' },
+    token: 'test-token',
+    isAuthenticated: true,
+    loading: false,
+    login: jest.fn(),
+    logout: jest.fn(),
+  }),
+  AuthProvider: ({ children }) => children,
+}));
 
 // Mock i18n service
 jest.mock('../../services/i18nService', () => ({
@@ -53,13 +66,8 @@ describe('User Flow Integration Tests', () => {
 
   describe('Complete Symptom Analysis Flow', () => {
     it('should complete full symptom analysis journey', async () => {
-      render(
-        <ThemeProvider>
-          <MemoryRouter initialEntries={['/']}>
-            <App />
-          </MemoryRouter>
-        </ThemeProvider>
-      );
+      window.history.pushState({}, '', '/');
+      render(<App />);
       
       // 1. User arrives at home page
       await waitFor(() => {
@@ -77,6 +85,7 @@ describe('User Flow Integration Tests', () => {
       await waitFor(() => {
         expect(mockedAxios.post).toHaveBeenCalledWith(
           expect.stringContaining('/symptom-analyzer'),
+          expect.any(Object),
           expect.any(Object)
         );
       });
@@ -90,13 +99,8 @@ describe('User Flow Integration Tests', () => {
 
   describe('Navigation Flow', () => {
     it('should navigate through all main pages', async () => {
-      render(
-        <ThemeProvider>
-          <MemoryRouter initialEntries={['/']}>
-            <App />
-          </MemoryRouter>
-        </ThemeProvider>
-      );
+      window.history.pushState({}, '', '/');
+      render(<App />);
       
       // Start at home
       await waitFor(() => {
@@ -121,13 +125,8 @@ describe('User Flow Integration Tests', () => {
 
   describe('Theme Customization Flow', () => {
     it('should allow user to customize theme and see changes', () => {
-      render(
-        <ThemeProvider>
-          <MemoryRouter initialEntries={['/']}>
-            <App />
-          </MemoryRouter>
-        </ThemeProvider>
-      );
+      window.history.pushState({}, '', '/');
+      render(<App />);
       
       // Find theme toggle
       const themeButtons = screen.queryAllByRole('button');
@@ -151,13 +150,8 @@ describe('User Flow Integration Tests', () => {
 
   describe('Language Selection Flow', () => {
     it('should allow user to change language and see updates', () => {
-      render(
-        <ThemeProvider>
-          <MemoryRouter initialEntries={['/']}>
-            <App />
-          </MemoryRouter>
-        </ThemeProvider>
-      );
+      window.history.pushState({}, '', '/');
+      render(<App />);
       
       // Find language selector
       const langButton = screen.queryByRole('button', { name: /seleccionar idioma/i });
@@ -178,70 +172,82 @@ describe('User Flow Integration Tests', () => {
 
   describe('Error Recovery Flow', () => {
     it('should handle errors and allow recovery', async () => {
-      mockedAxios.get.mockRejectedValueOnce({
-        response: { data: { message: 'Service unavailable' } }
-      }).mockResolvedValueOnce({
-        data: { status: 'healthy' }
+      // Dashboard.checkServices llama primero a `.../health` (backend) y luego
+      // a `.../health` de IA; AppointmentCalendar también dispara su propio
+      // axios.get en paralelo, así que encadenar mockRejectedValueOnce por
+      // orden de llamada es frágil — se enruta por URL. Además, rechazar con
+      // un objeto plano (sin `.message`) deja `err.message` undefined, por lo
+      // que `setError` nunca se dispara: hay que rechazar con un `Error` real.
+      let backendHealthCalls = 0;
+      mockedAxios.get.mockImplementation((url) => {
+        if (typeof url === 'string' && url.includes('/health') && !url.includes('/ai')) {
+          backendHealthCalls += 1;
+          if (backendHealthCalls === 1) {
+            return Promise.reject(new Error('Service unavailable'));
+          }
+          return Promise.resolve({ data: { status: 'healthy' } });
+        }
+        // AppointmentCalendar también cuelga de axios.get (`/appointments`) y
+        // hace `response.data?.data ?? []`: un `{}` truthy no activa el `??`,
+        // por lo que `appointments` queda como objeto y `.map` explota.
+        return Promise.resolve({ data: { success: true, data: [] } });
       });
-      
-      render(
-        <ThemeProvider>
-          <MemoryRouter initialEntries={['/dashboard']}>
-            <App />
-          </MemoryRouter>
-        </ThemeProvider>
-      );
-      
+
+      window.history.pushState({}, '', '/dashboard');
+      render(<App />);
+
       // Wait for error
       await waitFor(() => {
         expect(screen.getByText(/error/i)).toBeInTheDocument();
       });
-      
+
       // Retry
       const retryButton = screen.getByText(/reintentar/i);
       fireEvent.click(retryButton);
-      
+
       // Should recover
       await waitFor(() => {
-        expect(mockedAxios.get).toHaveBeenCalledTimes(2);
+        expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
       });
     });
   });
 
   describe('Multi-step Analysis Flow', () => {
     it('should handle multi-step symptom analysis with follow-up questions', async () => {
-      mockedAxios.post
-        .mockResolvedValueOnce({
-          data: {
-            success: true,
+      // ChatBotEnhanced.handleSend hace varias llamadas a axios.post por
+      // mensaje (init de sesión, ml-analyze, el endpoint de chat `/analyze`
+      // y el guardado del mensaje), y el orden exacto varía según si
+      // `sessionId` ya se resolvió — encadenar mockResolvedValueOnce por
+      // orden de llamada es frágil. Se enruta por URL: `/analyze` (el único
+      // endpoint que determina el texto del bot) devuelve la pregunta de
+      // seguimiento en la primera llamada y la recomendación en la segunda;
+      // además devuelve el mensaje "plano" (`response.data.message`), no
+      // envuelto en `{success, data}` como los demás endpoints.
+      let analyzeCallCount = 0;
+      mockedAxios.post.mockImplementation((url) => {
+        if (typeof url === 'string' && url.includes('/symptom-analyzer/ml-analyze')) {
+          return Promise.resolve({
             data: {
-              sessionId: 'test-session',
-              message: '¿Cuánto tiempo llevas con la tos?',
-              analysis: null
+              success: true,
+              data: { id: 'test-analysis', disease: 'Bronquitis', confidence: 0.85, urgency_level: 'medium' }
             }
-          }
-        })
-        .mockResolvedValueOnce({
-          data: {
-            success: true,
-            data: {
-              message: 'Basado en tus síntomas, te recomiendo...',
-              analysis: {
-                id: 'test-analysis',
-                disease: 'Bronquitis',
-                confidence: 0.85
-              }
-            }
-          }
-        });
-      
-      render(
-        <ThemeProvider>
-          <MemoryRouter initialEntries={['/']}>
-            <App />
-          </MemoryRouter>
-        </ThemeProvider>
-      );
+          });
+        }
+        if (typeof url === 'string' && url.endsWith('/analyze')) {
+          analyzeCallCount += 1;
+          const message = analyzeCallCount === 1
+            ? '¿Cuánto tiempo llevas con la tos?'
+            : 'Basado en tus síntomas, te recomiendo...';
+          return Promise.resolve({ data: { message } });
+        }
+        if (typeof url === 'string' && url.includes('/chat-conversations') && !url.includes('/messages')) {
+          return Promise.resolve({ data: { success: true, data: { sessionId: 'test-session' } } });
+        }
+        return Promise.resolve({ data: { success: true } });
+      });
+
+      window.history.pushState({}, '', '/');
+      render(<App />);
       
       // First message
       const input = screen.getByRole('textbox');

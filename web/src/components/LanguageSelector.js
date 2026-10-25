@@ -41,6 +41,12 @@ const LanguageSelector = ({ className = '' }) => {
     };
   }, [isOpen]);
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape' && isOpen) {
+      setIsOpen(false);
+    }
+  };
+
   const handleLanguageSelect = (langCode) => {
     if (langCode === currentLang) {
       setIsOpen(false);
@@ -59,6 +65,7 @@ const LanguageSelector = ({ className = '' }) => {
       <button
         className="language-selector__button"
         onClick={() => setIsOpen(!isOpen)}
+        onKeyDown={handleKeyDown}
         aria-label={t('common.selectLanguage') || 'Seleccionar idioma'}
         aria-expanded={isOpen}
         aria-haspopup="true"

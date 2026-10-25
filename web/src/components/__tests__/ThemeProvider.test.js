@@ -17,7 +17,10 @@ jest.mock('../../theme/theme', () => ({
         primary: mode === 'light' ? '#000000' : '#ffffff',
         secondary: mode === 'light' ? '#666666' : '#aaaaaa'
       },
-      divider: mode === 'light' ? '#e0e0e0' : '#333333'
+      divider: mode === 'light' ? '#e0e0e0' : '#333333',
+      action: {
+        hover: mode === 'light' ? 'rgba(0, 0, 0, 0.04)' : 'rgba(255, 255, 255, 0.08)'
+      }
     }
   }))
 }));
@@ -29,7 +32,7 @@ const localStorageMock = {
   removeItem: jest.fn(),
   clear: jest.fn(),
 };
-global.localStorage = localStorageMock;
+Object.defineProperty(window, 'localStorage', { value: localStorageMock, writable: true });
 
 // Test component that uses theme context
 const TestComponent = () => {

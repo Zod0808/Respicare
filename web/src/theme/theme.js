@@ -229,28 +229,38 @@ export const getTheme = (mode = 'light') => {
 // Hook para usar el tema (si se usa React Context)
 export const useTheme = () => {
   const [mode, setMode] = React.useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('theme-mode');
-      return saved || 'light';
+    try {
+      if (typeof window !== 'undefined') {
+        const saved = localStorage.getItem('theme-mode');
+        return saved || 'light';
+      }
+    } catch {
+      // localStorage puede lanzar (modo privado, cuota excedida) — usar default
     }
     return 'light';
   });
 
   const theme = getTheme(mode);
 
+  const persist = (newMode) => {
+    try {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('theme-mode', newMode);
+      }
+    } catch {
+      // Ignorar: la UI sigue funcionando en memoria aunque no persista
+    }
+  };
+
   const toggleTheme = () => {
     const newMode = mode === 'light' ? 'dark' : 'light';
     setMode(newMode);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('theme-mode', newMode);
-    }
+    persist(newMode);
   };
 
   const setTheme = (newMode) => {
     setMode(newMode);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('theme-mode', newMode);
-    }
+    persist(newMode);
   };
 
   return { theme, mode, toggleTheme, setTheme };

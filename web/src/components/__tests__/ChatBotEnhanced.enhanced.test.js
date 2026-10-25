@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import ChatBotEnhanced from '../ChatBotEnhanced';
 import * as i18nService from '../../services/i18nService';
@@ -116,28 +117,43 @@ describe('ChatBotEnhanced Enhanced Tests', () => {
       });
     });
 
-    it('should handle rapid message sending', async () => {
-      mockedAxios.post.mockResolvedValue({
-        data: {
-          success: true,
-          data: { message: 'Response' }
+    it('should ignore rapid clicks while a message is still being sent', async () => {
+      let resolveAnalyze;
+      // La llamada de init de sesión resuelve al instante; la de /analyze del
+      // envío queda pendiente a propósito para mantener isLoading=true y así
+      // comprobar que el botón deshabilitado bloquea clicks adicionales.
+      mockedAxios.post.mockImplementation((url) => {
+        if (url.includes('/chat-conversations')) {
+          return Promise.resolve({
+            data: { success: true, data: { sessionId: 'test-session-id' } }
+          });
         }
+        return new Promise((resolve) => { resolveAnalyze = resolve; });
       });
-      
+
       render(<ChatBotEnhanced />);
-      
+
       const input = screen.getByRole('textbox');
       const sendButton = screen.getByRole('button', { name: /enviar/i });
-      
-      // Send multiple messages rapidly
-      for (let i = 0; i < 5; i++) {
+
+      await waitFor(() => expect(mockedAxios.post).toHaveBeenCalledTimes(1)); // init de sesión
+
+      await userEvent.setup().type(input, 'Message 0');
+      fireEvent.click(sendButton);
+      await waitFor(() => expect(sendButton).toBeDisabled());
+
+      for (let i = 1; i < 5; i++) {
         fireEvent.change(input, { target: { value: `Message ${i}` } });
-        fireEvent.click(sendButton);
+        await userEvent.setup().click(sendButton);
       }
-      
-      await waitFor(() => {
-        expect(mockedAxios.post).toHaveBeenCalledTimes(5);
-      });
+
+      // 1 init de sesión + 1 saveMessage('user', ...) + 1 /analyze pendiente
+      // del único send que sí llegó a ejecutarse; los 4 clicks mientras el
+      // botón está disabled no deberían agregar llamadas extra.
+      expect(mockedAxios.post).toHaveBeenCalledTimes(3);
+
+      resolveAnalyze({ data: { message: 'Respuesta' } });
+      await waitFor(() => expect(sendButton).not.toBeDisabled());
     });
 
     it('should handle session initialization failure gracefully', async () => {

@@ -6,13 +6,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import DOMPurify from 'isomorphic-dompurify';
 
-// Mock DOMPurify
-jest.mock('isomorphic-dompurify', () => ({
-  sanitize: jest.fn((html) => html.replace(/<script[^>]*>.*?<\/script>/gi, '')),
-  addHook: jest.fn(),
-  removeHook: jest.fn(),
-}));
-
 describe('XSS Protection Tests', () => {
   describe('Input Sanitization', () => {
     it('should sanitize script tags in user input', () => {

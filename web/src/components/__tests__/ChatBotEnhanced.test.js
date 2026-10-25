@@ -37,37 +37,51 @@ jest.mock('../MLAdvancedResults', () => {
   };
 });
 
+// axios.post se usa para 3 endpoints distintos dentro de un mismo flujo de envío
+// (init de sesión, ml-analyze, analyze); cada uno tiene un shape de respuesta
+// diferente, así que se enruta por URL en vez de usar mockResolvedValue único.
+const sessionResponse = {
+  data: { success: true, data: { sessionId: 'test-session-id' } }
+};
+const mlAnalyzeResponse = {
+  data: {
+    success: true,
+    data: {
+      disease: 'Resfriado común',
+      confidence: 0.8,
+      urgency_level: 'low',
+      explanation: { friendly: { main_explanation: 'Explicación amigable', key_factors: [], recommendations: [] } },
+      needs_medical_attention: false,
+      id: 'test-analysis-id',
+    }
+  }
+};
+const analyzeResponse = {
+  data: {
+    message: 'Respuesta del bot',
+    urgency_level: 'low',
+    symptom_count: 1,
+    symptom_categories: [],
+  }
+};
+
+const defaultPostImplementation = (url) => {
+  if (url.includes('/chat-conversations')) return Promise.resolve(sessionResponse);
+  if (url.includes('/ml-analyze')) return Promise.resolve(mlAnalyzeResponse);
+  if (url.includes('/analyze')) return Promise.resolve(analyzeResponse);
+  return Promise.resolve({ data: {} });
+};
+
 describe('ChatBotEnhanced', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     // Mock localStorage
     Storage.prototype.getItem = jest.fn(() => null);
     Storage.prototype.setItem = jest.fn();
-    
-    // Mock session initialization
-    mockedAxios.post.mockResolvedValue({
-      data: {
-        success: true,
-        data: { sessionId: 'test-session-id' }
-      }
-    });
-    
-    // Mock message sending
-    mockedAxios.post.mockResolvedValue({
-      data: {
-        success: true,
-        data: {
-          message: 'Respuesta del bot',
-          analysis: {
-            id: 'test-analysis-id',
-            shapExplanation: { key_factors: [] },
-            factors: []
-          }
-        }
-      }
-    });
-    
+
+    mockedAxios.post.mockImplementation(defaultPostImplementation);
+
     // Mock Speech Recognition
     global.SpeechRecognition = jest.fn(() => ({
       continuous: false,
@@ -120,7 +134,8 @@ describe('ChatBotEnhanced', () => {
     
     await waitFor(() => {
       expect(mockedAxios.post).toHaveBeenCalledWith(
-        expect.stringContaining('/symptom-analyzer/analyze'),
+        expect.stringContaining('/symptom-analyzer/ml-analyze'),
+        expect.any(Object),
         expect.any(Object)
       );
     });
@@ -144,34 +159,39 @@ describe('ChatBotEnhanced', () => {
 
   it('should display bot response', async () => {
     render(<ChatBotEnhanced />);
-    
+
     await waitFor(() => {
       const input = screen.getByRole('textbox');
       const sendButton = screen.getByRole('button', { name: /enviar/i });
-      
-      fireEvent.change(input, { target: { value: 'Tengo tos' } });
+
+      // Sin palabras clave de síntomas no se dispara el análisis ML, así que
+      // el texto del bot queda igual a response.data.message, sin el bloque
+      // de resultados ML concatenado.
+      fireEvent.change(input, { target: { value: 'Hola, buenos días' } });
       fireEvent.click(sendButton);
     });
-    
+
     await waitFor(() => {
       expect(screen.getByText('Respuesta del bot')).toBeInTheDocument();
     });
   });
 
   it('should show SHAP visualization when analysis is available', async () => {
-    mockedAxios.post.mockResolvedValueOnce({
-      data: {
-        success: true,
-        data: {
-          message: 'Respuesta',
-          analysis: {
-            id: 'test-id',
-            shapExplanation: { key_factors: [{ feature: 'Tos', importance: 0.8 }] }
+    mockedAxios.post.mockImplementation((url) => {
+      if (url.includes('/ml-analyze')) {
+        return Promise.resolve({
+          data: {
+            success: true,
+            data: {
+              ...mlAnalyzeResponse.data.data,
+              explanation: { key_factors: [{ feature: 'Tos', importance: 0.8 }] },
+            }
           }
-        }
+        });
       }
+      return defaultPostImplementation(url);
     });
-    
+
     render(<ChatBotEnhanced />);
     
     await waitFor(() => {
@@ -317,23 +337,32 @@ describe('ChatBotEnhanced', () => {
   });
 
   it('should handle error when sending message', async () => {
-    mockedAxios.post.mockRejectedValueOnce({
-      response: { data: { message: 'Error sending message' } }
+    // mockRejectedValueOnce antes de render() lo consume la llamada de init de
+    // sesión al montar, no el envío del mensaje; se enruta por URL para que
+    // falle específicamente la llamada a /analyze del envío de mensaje.
+    mockedAxios.post.mockImplementation((url) => {
+      if (url.includes('/analyze') && !url.includes('/ml-analyze')) {
+        return Promise.reject({
+          response: { data: { message: 'Error sending message' } }
+        });
+      }
+      return defaultPostImplementation(url);
     });
-    
+
     render(<ChatBotEnhanced />);
-    
+
     await waitFor(() => {
       const input = screen.getByRole('textbox');
       const sendButton = screen.getByRole('button', { name: /enviar/i });
-      
+
       fireEvent.change(input, { target: { value: 'Test' } });
       fireEvent.click(sendButton);
     });
-    
-    // Should handle error gracefully (implementation dependent)
+
+    // El componente no muestra la palabra "error" al usuario: ante un fallo
+    // de /analyze cae a una respuesta canned de keywords sin romper el chat.
     await waitFor(() => {
-      expect(screen.queryByText(/error/i)).toBeInTheDocument();
+      expect(screen.getByText(/Gracias por tu consulta/i)).toBeInTheDocument();
     });
   });
 });

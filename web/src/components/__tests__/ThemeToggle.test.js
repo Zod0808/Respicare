@@ -7,14 +7,15 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import ThemeToggle from '../ThemeToggle';
 import { ThemeProvider } from '../ThemeProvider';
 
-// Mock localStorage
+// Mock localStorage. `global.localStorage = mockObj` no tiene efecto real en
+// jsdom (la reasignación es ignorada); hay que usar Object.defineProperty.
 const localStorageMock = {
   getItem: jest.fn(() => 'light'),
   setItem: jest.fn(),
   removeItem: jest.fn(),
   clear: jest.fn(),
 };
-global.localStorage = localStorageMock;
+Object.defineProperty(window, 'localStorage', { value: localStorageMock, writable: true });
 
 describe('ThemeToggle', () => {
   beforeEach(() => {

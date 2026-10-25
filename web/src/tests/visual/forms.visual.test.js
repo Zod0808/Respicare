@@ -60,7 +60,7 @@ describe('SymptomReportForm — Estructura Visual del Formulario', () => {
 
   it('should render address input field', () => {
     render(<SymptomReportForm />);
-    const addressInput = screen.getByRole('textbox');
+    const addressInput = screen.getByPlaceholderText(/Av\. Bolognesi/i);
     expect(addressInput).toBeInTheDocument();
   });
 
@@ -172,9 +172,9 @@ describe('SymptomReportForm — Visual de Envío del Formulario', () => {
       const successEl = document.querySelector(
         '.success, [class*="success"], [class*="ok"]'
       );
-      const successText = screen.queryByText(/exitosamente|enviado|success/i);
+      const successText = screen.queryAllByText(/exitosamente|enviado|success/i);
       // Either a success element or text should appear
-      expect(successEl || successText).not.toBeNull();
+      expect(successEl || successText.length > 0).toBeTruthy();
     });
   });
 

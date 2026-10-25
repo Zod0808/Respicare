@@ -8,15 +8,12 @@ import MedicalReport from '../MedicalReport';
 jest.mock('axios');
 
 describe('MedicalReport component', () => {
-  let openSpy;
-
   beforeEach(() => {
     jest.clearAllMocks();
-    openSpy = jest.spyOn(window, 'open').mockImplementation(() => null);
-  });
-
-  afterEach(() => {
-    openSpy.mockRestore();
+    // jsdom no implementa URL.createObjectURL/revokeObjectURL, que
+    // downloadReport() usa para disparar la descarga vía un <a> oculto.
+    global.URL.createObjectURL = jest.fn(() => 'blob:mock-url');
+    global.URL.revokeObjectURL = jest.fn();
   });
 
   const fillRequiredFields = async () => {
@@ -47,6 +44,8 @@ describe('MedicalReport component', () => {
         ],
       },
     });
+    // Segunda llamada a axios.get: downloadReport() pide el blob del PDF.
+    axios.get.mockResolvedValueOnce({ data: new Blob(['pdf']) });
 
     render(<MedicalReport />);
     await fillRequiredFields();
@@ -59,10 +58,9 @@ describe('MedicalReport component', () => {
       expect(screen.getByText(/Reporte Bronquitis/i)).toBeInTheDocument();
     });
 
-    expect(openSpy).toHaveBeenCalledWith(
+    expect(axios.get).toHaveBeenCalledWith(
       expect.stringContaining('/reports/report-1/download'),
-      '_blank',
-      'noopener'
+      expect.objectContaining({ responseType: 'blob' })
     );
     expect(axios.post).toHaveBeenCalledWith(
       expect.stringContaining('/reports/generate'),
@@ -89,7 +87,7 @@ describe('MedicalReport component', () => {
     await waitFor(() => {
       expect(screen.getByText(/Error al generar reporte/i)).toBeInTheDocument();
     });
-    expect(openSpy).not.toHaveBeenCalled();
+    expect(axios.get).not.toHaveBeenCalled();
   });
 
   it('requiere un ID de paciente para cargar historial', async () => {

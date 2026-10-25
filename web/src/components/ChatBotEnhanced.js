@@ -403,7 +403,7 @@ function ChatBotEnhanced() {
         } else {
           mlInfo += `${urgencyEmoji} **Diagnóstico:** ${mlAnalysisResult.disease}\n`;
           mlInfo += `**Nivel de confianza:** ${confidencePercent}%\n`;
-          mlInfo += `**Urgencia:** ${mlAnalysisResult.urgency_level.toUpperCase()}\n\n`;
+          mlInfo += `**Urgencia:** ${mlAnalysisResult.urgency_level?.toUpperCase() || 'N/A'}\n\n`;
         }
         
         if (friendly?.key_factors && friendly.key_factors.length > 0) {

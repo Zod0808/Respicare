@@ -7,6 +7,7 @@ import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import '@testing-library/jest-dom';
 import axios from 'axios';
 import ChatBot from '../ChatBot';
+import { API_BASE, LEGACY_API_BASE } from '../../utils/apiBase';
 
 // Mock axios
 jest.mock('axios');
@@ -73,7 +74,7 @@ describe('ChatBot Component', () => {
 
       await waitFor(() => {
         expect(mockedAxios.post).toHaveBeenCalledWith(
-          'http://localhost:3001/api/chat-conversations',
+          `${LEGACY_API_BASE}/chat-conversations`,
           expect.objectContaining({
             metadata: expect.objectContaining({
               source: 'web',
@@ -341,7 +342,7 @@ describe('ChatBot Component', () => {
       // Should attempt ML analysis if symptoms are detected
       await waitFor(() => {
         expect(mockedAxios.post).toHaveBeenCalledWith(
-          'http://localhost:3001/api/v1/symptom-analyzer/ml-analyze',
+          `${API_BASE}/symptom-analyzer/ml-analyze`,
           expect.objectContaining({
             symptoms: expect.any(Array)
           }),

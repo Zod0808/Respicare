@@ -24,6 +24,7 @@ import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from '../../components/ThemeProvider';
 
 // ─── Mocks globales ───────────────────────────────────────────────────────────
 
@@ -144,7 +145,7 @@ describe('KEY-01 — Orden de foco (Tab) en SymptomReportForm', () => {
 describe('KEY-02 — Botones activables con Enter y Space', () => {
   it('ThemeToggle: Enter activa el toggle', async () => {
     const ThemeToggle = require('../../components/ThemeToggle').default;
-    const { container } = render(<ThemeToggle />);
+    const { container } = render(<ThemeProvider><ThemeToggle /></ThemeProvider>);
     const button = container.querySelector('button');
     if (!button) return;
 
@@ -159,7 +160,7 @@ describe('KEY-02 — Botones activables con Enter y Space', () => {
 
   it('ThemeToggle: Space activa el toggle', () => {
     const ThemeToggle = require('../../components/ThemeToggle').default;
-    const { container } = render(<ThemeToggle />);
+    const { container } = render(<ThemeProvider><ThemeToggle /></ThemeProvider>);
     const button = container.querySelector('button');
     if (!button) return;
 
@@ -307,15 +308,32 @@ describe('KEY-05/06 — Modal: foco y Escape', () => {
   });
 
   it('FhirPage: el botón de búsqueda es enfocable', async () => {
+    // FhirPage dispara una búsqueda automática al montar (useEffect sobre
+    // resourceType) vía fetch nativo; mientras `loading` es true el botón
+    // queda disabled="" ("Buscando...") y no es enfocable. Hay que mockear
+    // fetch y esperar a que termine esa carga inicial antes de enfocar.
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ data: { resourceType: 'Bundle', entry: [] } }),
+    });
+
     const FhirPage = require('../../pages/FhirPage').default;
     const { container } = render(
       <MemoryRouter><FhirPage /></MemoryRouter>
     );
+
+    await waitFor(() => {
+      const btn = container.querySelector('button.fhir-search-btn');
+      expect(btn).not.toHaveAttribute('disabled');
+    });
+
     const searchBtn = container.querySelector('button.fhir-search-btn, button');
     if (searchBtn) {
       searchBtn.focus();
       expect(document.activeElement).toBe(searchBtn);
     }
+
+    delete global.fetch;
   });
 
   it('FhirResourceViewer: el botón de cierre devuelve el foco', () => {
@@ -452,12 +470,14 @@ describe('KEY-08 — Sin trampa de foco (focus trap) fuera de modales', () => {
   it('Navbar: Tab puede salir hacia el siguiente contenido', async () => {
     const Navbar = require('../../components/Navbar').default;
     const { container } = render(
-      <div>
-        <MemoryRouter>
-          <Navbar />
-        </MemoryRouter>
-        <main id="main"><p tabIndex={0}>Contenido principal</p></main>
-      </div>
+      <ThemeProvider>
+        <div>
+          <MemoryRouter>
+            <Navbar />
+          </MemoryRouter>
+          <main id="main"><p tabIndex={0}>Contenido principal</p></main>
+        </div>
+      </ThemeProvider>
     );
 
     const focusable = getFocusableElements(container);
@@ -486,7 +506,7 @@ describe('KEY-08 — Sin trampa de foco (focus trap) fuera de modales', () => {
 describe('KEY-09 — ThemeToggle: activable por teclado', () => {
   it('el botón de tema es un button nativo', () => {
     const ThemeToggle = require('../../components/ThemeToggle').default;
-    const { container } = render(<ThemeToggle />);
+    const { container } = render(<ThemeProvider><ThemeToggle /></ThemeProvider>);
     const button = container.querySelector('button');
     expect(button).not.toBeNull();
     expect(button.tagName).toBe('BUTTON');
@@ -494,7 +514,7 @@ describe('KEY-09 — ThemeToggle: activable por teclado', () => {
 
   it('el botón de tema tiene aria-label', () => {
     const ThemeToggle = require('../../components/ThemeToggle').default;
-    const { container } = render(<ThemeToggle />);
+    const { container } = render(<ThemeProvider><ThemeToggle /></ThemeProvider>);
     const button = container.querySelector('button');
     if (button) {
       const hasAriaLabel = button.hasAttribute('aria-label');
@@ -506,7 +526,7 @@ describe('KEY-09 — ThemeToggle: activable por teclado', () => {
 
   it('el botón de tema cambia estado al hacer click', () => {
     const ThemeToggle = require('../../components/ThemeToggle').default;
-    const { container } = render(<ThemeToggle />);
+    const { container } = render(<ThemeProvider><ThemeToggle /></ThemeProvider>);
     const button = container.querySelector('button');
     if (!button) return;
 
@@ -577,7 +597,7 @@ describe('KEY-11 — Navbar: todos los enlaces son alcanzables con Tab', () => {
 
   it('la navbar tiene múltiples enlaces', () => {
     const { container } = render(
-      <MemoryRouter><Navbar /></MemoryRouter>
+      <ThemeProvider><MemoryRouter><Navbar /></MemoryRouter></ThemeProvider>
     );
     const links = container.querySelectorAll('a');
     expect(links.length).toBeGreaterThan(0);
@@ -585,7 +605,7 @@ describe('KEY-11 — Navbar: todos los enlaces son alcanzables con Tab', () => {
 
   it('todos los enlaces de la navbar son alcanzables con Tab (no tienen tabindex=-1)', () => {
     const { container } = render(
-      <MemoryRouter><Navbar /></MemoryRouter>
+      <ThemeProvider><MemoryRouter><Navbar /></MemoryRouter></ThemeProvider>
     );
     const links = container.querySelectorAll('a');
     links.forEach((link) => {
@@ -598,7 +618,7 @@ describe('KEY-11 — Navbar: todos los enlaces son alcanzables con Tab', () => {
 
   it('el logo/marca es un enlace con texto accesible', () => {
     const { container } = render(
-      <MemoryRouter><Navbar /></MemoryRouter>
+      <ThemeProvider><MemoryRouter><Navbar /></MemoryRouter></ThemeProvider>
     );
     const nav = container.querySelector('nav');
     if (nav) {

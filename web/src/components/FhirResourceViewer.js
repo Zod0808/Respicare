@@ -77,9 +77,9 @@ const FhirResourceViewer = ({ resource, resourceType, onClose }) => {
   const getResourceDisplayName = () => {
     if (resourceType === 'Patient') {
       const name = resource.name?.[0];
-      return name
-        ? `${name.given?.join(' ') || ''} ${name.family || ''}`.trim()
-        : resource.id || 'Paciente';
+      if (!name) return resource.id || 'Paciente';
+      const assembled = `${name.given?.join(' ') || ''} ${name.family || ''}`.trim();
+      return assembled || name.text || resource.id || 'Paciente';
     }
     if (resourceType === 'Observation') {
       return resource.code?.text || resource.code?.coding?.[0]?.display || 'Observación';

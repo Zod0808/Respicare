@@ -65,9 +65,14 @@ describe('AppointmentCalendar component', () => {
   });
 
   it('consulta disponibilidad cuando se proporciona doctorId', async () => {
-    axios.get
-      .mockResolvedValueOnce({ data: { data: sampleAppointments } }) // carga inicial
-      .mockResolvedValueOnce({ data: { data: sampleAvailability } });
+    // loadAppointments depende de doctorId y se re-dispara en cada tecla escrita
+    // en el input; usamos mockImplementation para no depender del orden de llamadas.
+    axios.get.mockImplementation((url) => {
+      if (url.includes('/availability')) {
+        return Promise.resolve({ data: { data: sampleAvailability } });
+      }
+      return Promise.resolve({ data: { data: sampleAppointments } });
+    });
 
     render(<AppointmentCalendar />);
 
@@ -81,8 +86,8 @@ describe('AppointmentCalendar component', () => {
       expect(screen.getByText(/Reservado/i)).toBeInTheDocument();
     });
 
-    const availabilityUrl = axios.get.mock.calls[1][0];
-    expect(availabilityUrl).toContain('/appointments/doctor/doctor-9/availability');
+    const availabilityCall = axios.get.mock.calls.find(([url]) => url.includes('/availability'));
+    expect(availabilityCall[0]).toContain('/appointments/doctor/doctor-9/availability');
   });
 });
 

@@ -3,6 +3,7 @@
  * Additional edge cases and coverage improvements
  */
 
+import { fireEvent } from '@testing-library/react';
 import {
   addAriaAttributes,
   announceToScreenReader,

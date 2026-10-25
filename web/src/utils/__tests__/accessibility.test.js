@@ -155,7 +155,10 @@ describe('Accessibility Utilities', () => {
       buttons[0].focus();
       
       // Simulate Shift+Tab from first button
-      const shiftTabEvent = new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true });
+      // trapFocus escucha 'keydown' en el contenedor (delegación), así que el
+      // evento debe burbujear — a diferencia de los eventos reales del
+      // navegador, KeyboardEvent no burbujea por defecto si no se especifica.
+      const shiftTabEvent = new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true });
       buttons[0].dispatchEvent(shiftTabEvent);
       
       // Should wrap to last button

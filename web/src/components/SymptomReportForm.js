@@ -276,12 +276,13 @@ function SymptomReportForm({ onClose, onSuccess }) {
                           value={symptomSeverities[symptom.name] || 'mild'}
                           onChange={(e) => handleSeverityChange(symptom.name, e.target.value)}
                           className="severity-select"
+                          aria-label={`Severidad de ${symptom.name}`}
                         >
                           <option value="mild">Leve</option>
                           <option value="moderate">Moderado</option>
                           <option value="severe">Severo</option>
                         </select>
-                        
+
                         <div className="duration-input">
                           <input
                             type="number"
@@ -294,6 +295,7 @@ function SymptomReportForm({ onClose, onSuccess }) {
                               symptomDurations[symptom.name]?.unit || 'days'
                             )}
                             className="duration-value"
+                            aria-label={`Duración de ${symptom.name}`}
                           />
                           <select
                             value={symptomDurations[symptom.name]?.unit || 'days'}
@@ -303,6 +305,7 @@ function SymptomReportForm({ onClose, onSuccess }) {
                               e.target.value
                             )}
                             className="duration-unit"
+                            aria-label={`Unidad de duración de ${symptom.name}`}
                           >
                             <option value="hours">horas</option>
                             <option value="days">días</option>

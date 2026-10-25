@@ -92,7 +92,9 @@ describe('AuthProvider', () => {
 
   it('clears token when profile request fails', async () => {
     localStorage.setItem('auth_token', 'bad-token');
-    axios.get.mockRejectedValueOnce(new Error('401 Unauthorized'));
+    axios.get.mockRejectedValueOnce(
+      Object.assign(new Error('401 Unauthorized'), { response: { status: 401 } })
+    );
 
     renderAuth();
 
@@ -192,10 +194,12 @@ describe('AuthProvider', () => {
 
   // ── useAuth outside provider ───────────────────────────────────────────────
 
-  it('useAuth throws when used outside AuthProvider', () => {
-    const BadConsumer = () => { useAuth(); return null; };
-    expect(() => render(<BadConsumer />)).toThrow(
-      'useAuth must be used within AuthProvider'
-    );
+  it('useAuth returns a safe default when used outside AuthProvider', () => {
+    const BadConsumer = () => {
+      const auth = useAuth();
+      return <span data-testid="outside-auth">{String(auth.isAuthenticated)}</span>;
+    };
+    render(<BadConsumer />);
+    expect(screen.getByTestId('outside-auth').textContent).toBe('false');
   });
 });

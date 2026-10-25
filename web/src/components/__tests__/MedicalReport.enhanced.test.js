@@ -1,120 +1,90 @@
 /**
  * Enhanced Tests for MedicalReport Component
  * Additional edge cases and coverage improvements
+ *
+ * El componente real no recibe props (no `reportId`), no hace fetch al
+ * montar, y no tiene botones de exportar/imprimir/compartir — solo un
+ * formulario con "Generar PDF" y "Ver historial" (ver MedicalReport.js).
  */
 
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MedicalReport from '../MedicalReport';
 
-// Mock axios
 jest.mock('axios');
-const mockedAxios = axios;
 
 describe('MedicalReport Enhanced Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockedAxios.get.mockResolvedValue({
-      data: { data: {} }
-    });
+    global.URL.createObjectURL = jest.fn(() => 'blob:mock-url');
+    global.URL.revokeObjectURL = jest.fn();
   });
 
   describe('Edge Cases', () => {
-    it('should handle empty report data', async () => {
-      mockedAxios.get.mockResolvedValueOnce({
-        data: { data: null }
+    it('should disable action buttons while a request is pending', async () => {
+      axios.get.mockImplementation(() => new Promise(() => {})); // nunca resuelve
+
+      render(<MedicalReport />);
+      const user = userEvent.setup();
+      await user.type(screen.getByPlaceholderText(/patient-123/i), 'patient-1');
+      await user.click(screen.getByRole('button', { name: /Ver historial/i }));
+
+      expect(screen.getByRole('button', { name: /Ver historial/i })).toBeDisabled();
+      expect(screen.getByRole('button', { name: /Generar PDF/i })).toBeDisabled();
+    });
+
+    it('should render history rows with fallback text when optional fields are missing', async () => {
+      axios.get.mockResolvedValueOnce({
+        data: {
+          data: [
+            {
+              id: 'report-3',
+              title: 'Reporte sin firma',
+              createdAt: '2024-01-15T00:00:00Z',
+              sharedWith: [],
+              signedBy: null,
+            },
+          ],
+        },
       });
-      
-      render(<MedicalReport reportId="test-id" />);
-      
+
+      render(<MedicalReport />);
+      const user = userEvent.setup();
+      await user.type(screen.getByPlaceholderText(/patient-123/i), 'patient-3');
+      await user.click(screen.getByRole('button', { name: /Ver historial/i }));
+
       await waitFor(() => {
-        expect(screen.getByText(/no hay datos|no data/i)).toBeInTheDocument();
+        expect(screen.getByText('Reporte sin firma')).toBeInTheDocument();
+        expect(screen.getByText('—')).toBeInTheDocument();
+        expect(screen.getByText('Pendiente')).toBeInTheDocument();
       });
     });
 
-    it('should handle report with all fields', async () => {
-      const mockReport = {
-        id: '1',
-        patientName: 'Test Patient',
-        diagnosis: 'Bronquitis',
-        symptoms: ['tos', 'fiebre'],
-        recommendations: ['Rest', 'Hydration'],
-        date: '2024-01-15',
-      };
-      
-      mockedAxios.get.mockResolvedValueOnce({
-        data: { data: mockReport }
+    it('should show an error message when history load fails', async () => {
+      axios.get.mockRejectedValueOnce({
+        response: { data: { message: 'Historial no encontrado' } },
       });
-      
-      render(<MedicalReport reportId="1" />);
-      
+
+      render(<MedicalReport />);
+      const user = userEvent.setup();
+      await user.type(screen.getByPlaceholderText(/patient-123/i), 'patient-404');
+      await user.click(screen.getByRole('button', { name: /Ver historial/i }));
+
       await waitFor(() => {
-        expect(screen.getByText('Test Patient')).toBeInTheDocument();
-        expect(screen.getByText('Bronquitis')).toBeInTheDocument();
+        expect(screen.getByText(/Historial no encontrado/i)).toBeInTheDocument();
       });
     });
 
-    it('should handle export to PDF', () => {
-      render(<MedicalReport reportId="1" />);
-      
-      const exportButton = screen.getByText(/exportar|export|pdf/i);
-      if (exportButton) {
-        fireEvent.click(exportButton);
-        // Should trigger PDF export
-        expect(exportButton).toBeInTheDocument();
-      }
-    });
+    it('should allow switching the report template', async () => {
+      render(<MedicalReport />);
+      const select = screen.getByRole('combobox');
+      const user = userEvent.setup();
 
-    it('should handle print', () => {
-      const printSpy = jest.spyOn(window, 'print').mockImplementation(() => {});
-      
-      render(<MedicalReport reportId="1" />);
-      
-      const printButton = screen.getByText(/imprimir|print/i);
-      if (printButton) {
-        fireEvent.click(printButton);
-        expect(printSpy).toHaveBeenCalled();
-      }
-      
-      printSpy.mockRestore();
-    });
-
-    it('should handle share', () => {
-      const shareSpy = jest.fn();
-      Object.assign(navigator, {
-        share: shareSpy,
-      });
-      
-      render(<MedicalReport reportId="1" />);
-      
-      const shareButton = screen.getByText(/compartir|share/i);
-      if (shareButton) {
-        fireEvent.click(shareButton);
-        // Should trigger share
-        expect(shareButton).toBeInTheDocument();
-      }
-    });
-
-    it('should handle API errors gracefully', async () => {
-      mockedAxios.get.mockRejectedValueOnce({
-        response: { data: { message: 'Report not found' } }
-      });
-      
-      render(<MedicalReport reportId="invalid-id" />);
-      
-      await waitFor(() => {
-        expect(screen.getByText(/error|not found/i)).toBeInTheDocument();
-      });
-    });
-
-    it('should handle loading state', () => {
-      mockedAxios.get.mockImplementation(() => new Promise(() => {}));
-      
-      render(<MedicalReport reportId="1" />);
-      
-      expect(screen.getByText(/cargando|loading/i)).toBeInTheDocument();
+      expect(select).toHaveValue('clinical-summary');
+      await user.selectOptions(select, 'treatment-plan');
+      expect(select).toHaveValue('treatment-plan');
     });
   });
 });
-

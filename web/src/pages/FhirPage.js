@@ -115,8 +115,9 @@ const FhirPage = () => {
       <div className="fhir-page-content">
         <div className="fhir-search-panel">
           <div className="fhir-resource-type-selector">
-            <label>Tipo de Recurso:</label>
+            <label htmlFor="fhir-resource-type">Tipo de Recurso:</label>
             <select
+              id="fhir-resource-type"
               value={resourceType}
               onChange={(e) => setResourceType(e.target.value)}
             >

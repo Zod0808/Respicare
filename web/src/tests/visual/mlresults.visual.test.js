@@ -1,255 +1,230 @@
 /**
  * Visual Regression Tests — MLAdvancedResults + SHAPVisualization
  *
- * Strategy: DOM snapshots con datos de predicción reales,
- * barras de confianza, distribución de enfermedades, y visualización SHAP.
+ * Strategy: DOM snapshots de los estados reales del componente
+ * (tabs, explicaciones SHAP, comparación de modelos, recomendaciones RL,
+ * historial de experimentos) y visualización SHAP standalone.
+ *
+ * `MLAdvancedResults` no recibe un prop `result` con disease/confidence/
+ * urgencyLevel — carga sus datos vía axios según `analysisId`/`experimentId`/
+ * `sessionId` y los distribuye en 4 tabs (ver `src/components/MLAdvancedResults.js`).
  */
 
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import axios from 'axios';
 import MLAdvancedResults from '../../components/MLAdvancedResults';
+import SHAPVisualization from '../../components/SHAPVisualization';
 
-// Datos de predicción ML mock
-const mockMLResult = {
-  disease: 'Asma bronquial',
-  confidence: 0.87,
-  urgencyLevel: 'high',
-  symptoms: ['sibilancias', 'tos nocturna', 'dificultad respiratoria'],
-  topPredictions: [
-    { disease: 'Asma bronquial', confidence: 0.87 },
-    { disease: 'EPOC', confidence: 0.09 },
-    { disease: 'Bronquitis', confidence: 0.04 },
-  ],
-  shapValues: [
-    { feature: 'sibilancias', value: 0.42, impact: 'positive' },
-    { feature: 'tos_nocturna', value: 0.31, impact: 'positive' },
-    { feature: 'dificultad_respiratoria', value: 0.14, impact: 'positive' },
-    { feature: 'fiebre', value: -0.05, impact: 'negative' },
-  ],
-  modelVersion: '2.1.0',
-  processingTime: 145,
-  explanation: 'El modelo detectó patrones consistentes con asma bronquial basados en los síntomas reportados.',
-};
+jest.mock('axios');
+const mockedAxios = axios;
 
-const mockCriticalResult = {
-  ...mockMLResult,
-  disease: 'Neumonía severa',
-  confidence: 0.94,
-  urgencyLevel: 'critical',
-  symptoms: ['fiebre alta', 'dificultad respiratoria severa', 'tos con flema'],
-};
+const mockToken = 'visual-test-token';
+const mockAnalysisId = 'analysis-123';
 
-const mockLowConfidenceResult = {
-  ...mockMLResult,
-  disease: 'Resfriado común',
-  confidence: 0.42,
-  urgencyLevel: 'low',
-  symptoms: ['congestión nasal', 'estornudos'],
-};
+const mockShapFactors = [
+  { feature: 'sibilancias', value: 0.42, impact: 'positive' },
+  { feature: 'tos_nocturna', value: 0.31, impact: 'positive' },
+  { feature: 'dificultad_respiratoria', value: 0.14, impact: 'positive' },
+  { feature: 'fiebre', value: -0.05, impact: 'negative' },
+];
 
-// ─── DOM Snapshot — diferentes escenarios de resultado ───────────────────────
+const mockModels = [
+  { name: 'XGBoost', precision: 0.9, recall: 0.88, f1: 0.89, rocAuc: 0.95, inferenceTime: 45, status: 'active' },
+  { name: 'Random Forest', precision: 0.86, recall: 0.85, f1: 0.855, rocAuc: 0.91, inferenceTime: 60, status: 'active' },
+];
+
+const mockRecommendations = [
+  {
+    action: 'Reforzar seguimiento respiratorio',
+    confidence: 0.87,
+    recommendation: 'Programar control en 48 horas por riesgo elevado.',
+    state_summary: { adherence_rate: 0.7, recent_reminders: 1, time_to_next_dose: '2h' },
+  },
+];
+
+const mockExperiments = [
+  {
+    experimentId: 'exp-0001-abcdef',
+    experimentType: 'rl_session',
+    modelName: 'XGBoost',
+    status: 'completed',
+    performance: { durationMs: 2450 },
+    createdAt: '2026-01-15T12:00:00.000Z',
+  },
+];
+
+beforeEach(() => {
+  localStorage.setItem('token', mockToken);
+  mockedAxios.get.mockImplementation((url) => {
+    if (typeof url === 'string' && url.includes('/symptom-analyzer/ml-analyze/')) {
+      return Promise.resolve({ data: { success: true, data: { explanation: mockShapFactors } } });
+    }
+    if (typeof url === 'string' && url.includes('/ml/models/compare')) {
+      return Promise.resolve({ data: { success: true, data: { models: mockModels, metrics: { accuracy: 0.9 } } } });
+    }
+    if (typeof url === 'string' && url.includes('/ml/rl/session/')) {
+      return Promise.resolve({ data: { success: true, data: mockRecommendations } });
+    }
+    if (typeof url === 'string' && url.includes('/ml/experiments')) {
+      return Promise.resolve({ data: { success: true, data: mockExperiments } });
+    }
+    return Promise.resolve({ data: { success: true, data: {} } });
+  });
+});
+
+afterEach(() => {
+  localStorage.removeItem('token');
+  jest.clearAllMocks();
+});
+
+// ─── DOM Snapshot — estados reales del componente ────────────────────────────
 
 describe('MLAdvancedResults — Snapshot Visual Regression', () => {
-  it('matches DOM snapshot with high confidence result (87%)', () => {
-    const { asFragment } = render(<MLAdvancedResults result={mockMLResult} />);
+  it('matches DOM snapshot with only tabs (no ids provided)', () => {
+    const { asFragment } = render(<MLAdvancedResults />);
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('matches DOM snapshot with critical urgency result', () => {
-    const { asFragment } = render(<MLAdvancedResults result={mockCriticalResult} />);
+  it('matches DOM snapshot with SHAP explanations loaded', async () => {
+    const { asFragment } = render(<MLAdvancedResults analysisId={mockAnalysisId} />);
+    await waitFor(() => {
+      expect(screen.getByText('Explicaciones SHAP Detalladas')).toBeInTheDocument();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('matches DOM snapshot with low confidence result (42%)', () => {
-    const { asFragment } = render(<MLAdvancedResults result={mockLowConfidenceResult} />);
+  it('matches DOM snapshot with model comparison table', async () => {
+    const { asFragment } = render(<MLAdvancedResults />);
+    fireEvent.click(screen.getByText(/Comparación de Modelos/));
+    await waitFor(() => {
+      expect(screen.getByText('XGBoost')).toBeInTheDocument();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('matches DOM snapshot with no result (null/undefined)', () => {
-    const { asFragment } = render(<MLAdvancedResults result={null} />);
+  it('matches DOM snapshot with RL recommendations loaded', async () => {
+    const { asFragment } = render(<MLAdvancedResults sessionId="session-789" />);
+    fireEvent.click(screen.getByText(/Recomendaciones Optimizadas/));
+    await waitFor(() => {
+      expect(screen.getByText(/Reforzar seguimiento respiratorio/i)).toBeInTheDocument();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 });
 
-// ─── Nombre de enfermedad — texto del diagnóstico ───────────────────────────
+// ─── Tabs — estructura visual ─────────────────────────────────────────────────
 
-describe('MLAdvancedResults — Visual del Diagnóstico', () => {
-  it('should display disease name prominently', () => {
-    render(<MLAdvancedResults result={mockMLResult} />);
-    expect(screen.getByText(/asma bronquial/i)).toBeInTheDocument();
+describe('MLAdvancedResults — Visual de Tabs', () => {
+  it('should render all 4 tabs', () => {
+    render(<MLAdvancedResults />);
+    expect(screen.getByText(/Explicaciones SHAP/)).toBeInTheDocument();
+    expect(screen.getByText(/Comparación de Modelos/)).toBeInTheDocument();
+    expect(screen.getByText(/Recomendaciones Optimizadas/)).toBeInTheDocument();
+    expect(screen.getByText(/Historial de Experimentos/)).toBeInTheDocument();
   });
 
-  it('should display critical disease name', () => {
-    render(<MLAdvancedResults result={mockCriticalResult} />);
-    expect(screen.getByText(/neumonía severa/i)).toBeInTheDocument();
-  });
-});
-
-// ─── Barra de confianza — porcentaje visible ──────────────────────────────────
-
-describe('MLAdvancedResults — Visual de Barra de Confianza', () => {
-  it('should display confidence percentage (87%)', () => {
-    render(<MLAdvancedResults result={mockMLResult} />);
-    const text = document.body.textContent;
-    expect(text).toMatch(/87|0\.87|confianza/i);
-  });
-
-  it('should display high confidence percentage (94%)', () => {
-    render(<MLAdvancedResults result={mockCriticalResult} />);
-    const text = document.body.textContent;
-    expect(text).toMatch(/94|0\.94/i);
-  });
-
-  it('should display low confidence percentage (42%)', () => {
-    render(<MLAdvancedResults result={mockLowConfidenceResult} />);
-    const text = document.body.textContent;
-    expect(text).toMatch(/42|0\.42/i);
-  });
-
-  it('should render confidence bar element', () => {
-    render(<MLAdvancedResults result={mockMLResult} />);
-    const bar = document.querySelector(
-      '.confidence-bar, .progress-bar, [class*="confidence"], [class*="progress"], [role="progressbar"]'
-    );
-    if (bar) {
-      expect(bar).toBeInTheDocument();
-    } else {
-      // If no progress bar, at least percentage text should be visible
-      expect(document.body.textContent).toMatch(/87|confianza/i);
-    }
+  it('should mark explanations tab as active by default', () => {
+    render(<MLAdvancedResults />);
+    const explanationsTab = screen.getByText(/Explicaciones SHAP/).closest('button');
+    expect(explanationsTab).toHaveClass('active');
   });
 });
 
-// ─── Nivel de urgencia — badge de color ──────────────────────────────────────
+// ─── Explicaciones SHAP — factores y su impacto ──────────────────────────────
 
-describe('MLAdvancedResults — Visual de Nivel de Urgencia', () => {
-  it('should display urgency level for high urgency', () => {
-    render(<MLAdvancedResults result={mockMLResult} />);
-    const urgencyText = screen.queryByText(/high|alta|urgente|urgency/i);
-    if (urgencyText) {
-      expect(urgencyText).toBeInTheDocument();
-    } else {
-      expect(document.body.textContent).toMatch(/high|alta|urgente/i);
-    }
+describe('MLAdvancedResults — Visual de Explicaciones SHAP', () => {
+  it('should display SHAP feature names once loaded', async () => {
+    render(<MLAdvancedResults analysisId={mockAnalysisId} />);
+    await waitFor(() => {
+      expect(screen.getByText(/sibilancias/i)).toBeInTheDocument();
+    });
   });
 
-  it('should display critical urgency for critical case', () => {
-    render(<MLAdvancedResults result={mockCriticalResult} />);
-    expect(document.body.textContent).toMatch(/critical|crítica|urgente|emergencia/i);
-  });
-
-  it('should display low urgency for mild case', () => {
-    render(<MLAdvancedResults result={mockLowConfidenceResult} />);
-    expect(document.body.textContent).toMatch(/low|baja|leve/i);
+  it('should not render the explanations block without analysisId', () => {
+    render(<MLAdvancedResults />);
+    expect(screen.queryByText('Explicaciones SHAP Detalladas')).not.toBeInTheDocument();
   });
 });
 
-// ─── Top predicciones — lista de diagnósticos alternativos ───────────────────
+// ─── Comparación de modelos — tabla con métricas en porcentaje ──────────────
 
-describe('MLAdvancedResults — Visual de Predicciones Alternativas', () => {
-  it('should display top 3 disease predictions', () => {
-    render(<MLAdvancedResults result={mockMLResult} />);
-    // Should show at least the main diagnosis
-    expect(screen.getByText(/asma bronquial/i)).toBeInTheDocument();
-  });
+describe('MLAdvancedResults — Visual de Comparación de Modelos', () => {
+  it('should display model names and percentage metrics', async () => {
+    render(<MLAdvancedResults />);
+    fireEvent.click(screen.getByText(/Comparación de Modelos/));
 
-  it('should display alternative predictions if rendered', () => {
-    render(<MLAdvancedResults result={mockMLResult} />);
-    // May or may not show alternatives depending on implementation
-    const epocText = screen.queryByText(/EPOC/i);
-    const bronquitisText = screen.queryByText(/bronquitis/i);
-    // At least one should be present or none (implementation dependent)
-    expect(true).toBe(true); // Non-breaking assertion
+    await waitFor(() => {
+      expect(screen.getByText('XGBoost')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Random Forest')).toBeInTheDocument();
+    expect(screen.getByText('90.00%')).toBeInTheDocument();
   });
 });
 
-// ─── Síntomas — lista de síntomas detectados ─────────────────────────────────
+// ─── Recomendaciones RL — badge de confianza ─────────────────────────────────
 
-describe('MLAdvancedResults — Visual de Síntomas', () => {
-  it('should display detected symptoms list', () => {
-    render(<MLAdvancedResults result={mockMLResult} />);
-    const text = document.body.textContent.toLowerCase();
-    expect(text).toMatch(/sibilancias|tos nocturna|dificultad/i);
+describe('MLAdvancedResults — Visual de Recomendaciones RL', () => {
+  it('should display recommendation confidence badge', async () => {
+    render(<MLAdvancedResults sessionId="session-789" />);
+    fireEvent.click(screen.getByText(/Recomendaciones Optimizadas/));
+
+    await waitFor(() => {
+      expect(screen.getByText(/Confianza: 87\.0%/i)).toBeInTheDocument();
+    });
   });
 });
 
-// ─── SHAP values — impacto de características ────────────────────────────────
+// ─── Historial de experimentos — tabla con estado ────────────────────────────
 
-describe('MLAdvancedResults — Visual de SHAP Values', () => {
-  it('should display SHAP feature contributions if component supports it', () => {
-    render(<MLAdvancedResults result={mockMLResult} />);
-    const text = document.body.textContent.toLowerCase();
-    // SHAP features may or may not be rendered depending on implementation
-    const hasShapContent =
-      text.includes('shap') ||
-      text.includes('sibilancias') ||
-      text.includes('importancia') ||
-      document.querySelector('[class*="shap"], [class*="factor"]') !== null;
-    expect(typeof hasShapContent).toBe('boolean');
+describe('MLAdvancedResults — Visual de Historial de Experimentos', () => {
+  it('should display experiment status badge', async () => {
+    render(<MLAdvancedResults experimentId="experiment-456" />);
+    fireEvent.click(screen.getByText(/Historial de Experimentos/));
+
+    await waitFor(() => {
+      expect(screen.getByText('completed')).toBeInTheDocument();
+    });
   });
 });
 
-// ─── Versión del modelo — metadata visual ────────────────────────────────────
+// ─── Estados de carga y error ─────────────────────────────────────────────────
 
-describe('MLAdvancedResults — Metadata Visual del Modelo', () => {
-  it('should display model version if rendered', () => {
-    render(<MLAdvancedResults result={mockMLResult} />);
-    const text = document.body.textContent;
-    // Version may or may not be displayed
-    if (text.includes('2.1.0') || text.includes('modelo')) {
-      expect(text).toMatch(/2\.1\.0|modelo|version/i);
-    }
+describe('MLAdvancedResults — Estados Visuales de Carga y Error', () => {
+  it('should show loading indicator while fetching', () => {
+    mockedAxios.get.mockImplementation(() => new Promise(() => {}));
+    render(<MLAdvancedResults analysisId={mockAnalysisId} />);
+    expect(screen.getByText(/cargando/i)).toBeInTheDocument();
   });
 
-  it('should display processing time if rendered', () => {
-    render(<MLAdvancedResults result={mockMLResult} />);
-    const text = document.body.textContent;
-    // Processing time may or may not be displayed
-    if (text.includes('145') || text.includes('ms')) {
-      expect(text).toMatch(/145|ms|tiempo/i);
-    }
+  it('should show error message when the request fails', async () => {
+    mockedAxios.get.mockRejectedValue(new Error('Network error'));
+    render(<MLAdvancedResults analysisId={mockAnalysisId} />);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Error cargando datos de análisis/i)).toBeInTheDocument();
+    });
   });
 });
 
-// ─── SHAPVisualization — componente visual de importancia ────────────────────
+// ─── SHAPVisualization — componente visual de importancia (standalone) ──────
 
 describe('SHAPVisualization — Snapshot Visual Regression', () => {
-  let SHAPVisualization;
-
-  beforeAll(() => {
-    try {
-      SHAPVisualization = require('../../components/SHAPVisualization').default;
-    } catch {
-      SHAPVisualization = null;
-    }
-  });
-
   it('matches DOM snapshot with SHAP data', () => {
-    if (!SHAPVisualization) return;
-
     const { asFragment } = render(
-      <SHAPVisualization
-        shapValues={mockMLResult.shapValues}
-        disease="Asma bronquial"
-        confidence={0.87}
-      />
+      <SHAPVisualization shapData={mockShapFactors} disease="Asma bronquial" confidence={0.87} />
     );
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('should render SHAP bar chart structure', () => {
-    if (!SHAPVisualization) return;
+  it('should render SHAP feature names', () => {
+    render(<SHAPVisualization shapData={mockShapFactors} disease="Asma bronquial" confidence={0.87} />);
+    expect(screen.getByText(/sibilancias/i)).toBeInTheDocument();
+  });
 
-    render(
-      <SHAPVisualization
-        shapValues={mockMLResult.shapValues}
-        disease="Asma bronquial"
-        confidence={0.87}
-      />
-    );
-
-    // SHAP component should show feature names
-    expect(document.body.textContent).toMatch(/sibilancias|tos_nocturna|shap|impacto/i);
+  it('should render an empty state without SHAP data', () => {
+    render(<SHAPVisualization shapData={null} />);
+    expect(screen.getByText(/No hay datos de explicación disponibles/i)).toBeInTheDocument();
   });
 });

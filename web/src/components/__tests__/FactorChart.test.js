@@ -25,22 +25,25 @@ describe('FactorChart', () => {
 
   it('should render bar chart by default', () => {
     const { container } = render(<FactorChart factors={mockFactors} />);
-    expect(container.querySelector('.factor-chart--bar')).toBeInTheDocument();
+    expect(container.querySelector('.factor-chart-bar')).toBeInTheDocument();
   });
 
   it('should render pie chart when type is pie', () => {
     const { container } = render(<FactorChart factors={mockFactors} type="pie" />);
-    expect(container.querySelector('.factor-chart--pie')).toBeInTheDocument();
+    expect(container.querySelector('.factor-chart-pie')).toBeInTheDocument();
   });
 
   it('should render radar chart when type is radar', () => {
     const { container } = render(<FactorChart factors={mockFactors} type="radar" />);
-    expect(container.querySelector('.factor-chart--radar')).toBeInTheDocument();
+    expect(container.querySelector('.factor-chart-radar')).toBeInTheDocument();
   });
 
-  it('should render heatmap chart when type is heatmap', () => {
+  it('should render an empty chart content area for an unsupported type', () => {
+    // El componente solo implementa bar/pie/radar; cualquier otro "type"
+    // (p. ej. "heatmap") deja el header pero sin contenido de gráfico.
     const { container } = render(<FactorChart factors={mockFactors} type="heatmap" />);
-    expect(container.querySelector('.factor-chart--heatmap')).toBeInTheDocument();
+    expect(screen.getByText('Factores de Influencia')).toBeInTheDocument();
+    expect(container.querySelector('.factor-chart-content').children.length).toBe(0);
   });
 
   it('should display factor names', () => {
@@ -51,13 +54,14 @@ describe('FactorChart', () => {
   });
 
   it('should handle empty factors array', () => {
+    // Con factors vacíos el componente muestra el estado vacío, no el título.
     render(<FactorChart factors={[]} />);
-    expect(screen.getByText('Factores de Influencia')).toBeInTheDocument();
+    expect(screen.getByText('No hay factores disponibles para visualizar.')).toBeInTheDocument();
   });
 
   it('should handle null factors', () => {
     render(<FactorChart factors={null} />);
-    expect(screen.getByText('Factores de Influencia')).toBeInTheDocument();
+    expect(screen.getByText('No hay factores disponibles para visualizar.')).toBeInTheDocument();
   });
 
   it('should handle string factors', () => {
@@ -68,13 +72,14 @@ describe('FactorChart', () => {
   });
 
   it('should show legend when showLegend is true', () => {
-    const { container } = render(<FactorChart factors={mockFactors} showLegend={true} />);
-    expect(container.querySelector('.factor-chart__legend')).toBeInTheDocument();
+    // La leyenda solo existe en el chart de tipo "pie".
+    const { container } = render(<FactorChart factors={mockFactors} type="pie" showLegend={true} />);
+    expect(container.querySelector('.pie-legend')).toBeInTheDocument();
   });
 
   it('should hide legend when showLegend is false', () => {
-    const { container } = render(<FactorChart factors={mockFactors} showLegend={false} />);
-    expect(container.querySelector('.factor-chart__legend')).not.toBeInTheDocument();
+    const { container } = render(<FactorChart factors={mockFactors} type="pie" showLegend={false} />);
+    expect(container.querySelector('.pie-legend')).not.toBeInTheDocument();
   });
 
   it('should handle hover interactions when interactive is true', () => {

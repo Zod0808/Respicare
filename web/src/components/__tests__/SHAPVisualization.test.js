@@ -40,13 +40,15 @@ describe('SHAPVisualization', () => {
   });
 
   it('should display confidence score when provided', () => {
-    render(<SHAPVisualization shapData={mockShapData} confidence={0.85} />);
-    expect(screen.getByText(/85%/i)).toBeInTheDocument();
+    // El badge de confianza solo se renderiza junto con `disease`, y el
+    // formato real es "85.0% confianza" (con un decimal), no "85%".
+    render(<SHAPVisualization shapData={mockShapData} disease="Asma" confidence={0.85} />);
+    expect(screen.getByText(/85\.0%/i)).toBeInTheDocument();
   });
 
   it('should default to waterfall view', () => {
     const { container } = render(<SHAPVisualization shapData={mockShapData} />);
-    expect(container.querySelector('.shap-visualization--waterfall')).toBeInTheDocument();
+    expect(container.querySelector('.shap-waterfall')).toBeInTheDocument();
   });
 
   it('should switch to bar view', () => {
@@ -106,13 +108,13 @@ describe('SHAPVisualization', () => {
   });
 
   it('should handle high confidence score', () => {
-    render(<SHAPVisualization shapData={mockShapData} confidence={0.95} />);
-    expect(screen.getByText(/95%/i)).toBeInTheDocument();
+    render(<SHAPVisualization shapData={mockShapData} disease="Asma" confidence={0.95} />);
+    expect(screen.getByText(/95\.0%/i)).toBeInTheDocument();
   });
 
   it('should handle low confidence score', () => {
-    render(<SHAPVisualization shapData={mockShapData} confidence={0.45} />);
-    expect(screen.getByText(/45%/i)).toBeInTheDocument();
+    render(<SHAPVisualization shapData={mockShapData} disease="Asma" confidence={0.45} />);
+    expect(screen.getByText(/45\.0%/i)).toBeInTheDocument();
   });
 });
 

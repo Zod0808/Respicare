@@ -32,7 +32,9 @@ export function announceToScreenReader(message, priority = 'polite') {
   
   // Remover después de que el lector de pantalla lo haya anunciado
   setTimeout(() => {
-    document.body.removeChild(announcement);
+    if (announcement.parentNode) {
+      announcement.parentNode.removeChild(announcement);
+    }
   }, 1000);
 }
 
@@ -42,7 +44,12 @@ export function announceToScreenReader(message, priority = 'polite') {
 export function checkContrast(foreground, background) {
   // Convertir hex a RGB
   const hexToRgb = (hex) => {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    // Soporta tanto el formato largo (#rrggbb) como el shorthand CSS (#rgb)
+    const shortHex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i.exec(hex);
+    const normalized = shortHex
+      ? `${shortHex[1]}${shortHex[1]}${shortHex[2]}${shortHex[2]}${shortHex[3]}${shortHex[3]}`
+      : hex;
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(normalized);
     return result ? {
       r: parseInt(result[1], 16),
       g: parseInt(result[2], 16),
@@ -134,6 +141,11 @@ export function createSkipLink(targetId, label = 'Saltar al contenido principal'
     e.preventDefault();
     const target = document.getElementById(targetId);
     if (target) {
+      // Elementos no interactivos (main, section, etc.) no son enfocables
+      // sin tabindex — necesario para que target.focus() funcione.
+      if (!target.hasAttribute('tabindex')) {
+        target.setAttribute('tabindex', '-1');
+      }
       target.focus();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }

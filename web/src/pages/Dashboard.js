@@ -80,7 +80,7 @@ function Dashboard() {
 
         <div className="dashboard-content">
           <div className="services-section">
-            <h3>Estado de Servicios</h3>
+            <h2>Estado de Servicios</h2>
             
             {loading && (
               <div className="loading">
@@ -102,7 +102,7 @@ function Dashboard() {
               <div className="services-grid">
                 <div className="service-card">
                   <div className={`status-indicator ${backendStatus?.status === 'healthy' ? 'healthy' : 'unhealthy'}`}></div>
-                  <h4>🔧 Backend API</h4>
+                  <h3>🔧 Backend API</h3>
                   <p className="service-status">
                     {backendStatus?.status === 'healthy' ? '✅ Operativo' : '❌ No disponible'}
                   </p>
@@ -119,7 +119,7 @@ function Dashboard() {
 
                 <div className="service-card">
                   <div className={`status-indicator ${aiStatus?.status === 'healthy' ? 'healthy' : 'unhealthy'}`}></div>
-                  <h4>🤖 AI Services</h4>
+                  <h3>🤖 AI Services</h3>
                   <p className="service-status">
                     {aiStatus?.status === 'healthy' ? '✅ Operativo' : '❌ No disponible'}
                   </p>
@@ -142,7 +142,7 @@ function Dashboard() {
           </div>
 
           <div className="info-section">
-            <h3>Endpoints Disponibles</h3>
+            <h2>Endpoints Disponibles</h2>
             <div className="endpoints-list">
               <div className="endpoint">
                 <span className="method method-get">GET</span>
@@ -186,16 +186,16 @@ function Dashboard() {
           </div>
 
           <div className="admin-tools">
-            <h3>Herramientas de Administración</h3>
+            <h2>Herramientas de Administración</h2>
             <div className="tools-grid">
               <a href={`${BACKEND_BASE_URL.replace(/\/api\/v\d+$/i,'').replace(/\/api$/i,'')}/mongo-express/`} target="_blank" rel="noopener noreferrer" className="tool-card">
                 <span className="tool-icon">🗄️</span>
-                <h4>MongoDB Express</h4>
+                <h3>MongoDB Express</h3>
                 <p>Administración de Base de Datos</p>
               </a>
               <a href={`${BACKEND_BASE_URL.replace(/\/api\/v\d+$/i,'').replace(/\/api$/i,'')}/redis-commander/`} target="_blank" rel="noopener noreferrer" className="tool-card">
                 <span className="tool-icon">💾</span>
-                <h4>Redis Commander</h4>
+                <h3>Redis Commander</h3>
                 <p>Gestión de Caché</p>
               </a>
             </div>

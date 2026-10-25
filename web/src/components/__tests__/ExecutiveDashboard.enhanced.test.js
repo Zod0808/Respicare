@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import axios from 'axios';
 import ExecutiveDashboard from '../ExecutiveDashboard';
 
@@ -34,72 +34,83 @@ describe('ExecutiveDashboard Enhanced Tests', () => {
     });
 
     it('should display all KPI cards', async () => {
+      // El componente consume response.data directamente (sin envoltorio
+      // "data"), con la forma real summary/kpis/... (ver ExecutiveDashboard.js).
       const mockData = {
-        totalPatients: 100,
-        totalAppointments: 50,
-        totalAlerts: 10,
-        systemHealth: 'healthy',
+        summary: { patients: 100, doctors: 0, admins: 0, activeUsers: 0, openAlerts: 0, criticalAlerts: 0, openAppointments: 0 },
+        kpis: { averageAcknowledgementMinutes: 0, appointmentCompletionRate: 0, aiConfidenceAverage: 0, criticalAlertRatio: 0, satisfactionScore: 0 },
       };
-      
-      mockedAxios.get.mockResolvedValueOnce({
-        data: { data: mockData }
-      });
-      
+
+      mockedAxios.get.mockResolvedValueOnce({ data: mockData });
+
       render(<ExecutiveDashboard />);
-      
+
       await waitFor(() => {
-        expect(screen.getByText(/100|patients/i)).toBeInTheDocument();
+        expect(screen.getByText('Pacientes')).toBeInTheDocument();
+        expect(screen.getByText('100')).toBeInTheDocument();
       });
     });
 
-    it('should handle date range filter', () => {
+    it('should fall back to a message when there are no district trends', async () => {
+      mockedAxios.get.mockResolvedValueOnce({
+        data: { epidemiology: { districtTrends: [] } }
+      });
+
       render(<ExecutiveDashboard />);
-      
-      const startDateInput = screen.getByLabelText(/fecha inicio|start date/i);
-      const endDateInput = screen.getByLabelText(/fecha fin|end date/i);
-      
-      if (startDateInput && endDateInput) {
-        fireEvent.change(startDateInput, { target: { value: '2024-01-01' } });
-        fireEvent.change(endDateInput, { target: { value: '2024-01-31' } });
-        
-        // Should trigger data refresh
-        expect(mockedAxios.get).toHaveBeenCalled();
-      }
+
+      await waitFor(() => {
+        expect(screen.getByText(/No se encontraron tendencias significativas/i)).toBeInTheDocument();
+      });
     });
 
-    it('should handle export to CSV', () => {
+    it('should render the outbreak risk table when outbreaks are present', async () => {
+      mockedAxios.get.mockResolvedValueOnce({
+        data: {
+          outbreaks: [{
+            district: 'Pocollay',
+            category: 'respiratory',
+            recentTotal: 9,
+            growthRate: 0.2,
+            severityRate: 0.3,
+            riskLevel: 'medium',
+            confidence: 0.6,
+          }]
+        }
+      });
+
       render(<ExecutiveDashboard />);
-      
-      const exportButton = screen.getByText(/exportar|export|csv/i);
-      if (exportButton) {
-        fireEvent.click(exportButton);
-        // Should trigger CSV export
-        expect(exportButton).toBeInTheDocument();
-      }
+
+      await waitFor(() => {
+        expect(screen.getByText('Pocollay')).toBeInTheDocument();
+        expect(screen.getByText('MEDIUM')).toBeInTheDocument();
+      });
     });
 
-    it('should handle refresh data', async () => {
-      render(<ExecutiveDashboard />);
-      
-      const refreshButton = screen.getByText(/actualizar|refresh/i);
-      if (refreshButton) {
-        fireEvent.click(refreshButton);
-        
-        await waitFor(() => {
-          expect(mockedAxios.get).toHaveBeenCalled();
-        });
-      }
+    it('should auto-refresh data on the configured interval when autoRefresh is true', async () => {
+      jest.useFakeTimers();
+
+      render(<ExecutiveDashboard autoRefresh refreshInterval={5000} />);
+
+      await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(1));
+
+      await act(async () => {
+        jest.advanceTimersByTime(5000);
+      });
+
+      await waitFor(() => expect(mockedAxios.get).toHaveBeenCalledTimes(2));
+
+      jest.useRealTimers();
     });
 
     it('should handle API errors gracefully', async () => {
-      mockedAxios.get.mockRejectedValueOnce({
-        response: { data: { message: 'API Error' } }
-      });
-      
+      // err.message solo existe si se rechaza con un Error real; un objeto
+      // plano sin .message cae al mensaje genérico de fallback del componente.
+      mockedAxios.get.mockRejectedValueOnce(new Error('API Error'));
+
       render(<ExecutiveDashboard />);
-      
+
       await waitFor(() => {
-        expect(screen.getByText(/error/i)).toBeInTheDocument();
+        expect(screen.getByText(/API Error/i)).toBeInTheDocument();
       });
     });
   });

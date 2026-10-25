@@ -138,9 +138,11 @@ describe('Navbar — Comportamiento Responsive en Mobile', () => {
         <Navbar />
       </MemoryRouter>
     );
-    // All links should still be in DOM (possibly hidden via CSS)
+    // Sin autenticar, Navbar solo muestra "Chatbot" + el CTA de login
+    // (los links de Dashboard/Analítica/Clínica requieren `isStaff`, ver
+    // Navbar.js) — deben seguir en el DOM independientemente del viewport.
     const links = document.querySelectorAll('.nav-link');
-    expect(links.length).toBeGreaterThanOrEqual(6);
+    expect(links.length).toBeGreaterThanOrEqual(2);
   });
 });
 
@@ -157,10 +159,12 @@ describe('Navbar — Comportamiento Responsive en Desktop', () => {
         <Navbar />
       </MemoryRouter>
     );
+    // Sin autenticar, los únicos links visibles son "Chatbot" y el CTA de
+    // login ("Iniciar sesión") — Dashboard/Analítica son solo para
+    // `isStaff` (ver Navbar.js), no para cualquier usuario de escritorio.
     expect(screen.getByRole('navigation')).toBeInTheDocument();
-    expect(screen.getByText('Inicio')).toBeInTheDocument();
-    expect(screen.getByText('Estado del Sistema')).toBeInTheDocument();
-    expect(screen.getByText('Análisis')).toBeInTheDocument();
+    expect(screen.getByText('Chatbot')).toBeInTheDocument();
+    expect(screen.getByText('Iniciar sesión')).toBeInTheDocument();
   });
 
   it('should render navbar menu container at desktop', () => {

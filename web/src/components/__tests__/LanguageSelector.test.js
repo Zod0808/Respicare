@@ -9,7 +9,9 @@ import * as i18nService from '../../services/i18nService';
 
 // Mock i18n service
 jest.mock('../../services/i18nService', () => ({
-  t: jest.fn((key) => key),
+  // El componente usa t('common.selectLanguage') como aria-label del botón;
+  // el mock debe traducirlo para que los tests lo encuentren por accesibilidad.
+  t: jest.fn((key) => (key === 'common.selectLanguage' ? 'Seleccionar idioma' : key)),
   setLanguage: jest.fn(),
   getCurrentLanguage: jest.fn(() => 'es'),
   SUPPORTED_LANGUAGES: {

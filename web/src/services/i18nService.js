@@ -451,8 +451,13 @@ const translations = {
 // Obtener idioma del navegador o localStorage
 const getBrowserLanguage = () => {
   if (typeof window === 'undefined') return 'es';
-  
-  const stored = localStorage.getItem('i18n-language');
+
+  let stored = null;
+  try {
+    stored = localStorage.getItem('i18n-language');
+  } catch {
+    // localStorage puede lanzar (modo privado, cuota excedida) — ignorar y seguir
+  }
   if (stored && translations[stored]) {
     return stored;
   }
@@ -506,10 +511,14 @@ export const setLanguage = (langCode) => {
   }
   
   currentLanguage = langCode;
-  
+
   if (typeof window !== 'undefined') {
-    localStorage.setItem('i18n-language', langCode);
-    
+    try {
+      localStorage.setItem('i18n-language', langCode);
+    } catch {
+      // Ignorar: el idioma sigue cambiando en memoria aunque no persista
+    }
+
     // Disparar evento personalizado para notificar cambios
     window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: langCode } }));
   }

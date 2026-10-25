@@ -102,8 +102,12 @@ describe('Security Utilities', () => {
     });
 
     it('should create iframe with sandbox attributes', () => {
-      const iframe = createSafeIframe('https://example.com');
-      
+      // example.com no está en la whitelist de dominios (solo youtube/vimeo);
+      // este test verifica atributos de sandbox, no la política de dominios
+      // (ya cubierta por 'should throw error for non-allowed domain'), así que
+      // usamos un dominio permitido como en los tests hermanos de abajo.
+      const iframe = createSafeIframe('https://www.youtube.com/embed/test');
+
       expect(iframe).toBeInstanceOf(HTMLIFrameElement);
       expect(iframe).toHaveAttribute('sandbox');
       expect(iframe.getAttribute('sandbox')).toContain('allow-scripts');

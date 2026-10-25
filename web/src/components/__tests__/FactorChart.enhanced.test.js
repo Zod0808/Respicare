@@ -70,8 +70,8 @@ describe('FactorChart Enhanced Tests', () => {
       ];
       
       render(<FactorChart factors={specialFactors} />);
-      // Should render safely
-      expect(screen.getByText(/Factor/)).toBeInTheDocument();
+      // Should render safely (hay más de un factor cuyo nombre contiene "Factor")
+      expect(screen.getAllByText(/Factor/).length).toBeGreaterThan(0);
     });
   });
 
@@ -83,15 +83,17 @@ describe('FactorChart Enhanced Tests', () => {
     });
 
     it('should switch between all chart types', () => {
+      // El tipo "pie" repite el título dentro del SVG (pie-center-text),
+      // además del <h4> del header, por eso se usa getAllByText ahí.
       const { rerender } = render(<FactorChart factors={mockFactors} type="bar" />);
       expect(screen.getByText('Factores de Influencia')).toBeInTheDocument();
-      
+
       rerender(<FactorChart factors={mockFactors} type="pie" />);
-      expect(screen.getByText('Factores de Influencia')).toBeInTheDocument();
-      
+      expect(screen.getAllByText('Factores de Influencia').length).toBeGreaterThan(0);
+
       rerender(<FactorChart factors={mockFactors} type="radar" />);
       expect(screen.getByText('Factores de Influencia')).toBeInTheDocument();
-      
+
       rerender(<FactorChart factors={mockFactors} type="heatmap" />);
       expect(screen.getByText('Factores de Influencia')).toBeInTheDocument();
     });
@@ -193,15 +195,16 @@ describe('FactorChart Enhanced Tests', () => {
 
   describe('Legend Edge Cases', () => {
     it('should show legend with single factor', () => {
-      render(<FactorChart factors={[{ name: 'Single', value: 0.5 }]} showLegend={true} />);
-      // Legend should be present
-      const { container } = render(<FactorChart factors={[{ name: 'Single', value: 0.5 }]} showLegend={true} />);
-      expect(container.querySelector('.factor-chart__legend')).toBeInTheDocument();
+      // La leyenda solo existe en el chart de tipo "pie".
+      const { container } = render(
+        <FactorChart factors={[{ name: 'Single', value: 0.5 }]} type="pie" showLegend={true} />
+      );
+      expect(container.querySelector('.pie-legend')).toBeInTheDocument();
     });
 
     it('should hide legend when showLegend is false', () => {
-      const { container } = render(<FactorChart factors={mockFactors} showLegend={false} />);
-      expect(container.querySelector('.factor-chart__legend')).not.toBeInTheDocument();
+      const { container } = render(<FactorChart factors={mockFactors} type="pie" showLegend={false} />);
+      expect(container.querySelector('.pie-legend')).not.toBeInTheDocument();
     });
   });
 });

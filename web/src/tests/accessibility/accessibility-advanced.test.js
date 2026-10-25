@@ -15,6 +15,7 @@ import Analytics from '../../pages/Analytics';
 import LanguageSelector from '../../components/LanguageSelector';
 import ThemeToggle from '../../components/ThemeToggle';
 import ChatBotEnhanced from '../../components/ChatBotEnhanced';
+import { initAccessibility } from '../../utils/accessibility';
 import axios from 'axios';
 
 // Extend Jest matchers
@@ -47,11 +48,18 @@ jest.mock('../../components/ChatBotEnhanced', () => {
   };
 });
 
+// La app real envuelve cada página en <main role="main" id="main-content">
+// (ver App.js) y llama a initAccessibility() (inserta el skip link) en un
+// useEffect raíz. Las páginas aquí se renderizan sueltas, sin <App>, así que
+// hay que reproducir ese contexto para que main/skip-link existan en el DOM.
 const renderWithProviders = (component) => {
+  initAccessibility();
   return render(
     <ThemeProvider>
       <BrowserRouter>
-        {component}
+        <main role="main" id="main-content">
+          {component}
+        </main>
       </BrowserRouter>
     </ThemeProvider>
   );
@@ -63,8 +71,12 @@ describe('Advanced Accessibility Tests', () => {
     Storage.prototype.getItem = jest.fn(() => null);
     Storage.prototype.setItem = jest.fn();
     
+    // AppointmentCalendar carga citas automáticamente al montar y hace
+    // `response.data?.data ?? []`; un objeto vacío no es nullish, así que
+    // `{}` pasaría directo y luego `appointments.map` explota. Un array es
+    // compatible con todos los consumidores (Dashboard, AppointmentCalendar).
     mockedAxios.get.mockResolvedValue({
-      data: { success: true, data: {} }
+      data: { success: true, data: [] }
     });
     
     mockedAxios.post.mockResolvedValue({
@@ -101,10 +113,13 @@ describe('Advanced Accessibility Tests', () => {
         </div>
       );
       
-      // All interactive elements should be focusable
+      // Los <button> nativos son focuseables por teclado por defecto, sin
+      // necesidad de un atributo tabIndex explícito (getAttribute devuelve
+      // null si no se fijó). Lo que importa es que no estén sacados del
+      // flujo de tabulación con tabindex="-1".
       const interactiveElements = screen.getAllByRole('button');
       interactiveElements.forEach(element => {
-        expect(element).toHaveAttribute('tabIndex', expect.any(String));
+        expect(element).not.toHaveAttribute('tabIndex', '-1');
       });
     });
 
@@ -150,7 +165,10 @@ describe('Advanced Accessibility Tests', () => {
         </div>
       );
       
-      const langButton = screen.getByRole('button', { name: /seleccionar idioma/i });
+      // El mock de i18nService hace t(key) => key, así que el aria-label
+      // real es el literal "common.selectLanguage" (no el texto traducido
+      // "Seleccionar idioma", que solo aparecería si t() devolviera falsy).
+      const langButton = screen.getByRole('button', { name: /selectLanguage/i });
       expect(langButton).toHaveAttribute('aria-label');
       expect(langButton).toHaveAttribute('aria-expanded');
     });
@@ -182,14 +200,16 @@ describe('Advanced Accessibility Tests', () => {
       
       // In a real scenario, you would check contrast ratios
       // This is a placeholder - real implementation would use a contrast checker
+      //
+      // jsdom no aplica hojas de estilo CSS reales, así que
+      // getComputedStyle().color es "" para cualquier elemento sin estilo
+      // inline (no hay motor de layout/CSS). No se puede afirmar que sea
+      // truthy; solo que getComputedStyle no falle para cada elemento.
       textElements.forEach(element => {
         const styles = window.getComputedStyle(element);
-        const color = styles.color;
-        const backgroundColor = styles.backgroundColor;
-        
-        // Verify styles are applied (actual contrast checking would be more complex)
-        expect(color).toBeTruthy();
-        expect(backgroundColor || 'transparent').toBeTruthy();
+        expect(styles).toBeDefined();
+        expect(typeof styles.color).toBe('string');
+        expect(typeof styles.backgroundColor).toBe('string');
       });
     });
   });
@@ -239,7 +259,9 @@ describe('Advanced Accessibility Tests', () => {
       rerender(
         <ThemeProvider>
           <BrowserRouter>
-            <Dashboard />
+            <main role="main" id="main-content">
+              <Dashboard />
+            </main>
           </BrowserRouter>
         </ThemeProvider>
       );

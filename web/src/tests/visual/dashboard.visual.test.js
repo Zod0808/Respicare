@@ -254,6 +254,13 @@ describe('AnalyticsDashboard — Snapshot Visual Regression', () => {
   });
 
   it('matches DOM snapshot with analytics data', async () => {
+    // AnalyticsDashboard guarda `lastUpdated` como `new Date()` real al
+    // momento del fetch (no viene de los datos mockeados), y lo renderiza
+    // como texto ("Última actualización: ..."). Sin fijar la fecha del
+    // sistema, el snapshot cambia todos los días. Se fija un reloj falso
+    // para que sea determinista.
+    jest.useFakeTimers().setSystemTime(new Date('2026-01-15T12:16:00'));
+
     const axios = require('axios');
     axios.get.mockImplementation((url) => {
       if (url.includes('/analytics/dashboard')) {
@@ -274,6 +281,8 @@ describe('AnalyticsDashboard — Snapshot Visual Regression', () => {
     });
 
     expect(asFragment()).toMatchSnapshot();
+
+    jest.useRealTimers();
   });
 });
 

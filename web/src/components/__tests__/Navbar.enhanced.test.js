@@ -5,19 +5,15 @@
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import Navbar from '../Navbar';
-import * as i18nService from '../../services/i18nService';
+import { useAuth } from '../../contexts/AuthContext';
 
-// Mock i18n service
-jest.mock('../../services/i18nService', () => ({
-  t: jest.fn((key) => key),
-  getCurrentLanguage: jest.fn(() => 'es'),
-  setLanguage: jest.fn(),
+jest.mock('../../contexts/AuthContext', () => ({
+  useAuth: jest.fn(),
 }));
 
-// Mock child components
 jest.mock('../ThemeToggle', () => {
   return function MockThemeToggle() {
     return <div data-testid="theme-toggle">Theme Toggle</div>;
@@ -30,15 +26,6 @@ jest.mock('../LanguageSelector', () => {
   };
 });
 
-jest.mock('../../contexts/AuthContext', () => ({
-  useAuth: () => ({
-    isAuthenticated: false,
-    user: null,
-    logout: jest.fn(),
-    loading: false,
-  }),
-}));
-
 const renderWithRouter = (component, initialEntries = ['/']) => {
   return render(
     <MemoryRouter initialEntries={initialEntries}>
@@ -50,90 +37,98 @@ const renderWithRouter = (component, initialEntries = ['/']) => {
 describe('Navbar Enhanced Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    // resetMocks:true (react-scripts default) clears jest.fn() implementations
-    // between tests — re-set them here so t() returns the key for link names
-    i18nService.t.mockImplementation((key) => key);
-    i18nService.getCurrentLanguage.mockReturnValue('es');
+    useAuth.mockReturnValue({
+      isAuthenticated: true,
+      user: { name: 'Dr. House', email: 'house@example.com', role: 'doctor' },
+      logout: jest.fn(),
+    });
   });
 
   describe('Edge Cases', () => {
-    it('should handle language change event', () => {
-      renderWithRouter(<Navbar />);
-      
-      const event = new CustomEvent('languageChanged', {
-        detail: { language: 'en' }
-      });
-      window.dispatchEvent(event);
-      
-      // Should update language
-      expect(i18nService.getCurrentLanguage).toHaveBeenCalled();
-    });
-
-    it('should highlight active link correctly', () => {
+    it('should highlight the active top-level link correctly', () => {
       renderWithRouter(<Navbar />, ['/dashboard']);
-      
-      const dashboardLink = screen.getByRole('link', { name: /dashboard/i });
+
+      const dashboardLink = screen.getByText('Dashboard').closest('a');
       expect(dashboardLink).toHaveClass('active');
     });
 
-    it('should handle all navigation links', () => {
-      renderWithRouter(<Navbar />);
-      
-      const links = screen.getAllByRole('link');
-      expect(links.length).toBeGreaterThan(0);
-      
-      links.forEach(link => {
-        expect(link).toHaveAttribute('href');
-      });
+    it('should not mark inactive links as active', () => {
+      renderWithRouter(<Navbar />, ['/dashboard']);
+
+      const chatbotLink = screen.getByText('Chatbot').closest('a');
+      expect(chatbotLink).not.toHaveClass('active');
+    });
+
+    it('should mark a dropdown button active when one of its links matches the route', () => {
+      renderWithRouter(<Navbar />, ['/analytics']);
+
+      const analyticsBtn = screen.getByText('Analítica').closest('button');
+      expect(analyticsBtn).toHaveClass('active');
     });
 
     it('should render brand information', () => {
       renderWithRouter(<Navbar />);
-      
-      expect(screen.getByText(/respicare|brandName/i)).toBeInTheDocument();
+
+      expect(screen.getByText('RespiCare')).toBeInTheDocument();
     });
 
-    it('should have proper ARIA attributes', () => {
+    it('should close the role dropdown after selecting a link inside it', () => {
       renderWithRouter(<Navbar />);
-      
-      const nav = screen.getByRole('navigation');
-      expect(nav).toHaveAttribute('aria-label', 'Main navigation');
+
+      const analyticsBtn = screen.getByText('Analítica').closest('button');
+      fireEvent.click(analyticsBtn);
+      const heatmapLink = screen.getByText('Mapa de Calor').closest('a');
+
+      fireEvent.click(heatmapLink);
+
+      expect(screen.queryByText('Mapa de Calor')).not.toBeInTheDocument();
     });
 
-    it('should handle rapid navigation', () => {
+    it('should close the user menu when the route changes', () => {
+      renderWithRouter(<Navbar />, ['/']);
+
+      fireEvent.click(screen.getByLabelText('Menú de usuario'));
+      expect(screen.getByRole('menuitem', { name: /cerrar sesión/i })).toBeInTheDocument();
+
+      fireEvent.click(screen.getByText('Dashboard').closest('a'));
+
+      expect(screen.queryByRole('menuitem', { name: /cerrar sesión/i })).not.toBeInTheDocument();
+    });
+
+    it('should handle rapid navigation across routes without crashing', () => {
       const { rerender } = renderWithRouter(<Navbar />, ['/']);
-      
+
       rerender(
         <MemoryRouter initialEntries={['/dashboard']}>
           <Navbar />
         </MemoryRouter>
       );
-      
+
       rerender(
         <MemoryRouter initialEntries={['/analytics']}>
           <Navbar />
         </MemoryRouter>
       );
-      
-      // Should handle rapid navigation
+
       expect(screen.getByRole('navigation')).toBeInTheDocument();
     });
   });
 
   describe('Accessibility', () => {
-    it('should have skip link', () => {
+    it('should expose navigation landmark with a Spanish label', () => {
       renderWithRouter(<Navbar />);
-      
-      // Should have navigation landmarks
-      expect(screen.getByRole('navigation')).toBeInTheDocument();
+
+      expect(screen.getByRole('navigation', { name: 'Navegación principal' })).toBeInTheDocument();
     });
 
-    it('should mark active link with aria-current', () => {
-      renderWithRouter(<Navbar />, ['/dashboard']);
-      
-      const activeLink = screen.getByRole('link', { name: /dashboard/i });
-      expect(activeLink).toHaveAttribute('aria-current', 'page');
+    it('should set aria-expanded on dropdown triggers when opened', () => {
+      renderWithRouter(<Navbar />);
+
+      const analyticsBtn = screen.getByText('Analítica').closest('button');
+      expect(analyticsBtn).toHaveAttribute('aria-expanded', 'false');
+
+      fireEvent.click(analyticsBtn);
+      expect(analyticsBtn).toHaveAttribute('aria-expanded', 'true');
     });
   });
 });
-

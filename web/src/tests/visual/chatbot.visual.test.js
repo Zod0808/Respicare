@@ -30,6 +30,14 @@ import ChatBot from '../../components/ChatBot';
 // ─── DOM Snapshot — estado inicial del chatbot ───────────────────────────────
 
 describe('ChatBot — Snapshot Visual Regression', () => {
+  beforeEach(() => {
+    jest.useFakeTimers().setSystemTime(new Date('2026-01-15T12:16:00'));
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   it('matches DOM snapshot on initial render', () => {
     const { asFragment } = render(<ChatBot />);
     expect(asFragment()).toMatchSnapshot();
@@ -58,7 +66,7 @@ describe('ChatBot — Estructura Visual del Layout', () => {
     render(<ChatBot />);
     const input = screen.getByPlaceholderText(/mensaje|escribe|pregunta/i);
     expect(input).toBeInTheDocument();
-    expect(input.tagName.toLowerCase()).toBe('input');
+    expect(input.tagName.toLowerCase()).toBe('textarea');
   });
 
   it('should render send button', () => {
@@ -70,7 +78,7 @@ describe('ChatBot — Estructura Visual del Layout', () => {
   it('should display initial welcome bot message', () => {
     render(<ChatBot />);
     expect(screen.getByText(/Hola!/i)).toBeInTheDocument();
-    expect(screen.getByText(/asistente médico/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/asistente médico/i).length).toBeGreaterThan(0);
   });
 });
 

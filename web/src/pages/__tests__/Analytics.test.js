@@ -41,29 +41,30 @@ describe('Analytics page', () => {
 
   it('renders subtitle text', () => {
     render(<Analytics />);
-    expect(screen.getByText(/Seguimiento de salud/i)).toBeInTheDocument();
+    expect(screen.getByText(/Estadísticas epidemiológicas/i)).toBeInTheDocument();
   });
 
-  it('shows default monitoring tab content after load', async () => {
+  it('shows default dashboard tab content after load', async () => {
+    // La pestaña activa por defecto es 'dashboard', no 'monitoring'.
     render(<Analytics />);
-    await waitFor(() =>
-      expect(screen.getByTestId('patient-monitoring')).toBeInTheDocument()
-    );
-  });
-
-  it('switches to Dashboard tab on click', async () => {
-    render(<Analytics />);
-    await waitFor(() => screen.getByTestId('patient-monitoring'));
-    fireEvent.click(screen.getByText(/Dashboard/i));
     await waitFor(() =>
       expect(screen.getByTestId('analytics-dashboard')).toBeInTheDocument()
     );
   });
 
+  it('switches to Monitoreo tab on click', async () => {
+    render(<Analytics />);
+    await waitFor(() => screen.getByTestId('analytics-dashboard'));
+    fireEvent.click(screen.getByText(/Monitoreo Wearables/i));
+    await waitFor(() =>
+      expect(screen.getByTestId('patient-monitoring')).toBeInTheDocument()
+    );
+  });
+
   it('switches to Tendencias tab on click', async () => {
     render(<Analytics />);
-    await waitFor(() => screen.getByTestId('patient-monitoring'));
-    fireEvent.click(screen.getByText(/Tendencias/i));
+    await waitFor(() => screen.getByTestId('analytics-dashboard'));
+    fireEvent.click(screen.getByText(/Tendencias Temporales/i));
     await waitFor(() =>
       expect(screen.getByTestId('temporal-trends')).toBeInTheDocument()
     );
@@ -71,8 +72,8 @@ describe('Analytics page', () => {
 
   it('switches to Enfermedades tab on click', async () => {
     render(<Analytics />);
-    await waitFor(() => screen.getByTestId('patient-monitoring'));
-    fireEvent.click(screen.getByText(/Enfermedades/i));
+    await waitFor(() => screen.getByTestId('analytics-dashboard'));
+    fireEvent.click(screen.getByText(/🦠 Enfermedades/i));
     await waitFor(() =>
       expect(screen.getByTestId('disease-reports')).toBeInTheDocument()
     );
