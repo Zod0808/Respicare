@@ -66,13 +66,13 @@ Criterios del documento, aplicados al proyecto real:
 | Requisitos | Revisar criterios de aceptación | Revisar si los Sprints (`Documentation/informes/Plan_Iteracion_Sprint*.md`) documentan criterios de aceptación por historia — [ ] verificar cobertura |
 | Diseño | Evaluar testabilidad y riesgos | [ ] No hay documento de riesgos explícito ligado a testabilidad |
 | Construcción | Plan de pruebas y automatización | ✅ `CATALOGO_PRUEBAS.md` cubre esto ampliamente |
-| Pruebas | Ejecutar pruebas y reportar defectos | ✅ CI ejecuta tests; `PENDIENTES_CORRECCION_TESTS.md` ya actúa como reporte de defectos |
+| Pruebas | Ejecutar pruebas y reportar defectos | ✅ CI ejecuta tests; `PENDIENTES_CORRECCION_TESTS.md` ya actúa como reporte de defectos — verificado 2026-10-25: backend/web/mobile/ai-services en 0 fails reales |
 | Despliegue | Pruebas de humo y aprobación de liberación | ✅ `scripts/smoke-test-vm.sh` + aprobación de Cesar Fabian Chavez Linares (sección 14 de `PLAN_DE_DESPLIEGUE.md`) |
 
 ### Métricas y criterios de salida
 
 - [x] **Cobertura**: ya trackeada y cumplida en los 4 módulos (≥80% en backend/web/mobile/ai-services, ver `CATALOGO_PRUEBAS.md`).
-- [ ] **Defectos**: hay cantidad/severidad registrada (`CATALOGO_PRUEBAS.md`: backend 26 fail, web 271 fail, ai-services 344 fail/77 err) — **sigue pendiente**: no se redujeron en esta sesión. Es un esfuerzo de remediación propio (cientos de tests), separado del plan de despliegue; se sigue trackeando en `PENDIENTES_CORRECCION_TESTS.md`. No bloquea el plan de despliegue en sí, pero sí debería bloquear el gate de salida de QA del punto siguiente.
+- [x] **Defectos**: **resuelto, verificado 2026-10-25** — los conteos de `CATALOGO_PRUEBAS.md` (backend 26 fail, web 271 fail, ai-services 344 fail/77 err) están obsoletos; `PENDIENTES_CORRECCION_TESTS.md` confirma 0 fails reales en los 4 módulos (backend 2501/2509, web 1257/1257, mobile 7/7, ai-services 2045/2045). `CATALOGO_PRUEBAS.md` sigue sin resincronizarse con estas cifras (pendiente, ver ítem 5 abajo).
 - [ ] **Criterio de salida formal**: "sin defectos críticos abiertos y pruebas aprobadas" — sigue sin declararse como gate explícito en CI (ningún workflow falla hoy por los fails de arriba). Pendiente: decidir un umbral (ej. 0 fails críticos / severidad alta) y hacer que `backend-tests.yml`/`web-tests.yml`/`ai-services-tests.yml` lo exijan.
 
 ---
@@ -83,7 +83,7 @@ Criterios del documento, aplicados al proyecto real:
 2. ~~Crear `Documentation/PLAN_DE_DESPLIEGUE.md` formal~~ — **resuelto**, incluye objetivo/alcance, responsables, criterios de aceptación/reversión (con SLA de rendimiento) y estrategia de despliegue nombrada explícitamente (recreate, no blue-green).
 3. ~~Agregar smoke tests post-despliegue y proceso de backup pre-deploy~~ — **resuelto**: `scripts/smoke-test-vm.sh` y `scripts/backup-vm.sh`.
 4. **Formalizar un gate de salida de QA** (sin críticos abiertos) antes de producción — sigue pendiente, ningún workflow de CI falla hoy por los fails existentes.
-5. **Reducir o justificar los fails pendientes** en backend (26), web (271) y ai-services (344 fail/77 err) — sigue pendiente. Es un esfuerzo de remediación de código separado de este plan de despliegue; tiene su propio tracking en `PENDIENTES_CORRECCION_TESTS.md` (que ya está desactualizado respecto a `CATALOGO_PRUEBAS.md` y debería re-sincronizarse).
+5. ~~Reducir o justificar los fails pendientes en backend (26), web (271) y ai-services (344 fail/77 err)~~ — **resuelto**: 0 fails reales en los 4 módulos, verificado 2026-10-25 (ver `PENDIENTES_CORRECCION_TESTS.md`). Pendiente real remanente: `CATALOGO_PRUEBAS.md` todavía cita las cifras viejas (26/271/344+77) y necesita una pasada de resincronización propia, incluyendo recalcular los % de cobertura ahí citados.
 6. ~~Verificar que el ambiente de preproducción use copia anonimizada~~ — **resuelto, con hallazgo**: no hay ambiente de preproducción real desplegado (`deploy-staging.yml` nunca se ejecutó; se archivó). La pregunta queda sin objeto hasta que se decida construir ese ambiente de verdad.
 
 *(Documento informativo para planificación — no implica que ya se hayan hecho los cambios anteriores salvo donde se indica "resuelto".)*

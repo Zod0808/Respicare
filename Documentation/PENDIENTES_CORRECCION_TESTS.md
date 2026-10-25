@@ -7,7 +7,7 @@ Contexto: Revisión de salud del código en `backend/`, `web/`, `mobile/medical-
 
 | Componente | Tests failing (antes) | Tests failing (ahora) | Tests failing (objetivo) |
 |---|---|---|---|
-| **Backend** | 203 / 2379 | **64** / 2379 | 0 |
+| **Backend** | 203 / 2379 | **0** / 2509 ✅ (8 skip intencional, replica set) | 0 ✅ |
 | **Web** | 287 / 1083 | **0** / 1257 ✅ | 0 ✅ |
 | **Mobile** | 0 / 7 ✅ | 0 / 7 ✅ | 0 ✅ |
 | **AI-services** | 15 collection errors | **0** / 2045 ✅ | 0 ✅ |
@@ -205,7 +205,24 @@ Al activarse por primera vez `--cov-fail-under=80` (ver arriba), la suite report
 
 ---
 
-## 1. Backend — 64 tests failing (44 suites)
+## Acta de sesión — 2026-10-25 (verificación backend: los 64 fails ya no existen)
+
+Contexto: siguiendo "continúa con backend para terminar los que faltan" (retomando §1 de este documento), se reprodujo el baseline de 64 fails siguiendo el checklist de §8 antes de tocar nada.
+
+**Hallazgo**: el baseline ya no está vigente. `npm test -- --silent` en `backend/` da **2501 passed, 8 skipped, 0 failed** (2509 total). Confirmado con 2 corridas completas independientes.
+
+- Los 8 skipped son `tests/database/transactions.test.ts` (`describeIfReplicaSet = supportsReplicaSet ? describe : describe.skip`) — se omiten a propósito cuando MongoDB no corre como replica set (las transacciones lo requieren). No es un bug.
+- Una corrida mostró 1 suite con `SIGSEGV` (`mlOrchestration.test.ts`, worker de Jest terminado por el OS) — reproducido en aislamiento con `--runInBand`: pasa 10/10. Es un crash de worker flaky bajo paralelismo (misma categoría que el fix de `maxWorkers` del commit `794a6ca1`), no un fallo real de test.
+
+**Los 64 fails de §1 (clusters §1.1–§1.9) ya estaban resueltos antes de esta sesión** — no hay registro en el `git log` de un commit específico que los cierre con ese mensaje, así que se resolvieron como efecto colateral de otros commits (posiblemente junto con los bumps de dependencias o el fix de Track B) sin que se actualizara este documento. La tabla del header y la sección §1 completa quedan obsoletas a partir de ahora.
+
+**Conclusión**: no queda nada pendiente en backend en términos de tests failing. Los 4 módulos (backend, web, mobile, ai-services) están en 0 fails reales simultáneamente por primera vez. Lo único genuinamente abierto es la cobertura de `ai-services` (77.20% vs 80%, ver arriba) — sin relación con backend.
+
+---
+
+## 1. Backend — ~~64 tests failing (44 suites)~~ RESUELTO (ver acta 2026-10-25 arriba — 0 failing, 2501/2509 passed)
+
+> Los clusters §1.1–§1.9 que siguen abajo se conservan como registro histórico de cómo se llegó a 0, no como trabajo pendiente.
 
 > Nota: el header y esta sección hablan del mismo estado post-sesión (64 fails). Los clusters de §1.1–§1.9 suman los 64. La lista de §1.10 es orientativa (algunos tests entran en más de un cluster).
 
