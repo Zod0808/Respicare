@@ -11,7 +11,6 @@ pandas==2.1.3
 
 # Medical text processing - MINIMAL
 spacy==3.6.1
-nltk==3.10.3
 # scispacy==0.5.3  # Opcional en desarrollo
 
 # Database and caching
