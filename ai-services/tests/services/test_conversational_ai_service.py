@@ -166,36 +166,43 @@ class TestConversationalAIService:
 
     # ─── get_conversation_context ──────────────────────────────────────────
 
-    def test_get_conversation_context_empty_history(self, service):
+    @pytest.mark.asyncio
+    async def test_get_conversation_context_empty_history(self, service):
         """Should handle empty conversation history"""
-        result = service.get_conversation_context([])
+        result = await service.get_conversation_context([])
         assert isinstance(result, dict)
 
-    def test_get_conversation_context_with_history(self, service):
+    @pytest.mark.asyncio
+    async def test_get_conversation_context_with_history(self, service):
         """Should extract context from conversation history"""
+        # get_conversation_context lee la clave 'text' (ver
+        # services/conversational_ai_service.py:466), no 'content'.
         history = [
-            {"role": "user", "content": "Tengo tos y fiebre desde hace 2 días"},
-            {"role": "assistant", "content": "¿Ha tenido contacto con personas enfermas?"},
-            {"role": "user", "content": "Sí, mi hijo tuvo gripe la semana pasada"},
+            {"role": "user", "text": "Tengo tos y fiebre desde hace 2 días"},
+            {"role": "assistant", "text": "¿Ha tenido contacto con personas enfermas?"},
+            {"role": "user", "text": "Sí, mi hijo tuvo gripe la semana pasada"},
         ]
-        result = service.get_conversation_context(history)
-        assert isinstance(result, dict)
+        result = await service.get_conversation_context(history)
+        assert result['total_messages'] == 3
+        assert 'tos' in result['combined_keywords']['keywords']
+        assert result['has_symptoms_discussed'] is True
 
-    def test_get_conversation_context_extracts_symptoms(self, service):
+    @pytest.mark.asyncio
+    async def test_get_conversation_context_extracts_symptoms(self, service):
         """Should extract symptoms mentioned in history"""
         history = [
-            {"role": "user", "content": "Tengo tos severa y dificultad para respirar"},
+            {"role": "user", "text": "Tengo tos severa y dificultad para respirar"},
         ]
-        result = service.get_conversation_context(history)
-        assert isinstance(result, dict)
-        # Should identify some context
-        assert result is not None
+        result = await service.get_conversation_context(history)
+        extracted_symptoms = {s['name'] for s in result['combined_keywords']['symptoms']}
+        assert 'tos' in extracted_symptoms
 
-    def test_get_conversation_context_single_message(self, service):
+    @pytest.mark.asyncio
+    async def test_get_conversation_context_single_message(self, service):
         """Should work with single message history"""
-        history = [{"role": "user", "content": "Me duele el pecho"}]
-        result = service.get_conversation_context(history)
-        assert isinstance(result, dict)
+        history = [{"role": "user", "text": "Me duele el pecho"}]
+        result = await service.get_conversation_context(history)
+        assert result['total_messages'] == 1
 
     # ─── _get_urgency_recommendation ─────────────────────────────────────────
 

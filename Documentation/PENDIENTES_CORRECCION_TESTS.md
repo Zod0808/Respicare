@@ -10,7 +10,7 @@ Contexto: Revisión de salud del código en `backend/`, `web/`, `mobile/medical-
 | **Backend** | 203 / 2379 | **64** / 2379 | 0 |
 | **Web** | 287 / 1083 | **0** / 1257 ✅ | 0 ✅ |
 | **Mobile** | 0 / 7 ✅ | 0 / 7 ✅ | 0 ✅ |
-| **AI-services** | 15 collection errors | 0 collection errors ✅ / 55 runtime fails | 0 |
+| **AI-services** | 15 collection errors | **0** / 2045 ✅ | 0 ✅ |
 
 TSC y ESLint: **0 errores en backend + mobile** (baseline: 38 tsc + 16 lint en backend). Web es JS puro (sin tsc).
 
@@ -123,7 +123,7 @@ Este único hallazgo explica fallos en `ThemeProvider.test.js`, `theme.test.js` 
 
 - **`src/services/__tests__/i18nService.test.js`**: cerrado. El test `'should load language from localStorage on initialization'` se corrigió (usa `setLanguage('pt')` en vez de mockear `getItem`, por el mismo motivo que los otros 2 tests del mismo archivo) y la suite completa re-corrió 20/20 ✅.
 - **Resto de la suite web**: cerrado por completo. `CI=true npx react-scripts test --watchAll=false` → **84/84 suites, 1257/1257 tests, 26/26 snapshots, 0 fallos**.
-- **AI-services**: no se tocó en esta sesión (sigue en 55 runtime fails documentados en §3).
+- **AI-services**: cerrado. Ver acta de sesión más abajo — de los "55 runtime fails" documentados en §3, ya estaban resueltos todos salvo 1; se corrigió ese último y la suite completa pasa 2045/2045.
 
 ### Estado de commits
 
@@ -146,7 +146,62 @@ Además sigue pendiente el push del commit de backend `794a6ca` (fix de `maxWork
 
 ### Cómo reanudar esta rama de trabajo
 
-**Web: cerrado.** Las 84 suites (1257 tests) pasan al 100%. Lo único pendiente de esta sesión es decidir si se commitea/pushea (nada se ha commiteado aún, por convención) y continuar con `ai-services` (55 runtime fails, §3) cuando se retome ese frente.
+**Web y AI-services: cerrados en cuanto a tests (2045/2045, 0 fallos, sin `RuntimeWarning` de interés).** Las 84 suites de web (1257 tests) y las 2045 de `ai-services` pasan al 100%. Pendiente real: decidir qué hacer con el gate de cobertura (`--cov-fail-under=80`, recién activado — ver abajo, "Cobertura real: 77.20% vs 80% requerido") y decidir si se commitea/pushea todo lo de esta rama.
+
+---
+
+## Acta de sesión — 2026-10-25 (continuación: AI-services)
+
+Contexto: siguiendo "continúa con ai-services", se montó un venv Python 3.11 (torch no está en `requirements.txt`, por lo que `pandas==2.1.4` no compila en 3.13; ver reconstrucción del entorno en los commits de esta rama) y se corrió la suite completa.
+
+**Hallazgo principal**: el estado real ya no coincidía con los "55 runtime fails" documentados en §3 — aparentemente ya habían sido corregidos en una sesión anterior no reflejada en este documento. `pytest --collect-only` → 2045 tests, 0 errores de colección (solo warnings de markers no registrados, §3.3, que siguen pendientes pero no bloquean). `pytest -q` → **1 failed, 2044 passed**.
+
+### El único fallo real: `tests/strategies/test_local_model_strategy.py::test_process_symptom_predictions`
+
+**Causa raíz**: `torch` no está instalado en este entorno (no está en `requirements.txt`, solo en `requirements-full.txt`), así que `tests/conftest.py` inyecta un stub `MagicMock` en `sys.modules['torch']` a propósito (diseño existente, no tocar). Bajo ese stub, `torch.tensor(...)` devuelve un `MagicMock`, no un tensor real.
+
+`strategies/local_model_strategy.py::_process_symptom_predictions` y sus helpers (`_identify_warning_signs_from_predictions`, `_determine_urgency_from_predictions`) hacen comparaciones numéricas reales (`predictions[i] > 0.7`). Cuando se llega a ahí con un `MagicMock`, Python lanza `TypeError: '>' not supported between instances of 'MagicMock' and 'float'`.
+
+Ese código solo se ejecuta en producción a través de `analyze_symptoms()`, que envuelve toda la lógica en un `try/except Exception` y cae a `_fallback_symptom_analysis` ante cualquier error — por eso ningún otro test (varios usan el mismo `torch.tensor(...)` no funcional para construir `mock_output.logits`) lo detecta: la excepción queda silenciosamente enmascarada y el resultado de fallback igual tiene las claves que esos tests verifican (`urgency_level`, `severity_score`, etc.). `test_process_symptom_predictions` es el único que llama `_process_symptom_predictions` directamente, sin pasar por ese `try/except`, así que expone el `TypeError` real.
+
+**Fix** (test, no producción — el bug real está en que el entorno de test no tiene torch, cosa ya aceptada por diseño): en vez de `torch.tensor(...)`, se construye un `MagicMock` cuyo `.cpu().numpy()` devuelve un `np.array(...)` real, igual que necesita `_process_symptom_predictions` tras su propio `predictions.cpu().numpy()[0]`.
+
+```python
+predictions = MagicMock()
+predictions.cpu.return_value.numpy.return_value = np.array(
+    [[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]]
+)
+```
+
+Resultado: `tests/strategies/test_local_model_strategy.py` 22/22 ✅. Suite completa `ai-services`: **2045/2045 ✅** (`pytest -q` → `2045 passed, 75 warnings in 196.27s`).
+
+### Continuación — "sigue con lo que quede pendiente" (mismo día)
+
+Siguiendo con lo que había quedado marcado como "no bloqueante" arriba (§3.3 y los `RuntimeWarning` de §3.1), se encontraron y corrigieron varios problemas reales adicionales:
+
+**1. `pytest.ini` estaba completamente inerte.** Tenía `[tool:pytest]` como encabezado — esa sintaxis solo es válida dentro de `setup.cfg`; en un `pytest.ini` standalone pytest la ignora por completo y no aplica ninguna directiva (`testpaths`, `markers`, `--strict-markers`, `--asyncio-mode=auto`, `--cov-fail-under=80`, etc.), sin ningún error visible. Confirmado con `pytest --collect-only`: antes mostraba `asyncio: mode=Mode.STRICT` (contradice el `--asyncio-mode=auto` del ini); tras cambiar a `[pytest]`, muestra `Mode.AUTO`. **Fix**: `[tool:pytest]` → `[pytest]`.
+
+Efectos secundarios de reactivar el ini (todos eran comportamiento *correcto* que simplemente nunca se había aplicado):
+
+- **§3.3 resuelto solo**: `performance` y `security` ya estaban declarados en `markers =` del ini; solo faltaba que el ini se leyera. Confirmado: `pytest --collect-only -q` ya no emite `PytestUnknownMarkWarning`.
+- **`testpaths = tests` ahora se respeta**, lo cual dejó fuera de la colección a `ml_tests/test_fairness_and_drift.py` (11 tests, vivía fuera de `tests/`, solo se colectaba por el comportamiento permisivo de pytest sin ini). **Fix**: `git mv ml_tests/test_fairness_and_drift.py tests/ml_models/test_fairness_and_drift.py` (import limpios, sin hacks de path relativo) y se borró el directorio `ml_tests/` ya vacío.
+- **`--cov-fail-under=80` ahora se aplica de verdad** — ver sección de cobertura más abajo.
+
+**2. Los `RuntimeWarning` de §3.1 — ya NO están enmascarados por el `try/except` de `analyze_symptoms`; son bugs reales independientes, no relacionados entre sí:**
+
+- **`tests/ml_models/test_lazy_loader.py::test_download_model_error`** (bug de test, no de producción): el mock encadenaba `mock_session.return_value.__aenter__.return_value.get.return_value...`. Como `__aenter__` es un `AsyncMock`, en `unittest.mock` **todo hijo de un `AsyncMock` (incluyendo atributos no-dunder como `.get`) hereda el tipo `AsyncMock`** — confirmado empíricamente. Entonces `session.get(url)` (que en `aiohttp` real es síncrono y devuelve un context-manager) devolvía una corrutina nunca esperada, y el `async with session.get(...) as response` fallaba con `TypeError: 'coroutine' object does not support the asynchronous context manager protocol` — una excepción que `pytest.raises(Exception)` (demasiado genérico) dejaba pasar como test "exitoso" sin validar el caso real (404). **Fix**: reconstruir el mock con `session.get` como `MagicMock` síncrono que devuelve un context-manager cuyo `__aenter__`/`__aexit__` sí son `AsyncMock`. También se corrigió `test_download_model_with_progress`, que tenía el mismo problema de mock y además no llamaba realmente a `download_model` (el `assert len(progress_values) >= 0` era una tautología). Ambos tests ahora ejercitan el flujo real y verifican resultados concretos.
+- **`services/conversational_ai_service.py:471` — bug real de producción**: `get_conversation_context()` (método síncrono) llamaba `self._extract_symptoms_and_context(combined_text)` **sin `await`**, aunque `_extract_symptoms_and_context` es `async def`. El resultado (`combined_keywords`) quedaba siendo una corrutina nunca esperada en vez del diccionario de síntomas extraídos — nadie lo notaba porque los 4 tests que llaman a este método solo hacían `assert isinstance(result, dict)` (el dict exterior sí es válido; el valor envenenado estaba anidado adentro) y además usaban `"content"` como clave de los mensajes de historial en vez de `"text"` (la clave real que lee el método), por lo que `combined_text` siempre era `""`. **Fix**: se volvió `get_conversation_context` a `async def` y se agregó el `await` que faltaba; se actualizaron los 4 tests a `async`/`await`, se corrigió la clave `"text"` y se añadieron aserciones reales (verifican que se extraigan los síntomas esperados) en vez de la tautología anterior.
+- **`services/ai_service_manager.py:163` (`analysis_context.set_strategy(strategy)`)** (bug de test, no de producción): `set_strategy` es un método síncrono real (`strategies/analysis_strategy.py:43`), pero el fixture compartido `mock_services` en `tests/services/test_ai_service_manager.py` creaba `'analysis_context': AsyncMock()` a secas — por la misma herencia de tipo que en el caso anterior, `set_strategy` quedaba como `AsyncMock`, y la llamada síncrona de producción dejaba una corrutina sin esperar. Solo algunos tests individuales pisaban `set_strategy` con un `MagicMock()` explícito; el que no lo hacía (`test_initialize_auto_initializes_on_use`) disparaba el warning. **Fix**: se corrigió el fixture en la raíz (`analysis_context` ahora es un `MagicMock()` con `set_strategy` síncrono por defecto y `analyze_symptoms`/`process_medical_text` como `AsyncMock` explícitos), en vez de parchear cada test por separado.
+
+Verificado con `pytest -W error::RuntimeWarning` en cada archivo afectado: los tres `RuntimeWarning` desaparecen y ningún test se rompe. (Nota: al correr la suite completa con ese flag también "falla" `test_auto_tune_with_grid_search` — es un falso positivo del flag de diagnóstico, no un bug: `sklearn.exceptions.FitFailedWarning` hereda de `RuntimeWarning`, y ese test tiene a propósito una combinación `solver=lbfgs`+`penalty=l1` inválida en su grid de búsqueda que `GridSearchCV` descarta y reporta como warning — comportamiento esperado, el test pasa normalmente sin el flag.)
+
+**Resultado final**: `pytest -q` (sin flags de diagnóstico) → **2045 passed, 14 warnings in 209s** (0 fallos, sin ningún `RuntimeWarning` de interés; los warnings restantes son de `pkg_resources`/pydantic, ajenos a este código).
+
+### Cobertura real: 77.20% vs 80% requerido (pendiente de decisión)
+
+Al activarse por primera vez `--cov-fail-under=80` (ver arriba), la suite reporta `FAIL Required test coverage of 80% not reached. Total coverage: 77.20%`. Esto es un hallazgo nuevo y genuino (el propio `pytest.ini` cita esto como RNF-012), no algo introducido en esta sesión — simplemente nunca se había aplicado antes por el bug del encabezado. Módulos con cobertura más baja: `symptom_analyzer/analyzer.py` (13.86%), `strategies/analysis_strategy.py` (31.25%), `shap_explainer.py` (58.09%), `services/notification_service.py` (66.67%), `services/medical_history_service.py` (74.45%), varios `repositories/*`.
+
+**No se tocó en esta sesión** — cerrar un gap de ~3 puntos de forma correcta implica escribir cobertura real (no cosmética) para varios módulos, que es trabajo de alcance considerable y requiere decisión explícita: ¿se escribe esa cobertura, se documenta como deuda conocida, o se ajusta el umbral? Pendiente de instrucción del usuario.
 
 ---
 

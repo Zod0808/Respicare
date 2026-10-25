@@ -214,8 +214,15 @@ class TestLocalModelStrategy:
     
     def test_process_symptom_predictions(self, local_model_strategy):
         """Test processing symptom predictions"""
-        # Create mock predictions tensor
-        predictions = torch.tensor([[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]])
+        # Este método hace comparaciones numéricas reales (predictions[i] > 0.7)
+        # sin pasar por el try/except de analyze_symptoms, así que no sirve el
+        # torch.tensor() global (stub MagicMock cuando torch no está instalado,
+        # ver tests/conftest.py); necesitamos que .cpu().numpy() devuelva un
+        # array real.
+        predictions = MagicMock()
+        predictions.cpu.return_value.numpy.return_value = np.array(
+            [[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]]
+        )
         symptoms = [{"symptom": "tos"}]
         
         result = local_model_strategy._process_symptom_predictions(predictions, symptoms)

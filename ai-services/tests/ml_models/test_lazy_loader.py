@@ -45,32 +45,64 @@ class TestModelDownloader:
     @pytest.mark.asyncio
     async def test_download_model_with_progress(self, downloader):
         """Test download with progress callback"""
+        # response.content.iter_chunked() debe devolver un async-iterator
+        # síncronamente (como aiohttp real), no una corrutina; y session.get()
+        # debe devolver el context-manager síncronamente, no una corrutina.
+        # Si se encadenan AsyncMock() a través de .return_value (como antes),
+        # cada nivel hereda el tipo AsyncMock de su padre y session.get(...)
+        # termina devolviendo una corrutina nunca-esperada en vez del CM.
         progress_values = []
-        
+
         def progress_callback(progress):
             progress_values.append(progress)
-        
+
+        async def fake_iter_chunked(chunk_size):
+            yield b'chunk1'
+            yield b'chunk2'
+
+        mock_response = AsyncMock()
+        mock_response.status = 200
+        mock_response.headers = {'Content-Length': '12'}
+        mock_response.content.iter_chunked = fake_iter_chunked
+
+        mock_get_cm = MagicMock()
+        mock_get_cm.__aenter__ = AsyncMock(return_value=mock_response)
+        mock_get_cm.__aexit__ = AsyncMock(return_value=False)
+
+        mock_session_instance = MagicMock()
+        mock_session_instance.get = MagicMock(return_value=mock_get_cm)
+
         with patch('aiohttp.ClientSession') as mock_session:
-            mock_response = AsyncMock()
-            mock_response.status = 200
-            mock_response.headers = {'Content-Length': '1000'}
-            mock_response.content.iter_chunked = AsyncMock(return_value=[b'chunk1', b'chunk2'])
-            
-            mock_session.return_value.__aenter__.return_value.get.return_value.__aenter__.return_value = mock_response
-            
-            # Should handle download
-            assert len(progress_values) >= 0
-    
+            mock_session.return_value.__aenter__ = AsyncMock(return_value=mock_session_instance)
+            mock_session.return_value.__aexit__ = AsyncMock(return_value=False)
+
+            result = await downloader.download_model(
+                "http://example.com/model", "test_model", progress_callback
+            )
+
+        assert result.exists()
+        assert progress_values == [0.5, 1.0]
+
     @pytest.mark.asyncio
     async def test_download_model_error(self, downloader):
         """Test download error handling"""
+        # Mismo motivo que en test_download_model_with_progress: session.get
+        # debe ser un MagicMock síncrono, no un AsyncMock heredado.
+        mock_response = AsyncMock()
+        mock_response.status = 404
+
+        mock_get_cm = MagicMock()
+        mock_get_cm.__aenter__ = AsyncMock(return_value=mock_response)
+        mock_get_cm.__aexit__ = AsyncMock(return_value=False)
+
+        mock_session_instance = MagicMock()
+        mock_session_instance.get = MagicMock(return_value=mock_get_cm)
+
         with patch('aiohttp.ClientSession') as mock_session:
-            mock_response = AsyncMock()
-            mock_response.status = 404
-            
-            mock_session.return_value.__aenter__.return_value.get.return_value.__aenter__.return_value = mock_response
-            
-            with pytest.raises(Exception):
+            mock_session.return_value.__aenter__ = AsyncMock(return_value=mock_session_instance)
+            mock_session.return_value.__aexit__ = AsyncMock(return_value=False)
+
+            with pytest.raises(Exception, match="Download failed: 404"):
                 await downloader.download_model("http://example.com/model", "test_model")
 
 

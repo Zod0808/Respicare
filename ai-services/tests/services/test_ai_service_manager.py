@@ -22,9 +22,18 @@ class TestAIServiceManager:
     @pytest.fixture
     def mock_services(self):
         """Create mock services dictionary"""
+        # analysis_context.set_strategy es sincrono en producción
+        # (strategies/analysis_strategy.py:43). Si se usa AsyncMock() a secas,
+        # set_strategy hereda el tipo AsyncMock del padre y la llamada
+        # síncrona en ai_service_manager.py:163 deja una corrutina sin
+        # esperar (RuntimeWarning: coroutine ... was never awaited).
+        analysis_context = MagicMock()
+        analysis_context.set_strategy = MagicMock()
+        analysis_context.analyze_symptoms = AsyncMock()
+        analysis_context.process_medical_text = AsyncMock()
         return {
             'model_manager': AsyncMock(),
-            'analysis_context': AsyncMock(),
+            'analysis_context': analysis_context,
             'database_service': AsyncMock(),
             'cache_service': AsyncMock()
         }

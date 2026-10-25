@@ -458,17 +458,17 @@ class ConversationalAIService:
         
         return recommendations.get(urgency_level, recommendations['low'])
     
-    def get_conversation_context(self, conversation_history: List[Dict[str, Any]]) -> Dict[str, Any]:
+    async def get_conversation_context(self, conversation_history: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Extract context from conversation history"""
         if not conversation_history:
             return {}
-        
+
         all_messages = [msg.get('text', '') for msg in conversation_history]
         combined_text = ' '.join(all_messages).lower()
-        
+
         return {
             'total_messages': len(conversation_history),
-            'combined_keywords': self._extract_symptoms_and_context(combined_text),
+            'combined_keywords': await self._extract_symptoms_and_context(combined_text),
             'has_symptoms_discussed': any(
                 any(keyword in msg.get('text', '').lower() 
                     for keywords in self.symptom_keywords.values() 
