@@ -1,0 +1,86 @@
+@startuml Arquitectura de Solucion - RespiCare (Produccion)
+
+!theme plain
+skinparam linetype ortho
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam componentStyle rectangle
+skinparam node {
+  BackgroundColor #F5F7FA
+  BorderColor #34495E
+}
+skinparam database {
+  BackgroundColor #E8F6EF
+  BorderColor #1E8449
+}
+skinparam component {
+  BackgroundColor #EAF2FB
+  BorderColor #2E6DA4
+}
+skinparam cloud {
+  BackgroundColor #FEF9E7
+  BorderColor #B7950B
+}
+
+title Arquitectura de Solucion - RespiCare (Ambiente de Produccion)
+
+cloud "Internet" as internet
+
+node "Vercel" as vercel {
+  component "Frontend Web\nReact 18 (SPA)" as web
+}
+
+cloud "Cloudflare Tunnel\n(*.trycloudflare.com)" as tunnel
+
+node "VM de Produccion (Docker Compose)" as vm {
+  component "Nginx (Alpine)\nReverse Proxy" as nginx
+
+  package "Stack de Aplicacion" {
+    component "Backend API\nNode.js / Express\n:3001" as backend
+    component "AI Services\nPython / FastAPI\n:8000" as ai
+  }
+
+  package "Datos" {
+    database "MongoDB 6.0\n:27017" as mongo
+    database "Redis 7\n:6379" as redis
+  }
+
+  package "Administracion (interna)" {
+    component "Mongo Express" as mongoExpress
+    component "Redis Commander" as redisCommander
+  }
+}
+
+cloud "Servicios Externos" as externos {
+  component "OpenAI API\n(chatbot, Whisper)" as openai
+  component "API Institucional\nMINSA / DIRESA / SINADEF" as minsa
+}
+
+' --- Flujo principal de usuario ---
+internet --> vercel : HTTPS
+vercel --> web
+web --> tunnel : HTTPS / WSS
+
+internet --> tunnel : HTTPS (acceso directo\na API / admin UIs)
+
+tunnel --> nginx : puerto 80 (host)
+
+nginx --> backend : /api/, /ws/, /socket.io/
+nginx --> ai : /ai/
+nginx --> mongoExpress : /mongo-express/
+nginx --> redisCommander : /redis-commander/
+
+backend --> mongo
+backend --> redis
+ai --> mongo
+ai --> redis
+
+mongoExpress --> mongo
+redisCommander --> redis
+
+backend --> ai : AI_SERVICE_URL (interno)
+
+ai --> openai : chatbot multimodal\n/ transcripcion
+backend --> minsa : interoperabilidad\n(X-API-Key)
+
+@enduml
