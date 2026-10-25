@@ -140,7 +140,9 @@ class TestModelFactory:
         )
         
         mock_tokenizer_class.from_pretrained.assert_called_once_with("custom-model")
-        mock_model_class.from_pretrained.assert_called_once_with("custom-model", num_labels=20)
+        mock_model_class.from_pretrained.assert_called_once_with(
+            "custom-model", num_labels=20, ignore_mismatched_sizes=True
+        )
     
     @patch('spacy.load')
     @patch('factories.model_factory.settings')

@@ -119,7 +119,7 @@ class ModelManager:
         def sync_load() -> Tuple[Any, Any]:
             tokenizer = AutoTokenizer.from_pretrained(model_name)
             model = AutoModelForSequenceClassification.from_pretrained(
-                model_name, num_labels=10
+                model_name, num_labels=10, ignore_mismatched_sizes=True
             )
             return tokenizer, model
 

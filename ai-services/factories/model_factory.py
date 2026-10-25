@@ -112,7 +112,8 @@ class ModelFactory:
             tokenizer = AutoTokenizer.from_pretrained(model_name)
             model = AutoModelForSequenceClassification.from_pretrained(
                 model_name,
-                num_labels=num_labels
+                num_labels=num_labels,
+                ignore_mismatched_sizes=True,
             )
             
             # Set to evaluation mode

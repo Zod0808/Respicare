@@ -76,7 +76,8 @@ class MedicalBERTModel:
             self._model = AutoModelForSequenceClassification.from_pretrained(
                 self.model_name,
                 num_labels=3,  # Por defecto: 3 clases (asthma, copd, flu)
-                cache_dir=os.getenv("TRANSFORMERS_CACHE", "/tmp/transformers_cache")
+                cache_dir=os.getenv("TRANSFORMERS_CACHE", "/tmp/transformers_cache"),
+                ignore_mismatched_sizes=True,
             )
             
             # Mover a GPU si está disponible

@@ -30,14 +30,16 @@ class LocalModelStrategy(AnalysisStrategy):
             self.symptom_tokenizer = AutoTokenizer.from_pretrained(model_name)
             self.symptom_model = AutoModelForSequenceClassification.from_pretrained(
                 model_name,
-                num_labels=10  # Number of symptom categories
+                num_labels=10,  # Number of symptom categories
+                ignore_mismatched_sizes=True,
             )
-            
+
             # Load medical text processing model
             self.medical_tokenizer = AutoTokenizer.from_pretrained(model_name)
             self.medical_model = AutoModelForSequenceClassification.from_pretrained(
                 model_name,
-                num_labels=15  # Number of medical entity types
+                num_labels=15,  # Number of medical entity types
+                ignore_mismatched_sizes=True,
             )
             
             logger.info("Local models loaded successfully")
