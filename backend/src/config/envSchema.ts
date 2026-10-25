@@ -37,7 +37,7 @@ const isPlaceholder = (value: string): boolean =>
 
 const secretSchema = (name: string) =>
   z
-    .string({ required_error: `Variable de entorno requerida no encontrada: ${name}` })
+    .string({ error: `Variable de entorno requerida no encontrada: ${name}` })
     .min(1, `Variable de entorno requerida no encontrada: ${name}`)
     .min(
       MIN_SECRET_LENGTH,
@@ -50,7 +50,7 @@ const secretSchema = (name: string) =>
 const envSchema = z
   .object({
     MONGODB_URI: z
-      .string({ required_error: 'Variable de entorno requerida no encontrada: MONGODB_URI' })
+      .string({ error: 'Variable de entorno requerida no encontrada: MONGODB_URI' })
       .min(1, 'Variable de entorno requerida no encontrada: MONGODB_URI')
       .refine((value) => !isPlaceholder(value), {
         message:
@@ -69,7 +69,7 @@ const envSchema = z
 export const validateEnv = (rawEnv: NodeJS.ProcessEnv = process.env): void => {
   const result = envSchema.safeParse(rawEnv);
   if (!result.success) {
-    const messages = result.error.errors.map((issue) => issue.message);
+    const messages = result.error.issues.map((issue) => issue.message);
     throw new Error(`Configuración de entorno inválida:\n- ${messages.join('\n- ')}`);
   }
 };

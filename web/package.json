@@ -121,6 +121,7 @@
     "postcss": ">=8.4.31",
     "micromatch": ">=4.0.8",
     "typescript": "^4.9.5",
-    "yaml": "2.8.1"
+    "yaml": "2.8.1",
+    "websocket-driver": ">=0.7.5"
   }
 }
