@@ -37,7 +37,7 @@
     "cypress": "^16.2.0",
     "isomorphic-dompurify": "^4.6.0",
     "jest": "^30.5.2",
-    "jest-axe": "^8.0.0",
+    "jest-axe": "^11.0.0",
     "jest-junit": "^16.0.0",
     "typescript": "^4.9.5"
   },
