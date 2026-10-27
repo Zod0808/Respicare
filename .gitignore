@@ -67,6 +67,7 @@ coverage.xml
 .jest/
 *.test.js.snap
 test-results.json
+junit.xml
 backend/emerg*.txt
 backend/*_out.txt
 web/cypress/screenshots/
