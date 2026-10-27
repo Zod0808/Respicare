@@ -1,5 +1,5 @@
 # Static code analysis tools for AI Services
-pylint==3.0.3
+pylint==4.0.9
 flake8==6.1.0
 black==26.10.1
 mypy==1.7.1
