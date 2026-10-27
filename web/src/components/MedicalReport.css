@@ -142,3 +142,40 @@
   }
 }
 
+/* ── Dark mode ── */
+.theme-dark .medical-report,
+[data-theme="dark"] .medical-report            { background: #1e293b; border-color: #334155; }
+
+.theme-dark .medical-report header h3,
+[data-theme="dark"] .medical-report header h3  { color: #f9fafb; }
+
+.theme-dark .medical-report header p,
+[data-theme="dark"] .medical-report header p    { color: #9ca3af; }
+
+.theme-dark .report-form label,
+[data-theme="dark"] .report-form label          { color: #e5e7eb; }
+
+.theme-dark .report-form input,
+[data-theme="dark"] .report-form input,
+.theme-dark .report-form textarea,
+[data-theme="dark"] .report-form textarea,
+.theme-dark .report-form select,
+[data-theme="dark"] .report-form select         { background: #0f172a; border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .report-message.success,
+[data-theme="dark"] .report-message.success     { background: #0f3324; color: #6ee7a0; border-color: #166534; }
+
+.theme-dark .report-message.error,
+[data-theme="dark"] .report-message.error       { background: #450a0a; color: #fca5a5; border-color: #7f1d1d; }
+
+.theme-dark .report-history th,
+[data-theme="dark"] .report-history th,
+.theme-dark .report-history td,
+[data-theme="dark"] .report-history td          { border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .report-history th,
+[data-theme="dark"] .report-history th          { background: #0f172a; color: #f9fafb; }
+
+.theme-dark .report-history a,
+[data-theme="dark"] .report-history a           { color: #93c5fd; }
+

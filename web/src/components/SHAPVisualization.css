@@ -314,3 +314,47 @@
   }
 }
 
+/* ── Dark mode ── */
+.theme-dark .shap-visualization,
+[data-theme="dark"] .shap-visualization         { background: #1e293b; }
+
+.theme-dark .disease-name,
+[data-theme="dark"] .disease-name,
+.theme-dark .bar-label,
+[data-theme="dark"] .bar-label                  { color: #f9fafb; }
+
+.theme-dark .view-selector,
+[data-theme="dark"] .view-selector,
+.theme-dark .bar-container,
+[data-theme="dark"] .bar-container              { background: #0f172a; }
+
+.theme-dark .view-selector button,
+[data-theme="dark"] .view-selector button       { color: #9ca3af; }
+
+.theme-dark .waterfall-label,
+[data-theme="dark"] .waterfall-label,
+.theme-dark .waterfall-cumulative,
+[data-theme="dark"] .waterfall-cumulative,
+.theme-dark .bar-description,
+[data-theme="dark"] .bar-description,
+.theme-dark .shap-disclaimer,
+[data-theme="dark"] .shap-disclaimer,
+.theme-dark .shap-visualization-empty,
+[data-theme="dark"] .shap-visualization-empty   { color: #9ca3af; }
+
+.theme-dark .waterfall-bar.base,
+[data-theme="dark"] .waterfall-bar.base         { background: #334155; border-color: #64748b; }
+
+.theme-dark .waterfall-start,
+[data-theme="dark"] .waterfall-start,
+.theme-dark .waterfall-end,
+[data-theme="dark"] .waterfall-end,
+.theme-dark .shap-footer,
+[data-theme="dark"] .shap-footer                { border-color: #334155; }
+
+.theme-dark .summary-section,
+[data-theme="dark"] .summary-section            { background: #0f172a; }
+
+.theme-dark .summary-section li,
+[data-theme="dark"] .summary-section li         { border-color: #334155; color: #e5e7eb; }
+

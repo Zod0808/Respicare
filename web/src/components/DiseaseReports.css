@@ -536,3 +536,84 @@ td {
     font-size: 0.9rem;
   }
 }
+
+/* ── Dark mode ── */
+.theme-dark .disease-reports-container,
+[data-theme="dark"] .disease-reports-container { background: #1e293b; }
+
+.theme-dark .disease-header h3,
+[data-theme="dark"] .disease-header h3,
+.theme-dark .chart-container h4,
+[data-theme="dark"] .chart-container h4,
+.theme-dark .disease-summary h4,
+[data-theme="dark"] .disease-summary h4,
+.theme-dark .symptoms-table h4,
+[data-theme="dark"] .symptoms-table h4,
+.theme-dark .disease-info h5,
+[data-theme="dark"] .disease-info h5,
+.theme-dark .symptom-name,
+[data-theme="dark"] .symptom-name,
+.theme-dark .disease-name,
+[data-theme="dark"] .disease-name,
+.theme-dark .district-name,
+[data-theme="dark"] .district-name              { color: #f9fafb; }
+
+.theme-dark .disease-header p,
+[data-theme="dark"] .disease-header p,
+.theme-dark .control-group label,
+[data-theme="dark"] .control-group label,
+.theme-dark .loading-overlay,
+[data-theme="dark"] .loading-overlay,
+.theme-dark .disease-confidence,
+[data-theme="dark"] .disease-confidence,
+.theme-dark .disease-urgency,
+[data-theme="dark"] .disease-urgency,
+.theme-dark .symptom-districts,
+[data-theme="dark"] .symptom-districts,
+.theme-dark .symptom-categories,
+[data-theme="dark"] .symptom-categories,
+.theme-dark .disease-percentage,
+[data-theme="dark"] .disease-percentage,
+.theme-dark .district-symptom,
+[data-theme="dark"] .district-symptom           { color: #9ca3af; }
+
+.theme-dark .disease-controls,
+[data-theme="dark"] .disease-controls,
+.theme-dark .chart-container,
+[data-theme="dark"] .chart-container,
+.theme-dark .symptoms-table,
+[data-theme="dark"] .symptoms-table,
+.theme-dark .empty-state,
+[data-theme="dark"] .empty-state,
+.theme-dark .disease-item,
+[data-theme="dark"] .disease-item,
+.theme-dark .symptom-analysis-item,
+[data-theme="dark"] .symptom-analysis-item,
+.theme-dark .district-item,
+[data-theme="dark"] .district-item,
+.theme-dark .confidence-item,
+[data-theme="dark"] .confidence-item            { background: #0f172a; border-color: #334155; }
+
+.theme-dark .disease-item:hover,
+[data-theme="dark"] .disease-item:hover,
+.theme-dark .symptom-analysis-item:hover,
+[data-theme="dark"] .symptom-analysis-item:hover,
+.theme-dark .district-item:hover,
+[data-theme="dark"] .district-item:hover,
+.theme-dark .confidence-item:hover,
+[data-theme="dark"] .confidence-item:hover      { background: #273449; }
+
+.theme-dark .control-select,
+[data-theme="dark"] .control-select,
+.theme-dark .disease-card,
+[data-theme="dark"] .disease-card,
+.theme-dark table,
+[data-theme="dark"] table                       { background: #1e293b; color: #e5e7eb; border-color: #334155; }
+
+.theme-dark th,
+[data-theme="dark"] th,
+.theme-dark td,
+[data-theme="dark"] td                          { border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .spinner,
+[data-theme="dark"] .spinner                    { border-color: #334155; border-top-color: #667eea; }

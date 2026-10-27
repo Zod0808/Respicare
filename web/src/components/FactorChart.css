@@ -259,3 +259,54 @@
   }
 }
 
+/* ── Dark mode ── */
+.theme-dark .factor-chart,
+[data-theme="dark"] .factor-chart              { background: #1e293b; }
+
+.theme-dark .factor-detail,
+[data-theme="dark"] .factor-detail,
+.theme-dark .bar-tooltip,
+[data-theme="dark"] .bar-tooltip               { background: #0f172a; }
+
+.theme-dark .factor-detail strong,
+[data-theme="dark"] .factor-detail strong,
+.theme-dark .bar-label,
+[data-theme="dark"] .bar-label,
+.theme-dark .legend-name,
+[data-theme="dark"] .legend-name               { color: #f9fafb; }
+
+.theme-dark .factor-detail p,
+[data-theme="dark"] .factor-detail p,
+.theme-dark .bar-tooltip,
+[data-theme="dark"] .bar-tooltip,
+.theme-dark .legend-value,
+[data-theme="dark"] .legend-value,
+.theme-dark .factor-chart-empty,
+[data-theme="dark"] .factor-chart-empty        { color: #9ca3af; }
+
+.theme-dark .bar-item:hover,
+[data-theme="dark"] .bar-item:hover,
+.theme-dark .legend-item:hover,
+[data-theme="dark"] .legend-item:hover         { background: #273449; }
+
+.theme-dark .bar-item.hovered,
+[data-theme="dark"] .bar-item.hovered,
+.theme-dark .legend-item.hovered,
+[data-theme="dark"] .legend-item.hovered       { background: #1e3a5f; }
+
+.theme-dark .bar-item.selected,
+[data-theme="dark"] .bar-item.selected,
+.theme-dark .legend-item.selected,
+[data-theme="dark"] .legend-item.selected      { background: #1e4976; }
+
+.theme-dark .bar-category,
+[data-theme="dark"] .bar-category,
+.theme-dark .bar-wrapper,
+[data-theme="dark"] .bar-wrapper               { background: #334155; color: #d1d5db; }
+
+.theme-dark .pie-center-text,
+[data-theme="dark"] .pie-center-text           { fill: #93c5fd; }
+
+.theme-dark .radar-label,
+[data-theme="dark"] .radar-label               { fill: #e5e7eb; }
+

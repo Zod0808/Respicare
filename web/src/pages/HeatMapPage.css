@@ -24,3 +24,9 @@
     height: 100vh;
   }
 }
+
+.theme-dark .heatmap-loading,
+[data-theme="dark"] .heatmap-loading {
+  color: #93c5fd;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}

@@ -268,3 +268,69 @@
   vertical-align: middle;
 }
 
+/* ── Dark mode ── */
+.theme-dark .fairness-visualization,
+[data-theme="dark"] .fairness-visualization    { background: #1e293b; }
+
+.theme-dark .chart-header,
+[data-theme="dark"] .chart-header,
+.theme-dark .cohort-details,
+[data-theme="dark"] .cohort-details            { border-color: #334155; }
+
+.theme-dark .chart-header h3,
+[data-theme="dark"] .chart-header h3,
+.theme-dark .metric-value,
+[data-theme="dark"] .metric-value,
+.theme-dark .cohort-details h4,
+[data-theme="dark"] .cohort-details h4         { color: #f9fafb; }
+
+.theme-dark .chart-subtitle,
+[data-theme="dark"] .chart-subtitle,
+.theme-dark .control-group label,
+[data-theme="dark"] .control-group label,
+.theme-dark .chart-loading p,
+[data-theme="dark"] .chart-loading p,
+.theme-dark .chart-empty,
+[data-theme="dark"] .chart-empty,
+.theme-dark .metric-label,
+[data-theme="dark"] .metric-label,
+.theme-dark .cohort-table td,
+[data-theme="dark"] .cohort-table td           { color: #9ca3af; }
+
+.theme-dark .btn-refresh,
+[data-theme="dark"] .btn-refresh               { background: #0f172a; border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .btn-refresh:hover,
+[data-theme="dark"] .btn-refresh:hover         { background: #273449; }
+
+.theme-dark .chart-controls,
+[data-theme="dark"] .chart-controls,
+.theme-dark .metric-card,
+[data-theme="dark"] .metric-card,
+.theme-dark .cohort-table thead,
+[data-theme="dark"] .cohort-table thead        { background: #0f172a; }
+
+.theme-dark .metric-card,
+[data-theme="dark"] .metric-card               { border-color: #334155; }
+
+.theme-dark .metric-card.success,
+[data-theme="dark"] .metric-card.success       { background: #0f3324; border-color: #22c55e; }
+
+.theme-dark .metric-card.warning,
+[data-theme="dark"] .metric-card.warning       { background: #3a2410; border-color: #f97316; }
+
+.theme-dark .control-select,
+[data-theme="dark"] .control-select            { background: #1e293b; border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .chart-loading .spinner,
+[data-theme="dark"] .chart-loading .spinner    { border-color: #334155; }
+
+.theme-dark .cohort-table th,
+[data-theme="dark"] .cohort-table th           { color: #d1d5db; border-color: #334155; }
+
+.theme-dark .cohort-table td,
+[data-theme="dark"] .cohort-table td           { border-color: #334155; }
+
+.theme-dark .cohort-table tbody tr:hover,
+[data-theme="dark"] .cohort-table tbody tr:hover { background: #273449; }
+

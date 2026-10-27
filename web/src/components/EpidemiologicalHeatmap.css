@@ -281,3 +281,58 @@
   border: 1px solid #d1d5db;
 }
 
+/* ── Dark mode ── */
+.theme-dark .epidemiological-heatmap,
+[data-theme="dark"] .epidemiological-heatmap { background: #1e293b; }
+
+.theme-dark .chart-header,
+[data-theme="dark"] .chart-header,
+.theme-dark .heatmap-legend,
+[data-theme="dark"] .heatmap-legend          { border-color: #334155; }
+
+.theme-dark .chart-header h3,
+[data-theme="dark"] .chart-header h3,
+.theme-dark .heatmap-legend h4,
+[data-theme="dark"] .heatmap-legend h4       { color: #f9fafb; }
+
+.theme-dark .chart-subtitle,
+[data-theme="dark"] .chart-subtitle,
+.theme-dark .legend-item,
+[data-theme="dark"] .legend-item,
+.theme-dark .chart-empty,
+[data-theme="dark"] .chart-empty,
+.theme-dark .chart-loading p,
+[data-theme="dark"] .chart-loading p,
+.theme-dark .stat-label,
+[data-theme="dark"] .stat-label               { color: #9ca3af; }
+
+.theme-dark .btn-refresh,
+[data-theme="dark"] .btn-refresh             { background: #0f172a; border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .btn-refresh:hover,
+[data-theme="dark"] .btn-refresh:hover       { background: #273449; }
+
+.theme-dark .chart-controls,
+[data-theme="dark"] .chart-controls          { background: #0f172a; }
+
+.theme-dark .control-group label,
+[data-theme="dark"] .control-group label     { color: #9ca3af; }
+
+.theme-dark .control-select,
+[data-theme="dark"] .control-select          { background: #1e293b; border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .stat-card,
+[data-theme="dark"] .stat-card               { background: #0f172a; border-color: #334155; }
+
+.theme-dark .stat-card.warning,
+[data-theme="dark"] .stat-card.warning       { background: #3a2410; border-color: #f97316; }
+
+.theme-dark .stat-value,
+[data-theme="dark"] .stat-value              { color: #f9fafb; }
+
+.theme-dark .chart-loading .spinner,
+[data-theme="dark"] .chart-loading .spinner  { border-color: #334155; }
+
+.theme-dark .legend-color,
+[data-theme="dark"] .legend-color            { border-color: #334155; }
+

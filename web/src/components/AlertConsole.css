@@ -272,3 +272,86 @@
   }
 }
 
+/* ── Dark mode — triggered by body.theme-dark OR data-theme="dark" ── */
+.theme-dark .alert-console,
+[data-theme="dark"] .alert-console                { background: #1e293b; border-color: #334155; }
+
+.theme-dark .alert-console-header h3,
+[data-theme="dark"] .alert-console-header h3      { color: #f9fafb; }
+
+.theme-dark .alert-console-header p,
+[data-theme="dark"] .alert-console-header p       { color: #9ca3af; }
+
+.theme-dark .alert-console-form label,
+[data-theme="dark"] .alert-console-form label     { color: #e5e7eb; }
+
+.theme-dark .alert-console-form input,
+[data-theme="dark"] .alert-console-form input     { background: #0f172a; border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .alert-console-message.success,
+[data-theme="dark"] .alert-console-message.success { background: #0f3324; color: #6ee7a0; border-color: #166534; }
+
+.theme-dark .alert-console-message.error,
+[data-theme="dark"] .alert-console-message.error   { background: #450a0a; color: #fca5a5; border-color: #7f1d1d; }
+
+.theme-dark .alert-monitoring-card,
+[data-theme="dark"] .alert-monitoring-card        { background: #0f172a; border-color: #334155; }
+
+.theme-dark .alert-monitoring-card h4,
+[data-theme="dark"] .alert-monitoring-card h4     { color: #f9fafb; }
+
+.theme-dark .monitoring-grid div,
+[data-theme="dark"] .monitoring-grid div          { background: #1e293b; border-color: #334155; }
+
+.theme-dark .monitoring-grid span,
+[data-theme="dark"] .monitoring-grid span         { color: #9ca3af; }
+
+.theme-dark .monitoring-grid strong,
+[data-theme="dark"] .monitoring-grid strong       { color: #f9fafb; }
+
+.theme-dark .recent-failures h5,
+[data-theme="dark"] .recent-failures h5           { color: #fca5a5; }
+
+.theme-dark .recent-failures li,
+[data-theme="dark"] .recent-failures li           { background: #1e293b; border-color: #7f1d1d; }
+
+.theme-dark .recent-failures li strong,
+[data-theme="dark"] .recent-failures li strong    { color: #fca5a5; }
+
+.theme-dark .recent-failures li span,
+[data-theme="dark"] .recent-failures li span      { color: #fca5a5; }
+
+.theme-dark .recent-failures li time,
+[data-theme="dark"] .recent-failures li time      { color: #9ca3af; }
+
+.theme-dark .alert-table-wrapper,
+[data-theme="dark"] .alert-table-wrapper          { border-color: #334155; }
+
+.theme-dark .alert-table th,
+[data-theme="dark"] .alert-table th,
+.theme-dark .alert-table td,
+[data-theme="dark"] .alert-table td               { border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .alert-table th,
+[data-theme="dark"] .alert-table th               { background: #0f172a; color: #f9fafb; }
+
+.theme-dark .alert-table tbody tr:hover,
+[data-theme="dark"] .alert-table tbody tr:hover   { background: #273449; }
+
+.theme-dark .ack-button:disabled,
+[data-theme="dark"] .ack-button:disabled          { background: #475569; }
+
+.theme-dark .empty-alerts,
+[data-theme="dark"] .empty-alerts                 { color: #9ca3af; }
+
+/* Fallback for system preference when no class is set */
+@media (prefers-color-scheme: dark) {
+  body:not(.theme-light) .alert-console             { background: #1e293b; border-color: #334155; }
+  body:not(.theme-light) .alert-console-header h3   { color: #f9fafb; }
+  body:not(.theme-light) .alert-monitoring-card     { background: #0f172a; border-color: #334155; }
+  body:not(.theme-light) .monitoring-grid div       { background: #1e293b; border-color: #334155; }
+  body:not(.theme-light) .monitoring-grid strong    { color: #f9fafb; }
+  body:not(.theme-light) .alert-table th            { background: #0f172a; color: #f9fafb; border-color: #334155; }
+  body:not(.theme-light) .alert-table td            { color: #e5e7eb; border-color: #334155; }
+}
+

@@ -400,3 +400,50 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Dark mode ── */
+.theme-dark .monitoring-title,
+[data-theme="dark"] .monitoring-title,
+.theme-dark .section-title,
+[data-theme="dark"] .section-title,
+.theme-dark .avg-value,
+[data-theme="dark"] .avg-value,
+.theme-dark .ref-header,
+[data-theme="dark"] .ref-header,
+.theme-dark .no-data-state h3,
+[data-theme="dark"] .no-data-state h3           { color: #f9fafb; }
+
+.theme-dark .monitoring-subtitle,
+[data-theme="dark"] .monitoring-subtitle,
+.theme-dark .monitoring-loading,
+[data-theme="dark"] .monitoring-loading,
+.theme-dark .section-subtitle,
+[data-theme="dark"] .section-subtitle,
+.theme-dark .vital-title,
+[data-theme="dark"] .vital-title,
+.theme-dark .avg-label,
+[data-theme="dark"] .avg-label,
+.theme-dark .chart-legend-help,
+[data-theme="dark"] .chart-legend-help,
+.theme-dark .no-data-state,
+[data-theme="dark"] .no-data-state              { color: #9ca3af; }
+
+.theme-dark .vital-card,
+[data-theme="dark"] .vital-card,
+.theme-dark .chart-section,
+[data-theme="dark"] .chart-section              { background: #1e293b; }
+
+.theme-dark .average-item,
+[data-theme="dark"] .average-item,
+.theme-dark .reference-card,
+[data-theme="dark"] .reference-card             { background: #0f172a; border-color: #334155; }
+
+.theme-dark .vital-description,
+[data-theme="dark"] .vital-description,
+.theme-dark .ref-row,
+[data-theme="dark"] .ref-row,
+.theme-dark .overall-message,
+[data-theme="dark"] .overall-message            { color: #d1d5db; }
+
+.theme-dark .loading-spinner,
+[data-theme="dark"] .loading-spinner            { border-color: #334155; border-top-color: #3b82f6; }

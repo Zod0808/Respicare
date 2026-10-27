@@ -370,3 +370,66 @@
   }
 }
 
+/* ── Dark mode ── */
+.theme-dark .symptom-report-content,
+[data-theme="dark"] .symptom-report-content    { background: #1e293b; }
+
+.theme-dark .error-banner,
+[data-theme="dark"] .error-banner              { background: #450a0a; color: #fca5a5; border-color: #7f1d1d; }
+
+.theme-dark .form-section,
+[data-theme="dark"] .form-section              { border-color: #334155; }
+
+.theme-dark .form-section h3,
+[data-theme="dark"] .form-section h3,
+.theme-dark .form-group label,
+[data-theme="dark"] .form-group label,
+.theme-dark .symptom-checkbox,
+[data-theme="dark"] .symptom-checkbox          { color: #f9fafb; }
+
+.theme-dark .section-subtitle,
+[data-theme="dark"] .section-subtitle,
+.theme-dark .privacy-note,
+[data-theme="dark"] .privacy-note,
+.theme-dark .success-message p,
+[data-theme="dark"] .success-message p         { color: #9ca3af; }
+
+.theme-dark .form-group input,
+[data-theme="dark"] .form-group input,
+.theme-dark .form-group select,
+[data-theme="dark"] .form-group select,
+.theme-dark .form-group textarea,
+[data-theme="dark"] .form-group textarea,
+.theme-dark .severity-select,
+[data-theme="dark"] .severity-select,
+.theme-dark .duration-value,
+[data-theme="dark"] .duration-value,
+.theme-dark .duration-unit,
+[data-theme="dark"] .duration-unit             { background: #0f172a; border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .symptom-item,
+[data-theme="dark"] .symptom-item,
+.theme-dark .privacy-note,
+[data-theme="dark"] .privacy-note              { background: #0f172a; }
+
+.theme-dark .symptom-item:has(input:checked),
+[data-theme="dark"] .symptom-item:has(input:checked) { background: #1e3a5f; border-color: #93c5fd; }
+
+.theme-dark .symptom-details,
+[data-theme="dark"] .symptom-details           { border-color: #334155; }
+
+.theme-dark .btn-cancel,
+[data-theme="dark"] .btn-cancel                { background: #334155; color: #e5e7eb; }
+
+.theme-dark .btn-cancel:hover:not(:disabled),
+[data-theme="dark"] .btn-cancel:hover:not(:disabled) { background: #475569; }
+
+.theme-dark .success-message h3,
+[data-theme="dark"] .success-message h3        { color: #6ee7a0; }
+
+.theme-dark .success-note,
+[data-theme="dark"] .success-note              { color: #6b7280; }
+
+.theme-dark .symptom-report-content::-webkit-scrollbar-track,
+[data-theme="dark"] .symptom-report-content::-webkit-scrollbar-track { background: #0f172a; }
+

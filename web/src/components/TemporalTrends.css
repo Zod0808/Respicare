@@ -321,3 +321,59 @@
     font-size: 1.5rem;
   }
 }
+
+/* ── Dark mode ── */
+.theme-dark .temporal-trends-container,
+[data-theme="dark"] .temporal-trends-container { background: #1e293b; }
+
+.theme-dark .trends-header h3,
+[data-theme="dark"] .trends-header h3,
+.theme-dark .chart-container h4,
+[data-theme="dark"] .chart-container h4,
+.theme-dark .trends-summary h4,
+[data-theme="dark"] .trends-summary h4,
+.theme-dark .trend-date,
+[data-theme="dark"] .trend-date,
+.theme-dark .week-name,
+[data-theme="dark"] .week-name,
+.theme-dark .symptom-name,
+[data-theme="dark"] .symptom-name              { color: #f9fafb; }
+
+.theme-dark .trends-header p,
+[data-theme="dark"] .trends-header p,
+.theme-dark .control-group label,
+[data-theme="dark"] .control-group label,
+.theme-dark .loading-overlay,
+[data-theme="dark"] .loading-overlay,
+.theme-dark .stat-label,
+[data-theme="dark"] .stat-label,
+.theme-dark .week-severity,
+[data-theme="dark"] .week-severity             { color: #9ca3af; }
+
+.theme-dark .trends-controls,
+[data-theme="dark"] .trends-controls,
+.theme-dark .trends-summary,
+[data-theme="dark"] .trends-summary,
+.theme-dark .trend-item,
+[data-theme="dark"] .trend-item,
+.theme-dark .week-item,
+[data-theme="dark"] .week-item,
+.theme-dark .symptom-item,
+[data-theme="dark"] .symptom-item              { background: #0f172a; }
+
+.theme-dark .symptom-item:hover,
+[data-theme="dark"] .symptom-item:hover        { background: #273449; }
+
+.theme-dark .control-select,
+[data-theme="dark"] .control-select,
+.theme-dark .chart-container,
+[data-theme="dark"] .chart-container           { background: #0f172a; border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .stat-item,
+[data-theme="dark"] .stat-item                 { background: #1e293b; }
+
+.theme-dark .trend-bar,
+[data-theme="dark"] .trend-bar                 { background: #334155; }
+
+.theme-dark .spinner,
+[data-theme="dark"] .spinner                   { border-color: #334155; border-top-color: #667eea; }

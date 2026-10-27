@@ -186,3 +186,38 @@
   }
 }
 
+/* ── Dark mode ── */
+.theme-dark .shap-header h2,
+[data-theme="dark"] .shap-header h2         { color: #f9fafb; }
+
+.theme-dark .shap-header p,
+[data-theme="dark"] .shap-header p          { color: #9ca3af; }
+
+.theme-dark .shap-controls .control,
+[data-theme="dark"] .shap-controls .control { color: #9ca3af; }
+
+.theme-dark .shap-controls select,
+[data-theme="dark"] .shap-controls select   { background: #0f172a; border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .shap-card,
+[data-theme="dark"] .shap-card,
+.theme-dark .shap-loading,
+[data-theme="dark"] .shap-loading,
+.theme-dark .shap-error,
+[data-theme="dark"] .shap-error             { background: #1e293b; border-color: #334155; }
+
+.theme-dark .shap-card h3,
+[data-theme="dark"] .shap-card h3           { color: #f9fafb; }
+
+.theme-dark .shap-summary li,
+[data-theme="dark"] .shap-summary li        { color: #d1d5db; }
+
+.theme-dark .shap-summary strong,
+[data-theme="dark"] .shap-summary strong    { color: #f9fafb; }
+
+.theme-dark .shap-tag,
+[data-theme="dark"] .shap-tag               { background: #1e3a5f; color: #93c5fd; }
+
+.theme-dark .shap-key-factors li,
+[data-theme="dark"] .shap-key-factors li    { background: #0f172a; color: #e5e7eb; }
+

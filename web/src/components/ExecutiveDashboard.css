@@ -272,3 +272,51 @@
   }
 }
 
+/* ── Dark mode ── */
+.theme-dark .executive-dashboard,
+[data-theme="dark"] .executive-dashboard       { background-color: #0f172a; }
+
+.theme-dark .dashboard-header h2,
+[data-theme="dark"] .dashboard-header h2,
+.theme-dark .dashboard-card h3,
+[data-theme="dark"] .dashboard-card h3,
+.theme-dark .dashboard-value,
+[data-theme="dark"] .dashboard-value,
+.theme-dark .dashboard-list li strong,
+[data-theme="dark"] .dashboard-list li strong,
+.theme-dark .timeline-value,
+[data-theme="dark"] .timeline-value,
+.theme-dark .dashboard-table thead th,
+[data-theme="dark"] .dashboard-table thead th,
+.theme-dark .trend-indicator,
+[data-theme="dark"] .trend-indicator,
+.theme-dark .trend-indicator--stable,
+[data-theme="dark"] .trend-indicator--stable   { color: #f9fafb; }
+
+.theme-dark .dashboard-header p,
+[data-theme="dark"] .dashboard-header p,
+.theme-dark .timeline-date,
+[data-theme="dark"] .timeline-date,
+.theme-dark .dashboard-list li,
+[data-theme="dark"] .dashboard-list li,
+.theme-dark .predictive-summary,
+[data-theme="dark"] .predictive-summary        { color: #9ca3af; }
+
+.theme-dark .dashboard-timestamp,
+[data-theme="dark"] .dashboard-timestamp       { background-color: #334155; color: #d1d5db; }
+
+.theme-dark .dashboard-card,
+[data-theme="dark"] .dashboard-card,
+.theme-dark .dashboard-table thead th,
+[data-theme="dark"] .dashboard-table thead th  { background-color: #1e293b; border-color: #334155; }
+
+.theme-dark .dashboard-table th,
+[data-theme="dark"] .dashboard-table th,
+.theme-dark .dashboard-table td,
+[data-theme="dark"] .dashboard-table td        { border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .timeline-bar,
+[data-theme="dark"] .timeline-bar,
+.theme-dark .resource-progress,
+[data-theme="dark"] .resource-progress         { background: #334155; }
+

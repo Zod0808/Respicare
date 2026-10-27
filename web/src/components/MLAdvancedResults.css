@@ -304,3 +304,54 @@
   }
 }
 
+/* ── Dark mode ── */
+.theme-dark .ml-advanced-results__tabs,
+[data-theme="dark"] .ml-advanced-results__tabs { border-color: #334155; }
+
+.theme-dark .ml-advanced-results__tab,
+[data-theme="dark"] .ml-advanced-results__tab  { color: #9ca3af; }
+
+.theme-dark .ml-advanced-results__tab:hover,
+[data-theme="dark"] .ml-advanced-results__tab:hover { background: #273449; color: #93c5fd; }
+
+.theme-dark .ml-advanced-results__tab.active,
+[data-theme="dark"] .ml-advanced-results__tab.active { color: #93c5fd; border-bottom-color: #93c5fd; }
+
+.theme-dark .ml-advanced-results__loading .spinner,
+[data-theme="dark"] .ml-advanced-results__loading .spinner { border-color: #334155; border-top-color: #93c5fd; }
+
+.theme-dark .ml-advanced-results__error,
+[data-theme="dark"] .ml-advanced-results__error { background: #450a0a; color: #fca5a5; }
+
+.theme-dark .model-comparison-table table,
+[data-theme="dark"] .model-comparison-table table,
+.theme-dark .experiment-history-table table,
+[data-theme="dark"] .experiment-history-table table,
+.theme-dark .model-performance-chart,
+[data-theme="dark"] .model-performance-chart,
+.theme-dark .rl-recommendation-card,
+[data-theme="dark"] .rl-recommendation-card    { background: #1e293b; color: #e5e7eb; }
+
+.theme-dark .model-comparison-table td,
+[data-theme="dark"] .model-comparison-table td,
+.theme-dark .experiment-history-table td,
+[data-theme="dark"] .experiment-history-table td,
+.theme-dark .rl-recommendation__state,
+[data-theme="dark"] .rl-recommendation__state  { border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .model-comparison-table tr:hover,
+[data-theme="dark"] .model-comparison-table tr:hover { background: #273449; }
+
+.theme-dark .metric-bar-container,
+[data-theme="dark"] .metric-bar-container      { background: #334155; }
+
+.theme-dark .metric-value,
+[data-theme="dark"] .metric-value,
+.theme-dark .rl-recommendation__header h4,
+[data-theme="dark"] .rl-recommendation__header h4 { color: #f9fafb; }
+
+.theme-dark .rl-recommendation__description,
+[data-theme="dark"] .rl-recommendation__description,
+.theme-dark .rl-recommendation__state li,
+[data-theme="dark"] .rl-recommendation__state li { color: #9ca3af; }
+

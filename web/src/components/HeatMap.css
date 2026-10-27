@@ -477,3 +477,68 @@
   }
 }
 
+/* ── Dark mode ── */
+.theme-dark .heatmap-container,
+[data-theme="dark"] .heatmap-container        { background: #1e293b; }
+
+.theme-dark .heatmap-header,
+[data-theme="dark"] .heatmap-header           { border-color: #334155; }
+
+.theme-dark .heatmap-header h3,
+[data-theme="dark"] .heatmap-header h3,
+.theme-dark .filter-group label,
+[data-theme="dark"] .filter-group label,
+.theme-dark .legend-title,
+[data-theme="dark"] .legend-title,
+.theme-dark .zones-list h4,
+[data-theme="dark"] .zones-list h4,
+.theme-dark .zone-header h5,
+[data-theme="dark"] .zone-header h5,
+.theme-dark .zone-value,
+[data-theme="dark"] .zone-value,
+.theme-dark .modal-content h3,
+[data-theme="dark"] .modal-content h3,
+.theme-dark .modal-stat-value,
+[data-theme="dark"] .modal-stat-value          { color: #f9fafb; }
+
+.theme-dark .heatmap-subtitle,
+[data-theme="dark"] .heatmap-subtitle,
+.theme-dark .legend-item,
+[data-theme="dark"] .legend-item,
+.theme-dark .zone-label,
+[data-theme="dark"] .zone-label,
+.theme-dark .modal-stat-label,
+[data-theme="dark"] .modal-stat-label          { color: #9ca3af; }
+
+.theme-dark .heatmap-controls,
+[data-theme="dark"] .heatmap-controls,
+.theme-dark .map-container,
+[data-theme="dark"] .map-container,
+.theme-dark .zones-list,
+[data-theme="dark"] .zones-list,
+.theme-dark .modal-stat,
+[data-theme="dark"] .modal-stat                { background: #0f172a; }
+
+.theme-dark .filter-btn,
+[data-theme="dark"] .filter-btn                { background: #1e293b; border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .zone-card,
+[data-theme="dark"] .zone-card,
+.theme-dark .modal-content,
+[data-theme="dark"] .modal-content             { background: #1e293b; }
+
+.theme-dark .map-title,
+[data-theme="dark"] .map-title                 { background: rgba(30, 41, 59, 0.9); color: #f9fafb; }
+
+.theme-dark .modal-recommendations,
+[data-theme="dark"] .modal-recommendations     { background: #15314d; }
+
+.theme-dark .modal-recommendations h4,
+[data-theme="dark"] .modal-recommendations h4  { color: #93c5fd; }
+
+.theme-dark .modal-recommendations li,
+[data-theme="dark"] .modal-recommendations li  { color: #d1d5db; }
+
+.theme-dark .zones-scroll::-webkit-scrollbar-track,
+[data-theme="dark"] .zones-scroll::-webkit-scrollbar-track { background: #334155; }
+

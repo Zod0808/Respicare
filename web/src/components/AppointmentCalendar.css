@@ -203,3 +203,59 @@
   }
 }
 
+/* ── Dark mode — triggered by body.theme-dark OR data-theme="dark" ── */
+.theme-dark .appointment-calendar,
+[data-theme="dark"] .appointment-calendar         { background: #1e293b; border-color: #334155; }
+
+.theme-dark .appointment-calendar header h3,
+[data-theme="dark"] .appointment-calendar header h3 { color: #f9fafb; }
+
+.theme-dark .appointment-calendar header p,
+[data-theme="dark"] .appointment-calendar header p  { color: #9ca3af; }
+
+.theme-dark .filters label,
+[data-theme="dark"] .filters label                { color: #e5e7eb; }
+
+.theme-dark .filters input,
+[data-theme="dark"] .filters input                { background: #0f172a; border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .alert.success,
+[data-theme="dark"] .alert.success                { background: #0f3324; color: #6ee7a0; border-color: #166534; }
+
+.theme-dark .alert.error,
+[data-theme="dark"] .alert.error                  { background: #450a0a; color: #fca5a5; border-color: #7f1d1d; }
+
+.theme-dark .appointments-card,
+[data-theme="dark"] .appointments-card,
+.theme-dark .availability-card,
+[data-theme="dark"] .availability-card            { background: #0f172a; border-color: #334155; }
+
+.theme-dark .appointments-card h4,
+[data-theme="dark"] .appointments-card h4,
+.theme-dark .availability-card h4,
+[data-theme="dark"] .availability-card h4         { color: #f9fafb; }
+
+.theme-dark .empty,
+[data-theme="dark"] .empty                        { color: #9ca3af; }
+
+.theme-dark .appointments-card th,
+[data-theme="dark"] .appointments-card th,
+.theme-dark .appointments-card td,
+[data-theme="dark"] .appointments-card td         { border-color: #334155; color: #e5e7eb; }
+
+.theme-dark .appointments-card th,
+[data-theme="dark"] .appointments-card th         { background: #1e293b; color: #f9fafb; }
+
+.theme-dark .availability-card li,
+[data-theme="dark"] .availability-card li         { background: #1e293b; border-color: #334155; color: #e5e7eb; }
+
+/* Fallback for system preference when no class is set */
+@media (prefers-color-scheme: dark) {
+  body:not(.theme-light) .appointment-calendar       { background: #1e293b; border-color: #334155; }
+  body:not(.theme-light) .appointment-calendar header h3 { color: #f9fafb; }
+  body:not(.theme-light) .appointments-card,
+  body:not(.theme-light) .availability-card          { background: #0f172a; border-color: #334155; }
+  body:not(.theme-light) .appointments-card th       { background: #1e293b; color: #f9fafb; }
+  body:not(.theme-light) .appointments-card td       { color: #e5e7eb; }
+}
+
