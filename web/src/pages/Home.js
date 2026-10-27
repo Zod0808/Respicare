@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ChatBotEnhanced from '../components/ChatBotEnhanced';
+import PatientQuickAccess from '../components/PatientQuickAccess';
+import { useAuth } from '../contexts/AuthContext';
 import { t, getCurrentLanguage } from '../services/i18nService';
 import './Home.css';
 
@@ -18,6 +20,7 @@ const HERO_ILLUSTRATION =
   "</svg>";
 
 function Home() {
+  const { isAuthenticated, user } = useAuth();
   const [, setLanguage] = useState(getCurrentLanguage());
 
   useEffect(() => {
@@ -56,6 +59,8 @@ function Home() {
             />
           </div>
         </section>
+
+        {isAuthenticated && user?.role === 'patient' && <PatientQuickAccess />}
 
         <section className="home-chat-panel">
           <span className="home-chat-panel__eyebrow">Conversa con tu asistente</span>
