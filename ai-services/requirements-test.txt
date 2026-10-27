@@ -29,5 +29,5 @@ pytest-benchmark==4.0.0
 psutil==5.9.6
 
 # AI/ML testing utilities
-scikit-learn==1.3.2
+scikit-learn==1.5.2
 numpy==1.24.3
