@@ -138,5 +138,8 @@
     "tailwindcss": "^4.1.9",
     "tw-animate-css": "1.3.3",
     "typescript": "^5"
+  },
+  "overrides": {
+    "qs": ">=6.16.1 <7.0.0"
   }
 }
