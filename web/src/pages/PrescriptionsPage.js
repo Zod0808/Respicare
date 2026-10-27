@@ -7,7 +7,8 @@ import './clinical.css';
 const LIMIT = 10;
 
 const PrescriptionsPage = () => {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
+  const isPatient = user?.role === 'patient';
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -44,7 +45,7 @@ const PrescriptionsPage = () => {
   return (
     <div className="clinical-page">
       <div className="clinical-page-header">
-        <h1>💊 Prescripciones</h1>
+        <h1>💊 {isPatient ? 'Mis Recetas' : 'Prescripciones'}</h1>
         {total > 0 && <span className="clinical-count">{total} registros</span>}
       </div>
       {error && <div className="clinical-error">{error}</div>}
@@ -52,6 +53,34 @@ const PrescriptionsPage = () => {
         <div className="clinical-loading">
           <div className="loading-spinner" />
           <p>Cargando prescripciones…</p>
+        </div>
+      ) : isPatient ? (
+        <div className="clinical-cards">
+          {records.length === 0 ? (
+            <p className="clinical-empty-cards">
+              No tienes recetas registradas por ahora. Aparecerán aquí cuando tu médico te prescriba un tratamiento.
+            </p>
+          ) : records.map((r) => (
+            <article className="clinical-card" key={r._id}>
+              <div className="clinical-card__header">
+                <h3>{formatMedications(r.medications)}</h3>
+                <span className={`status-badge status-${r.status || 'active'}`}>
+                  {r.status || 'Activo'}
+                </span>
+              </div>
+              <div className="clinical-card__meta">
+                <span className="clinical-card__label">
+                  Prescrito por {r.doctorName || r.prescribedBy || 'tu médico'}
+                </span>
+                <span className="clinical-card__date">
+                  {r.prescribedDate || r.createdAt
+                    ? new Date(r.prescribedDate || r.createdAt).toLocaleDateString('es-PE')
+                    : '—'}
+                  {r.expiresAt && ` · vence ${new Date(r.expiresAt).toLocaleDateString('es-PE')}`}
+                </span>
+              </div>
+            </article>
+          ))}
         </div>
       ) : (
         <div className="clinical-table-wrapper">

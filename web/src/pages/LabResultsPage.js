@@ -14,7 +14,8 @@ const INTERPRETATION_LABELS = {
 };
 
 const LabResultsPage = () => {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
+  const isPatient = user?.role === 'patient';
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -45,7 +46,7 @@ const LabResultsPage = () => {
   return (
     <div className="clinical-page">
       <div className="clinical-page-header">
-        <h1>🔬 Resultados de Laboratorio</h1>
+        <h1>🔬 {isPatient ? 'Mis Resultados de Laboratorio' : 'Resultados de Laboratorio'}</h1>
         {total > 0 && <span className="clinical-count">{total} registros</span>}
       </div>
       {error && <div className="clinical-error">{error}</div>}
@@ -53,6 +54,34 @@ const LabResultsPage = () => {
         <div className="clinical-loading">
           <div className="loading-spinner" />
           <p>Cargando resultados de laboratorio…</p>
+        </div>
+      ) : isPatient ? (
+        <div className="clinical-cards">
+          {records.length === 0 ? (
+            <p className="clinical-empty-cards">
+              Aún no tienes resultados de laboratorio. Aparecerán aquí en cuanto tu médico registre uno.
+            </p>
+          ) : records.map((r) => (
+            <article className="clinical-card" key={r._id}>
+              <div className="clinical-card__header">
+                <h3>{r.testName || r.testType || r.name || 'Examen'}</h3>
+                <span className={`status-badge status-${r.interpretation || 'normal'}`}>
+                  {INTERPRETATION_LABELS[r.interpretation] || r.interpretation || 'Normal'}
+                </span>
+              </div>
+              <div className="clinical-card__meta">
+                <span className="badge">{r.category || 'General'}</span>
+                <span className={`status-badge status-${r.status || 'completed'}`}>
+                  {r.status || 'Completado'}
+                </span>
+                <span className="clinical-card__date">
+                  {r.testDate || r.createdAt
+                    ? new Date(r.testDate || r.createdAt).toLocaleDateString('es-PE')
+                    : '—'}
+                </span>
+              </div>
+            </article>
+          ))}
         </div>
       ) : (
         <div className="clinical-table-wrapper">

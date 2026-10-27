@@ -156,6 +156,82 @@
   color: #880e4f;
 }
 
+.status-normal {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-low {
+  background: #fff8e1;
+  color: #f57f17;
+}
+
+.status-high {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.clinical-cards {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.clinical-empty-cards {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #78909c;
+  font-style: italic;
+  padding: 50px 20px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(33, 150, 243, 0.12);
+}
+
+.clinical-card {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(33, 150, 243, 0.12);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.clinical-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.clinical-card__header h3 {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #1565c0;
+  line-height: 1.35;
+}
+
+.clinical-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.clinical-card__label {
+  font-size: 0.85rem;
+  color: #546e7a;
+}
+
+.clinical-card__date {
+  font-size: 0.8rem;
+  color: #90a4ae;
+}
+
 .clinical-pagination {
   max-width: 1200px;
   margin: 20px auto 0 auto;
@@ -261,6 +337,43 @@
   color: #ffcc80;
 }
 
+.theme-dark .status-normal {
+  background: rgba(46, 125, 50, 0.25);
+  color: #a5d6a7;
+}
+
+.theme-dark .status-low {
+  background: rgba(245, 127, 23, 0.25);
+  color: #ffcc80;
+}
+
+.theme-dark .status-high {
+  background: rgba(230, 81, 0, 0.25);
+  color: #ffab91;
+}
+
 .theme-dark .clinical-pagination span {
   color: rgba(255,255,255,0.6);
+}
+
+.theme-dark .clinical-empty-cards,
+.theme-dark .clinical-card {
+  background: #1e2433;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.theme-dark .clinical-empty-cards {
+  color: rgba(255,255,255,0.4);
+}
+
+.theme-dark .clinical-card__header h3 {
+  color: #90caf9;
+}
+
+.theme-dark .clinical-card__label {
+  color: rgba(255,255,255,0.65);
+}
+
+.theme-dark .clinical-card__date {
+  color: rgba(255,255,255,0.45);
 }

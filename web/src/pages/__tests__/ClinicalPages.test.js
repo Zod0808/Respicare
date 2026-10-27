@@ -50,6 +50,7 @@ import LabResultsPage from '../LabResultsPage';
 import AdminPage from '../AdminPage';
 
 const AUTH = { token: 'test-token', user: { name: 'Admin', role: 'admin' }, isAuthenticated: true };
+const PATIENT_AUTH = { token: 'test-token', user: { name: 'Rosa', role: 'patient' }, isAuthenticated: true };
 
 const withRouter = (ui) => render(<MemoryRouter>{ui}</MemoryRouter>);
 
@@ -165,6 +166,31 @@ describe('MedicalHistoryPage', () => {
     withRouter(<MedicalHistoryPage />);
     await waitFor(() => expect(screen.getByText('Sin autorización.')).toBeInTheDocument());
   });
+
+  it('renders a patient-friendly card view for patients, without the Paciente column', async () => {
+    useAuth.mockReturnValue(PATIENT_AUTH);
+    axios.get.mockResolvedValueOnce({
+      data: {
+        data: [
+          { _id: '1', primaryDiagnosis: 'Bronquitis', visitType: 'Consulta', visitDate: '2024-01-15', status: 'active' },
+        ],
+        total: 1,
+      },
+    });
+    withRouter(<MedicalHistoryPage />);
+    expect(screen.getByRole('heading', { name: /mi historial médico/i })).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByText('Bronquitis')).toBeInTheDocument());
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
+  });
+
+  it('shows a friendly empty state for patients with no records', async () => {
+    useAuth.mockReturnValue(PATIENT_AUTH);
+    axios.get.mockResolvedValueOnce({ data: { data: [], total: 0 } });
+    withRouter(<MedicalHistoryPage />);
+    await waitFor(() =>
+      expect(screen.getByText(/aún no tienes historias médicas registradas/i)).toBeInTheDocument()
+    );
+  });
 });
 
 describe('PrescriptionsPage', () => {
@@ -202,6 +228,32 @@ describe('PrescriptionsPage', () => {
     withRouter(<PrescriptionsPage />);
     await waitFor(() =>
       expect(screen.getByText(/error al cargar prescripciones/i)).toBeInTheDocument()
+    );
+  });
+
+  it('renders a patient-friendly card view for patients', async () => {
+    useAuth.mockReturnValue(PATIENT_AUTH);
+    axios.get.mockResolvedValueOnce({
+      data: {
+        data: [
+          { _id: 'p1', medications: [{ name: 'Salbutamol' }], doctorName: 'Dr. García', status: 'active', prescribedDate: '2024-02-01' },
+        ],
+        total: 1,
+      },
+    });
+    withRouter(<PrescriptionsPage />);
+    expect(screen.getByRole('heading', { name: /mis recetas/i })).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByText('Salbutamol')).toBeInTheDocument());
+    expect(screen.getByText(/prescrito por dr\. garcía/i)).toBeInTheDocument();
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
+  });
+
+  it('shows a friendly empty state for patients with no prescriptions', async () => {
+    useAuth.mockReturnValue(PATIENT_AUTH);
+    axios.get.mockResolvedValueOnce({ data: { data: [], total: 0 } });
+    withRouter(<PrescriptionsPage />);
+    await waitFor(() =>
+      expect(screen.getByText(/no tienes recetas registradas por ahora/i)).toBeInTheDocument()
     );
   });
 });
@@ -253,6 +305,31 @@ describe('LabResultsPage', () => {
     });
     withRouter(<LabResultsPage />);
     await waitFor(() => expect(screen.getByText('Rosa Mamani')).toBeInTheDocument());
+  });
+
+  it('renders a patient-friendly card view for patients', async () => {
+    useAuth.mockReturnValue(PATIENT_AUTH);
+    axios.get.mockResolvedValueOnce({
+      data: {
+        data: [
+          { _id: 'l1', testName: 'Espirometría', category: 'Función pulmonar', interpretation: 'normal', status: 'completed', testDate: '2024-04-01' },
+        ],
+        total: 1,
+      },
+    });
+    withRouter(<LabResultsPage />);
+    expect(screen.getByRole('heading', { name: /mis resultados de laboratorio/i })).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByText('Espirometría')).toBeInTheDocument());
+    expect(screen.queryByRole('table')).not.toBeInTheDocument();
+  });
+
+  it('shows a friendly empty state for patients with no lab results', async () => {
+    useAuth.mockReturnValue(PATIENT_AUTH);
+    axios.get.mockResolvedValueOnce({ data: { data: [], total: 0 } });
+    withRouter(<LabResultsPage />);
+    await waitFor(() =>
+      expect(screen.getByText(/aún no tienes resultados de laboratorio/i)).toBeInTheDocument()
+    );
   });
 });
 

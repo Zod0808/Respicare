@@ -16,7 +16,8 @@ import './clinical.css';
 const LIMIT = 10;
 
 const MedicalHistoryPage = () => {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
+  const isPatient = user?.role === 'patient';
   const [searchParams] = useSearchParams();
   const patientId = searchParams.get('patientId') || undefined;
   const [records, setRecords] = useState([]);
@@ -50,7 +51,7 @@ const MedicalHistoryPage = () => {
   return (
     <div className="clinical-page">
       <div className="clinical-page-header">
-        <h1>📋 Historias Médicas</h1>
+        <h1>📋 {isPatient ? 'Mi Historial Médico' : 'Historias Médicas'}</h1>
         {total > 0 && <span className="clinical-count">{total} registros</span>}
       </div>
       {error && <div className="clinical-error">{error}</div>}
@@ -58,6 +59,29 @@ const MedicalHistoryPage = () => {
         <div className="clinical-loading">
           <div className="loading-spinner" />
           <p>Cargando historias médicas…</p>
+        </div>
+      ) : isPatient ? (
+        <div className="clinical-cards">
+          {records.length === 0 ? (
+            <p className="clinical-empty-cards">
+              Aún no tienes historias médicas registradas. Aparecerán aquí después de tu primera consulta.
+            </p>
+          ) : records.map((r) => (
+            <article className="clinical-card" key={r._id}>
+              <div className="clinical-card__header">
+                <h3>{r.primaryDiagnosis || r.diagnosis || 'Consulta médica'}</h3>
+                <span className={`status-badge status-${r.status || 'active'}`}>
+                  {r.status || 'Activo'}
+                </span>
+              </div>
+              <div className="clinical-card__meta">
+                <span className="badge">{r.visitType || r.type || 'Consulta'}</span>
+                <span className="clinical-card__date">
+                  {r.visitDate ? new Date(r.visitDate).toLocaleDateString('es-PE') : '—'}
+                </span>
+              </div>
+            </article>
+          ))}
         </div>
       ) : (
         <div className="clinical-table-wrapper">
