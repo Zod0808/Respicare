@@ -1,10 +1,22 @@
-/* ── Navbar — RespiCare ────────────────────────────────────────────────────── */
+/* ── Navbar — RespiCare · "Clinical Breath" ──────────────────────────────────
+   Same language as the auth pages: deep petrol + clay accent, Fraunces for
+   the wordmark, Manrope for everything else — no blue-gradient SaaS bar.
+   ────────────────────────────────────────────────────────────────────────── */
 .navbar {
-  background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
-  box-shadow: 0 2px 16px rgba(13, 71, 161, 0.35);
+  --rc-petrol:      #103c37;
+  --rc-petrol-ink:  #0a2b27;
+  --rc-clay:        #d9683f;
+  --rc-clay-soft:   #f0a677;
+  --rc-paper:       #fffaf2;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body:     'Manrope', 'Segoe UI', sans-serif;
+
+  background: linear-gradient(120deg, var(--rc-petrol) 0%, var(--rc-petrol-ink) 100%);
+  box-shadow: 0 1px 0 rgba(217, 104, 63, 0.4), 0 10px 30px -14px rgba(0, 0, 0, 0.45);
   position: sticky;
   top: 0;
   z-index: 1000;
+  font-family: var(--rc-font-body);
 }
 
 .navbar-container {
@@ -23,15 +35,46 @@
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  color: #ffffff;
+  color: var(--rc-paper);
   flex-shrink: 0;
   margin-right: 12px;
+  position: relative;
 }
 
 .brand-icon {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   line-height: 1;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  position: relative;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+}
+
+.brand-icon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--rc-clay-soft);
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0.45;
+  animation: navbar-breathe 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes navbar-breathe {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.45; }
+  50%      { transform: translate(-50%, -50%) scale(1.15); opacity: 0.15; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-icon::before,
+  .nav-live-dot,
+  .nav-dropdown-menu,
+  .nav-user-menu {
+    animation: none !important;
+  }
 }
 
 .brand-text {
@@ -41,18 +84,21 @@
 }
 
 .brand-name {
-  font-size: 1.3rem;
-  font-weight: 800;
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  font-size: 1.4rem;
+  font-weight: 600;
   letter-spacing: -0.3px;
-  color: #ffffff;
+  color: var(--rc-paper);
 }
 
 .brand-sub {
-  font-size: 0.67rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 0.2px;
-  margin-top: 1px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--rc-clay-soft);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-top: 2px;
 }
 
 /* ── Nav menu (centre links) ─────────────────────────────────────────────────── */
@@ -74,7 +120,7 @@
   align-items: center;
   gap: 6px;
   padding: 7px 12px;
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 250, 242, 0.78);
   text-decoration: none;
   border-radius: 8px;
   font-size: 0.83rem;
@@ -83,20 +129,21 @@
   white-space: nowrap;
   background: transparent;
   border: none;
+  border-bottom: 2px solid transparent;
   cursor: pointer;
   font-family: inherit;
 }
 
 .nav-link:hover {
-  background: rgba(255, 255, 255, 0.14);
-  color: #ffffff;
+  background: rgba(255, 250, 242, 0.08);
+  color: var(--rc-paper);
   transform: translateY(-1px);
 }
 
 .nav-link.active {
-  background: rgba(255, 255, 255, 0.22);
-  color: #ffffff;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
+  background: rgba(255, 250, 242, 0.08);
+  color: var(--rc-paper);
+  border-bottom-color: var(--rc-clay);
 }
 
 .nav-icon {
@@ -106,11 +153,11 @@
 
 /* ── Monitoreo (highlight) ───────────────────────────────────────────────────── */
 .nav-link--highlight {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(217, 104, 63, 0.14);
 }
 
 .nav-link--highlight:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(217, 104, 63, 0.24);
 }
 
 /* Pulsing live dot */
@@ -118,49 +165,49 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #69f0ae;
-  box-shadow: 0 0 0 0 rgba(105, 240, 174, 0.7);
+  background: #7ee6b8;
+  box-shadow: 0 0 0 0 rgba(126, 230, 184, 0.7);
   animation: live-pulse 1.8s ease-out infinite;
   flex-shrink: 0;
 }
 
 @keyframes live-pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(105, 240, 174, 0.7); }
-  70%  { box-shadow: 0 0 0 6px rgba(105, 240, 174, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(105, 240, 174, 0); }
+  0%   { box-shadow: 0 0 0 0 rgba(126, 230, 184, 0.7); }
+  70%  { box-shadow: 0 0 0 6px rgba(126, 230, 184, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(126, 230, 184, 0); }
 }
 
 /* ── Admin link ──────────────────────────────────────────────────────────────── */
 .nav-link--admin {
-  background: rgba(255, 193, 7, 0.18);
-  color: #ffe082;
+  background: rgba(240, 166, 119, 0.16);
+  color: var(--rc-clay-soft);
 }
 
 .nav-link--admin:hover {
-  background: rgba(255, 193, 7, 0.28);
-  color: #fff9c4;
+  background: rgba(240, 166, 119, 0.28);
+  color: #fbd9bf;
 }
 
 .nav-link--admin.active {
-  background: rgba(255, 193, 7, 0.3);
-  color: #fff9c4;
+  background: rgba(240, 166, 119, 0.3);
+  color: #fbd9bf;
+  border-bottom-color: var(--rc-clay-soft);
 }
 
 /* ── Login CTA link ──────────────────────────────────────────────────────────── */
 .nav-link--cta {
-  background: rgba(255, 255, 255, 0.92) !important;
-  color: #1565c0 !important;
+  background: var(--rc-clay) !important;
+  color: var(--rc-paper) !important;
   font-weight: 700;
   padding: 7px 16px;
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: 2px 14px 14px 14px;
+  box-shadow: 0 4px 14px -4px rgba(217, 104, 63, 0.6);
 }
 
 .nav-link--cta:hover {
-  background: #ffffff !important;
-  color: #0d47a1 !important;
+  background: #c85a34 !important;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 18px -4px rgba(217, 104, 63, 0.7);
 }
 
 /* ── Dropdown component ──────────────────────────────────────────────────────── */
@@ -188,13 +235,13 @@
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(13, 71, 161, 0.18), 0 2px 8px rgba(0,0,0,0.1);
+  background: var(--rc-paper);
+  border-radius: 2px 14px 14px 14px;
+  border-top: 3px solid var(--rc-clay);
+  box-shadow: 0 20px 44px -12px rgba(10, 43, 39, 0.35);
   min-width: 230px;
   padding: 6px;
   z-index: 2000;
-  border: 1px solid #e3f2fd;
   animation: dropdown-in 0.15s ease;
 }
 
@@ -208,7 +255,7 @@
   align-items: center;
   gap: 10px;
   padding: 9px 12px;
-  color: #374151;
+  color: #3a332a;
   text-decoration: none;
   border-radius: 8px;
   font-size: 0.875rem;
@@ -218,13 +265,13 @@
 }
 
 .nav-dropdown-item:hover {
-  background: #e8f0fe;
-  color: #1565c0;
+  background: #fdece3;
+  color: var(--rc-clay);
 }
 
 .nav-dropdown-item.active {
-  background: #e8f0fe;
-  color: #1565c0;
+  background: #fdece3;
+  color: var(--rc-clay);
   font-weight: 600;
 }
 
@@ -239,7 +286,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #1565c0;
+  background: var(--rc-clay);
   margin-left: auto;
   flex-shrink: 0;
 }
@@ -268,25 +315,25 @@
   align-items: center;
   gap: 8px;
   padding: 5px 10px 5px 5px;
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 250, 242, 0.08);
+  border: 1px solid rgba(255, 250, 242, 0.22);
   border-radius: 24px;
-  color: #ffffff;
+  color: var(--rc-paper);
   cursor: pointer;
   font-family: inherit;
   transition: background 0.18s, border-color 0.18s;
 }
 
 .nav-user-btn:hover {
-  background: rgba(255, 255, 255, 0.24);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 250, 242, 0.16);
+  border-color: rgba(255, 250, 242, 0.36);
 }
 
 .nav-user-avatar {
   width: 30px;
   height: 30px;
-  background: rgba(255, 255, 255, 0.9);
-  color: #1565c0;
+  background: var(--rc-clay-soft);
+  color: var(--rc-petrol-ink);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -306,7 +353,7 @@
 .nav-user-name {
   font-size: 0.82rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--rc-paper);
   max-width: 90px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -322,26 +369,26 @@
   border-radius: 8px;
   letter-spacing: 0.2px;
   text-transform: uppercase;
-  background: rgba(255,255,255,0.2);
-  color: rgba(255,255,255,0.9);
+  background: rgba(255, 250, 242, 0.18);
+  color: rgba(255, 250, 242, 0.9);
 }
 
-.role--patient  { background: rgba(76, 175, 80, 0.25);  color: #a5d6a7; }
-.role--doctor   { background: rgba(33, 150, 243, 0.25); color: #90caf9; }
-.role--admin    { background: rgba(255, 193, 7, 0.25);  color: #ffe082; }
+.role--patient  { background: rgba(126, 230, 184, 0.25); color: #bdf0d8; }
+.role--doctor   { background: rgba(144, 202, 249, 0.25); color: #bfe0fb; }
+.role--admin    { background: rgba(240, 166, 119, 0.3);  color: #fbd9bf; }
 
 /* User dropdown menu */
 .nav-user-menu {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 8px 32px rgba(13, 71, 161, 0.18), 0 2px 8px rgba(0,0,0,0.1);
+  background: var(--rc-paper);
+  border-radius: 2px 14px 14px 14px;
+  border-top: 3px solid var(--rc-clay);
+  box-shadow: 0 20px 44px -12px rgba(10, 43, 39, 0.35);
   min-width: 240px;
   padding: 8px;
   z-index: 2000;
-  border: 1px solid #e3f2fd;
   animation: dropdown-in 0.15s ease;
 }
 
@@ -355,8 +402,8 @@
 .nav-user-avatar-lg {
   width: 44px;
   height: 44px;
-  background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
-  color: #ffffff;
+  background: linear-gradient(135deg, var(--rc-petrol) 0%, var(--rc-petrol-ink) 100%);
+  color: var(--rc-paper);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -369,7 +416,7 @@
 .nav-user-fullname {
   font-size: 0.92rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--rc-petrol-ink);
   margin: 0 0 2px;
   white-space: nowrap;
   overflow: hidden;
@@ -379,7 +426,7 @@
 
 .nav-user-email {
   font-size: 0.75rem;
-  color: #6b7fa3;
+  color: #8a7f6d;
   margin: 0 0 4px;
   white-space: nowrap;
   overflow: hidden;
@@ -388,17 +435,17 @@
 }
 
 /* In the user menu, role badge overrides for light background */
-.nav-user-menu .role--patient  { background: #e8f5e9; color: #2e7d32; }
-.nav-user-menu .role--doctor   { background: #e3f2fd; color: #1565c0; }
-.nav-user-menu .role--admin    { background: #fff8e1; color: #f57f17; }
+.nav-user-menu .role--patient  { background: #e4f6ec; color: #1f7a4c; }
+.nav-user-menu .role--doctor   { background: #e8f1fb; color: #1f5fa8; }
+.nav-user-menu .role--admin    { background: #fdece3; color: #a8481f; }
 .nav-user-menu .nav-user-role-badge {
-  background: #e8f0fe;
-  color: #1565c0;
+  background: #fdece3;
+  color: var(--rc-clay);
 }
 
 .nav-user-divider {
   height: 1px;
-  background: #f0f4ff;
+  background: #efe4d0;
   margin: 2px 0 4px;
   border: none;
 }
@@ -411,7 +458,7 @@
   padding: 10px 12px;
   background: none;
   border: none;
-  color: #c62828;
+  color: #a8481f;
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
@@ -422,42 +469,42 @@
 }
 
 .nav-logout-btn:hover {
-  background: #ffebee;
+  background: #fdece3;
 }
 
 /* ── Dark mode ───────────────────────────────────────────────────────────────── */
 .theme-dark .nav-dropdown-menu,
 .theme-dark .nav-user-menu {
-  background: #1e2a3a;
-  border-color: #2d3f55;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  background: #1c2823;
+  border-top-color: var(--rc-clay);
+  box-shadow: 0 20px 44px -12px rgba(0, 0, 0, 0.5);
 }
 
 .theme-dark .nav-dropdown-item {
-  color: #c9d6e8;
+  color: #d9d0c0;
 }
 
 .theme-dark .nav-dropdown-item:hover,
 .theme-dark .nav-dropdown-item.active {
-  background: rgba(255,255,255,0.08);
-  color: #90caf9;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--rc-clay-soft);
 }
 
-.theme-dark .nav-user-fullname { color: #e8edf5; }
-.theme-dark .nav-user-email    { color: #7a94b0; }
+.theme-dark .nav-user-fullname { color: #f3ead9; }
+.theme-dark .nav-user-email    { color: #9aa39d; }
 
-.theme-dark .nav-user-divider  { background: #2d3f55; }
+.theme-dark .nav-user-divider  { background: #2a3731; }
 
-.theme-dark .nav-logout-btn          { color: #ef9a9a; }
-.theme-dark .nav-logout-btn:hover    { background: rgba(198, 40, 40, 0.15); }
+.theme-dark .nav-logout-btn          { color: var(--rc-clay-soft); }
+.theme-dark .nav-logout-btn:hover    { background: rgba(217, 104, 63, 0.15); }
 
-.theme-dark .nav-user-menu .role--patient { background: rgba(76,175,80,0.15);  color: #a5d6a7; }
-.theme-dark .nav-user-menu .role--doctor  { background: rgba(33,150,243,0.15); color: #90caf9; }
-.theme-dark .nav-user-menu .role--admin   { background: rgba(255,193,7,0.15);  color: #ffe082; }
-.theme-dark .nav-user-menu .nav-user-role-badge { background: rgba(255,255,255,0.1); color: #90caf9; }
+.theme-dark .nav-user-menu .role--patient { background: rgba(126,230,184,0.15); color: #9ad9bc; }
+.theme-dark .nav-user-menu .role--doctor  { background: rgba(144,202,249,0.15); color: #90caf9; }
+.theme-dark .nav-user-menu .role--admin   { background: rgba(240,166,119,0.15); color: var(--rc-clay-soft); }
+.theme-dark .nav-user-menu .nav-user-role-badge { background: rgba(255,255,255,0.08); color: var(--rc-clay-soft); }
 
 .theme-dark .nav-user-avatar-lg {
-  background: linear-gradient(135deg, #1e4b8a 0%, #0d3060 100%);
+  background: linear-gradient(135deg, #16453f 0%, #081f1c 100%);
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────────── */
@@ -485,7 +532,7 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 4px;
-    border-top: 1px solid rgba(255,255,255,0.12);
+    border-top: 1px solid rgba(255, 250, 242, 0.12);
     padding-top: 8px;
   }
 

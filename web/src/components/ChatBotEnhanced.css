@@ -1,4 +1,4 @@
-/* Enhanced ChatBot Styles */
+/* Enhanced ChatBot Styles — "Clinical Breath" (hereda variables --rc-* de .chatbot-container en ChatBot.css) */
 
 .chatbot-container.enhanced {
   position: relative;
@@ -11,9 +11,9 @@
 }
 
 .history-button {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: white;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 250, 242, 0.2);
+  color: #fffaf2;
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
@@ -22,14 +22,14 @@
 }
 
 .history-button:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
   transform: scale(1.1);
 }
 
 .conversation-history {
-  background: white;
-  border-top: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
+  background: #fffaf2;
+  border-top: 1px solid var(--rc-paper-dim);
+  border-bottom: 1px solid var(--rc-paper-dim);
   max-height: 200px;
   overflow-y: auto;
   animation: slideDown 0.3s ease;
@@ -51,14 +51,17 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 20px;
-  background: #f5f5f5;
-  border-bottom: 1px solid #e0e0e0;
+  background: var(--rc-paper);
+  border-bottom: 1px solid var(--rc-paper-dim);
 }
 
 .history-header h4 {
   margin: 0;
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  font-weight: 600;
   font-size: 1rem;
-  color: #333;
+  color: var(--rc-petrol-ink);
 }
 
 .history-header button {
@@ -66,15 +69,15 @@
   border: none;
   font-size: 1.2rem;
   cursor: pointer;
-  color: #666;
+  color: #8a7f6d;
   padding: 4px 8px;
   border-radius: 4px;
   transition: all 0.2s;
 }
 
 .history-header button:hover {
-  background: #e0e0e0;
-  color: #333;
+  background: var(--rc-paper-dim);
+  color: var(--rc-petrol-ink);
 }
 
 .history-list {
@@ -86,13 +89,13 @@
   align-items: center;
   gap: 10px;
   padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--rc-paper-dim);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .history-item:hover {
-  background: #f9f9f9;
+  background: #fdece3;
   padding-left: 5px;
 }
 
@@ -108,7 +111,7 @@
 .history-text {
   flex: 1;
   font-size: 0.9rem;
-  color: #666;
+  color: #8a7f6d;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -116,7 +119,7 @@
 
 .history-time {
   font-size: 0.75rem;
-  color: #999;
+  color: #b8ac97;
   flex-shrink: 0;
 }
 
@@ -127,16 +130,16 @@
 
 .contextual-suggestions {
   padding: 12px 20px;
-  background: #f8f9ff;
-  border-top: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
+  background: var(--rc-paper);
+  border-top: 1px solid var(--rc-paper-dim);
+  border-bottom: 1px solid var(--rc-paper-dim);
 }
 
 .suggestions-title {
   margin: 0 0 8px 0;
   font-size: 0.85rem;
-  color: #666;
-  font-weight: 500;
+  color: #8a7f6d;
+  font-weight: 600;
 }
 
 .suggestions-list {
@@ -147,46 +150,48 @@
 
 .suggestion-btn {
   padding: 6px 12px;
-  background: white;
-  border: 1px solid #2196f3;
-  color: #2196f3;
+  background: #fffaf2;
+  border: 1px solid var(--rc-clay);
+  color: var(--rc-clay);
   border-radius: 15px;
   font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+  font-family: var(--rc-font-body);
 }
 
 .suggestion-btn:hover {
-  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
-  color: white;
+  background: var(--rc-clay);
+  color: #fffaf2;
   transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(33, 150, 243, 0.3);
+  box-shadow: 0 2px 6px rgba(217, 104, 63, 0.3);
 }
 
 .voice-button {
-  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  background: var(--rc-petrol);
   border: none;
-  color: white;
+  color: #fffaf2;
   padding: 12px 16px;
   border-radius: 20px;
   font-size: 1.2rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   min-width: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 3px 12px rgba(76, 175, 80, 0.3);
+  box-shadow: 0 10px 20px -8px rgba(16, 60, 55, 0.5);
 }
 
 .voice-button:hover:not(:disabled) {
+  background: var(--rc-clay);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+  box-shadow: 0 12px 22px -8px rgba(217, 104, 63, 0.45);
 }
 
 .voice-button.listening {
-  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  background: #b8502e;
   animation: pulse 1.5s infinite;
 }
 
@@ -208,6 +213,68 @@
   display: flex;
   gap: 10px;
   align-items: flex-end;
+}
+
+/* ── Elementos que antes usaban estilos inline (se movieron aquí para
+   heredar la paleta Clinical Breath en vez de quedar fijos en azul) ── */
+.advanced-results-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: var(--rc-petrol);
+  color: #fffaf2;
+  border: none;
+  border-radius: 2px 14px 14px 14px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: var(--rc-font-body);
+  transition: background 0.2s, transform 0.15s;
+}
+
+.advanced-results-btn:hover {
+  background: var(--rc-clay);
+  transform: translateY(-1px);
+}
+
+.advanced-results-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 43, 39, 0.65);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.advanced-results-container {
+  background: #fffaf2;
+  border-radius: 2px 24px 24px 24px;
+  padding: 24px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  position: relative;
+  box-shadow: 0 24px 60px -16px rgba(16, 60, 55, 0.45);
+}
+
+.advanced-results-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #8a7f6d;
+  transition: color 0.15s;
+}
+
+.advanced-results-close:hover {
+  color: var(--rc-clay);
 }
 
 @media (max-width: 768px) {
@@ -237,49 +304,56 @@
 
 /* ── Dark mode ──────────────────────────────────────────────────── */
 .theme-dark .conversation-history {
-  background: #1e2433;
-  border-color: rgba(255,255,255,0.1);
+  background: #1c2823;
+  border-color: #2a3731;
 }
 
 .theme-dark .history-header {
-  background: #252d3d;
-  border-bottom-color: rgba(255,255,255,0.08);
+  background: #16201d;
+  border-bottom-color: #2a3731;
 }
 
-.theme-dark .history-header h4 { color: rgba(255,255,255,0.87); }
+.theme-dark .history-header h4 { color: #f3ead9; }
 
-.theme-dark .history-header button { color: rgba(255,255,255,0.6); }
+.theme-dark .history-header button { color: #9aa39d; }
 .theme-dark .history-header button:hover {
-  background: rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.87);
+  background: #2a3731;
+  color: #f3ead9;
 }
 
 .theme-dark .history-item {
-  border-bottom-color: rgba(255,255,255,0.06);
+  border-bottom-color: #2a3731;
 }
 
 .theme-dark .history-item:hover {
-  background: rgba(255,255,255,0.05);
+  background: #2a1a14;
 }
 
-.theme-dark .history-text  { color: rgba(255,255,255,0.6); }
-.theme-dark .history-time  { color: rgba(255,255,255,0.4); }
+.theme-dark .history-text  { color: #9aa39d; }
+.theme-dark .history-time  { color: #5a6a62; }
 
 .theme-dark .contextual-suggestions {
-  background: #1a2030;
-  border-color: rgba(255,255,255,0.08);
+  background: #16201d;
+  border-color: #2a3731;
 }
 
-.theme-dark .suggestions-title { color: rgba(255,255,255,0.6); }
+.theme-dark .suggestions-title { color: #9aa39d; }
 
 .theme-dark .suggestion-btn {
   background: transparent;
-  border-color: #42a5f5;
-  color: #90caf9;
+  border-color: var(--rc-clay-soft);
+  color: var(--rc-clay-soft);
 }
 
 .theme-dark .suggestion-btn:hover {
-  background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
-  color: white;
+  background: var(--rc-clay);
+  color: #fffaf2;
 }
 
+.theme-dark .advanced-results-container {
+  background: #1c2823;
+  box-shadow: 0 24px 60px -16px rgba(0, 0, 0, 0.5);
+}
+
+.theme-dark .advanced-results-close { color: #9aa39d; }
+.theme-dark .advanced-results-close:hover { color: var(--rc-clay-soft); }

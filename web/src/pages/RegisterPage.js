@@ -9,19 +9,20 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { EyeIcon, RoleIcon } from './LoginPage';
 import './LoginPage.css';
 
 const ROLES = [
-  { value: 'patient', label: 'Paciente',       icon: '👤', desc: 'Gestión de citas e historial' },
-  { value: 'doctor',  label: 'Médico',          icon: '🩺', desc: 'Monitoreo y reportes clínicos' },
-  { value: 'admin',   label: 'Administrador',   icon: '⚙️', desc: 'Control completo del sistema' },
+  { value: 'patient', label: 'Paciente',      desc: 'Gestión de citas e historial' },
+  { value: 'doctor',  label: 'Médico',         desc: 'Monitoreo y reportes clínicos' },
+  { value: 'admin',   label: 'Administrador',  desc: 'Control completo del sistema' },
 ];
 
 const BENEFITS = [
-  { icon: '🔒', text: 'Datos médicos cifrados y seguros' },
-  { icon: '📱', text: 'Acceso desde cualquier dispositivo' },
-  { icon: '🩺', text: 'Seguimiento clínico personalizado' },
-  { icon: '📊', text: 'Reportes e indicadores en tiempo real' },
+  'Datos médicos cifrados y seguros',
+  'Acceso desde cualquier dispositivo',
+  'Seguimiento clínico personalizado',
+  'Reportes e indicadores en tiempo real',
 ];
 
 const RegisterPage = () => {
@@ -88,22 +89,31 @@ const RegisterPage = () => {
     <div className="login-page">
       {/* ── Panel izquierdo — branding ── */}
       <aside className="login-brand" aria-hidden="true">
+        <div className="login-brand__rings">
+          <span className="login-brand__ring login-brand__ring--1" />
+          <span className="login-brand__ring login-brand__ring--2" />
+          <span className="login-brand__ring login-brand__ring--3" />
+        </div>
         <div className="login-brand__inner">
+          <span className="login-brand__eyebrow">Nuevo registro</span>
           <div className="login-brand__logo">
-            <span className="login-brand__icon">🫁</span>
             <span className="login-brand__name">RespiCare</span>
           </div>
           <p className="login-brand__tagline">
-            Únete a la plataforma clínica más completa para el manejo de enfermedades respiratorias
+            Únete a la plataforma clínica más completa para el manejo de enfermedades respiratorias.
           </p>
-          <ul className="login-brand__features">
-            {BENEFITS.map((b, i) => (
-              <li key={i} className="login-brand__feature">
-                <span className="login-brand__feature-icon">{b.icon}</span>
-                <span>{b.text}</span>
+          <ol className="login-brand__list">
+            {BENEFITS.map((text, i) => (
+              <li
+                key={i}
+                className="login-brand__list-item"
+                style={{ animationDelay: `${0.4 + i * 0.1}s` }}
+              >
+                <span className="login-brand__list-index">{String(i + 1).padStart(2, '0')}</span>
+                <span className="login-brand__list-text">{text}</span>
               </li>
             ))}
-          </ul>
+          </ol>
           <div className="login-brand__badge">
             Sistema certificado · Datos encriptados · HIPAA-ready
           </div>
@@ -112,8 +122,9 @@ const RegisterPage = () => {
 
       {/* ── Panel derecho — formulario ── */}
       <section className="login-form-panel">
-        <div className="login-form-card" style={{ maxWidth: 460 }}>
+        <div className="login-form-card" style={{ maxWidth: 480 }}>
           <div className="login-form-header">
+            <span className="login-form-eyebrow">Crea tu cuenta</span>
             <h1 className="login-form-title">Crear cuenta</h1>
             <p className="login-form-subtitle">Completa tus datos para registrarte en RespiCare</p>
           </div>
@@ -121,7 +132,7 @@ const RegisterPage = () => {
           <form onSubmit={handleSubmit} className="login-form" noValidate>
             {error && (
               <div className="login-error" role="alert" aria-live="polite">
-                <span className="login-error__icon">⚠</span>
+                <span className="login-error__icon" aria-hidden="true">!</span>
                 {error}
               </div>
             )}
@@ -130,7 +141,6 @@ const RegisterPage = () => {
             <div className="login-field">
               <label htmlFor="reg-name">Nombre completo</label>
               <div className="login-input-wrap">
-                <span className="login-input-icon">👤</span>
                 <input
                   id="reg-name"
                   type="text"
@@ -148,7 +158,6 @@ const RegisterPage = () => {
             <div className="login-field">
               <label htmlFor="reg-email">Correo electrónico</label>
               <div className="login-input-wrap">
-                <span className="login-input-icon">✉</span>
                 <input
                   id="reg-email"
                   type="email"
@@ -169,13 +178,10 @@ const RegisterPage = () => {
                   <button
                     key={r.value}
                     type="button"
-                    className="login-role-card"
+                    className={`login-role-card${form.role === r.value ? ' is-selected' : ''}`}
                     onClick={() => setForm(f => ({ ...f, role: r.value }))}
-                    style={form.role === r.value
-                      ? { border: '2px solid #1565c0', background: '#e8f0fe' }
-                      : {}}
                   >
-                    <span>{r.icon}</span>
+                    <RoleIcon role={r.value} />
                     <strong>{r.label}</strong>
                     <span>{r.desc}</span>
                   </button>
@@ -187,7 +193,6 @@ const RegisterPage = () => {
             <div className="login-field">
               <label htmlFor="reg-password">Contraseña</label>
               <div className="login-input-wrap">
-                <span className="login-input-icon">🔑</span>
                 <input
                   id="reg-password"
                   type={showPwd ? 'text' : 'password'}
@@ -203,7 +208,7 @@ const RegisterPage = () => {
                   onClick={() => setShowPwd(v => !v)}
                   aria-label={showPwd ? 'Ocultar contraseña' : 'Mostrar contraseña'}
                 >
-                  {showPwd ? '🙈' : '👁'}
+                  <EyeIcon open={showPwd} />
                 </button>
               </div>
             </div>
@@ -212,7 +217,6 @@ const RegisterPage = () => {
             <div className="login-field">
               <label htmlFor="reg-confirm">Confirmar contraseña</label>
               <div className="login-input-wrap">
-                <span className="login-input-icon">🔑</span>
                 <input
                   id="reg-confirm"
                   type={showConfirm ? 'text' : 'password'}
@@ -228,7 +232,7 @@ const RegisterPage = () => {
                   onClick={() => setShowConfirm(v => !v)}
                   aria-label={showConfirm ? 'Ocultar contraseña' : 'Mostrar contraseña'}
                 >
-                  {showConfirm ? '🙈' : '👁'}
+                  <EyeIcon open={showConfirm} />
                 </button>
               </div>
             </div>

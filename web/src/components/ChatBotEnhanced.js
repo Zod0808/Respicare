@@ -592,7 +592,7 @@ function ChatBotEnhanced() {
 
               {/* Button to view advanced ML results */}
               {message.mlPrediction && message.type === 'bot' && (
-                <div className="message-actions" style={{ marginTop: '10px' }}>
+                <div className="message-actions">
                   <button
                     className="advanced-results-btn"
                     onClick={() => {
@@ -600,16 +600,6 @@ function ChatBotEnhanced() {
                       if (message.mlPrediction?.id || message.mlPrediction?.analysisId) {
                         setCurrentAnalysisId(message.mlPrediction.id || message.mlPrediction.analysisId);
                       }
-                    }}
-                    style={{
-                      padding: '8px 16px',
-                      backgroundColor: '#667eea',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '6px',
-                      cursor: 'pointer',
-                      fontSize: '14px',
-                      fontWeight: '500'
                     }}
                   >
                     📊 Ver Resultados ML Avanzados
@@ -661,28 +651,8 @@ function ChatBotEnhanced() {
 
       {/* Advanced ML Results Modal/Overlay */}
       {showAdvancedResults && (currentAnalysisId || currentExperimentId || currentSessionId) && (
-        <div className="advanced-results-overlay" style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          zIndex: 1000,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '20px'
-        }}>
-          <div className="advanced-results-container" style={{
-            backgroundColor: 'white',
-            borderRadius: '12px',
-            padding: '24px',
-            maxWidth: '90%',
-            maxHeight: '90%',
-            overflow: 'auto',
-            position: 'relative'
-          }}>
+        <div className="advanced-results-overlay">
+          <div className="advanced-results-container">
             <button
               onClick={() => {
                 setShowAdvancedResults(false);
@@ -690,16 +660,7 @@ function ChatBotEnhanced() {
                 setCurrentExperimentId(null);
                 setCurrentSessionId(null);
               }}
-              style={{
-                position: 'absolute',
-                top: '16px',
-                right: '16px',
-                background: 'none',
-                border: 'none',
-                fontSize: '24px',
-                cursor: 'pointer',
-                color: '#666'
-              }}
+              className="advanced-results-close"
               aria-label="Cerrar"
             >
               ✕
