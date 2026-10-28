@@ -140,24 +140,24 @@ function AnalyticsDashboard() {
 
   const getSeverityColor = (severity) => {
     switch (severity) {
-      case 'high': return '#ef5350';
-      case 'medium': return '#ffca28';
-      case 'low': return '#66bb6a';
-      default: return '#bdbdbd';
+      case 'high': return '#8a2f10';
+      case 'medium': return '#d9683f';
+      case 'low': return '#103c37';
+      default: return '#a3998a';
     }
   };
 
   const getCategoryColor = (category) => {
     const colors = {
-      'respiratory': '#667eea',
-      'fever': '#ff6b6b',
-      'pain': '#4ecdc4',
-      'digestive': '#45b7d1',
-      'fatigue': '#96ceb4',
-      'neurological': '#feca57',
-      'other': '#a4b0be'
+      'respiratory': '#103c37',
+      'fever': '#8a2f10',
+      'pain': '#d9683f',
+      'digestive': '#5c7a52',
+      'fatigue': '#b08968',
+      'neurological': '#7a6f9b',
+      'other': '#a3998a'
     };
-    return colors[category] || '#a4b0be';
+    return colors[category] || '#a3998a';
   };
 
   if (loading) {
@@ -291,7 +291,7 @@ function AnalyticsDashboard() {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip formatter={(value) => [value, 'Reportes']} />
-                <Bar dataKey="value" fill="#667eea" />
+                <Bar dataKey="value" fill="#103c37" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -375,23 +375,23 @@ function AnalyticsDashboard() {
                   data={topDistrictsData} 
                   margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-                  <XAxis 
-                    dataKey="name" 
+                  <CartesianGrid strokeDasharray="3 3" stroke="#efe4d0" />
+                  <XAxis
+                    dataKey="name"
                     angle={-45}
                     textAnchor="end"
                     height={100}
-                    tick={{ fill: '#666', fontSize: 11 }}
+                    tick={{ fill: '#152420', fontSize: 11 }}
                     interval={0}
                   />
-                  <YAxis 
+                  <YAxis
                     type="number"
                     domain={[0, 'dataMax + 1']}
-                    tick={{ fill: '#666', fontSize: 12 }}
+                    tick={{ fill: '#152420', fontSize: 12 }}
                     allowDecimals={false}
-                    label={{ value: 'Número de Reportes', angle: -90, position: 'insideLeft', style: { fill: '#666', fontSize: 14 } }}
+                    label={{ value: 'Número de Reportes', angle: -90, position: 'insideLeft', style: { fill: '#152420', fontSize: 14 } }}
                   />
-                  <Tooltip 
+                  <Tooltip
                     formatter={(value, name) => {
                       if (name === 'count') {
                         return [`${value} reportes`, 'Reportes'];
@@ -399,25 +399,25 @@ function AnalyticsDashboard() {
                       return [value, 'Severidad Promedio'];
                     }}
                     labelFormatter={(label) => `Distrito: ${label}`}
-                    contentStyle={{ 
-                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                      border: '1px solid #ccc',
+                    contentStyle={{
+                      backgroundColor: 'rgba(255, 250, 242, 0.95)',
+                      border: '1px solid #efe4d0',
                       borderRadius: '4px',
                       padding: '8px'
                     }}
                   />
-                  <Bar 
-                    dataKey="count" 
-                    fill="#2196f3" 
+                  <Bar
+                    dataKey="count"
+                    fill="#103c37"
                     name="Reportes"
                     radius={[6, 6, 0, 0]}
                     isAnimationActive={true}
-                    stroke="#1976d2"
+                    stroke="#0a2b27"
                     strokeWidth={2}
                   >
                     {topDistrictsData.map((entry, index) => {
                       // Colores alternados para mejor visibilidad
-                      const colors = ['#2196f3', '#1976d2', '#1565c0', '#0d47a1'];
+                      const colors = ['#103c37', '#0a2b27', '#d9683f', '#8a2f10'];
                       const color = colors[index % colors.length];
                       return <Cell key={`cell-${index}`} fill={color} stroke={color} strokeWidth={2} />;
                     })}
@@ -524,23 +524,21 @@ function AnalyticsDashboard() {
                 className="experiment-item"
                 style={{
                   padding: '12px',
-                  border: '1px solid #e0e0e0',
+                  border: '1px solid #efe4d0',
                   borderRadius: '8px',
                   marginBottom: '8px',
                   cursor: 'pointer',
                   transition: 'background-color 0.2s'
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
                 onClick={() => setSelectedExperiment(exp)}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <strong>{exp.experimentType === 'rl_session' ? '🔄 RL Session' : exp.experimentType === 'fl_round' ? '🌐 FL Round' : '🤖 ML Experiment'}</strong>
-                    <p style={{ margin: '4px 0', color: '#666', fontSize: '14px' }}>
+                    <p style={{ margin: '4px 0', color: 'rgba(21, 36, 32, 0.6)', fontSize: '14px' }}>
                       {exp.modelName || 'Unknown Model'} • {exp.status || 'unknown'}
                     </p>
-                    <p style={{ margin: 0, color: '#999', fontSize: '12px' }}>
+                    <p style={{ margin: 0, color: 'rgba(21, 36, 32, 0.45)', fontSize: '12px' }}>
                       {exp.createdAt ? new Date(exp.createdAt).toLocaleString('es-ES') : 'Fecha desconocida'}
                     </p>
                   </div>
@@ -551,12 +549,13 @@ function AnalyticsDashboard() {
                     }}
                     style={{
                       padding: '6px 12px',
-                      backgroundColor: '#667eea',
-                      color: 'white',
+                      backgroundColor: '#103c37',
+                      color: '#fffaf2',
                       border: 'none',
-                      borderRadius: '6px',
+                      borderRadius: '999px',
                       cursor: 'pointer',
-                      fontSize: '12px'
+                      fontSize: '12px',
+                      fontWeight: 700
                     }}
                   >
                     Ver Detalles
@@ -576,7 +575,7 @@ function AnalyticsDashboard() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          backgroundColor: 'rgba(10, 43, 39, 0.7)',
           zIndex: 1000,
           display: 'flex',
           alignItems: 'center',
@@ -584,8 +583,8 @@ function AnalyticsDashboard() {
           padding: '20px'
         }}>
           <div className="advanced-results-container" style={{
-            backgroundColor: 'white',
-            borderRadius: '12px',
+            backgroundColor: '#fffaf2',
+            borderRadius: '2px 16px 16px 16px',
             padding: '24px',
             maxWidth: '90%',
             maxHeight: '90%',
@@ -602,7 +601,7 @@ function AnalyticsDashboard() {
                 border: 'none',
                 fontSize: '24px',
                 cursor: 'pointer',
-                color: '#666'
+                color: 'rgba(21, 36, 32, 0.6)'
               }}
               aria-label="Cerrar"
             >
