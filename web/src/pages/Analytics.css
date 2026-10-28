@@ -1,38 +1,56 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   RespiCare · Analytics — "Clinical Breath"
+   Local --rc-* block (mirrors clinical.css/Dashboard.css). Only the page
+   shell (header + tab bar) is migrated here — .analytics-content still
+   resets to light-mode vars below because its sub-dashboards (ShapDashboard,
+   AutomaticReportsDashboard, etc.) haven't been migrated yet.
+   ────────────────────────────────────────────────────────────────────────── */
+
 .analytics-page {
+  --rc-ink:          #152420;
+  --rc-paper:        #f8f1e4;
+  --rc-paper-dim:    #efe4d0;
+  --rc-petrol:       #103c37;
+  --rc-petrol-ink:   #0a2b27;
+  --rc-clay:         #d9683f;
+  --rc-clay-soft:    #f0a677;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body:    'Manrope', 'Segoe UI', sans-serif;
+
   min-height: 100vh;
-  background: #f8f9ff;
+  background: var(--rc-paper);
+  font-family: var(--rc-font-body);
 }
 
 .analytics-header {
-  background: linear-gradient(135deg, #2196f3 0%, #1565c0 100%);
-  color: white;
+  background: linear-gradient(160deg, var(--rc-petrol) 0%, var(--rc-petrol-ink) 100%);
+  color: #fffaf2;
   padding: 40px 24px;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(33, 150, 243, 0.3);
 }
 
 .analytics-header h1 {
   margin: 0 0 12px 0;
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  font-weight: 600;
   font-size: 2.5rem;
-  font-weight: bold;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: none;
 }
 
 .analytics-header p {
   margin: 0;
-  font-size: 1.1rem;
-  opacity: 0.95;
-  font-weight: 500;
+  color: rgba(248, 241, 228, 0.8);
 }
 
 .analytics-tabs {
   display: flex;
   justify-content: center;
-  background: white;
-  border-bottom: 2px solid #e3f2fd;
+  background: #fffaf2;
+  border-bottom: 1px solid var(--rc-paper-dim);
   padding: 0 24px;
   gap: 0;
-  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.1);
+  box-shadow: 0 2px 8px -4px rgba(16, 60, 55, 0.12);
 }
 
 .tab-button {
@@ -40,23 +58,24 @@
   background: none;
   border: none;
   border-bottom: 3px solid transparent;
-  color: #666666;
+  color: rgba(21, 36, 32, 0.6);
+  font-family: var(--rc-font-body);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
   position: relative;
 }
 
 .tab-button:hover {
-  color: #000000;
-  background: #f8f9ff;
+  color: var(--rc-petrol-ink);
+  background: var(--rc-paper);
 }
 
 .tab-button.active {
-  color: #1976d2;
-  border-bottom-color: #2196f3;
-  background: #f8f9ff;
+  color: var(--rc-petrol);
+  border-bottom-color: var(--rc-petrol);
+  background: var(--rc-paper);
 }
 
 .tab-button.active::after {
@@ -69,7 +88,7 @@
   height: 0;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 6px solid #2196f3;
+  border-top: 6px solid var(--rc-petrol);
 }
 
 .analytics-content {
@@ -83,7 +102,7 @@
   align-items: center;
   justify-content: center;
   min-height: 320px;
-  color: #1976d2;
+  color: var(--rc-petrol);
   font-weight: 500;
 }
 
@@ -92,30 +111,30 @@
   .analytics-header {
     padding: 24px 16px;
   }
-  
+
   .analytics-header h1 {
     font-size: 2rem;
   }
-  
+
   .analytics-header p {
     font-size: 1rem;
   }
-  
+
   .analytics-tabs {
     flex-direction: column;
     padding: 0;
   }
-  
+
   .tab-button {
-    border-bottom: 1px solid #e3f2fd;
+    border-bottom: 1px solid var(--rc-paper-dim);
     border-radius: 0;
     text-align: left;
   }
-  
+
   .tab-button.active::after {
     display: none;
   }
-  
+
   .analytics-content {
     padding: 16px;
   }
@@ -135,41 +154,46 @@
 /* ── Dark mode ──────────────────────────────────────────────────── */
 .theme-dark .analytics-page,
 [data-theme="dark"] .analytics-page {
-  background: #0d1117;
+  background: #0f1a17;
 }
 
 .theme-dark .analytics-header,
 [data-theme="dark"] .analytics-header {
-  background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+  background: linear-gradient(160deg, #0a2b27 0%, #0f1a17 100%);
 }
 
 .theme-dark .analytics-tabs,
 [data-theme="dark"] .analytics-tabs {
-  background: #1e2433;
-  border-bottom-color: rgba(255,255,255,0.08);
+  background: #1c2823;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
 .theme-dark .tab-button,
 [data-theme="dark"] .tab-button {
-  color: rgba(255,255,255,0.6);
+  color: rgba(248, 241, 228, 0.6);
 }
 
 .theme-dark .tab-button:hover,
 [data-theme="dark"] .tab-button:hover {
-  color: rgba(255,255,255,0.87);
-  background: rgba(255,255,255,0.05);
+  color: #f8f1e4;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .theme-dark .tab-button.active,
 [data-theme="dark"] .tab-button.active {
-  color: #90caf9;
-  border-bottom-color: #42a5f5;
-  background: rgba(33,150,243,0.08);
+  color: var(--rc-clay-soft);
+  border-bottom-color: var(--rc-clay-soft);
+  background: rgba(240, 166, 119, 0.08);
+}
+
+.theme-dark .tab-button.active::after,
+[data-theme="dark"] .tab-button.active::after {
+  border-top-color: var(--rc-clay-soft);
 }
 
 .theme-dark .tab-loading,
 [data-theme="dark"] .tab-loading {
-  color: #90caf9;
+  color: var(--rc-clay-soft);
 }
 
 /*
@@ -188,7 +212,7 @@
   --color-bg-subtle: #f9fafb;
   --color-divider: rgba(0, 0, 0, 0.12);
   --color-border: rgba(0, 0, 0, 0.12);
-  background: #f0f4f8;
-  border-radius: 8px;
+  background: #fffaf2;
+  border-radius: 2px 12px 12px 12px;
   padding: 20px 24px;
 }
