@@ -28,8 +28,10 @@ jest.mock('../../utils/apiBase', () => ({
 
 describe('SymptomReportForm — Snapshot Visual Regression', () => {
   it('matches DOM snapshot on initial empty render', () => {
-    const { asFragment } = render(<SymptomReportForm />);
-    expect(asFragment()).toMatchSnapshot();
+    render(<SymptomReportForm />);
+    // SymptomReportForm renders via a portal to document.body, so asFragment()
+    // (scoped to the local render container) would capture nothing.
+    expect(document.body).toMatchSnapshot();
   });
 });
 
@@ -112,7 +114,7 @@ describe('SymptomReportForm — Visual de Selección de Síntomas', () => {
   });
 
   it('matches DOM snapshot with some symptoms selected', () => {
-    const { asFragment } = render(<SymptomReportForm />);
+    render(<SymptomReportForm />);
     const checkboxes = screen.getAllByRole('checkbox');
 
     // Select first 3 symptoms
@@ -120,7 +122,7 @@ describe('SymptomReportForm — Visual de Selección de Síntomas', () => {
       if (checkboxes[i]) fireEvent.click(checkboxes[i]);
     });
 
-    expect(asFragment()).toMatchSnapshot();
+    expect(document.body).toMatchSnapshot();
   });
 });
 
@@ -205,7 +207,7 @@ describe('SymptomReportForm — Visual de Envío del Formulario', () => {
       data: { success: true, message: 'Reporte enviado exitosamente' },
     });
 
-    const { asFragment } = render(<SymptomReportForm />);
+    render(<SymptomReportForm />);
 
     const checkboxes = screen.getAllByRole('checkbox');
     if (checkboxes[0]) fireEvent.click(checkboxes[0]);
@@ -224,7 +226,7 @@ describe('SymptomReportForm — Visual de Envío del Formulario', () => {
       }
     });
 
-    expect(asFragment()).toMatchSnapshot();
+    expect(document.body).toMatchSnapshot();
   });
 });
 

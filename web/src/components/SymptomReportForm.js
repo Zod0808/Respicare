@@ -8,6 +8,7 @@
  * opcionales, y los envía a POST /symptom-reports.
  */
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import axios from 'axios';
 import './SymptomReportForm.css';
 import { LEGACY_API_BASE } from '../utils/apiBase';
@@ -192,7 +193,7 @@ function SymptomReportForm({ onClose, onSuccess }) {
     }
   };
 
-  return (
+  return createPortal(
     <div className="symptom-report-modal">
       <div className="symptom-report-content">
         <div className="symptom-report-header">
@@ -407,7 +408,8 @@ function SymptomReportForm({ onClose, onSuccess }) {
           </form>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 

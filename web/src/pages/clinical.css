@@ -1,6 +1,27 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   RespiCare · Shared clinical list pages — "Clinical Breath"
+   Same editorial petrol/clay/paper system as Home/Login/Navbar: Fraunces
+   (display) + Manrope (body), warm paper instead of the generic blue-gradient
+   SaaS look. Shared by Admin, Alerts, Appointments, Consents, Educational
+   Content, Emergency, Lab Results, Medical History, Prescriptions and
+   Referrals pages (table view for staff/doctor/admin, card view for patients
+   on the clinical history/prescriptions/lab-results routes).
+   ────────────────────────────────────────────────────────────────────────── */
+
 .clinical-page {
+  --rc-ink:          #152420;
+  --rc-paper:        #f8f1e4;
+  --rc-paper-dim:    #efe4d0;
+  --rc-petrol:       #103c37;
+  --rc-petrol-ink:   #0a2b27;
+  --rc-clay:         #d9683f;
+  --rc-clay-soft:    #f0a677;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body:    'Manrope', 'Segoe UI', sans-serif;
+
   min-height: calc(100vh - 70px);
-  background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%);
+  background: var(--rc-paper);
+  font-family: var(--rc-font-body);
   padding: 30px 20px;
 }
 
@@ -13,28 +34,33 @@
 }
 
 .clinical-page-header h1 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #1565c0;
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: var(--rc-petrol-ink);
   margin: 0;
 }
 
 .clinical-count {
-  background: #e3f2fd;
-  color: #1565c0;
+  background: rgba(16, 60, 55, 0.12);
+  color: var(--rc-petrol);
+  font-family: var(--rc-font-body);
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
   padding: 4px 12px;
-  border-radius: 20px;
+  border-radius: 999px;
 }
 
 .clinical-error {
   max-width: 1200px;
   margin: 0 auto 20px auto;
-  background: #ffebee;
-  color: #c62828;
-  border: 1px solid #ef9a9a;
-  border-radius: 10px;
+  background: #fdece3;
+  color: #8a2f10;
+  border: none;
+  border-left: 3px solid var(--rc-clay);
+  border-radius: 2px 10px 10px 2px;
   padding: 14px 18px;
   font-weight: 500;
 }
@@ -43,14 +69,14 @@
   max-width: 1200px;
   margin: 60px auto;
   text-align: center;
-  color: #546e7a;
+  color: rgba(21, 36, 32, 0.6);
 }
 
 .loading-spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid #e3f2fd;
-  border-top-color: #2196f3;
+  border: 4px solid var(--rc-paper-dim);
+  border-top-color: var(--rc-clay);
   border-radius: 50%;
   animation: clinical-spin 0.8s linear infinite;
   margin: 0 auto 16px auto;
@@ -63,9 +89,9 @@
 .clinical-table-wrapper {
   max-width: 1200px;
   margin: 0 auto;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(33, 150, 243, 0.12);
+  background: #fffaf2;
+  border-radius: 2px 20px 20px 20px;
+  box-shadow: 0 14px 30px -18px rgba(16, 60, 55, 0.18);
   overflow: hidden;
 }
 
@@ -75,49 +101,49 @@
 }
 
 .clinical-table thead {
-  background: linear-gradient(135deg, #2196f3 0%, #1565c0 100%);
+  background: linear-gradient(135deg, var(--rc-petrol) 0%, var(--rc-petrol-ink) 100%);
 }
 
 .clinical-table thead th {
   padding: 14px 18px;
   text-align: left;
-  color: #ffffff;
-  font-weight: 600;
+  color: #fffaf2;
+  font-weight: 700;
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .clinical-table tbody tr {
-  border-bottom: 1px solid #f0f4ff;
+  border-bottom: 1px solid var(--rc-paper-dim);
   transition: background 0.15s;
 }
 
 .clinical-table tbody tr:hover {
-  background: #f5f9ff;
+  background: rgba(16, 60, 55, 0.05);
 }
 
 .clinical-table tbody td {
   padding: 14px 18px;
   font-size: 0.9rem;
-  color: #37474f;
+  color: var(--rc-ink);
 }
 
 .clinical-empty {
   text-align: center;
-  color: #90a4ae;
+  color: rgba(21, 36, 32, 0.55);
   font-style: italic;
   padding: 40px !important;
 }
 
 .badge {
   display: inline-block;
-  background: #e3f2fd;
-  color: #1565c0;
+  background: rgba(16, 60, 55, 0.12);
+  color: var(--rc-petrol);
   font-size: 0.75rem;
   font-weight: 600;
   padding: 4px 10px;
-  border-radius: 20px;
+  border-radius: 999px;
   text-transform: capitalize;
 }
 
@@ -126,49 +152,37 @@
   font-size: 0.75rem;
   font-weight: 600;
   padding: 4px 10px;
-  border-radius: 20px;
+  border-radius: 999px;
   text-transform: capitalize;
 }
 
 .status-active,
 .status-scheduled,
-.status-completed {
-  background: #e8f5e9;
-  color: #2e7d32;
+.status-completed,
+.status-normal {
+  background: rgba(16, 60, 55, 0.12);
+  color: var(--rc-petrol);
 }
 
 .status-inactive,
 .status-cancelled,
 .status-rejected {
-  background: #ffebee;
-  color: #c62828;
+  background: rgba(21, 36, 32, 0.08);
+  color: rgba(21, 36, 32, 0.65);
 }
 
 .status-pending,
-.status-rescheduled {
-  background: #fff8e1;
-  color: #f57f17;
+.status-rescheduled,
+.status-low,
+.status-high {
+  background: rgba(217, 104, 63, 0.14);
+  color: var(--rc-clay);
 }
 
 .status-critical,
 .status-emergency {
-  background: #fce4ec;
-  color: #880e4f;
-}
-
-.status-normal {
-  background: #e8f5e9;
-  color: #2e7d32;
-}
-
-.status-low {
-  background: #fff8e1;
-  color: #f57f17;
-}
-
-.status-high {
-  background: #fff3e0;
-  color: #e65100;
+  background: rgba(179, 38, 30, 0.14);
+  color: #8a2f10;
 }
 
 .clinical-cards {
@@ -182,18 +196,19 @@
 .clinical-empty-cards {
   grid-column: 1 / -1;
   text-align: center;
-  color: #78909c;
+  color: rgba(21, 36, 32, 0.55);
   font-style: italic;
   padding: 50px 20px;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(33, 150, 243, 0.12);
+  background: #fffaf2;
+  border-radius: 2px 20px 20px 20px;
+  box-shadow: 0 14px 30px -18px rgba(16, 60, 55, 0.18);
 }
 
 .clinical-card {
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 4px 20px rgba(33, 150, 243, 0.12);
+  background: #fffaf2;
+  border-radius: 2px 20px 20px 20px;
+  border: 1px solid var(--rc-paper-dim);
+  box-shadow: 0 14px 30px -18px rgba(16, 60, 55, 0.18);
   padding: 18px 20px;
   display: flex;
   flex-direction: column;
@@ -209,9 +224,10 @@
 
 .clinical-card__header h3 {
   margin: 0;
-  font-size: 1.02rem;
-  font-weight: 700;
-  color: #1565c0;
+  font-family: var(--rc-font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--rc-petrol-ink);
   line-height: 1.35;
 }
 
@@ -224,12 +240,12 @@
 
 .clinical-card__label {
   font-size: 0.85rem;
-  color: #546e7a;
+  color: rgba(21, 36, 32, 0.65);
 }
 
 .clinical-card__date {
   font-size: 0.8rem;
-  color: #90a4ae;
+  color: rgba(21, 36, 32, 0.5);
 }
 
 .clinical-pagination {
@@ -243,13 +259,18 @@
 
 .clinical-pagination button {
   padding: 8px 20px;
-  background: linear-gradient(135deg, #2196f3 0%, #1565c0 100%);
-  color: #ffffff;
+  background: var(--rc-petrol);
+  color: #fffaf2;
   border: none;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 2px 14px 14px 14px;
+  font-family: var(--rc-font-body);
+  font-weight: 700;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.clinical-pagination button:hover:not(:disabled) {
+  background: var(--rc-clay);
 }
 
 .clinical-pagination button:disabled {
@@ -258,122 +279,117 @@
 }
 
 .clinical-pagination span {
-  color: #546e7a;
+  color: rgba(21, 36, 32, 0.65);
   font-size: 0.9rem;
 }
 
 /* ── Dark mode ──────────────────────────────────────────────────── */
 .theme-dark .clinical-page {
-  background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%);
+  --rc-paper: #16201d;
 }
 
 .theme-dark .clinical-page-header h1 {
-  color: #90caf9;
+  color: #f8f1e4;
 }
 
 .theme-dark .clinical-count {
-  background: rgba(25, 118, 210, 0.25);
-  color: #90caf9;
+  background: rgba(240, 166, 119, 0.18);
+  color: var(--rc-clay-soft);
 }
 
 .theme-dark .clinical-error {
-  background: #450a0a;
-  color: #fca5a5;
-  border-color: #7f1d1d;
+  background: #2e130a;
+  color: #f3a98f;
+  border-left-color: var(--rc-clay-soft);
 }
 
 .theme-dark .clinical-loading {
-  color: #90a4ae;
+  color: rgba(248, 241, 228, 0.6);
 }
 
 .theme-dark .loading-spinner {
-  border-color: rgba(255,255,255,0.1);
-  border-top-color: #42a5f5;
+  border-color: rgba(255, 255, 255, 0.1);
+  border-top-color: var(--rc-clay-soft);
 }
 
 .theme-dark .clinical-table-wrapper {
-  background: #1e2433;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  background: #1c2823;
+  box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.5);
 }
 
 .theme-dark .clinical-table tbody tr {
-  border-bottom-color: rgba(255,255,255,0.06);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
 }
 
 .theme-dark .clinical-table tbody tr:hover {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .theme-dark .clinical-table tbody td {
-  color: rgba(255,255,255,0.8);
+  color: #f8f1e4;
 }
 
 .theme-dark .clinical-empty {
-  color: rgba(255,255,255,0.4);
+  color: rgba(248, 241, 228, 0.5);
 }
 
 .theme-dark .badge {
-  background: rgba(25, 118, 210, 0.25);
-  color: #90caf9;
+  background: rgba(240, 166, 119, 0.18);
+  color: var(--rc-clay-soft);
 }
 
 .theme-dark .status-active,
 .theme-dark .status-scheduled,
-.theme-dark .status-completed {
-  background: rgba(46, 125, 50, 0.25);
-  color: #a5d6a7;
+.theme-dark .status-completed,
+.theme-dark .status-normal {
+  background: rgba(240, 166, 119, 0.18);
+  color: var(--rc-clay-soft);
 }
 
 .theme-dark .status-inactive,
 .theme-dark .status-cancelled,
 .theme-dark .status-rejected {
-  background: rgba(198, 40, 40, 0.25);
-  color: #ef9a9a;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(248, 241, 228, 0.7);
 }
 
 .theme-dark .status-pending,
-.theme-dark .status-rescheduled {
-  background: rgba(245, 127, 23, 0.25);
-  color: #ffcc80;
-}
-
-.theme-dark .status-normal {
-  background: rgba(46, 125, 50, 0.25);
-  color: #a5d6a7;
-}
-
-.theme-dark .status-low {
-  background: rgba(245, 127, 23, 0.25);
-  color: #ffcc80;
-}
-
+.theme-dark .status-rescheduled,
+.theme-dark .status-low,
 .theme-dark .status-high {
-  background: rgba(230, 81, 0, 0.25);
-  color: #ffab91;
+  background: rgba(240, 166, 119, 0.22);
+  color: var(--rc-clay-soft);
 }
 
-.theme-dark .clinical-pagination span {
-  color: rgba(255,255,255,0.6);
+.theme-dark .status-critical,
+.theme-dark .status-emergency {
+  background: rgba(239, 128, 109, 0.22);
+  color: #ffab91;
 }
 
 .theme-dark .clinical-empty-cards,
 .theme-dark .clinical-card {
-  background: #1e2433;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  background: #1c2823;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.5);
 }
 
 .theme-dark .clinical-empty-cards {
-  color: rgba(255,255,255,0.4);
+  color: rgba(248, 241, 228, 0.5);
 }
 
 .theme-dark .clinical-card__header h3 {
-  color: #90caf9;
+  color: #f8f1e4;
 }
 
 .theme-dark .clinical-card__label {
-  color: rgba(255,255,255,0.65);
+  color: rgba(248, 241, 228, 0.65);
 }
 
 .theme-dark .clinical-card__date {
-  color: rgba(255,255,255,0.45);
+  color: rgba(248, 241, 228, 0.45);
+}
+
+.theme-dark .clinical-pagination span {
+  color: rgba(248, 241, 228, 0.6);
 }

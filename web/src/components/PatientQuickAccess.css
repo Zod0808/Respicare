@@ -8,7 +8,16 @@
   position: relative;
   margin-bottom: 28px;
   opacity: 0;
-  animation: rc-rise 0.65s ease-out 0.1s forwards;
+  animation: quick-access-fade-in 0.65s ease-out 0.1s forwards;
+}
+
+/* No transform here (unlike rc-rise): this section hosts SymptomReportForm's
+   position:fixed overlay, and any transform in a forwards-filled animation
+   permanently turns .quick-access into its containing block, trapping the
+   modal inside this box instead of the viewport. */
+@keyframes quick-access-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 .quick-access__head {

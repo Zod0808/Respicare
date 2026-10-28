@@ -92,15 +92,17 @@ describe('KEY-01 — Orden de foco (Tab) en SymptomReportForm', () => {
   });
 
   it('el formulario tiene al menos un elemento enfocable', () => {
-    const { container } = render(<SymptomReportForm />);
-    const focusable = getFocusableElements(container);
+    // SymptomReportForm renders via a portal to document.body, por lo que
+    // hay que buscar los elementos enfocables ahí en vez de en `container`.
+    render(<SymptomReportForm />);
+    const focusable = getFocusableElements(document.body);
     expect(focusable.length).toBeGreaterThan(0);
   });
 
   it('Tab avanza al siguiente elemento enfocable', async () => {
     const user = userEvent.setup();
-    const { container } = render(<SymptomReportForm />);
-    const focusable = getFocusableElements(container);
+    render(<SymptomReportForm />);
+    const focusable = getFocusableElements(document.body);
     if (focusable.length < 2) return;
 
     focusable[0].focus();
@@ -115,8 +117,8 @@ describe('KEY-01 — Orden de foco (Tab) en SymptomReportForm', () => {
 
   it('Shift+Tab retrocede al elemento anterior', async () => {
     const user = userEvent.setup();
-    const { container } = render(<SymptomReportForm />);
-    const focusable = getFocusableElements(container);
+    render(<SymptomReportForm />);
+    const focusable = getFocusableElements(document.body);
     if (focusable.length < 2) return;
 
     focusable[1].focus();
@@ -127,8 +129,8 @@ describe('KEY-01 — Orden de foco (Tab) en SymptomReportForm', () => {
   });
 
   it('el botón de envío es el último o está dentro del flujo Tab', () => {
-    const { container } = render(<SymptomReportForm />);
-    const submitBtn = container.querySelector('button[type="submit"], button');
+    render(<SymptomReportForm />);
+    const submitBtn = document.body.querySelector('button[type="submit"], button');
     if (submitBtn) {
       const tabIndex = submitBtn.getAttribute('tabindex');
       if (tabIndex !== null) {
@@ -217,8 +219,8 @@ describe('KEY-03 — Checkboxes: activables con Space', () => {
   });
 
   it('los checkboxes son elementos input[type=checkbox] nativos', () => {
-    const { container } = render(<SymptomReportForm />);
-    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+    render(<SymptomReportForm />);
+    const checkboxes = document.body.querySelectorAll('input[type="checkbox"]');
     if (checkboxes.length === 0) return; // Sin checkboxes en este form, skip
 
     checkboxes.forEach((cb) => {
@@ -228,12 +230,12 @@ describe('KEY-03 — Checkboxes: activables con Space', () => {
   });
 
   it('los checkboxes tienen un label asociado', () => {
-    const { container } = render(<SymptomReportForm />);
-    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+    render(<SymptomReportForm />);
+    const checkboxes = document.body.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach((cb) => {
       const id = cb.id;
       const hasLabel = id
-        ? container.querySelector(`label[for="${id}"]`) !== null
+        ? document.body.querySelector(`label[for="${id}"]`) !== null
         : false;
       const hasWrappingLabel = cb.closest('label') !== null;
       const hasAriaLabel = cb.hasAttribute('aria-label');
@@ -245,8 +247,8 @@ describe('KEY-03 — Checkboxes: activables con Space', () => {
   });
 
   it('Space cambia el estado del checkbox', () => {
-    const { container } = render(<SymptomReportForm />);
-    const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+    render(<SymptomReportForm />);
+    const checkboxes = document.body.querySelectorAll('input[type="checkbox"]');
     if (checkboxes.length === 0) return;
 
     const firstCb = checkboxes[0];
@@ -265,8 +267,8 @@ describe('KEY-03 — Checkboxes: activables con Space', () => {
 describe('KEY-04 — Selects: navegables con teclas de flecha', () => {
   it('SymptomReportForm: los selects son elementos select nativos', () => {
     const SymptomReportForm = require('../../components/SymptomReportForm').default;
-    const { container } = render(<SymptomReportForm />);
-    const selects = container.querySelectorAll('select');
+    render(<SymptomReportForm />);
+    const selects = document.body.querySelectorAll('select');
     selects.forEach((sel) => {
       expect(sel.tagName).toBe('SELECT');
       // Los selects nativos son navegables con flechas por el navegador
@@ -442,14 +444,16 @@ describe('KEY-08 — Sin trampa de foco (focus trap) fuera de modales', () => {
   it('SymptomReportForm: Tab puede salir del formulario', async () => {
     const user = userEvent.setup();
     const SymptomReportForm = require('../../components/SymptomReportForm').default;
-    const { container } = render(
+    render(
       <div>
         <SymptomReportForm />
         <button id="after-form">Después del form</button>
       </div>
     );
 
-    const focusable = getFocusableElements(container);
+    // SymptomReportForm renders via a portal to document.body, so the
+    // focusable elements span both the local tree and the portal content.
+    const focusable = getFocusableElements(document.body);
     if (focusable.length === 0) return;
 
     focusable[0].focus();
