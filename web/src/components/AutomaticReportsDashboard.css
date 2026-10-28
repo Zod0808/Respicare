@@ -656,12 +656,17 @@
    unchanged in dark mode, following the validated precedent from the
    .zone-risk / .alert-level badges in InteractiveHeatMap.css: the
    translucent tinted backgrounds read fine against both light and dark
-   card surfaces, so only plain text/surface colors need overrides here. */
+   card surfaces, so only plain text/surface colors need overrides here.
+
+   The Analytics tab content area keeps a light (#fffaf2) background in dark
+   mode by design (see Analytics.css), and this component's own root goes
+   transparent in dark mode too - so .dashboard-title/.dashboard-subtitle,
+   .loading and .empty-state (which sit directly on that light page
+   background, not inside a dark-bg'd card) are intentionally left out of
+   the cream overrides below and keep their default --rc-ink color. */
 .theme-dark .automatic-reports-dashboard,
 [data-theme="dark"] .automatic-reports-dashboard               { background: transparent; color: #f8f1e4; }
 
-.theme-dark .automatic-reports-dashboard .dashboard-title,
-[data-theme="dark"] .automatic-reports-dashboard .dashboard-title,
 .theme-dark .automatic-reports-dashboard .stat-value,
 [data-theme="dark"] .automatic-reports-dashboard .stat-value,
 .theme-dark .automatic-reports-dashboard .report-type-badge,
@@ -679,22 +684,14 @@
 .theme-dark .automatic-reports-dashboard .anomaly-explanation,
 [data-theme="dark"] .automatic-reports-dashboard .anomaly-explanation,
 .theme-dark .automatic-reports-dashboard .diagnosis-name,
-[data-theme="dark"] .automatic-reports-dashboard .diagnosis-name,
-.theme-dark .automatic-reports-dashboard .empty-state h3,
-[data-theme="dark"] .automatic-reports-dashboard .empty-state h3               { color: #f8f1e4; }
+[data-theme="dark"] .automatic-reports-dashboard .diagnosis-name               { color: #f8f1e4; }
 
-.theme-dark .automatic-reports-dashboard .dashboard-subtitle,
-[data-theme="dark"] .automatic-reports-dashboard .dashboard-subtitle,
 .theme-dark .automatic-reports-dashboard .stat-label,
 [data-theme="dark"] .automatic-reports-dashboard .stat-label,
 .theme-dark .automatic-reports-dashboard .report-period,
 [data-theme="dark"] .automatic-reports-dashboard .report-period,
 .theme-dark .automatic-reports-dashboard .metric-label-text,
 [data-theme="dark"] .automatic-reports-dashboard .metric-label-text,
-.theme-dark .automatic-reports-dashboard .loading,
-[data-theme="dark"] .automatic-reports-dashboard .loading,
-.theme-dark .automatic-reports-dashboard .empty-state,
-[data-theme="dark"] .automatic-reports-dashboard .empty-state,
 .theme-dark .automatic-reports-dashboard .modal-period,
 [data-theme="dark"] .automatic-reports-dashboard .modal-period,
 .theme-dark .automatic-reports-dashboard .detail-section-hint,
