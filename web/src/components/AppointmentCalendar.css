@@ -1,21 +1,42 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   RespiCare · AppointmentCalendar — "Clinical Breath"
+   Local --rc-* block (mirrors clinical.css/SymptomReportForm.css) so this
+   component looks correct whether it's embedded in a migrated clinical.css
+   page (AppointmentsPage) or the still-legacy Dashboard.
+   ────────────────────────────────────────────────────────────────────────── */
+
 .appointment-calendar {
-  background: #ffffff;
-  border-radius: 20px;
-  border: 1px solid #e3f2fd;
+  --rc-ink:          #152420;
+  --rc-paper:        #f8f1e4;
+  --rc-paper-dim:    #efe4d0;
+  --rc-petrol:       #103c37;
+  --rc-petrol-ink:   #0a2b27;
+  --rc-clay:         #d9683f;
+  --rc-clay-soft:    #f0a677;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body:    'Manrope', 'Segoe UI', sans-serif;
+
+  background: #fffaf2;
+  border-radius: 2px 20px 20px 20px;
+  border: 1px solid var(--rc-paper-dim);
   padding: 24px;
   margin-bottom: 40px;
-  box-shadow: 0 20px 50px rgba(33, 150, 243, 0.15);
+  font-family: var(--rc-font-body);
+  box-shadow: 0 14px 30px -18px rgba(16, 60, 55, 0.18);
 }
 
 .appointment-calendar header h3 {
   margin: 0 0 8px;
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  font-weight: 600;
   font-size: 1.8rem;
-  color: #0d47a1;
+  color: var(--rc-petrol-ink);
 }
 
 .appointment-calendar header p {
   margin: 0;
-  color: #607d8b;
+  color: rgba(21, 36, 32, 0.6);
 }
 
 .filters {
@@ -30,7 +51,7 @@
   display: flex;
   flex-direction: column;
   font-weight: 600;
-  color: #0d47a1;
+  color: var(--rc-petrol-ink);
   font-size: 0.95rem;
 }
 
@@ -38,15 +59,15 @@
   margin-top: 8px;
   padding: 10px 12px;
   border-radius: 10px;
-  border: 1px solid #bbdefb;
-  background: #f5faff;
-  transition: border 0.2s, box-shadow 0.2s;
+  border: 2px solid var(--rc-paper-dim);
+  background: var(--rc-paper);
+  font-family: inherit;
+  transition: border-color 0.2s;
 }
 
 .filters input:focus {
-  border-color: #2196f3;
+  border-color: var(--rc-clay);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
 }
 
 .filters .actions {
@@ -56,39 +77,42 @@
 }
 
 .filters button {
-  background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
-  color: #ffffff;
+  background: var(--rc-petrol);
+  color: #fffaf2;
   border: none;
-  border-radius: 8px;
-  padding: 10px 18px;
-  font-weight: 600;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-family: var(--rc-font-body);
+  font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(33, 150, 243, 0.3);
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 10px 22px -10px rgba(16, 60, 55, 0.45);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .filters button:hover {
+  background: var(--rc-clay);
   transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(33, 150, 243, 0.4);
+  box-shadow: 0 14px 26px -10px rgba(217, 104, 63, 0.5);
 }
 
 .alert {
   padding: 12px 16px;
-  border-radius: 10px;
+  border-radius: 2px 10px 10px 2px;
   margin-bottom: 20px;
-  font-weight: 600;
+  font-weight: 500;
+  border-left: 3px solid transparent;
 }
 
 .alert.success {
-  background: #e8f5e9;
-  color: #1b5e20;
-  border: 1px solid #a5d6a7;
+  background: rgba(16, 60, 55, 0.08);
+  color: var(--rc-petrol);
+  border-left-color: var(--rc-petrol);
 }
 
 .alert.error {
-  background: #ffebee;
-  color: #b71c1c;
-  border: 1px solid #ef9a9a;
+  background: #fdece3;
+  color: #8a2f10;
+  border-left-color: var(--rc-clay);
 }
 
 .calendar-grid {
@@ -99,21 +123,23 @@
 
 .appointments-card,
 .availability-card {
-  background: #f8faff;
-  border: 1px solid #e3f2fd;
-  border-radius: 16px;
+  background: var(--rc-paper);
+  border: 1px solid var(--rc-paper-dim);
+  border-radius: 2px 16px 16px 16px;
   padding: 18px;
 }
 
 .appointments-card h4,
 .availability-card h4 {
   margin: 0 0 12px;
-  color: #0d47a1;
+  font-family: var(--rc-font-display);
+  color: var(--rc-petrol-ink);
 }
 
 .empty {
-  color: #78909c;
+  color: rgba(21, 36, 32, 0.55);
   font-size: 0.95rem;
+  font-style: italic;
 }
 
 .appointments-card table {
@@ -124,13 +150,13 @@
 .appointments-card th,
 .appointments-card td {
   padding: 10px;
-  border-bottom: 1px solid #e3f2fd;
+  border-bottom: 1px solid var(--rc-paper-dim);
   font-size: 0.9rem;
 }
 
 .appointments-card th {
-  background: #e3f2fd;
-  color: #0d47a1;
+  background: rgba(16, 60, 55, 0.08);
+  color: var(--rc-petrol-ink);
   font-weight: 700;
 }
 
@@ -139,18 +165,20 @@
   font-weight: 700;
 }
 
+/* Same 4-tier semantics as clinical.css: petrol = active/completed,
+   clay = pending/needs-attention, neutral = cancelled/inactive. */
 .status-scheduled,
-.status-rescheduled {
-  color: #1976d2;
+.status-completed {
+  color: var(--rc-petrol);
 }
 
-.status-completed {
-  color: #2e7d32;
+.status-rescheduled {
+  color: var(--rc-clay);
 }
 
 .status-cancelled,
 .status-no_show {
-  color: #c62828;
+  color: rgba(21, 36, 32, 0.55);
 }
 
 .availability-card ul {
@@ -164,19 +192,19 @@
 .availability-card li {
   display: flex;
   justify-content: space-between;
-  background: #ffffff;
+  background: #fffaf2;
   border-radius: 10px;
   padding: 12px;
-  border: 1px solid #e3f2fd;
+  border: 1px solid var(--rc-paper-dim);
   font-size: 0.9rem;
 }
 
 .availability-card li.available {
-  border-left: 4px solid #43a047;
+  border-left: 4px solid var(--rc-petrol);
 }
 
 .availability-card li.busy {
-  border-left: 4px solid #ef6c00;
+  border-left: 4px solid var(--rc-clay);
 }
 
 .availability-card li strong {
@@ -203,59 +231,74 @@
   }
 }
 
-/* ── Dark mode — triggered by body.theme-dark OR data-theme="dark" ── */
+/* ── Dark mode ──────────────────────────────────────────────────── */
 .theme-dark .appointment-calendar,
-[data-theme="dark"] .appointment-calendar         { background: #1e293b; border-color: #334155; }
+[data-theme="dark"] .appointment-calendar          { background: #1c2823; border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.5); }
 
 .theme-dark .appointment-calendar header h3,
-[data-theme="dark"] .appointment-calendar header h3 { color: #f9fafb; }
+[data-theme="dark"] .appointment-calendar header h3 { color: #f8f1e4; }
 
 .theme-dark .appointment-calendar header p,
-[data-theme="dark"] .appointment-calendar header p  { color: #9ca3af; }
+[data-theme="dark"] .appointment-calendar header p  { color: rgba(248, 241, 228, 0.65); }
 
 .theme-dark .filters label,
-[data-theme="dark"] .filters label                { color: #e5e7eb; }
+[data-theme="dark"] .filters label                 { color: #f8f1e4; }
 
 .theme-dark .filters input,
-[data-theme="dark"] .filters input                { background: #0f172a; border-color: #334155; color: #e5e7eb; }
+[data-theme="dark"] .filters input                 { background: #16201d; border-color: rgba(255, 255, 255, 0.12); color: #f8f1e4; }
 
 .theme-dark .alert.success,
-[data-theme="dark"] .alert.success                { background: #0f3324; color: #6ee7a0; border-color: #166534; }
+[data-theme="dark"] .alert.success                 { background: rgba(240, 166, 119, 0.12); color: var(--rc-clay-soft); border-left-color: var(--rc-clay-soft); }
 
 .theme-dark .alert.error,
-[data-theme="dark"] .alert.error                  { background: #450a0a; color: #fca5a5; border-color: #7f1d1d; }
+[data-theme="dark"] .alert.error                   { background: #2e130a; color: #f3a98f; border-left-color: var(--rc-clay-soft); }
 
 .theme-dark .appointments-card,
 [data-theme="dark"] .appointments-card,
 .theme-dark .availability-card,
-[data-theme="dark"] .availability-card            { background: #0f172a; border-color: #334155; }
+[data-theme="dark"] .availability-card             { background: #16201d; border-color: rgba(255, 255, 255, 0.08); }
 
 .theme-dark .appointments-card h4,
 [data-theme="dark"] .appointments-card h4,
 .theme-dark .availability-card h4,
-[data-theme="dark"] .availability-card h4         { color: #f9fafb; }
+[data-theme="dark"] .availability-card h4          { color: #f8f1e4; }
 
 .theme-dark .empty,
-[data-theme="dark"] .empty                        { color: #9ca3af; }
+[data-theme="dark"] .empty                         { color: rgba(248, 241, 228, 0.5); }
 
 .theme-dark .appointments-card th,
 [data-theme="dark"] .appointments-card th,
 .theme-dark .appointments-card td,
-[data-theme="dark"] .appointments-card td         { border-color: #334155; color: #e5e7eb; }
+[data-theme="dark"] .appointments-card td          { border-color: rgba(255, 255, 255, 0.08); color: #f8f1e4; }
 
 .theme-dark .appointments-card th,
-[data-theme="dark"] .appointments-card th         { background: #1e293b; color: #f9fafb; }
+[data-theme="dark"] .appointments-card th          { background: rgba(255, 255, 255, 0.06); color: #f8f1e4; }
+
+/* .appointments-card prefix needed: specificity must beat the generic
+   `.theme-dark .appointments-card td` color rule above, since `status`
+   and `status-*` are classes on the <td> itself, not a nested span. */
+.theme-dark .appointments-card .status-scheduled,
+[data-theme="dark"] .appointments-card .status-scheduled,
+.theme-dark .appointments-card .status-completed,
+[data-theme="dark"] .appointments-card .status-completed               { color: var(--rc-clay-soft); }
+
+.theme-dark .appointments-card .status-rescheduled,
+[data-theme="dark"] .appointments-card .status-rescheduled             { color: var(--rc-clay-soft); }
+
+.theme-dark .appointments-card .status-cancelled,
+[data-theme="dark"] .appointments-card .status-cancelled,
+.theme-dark .appointments-card .status-no_show,
+[data-theme="dark"] .appointments-card .status-no_show                 { color: rgba(248, 241, 228, 0.6); }
 
 .theme-dark .availability-card li,
-[data-theme="dark"] .availability-card li         { background: #1e293b; border-color: #334155; color: #e5e7eb; }
+[data-theme="dark"] .availability-card li          { background: #1c2823; border-color: rgba(255, 255, 255, 0.08); }
 
 /* Fallback for system preference when no class is set */
 @media (prefers-color-scheme: dark) {
-  body:not(.theme-light) .appointment-calendar       { background: #1e293b; border-color: #334155; }
-  body:not(.theme-light) .appointment-calendar header h3 { color: #f9fafb; }
+  body:not(.theme-light) .appointment-calendar        { background: #1c2823; border-color: rgba(255, 255, 255, 0.08); }
+  body:not(.theme-light) .appointment-calendar header h3 { color: #f8f1e4; }
   body:not(.theme-light) .appointments-card,
-  body:not(.theme-light) .availability-card          { background: #0f172a; border-color: #334155; }
-  body:not(.theme-light) .appointments-card th       { background: #1e293b; color: #f9fafb; }
-  body:not(.theme-light) .appointments-card td       { color: #e5e7eb; }
+  body:not(.theme-light) .availability-card           { background: #16201d; border-color: rgba(255, 255, 255, 0.08); }
+  body:not(.theme-light) .appointments-card th        { background: rgba(255, 255, 255, 0.06); color: #f8f1e4; }
+  body:not(.theme-light) .appointments-card td        { color: #f8f1e4; }
 }
-
