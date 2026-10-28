@@ -214,23 +214,23 @@ function EpidemiologicalHeatmap() {
   const getSeverityColor = (severity) => {
     switch (severity?.toLowerCase()) {
       case 'high':
-        return '#ef4444';
+        return '#8a2f10';
       case 'medium':
-        return '#f97316';
+        return '#d9683f';
       case 'low':
-        return '#22c55e';
+        return '#103c37';
       default:
-        return '#6b7280';
+        return '#a3998a';
     }
   };
 
   const getIntensityColor = (value, max) => {
-    if (max === 0) return '#e5e7eb';
+    if (max === 0) return '#efe4d0';
     const intensity = value / max;
-    if (intensity > 0.7) return '#ef4444';
-    if (intensity > 0.4) return '#f97316';
-    if (intensity > 0.2) return '#fbbf24';
-    return '#22c55e';
+    if (intensity > 0.7) return '#8a2f10';
+    if (intensity > 0.4) return '#d9683f';
+    if (intensity > 0.2) return '#f0a677';
+    return '#103c37';
   };
 
   const renderHeatmap = () => {
@@ -270,26 +270,26 @@ function EpidemiologicalHeatmap() {
         return (
           <ResponsiveContainer width="100%" height={400}>
             <BarChart data={temporalHeatmapData} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#efe4d0" />
               <XAxis
                 dataKey="date"
-                stroke="#6b7280"
+                stroke="#152420"
                 style={{ fontSize: '12px' }}
                 angle={-45}
                 textAnchor="end"
                 height={100}
               />
-              <YAxis stroke="#6b7280" style={{ fontSize: '12px' }} />
+              <YAxis stroke="#152420" style={{ fontSize: '12px' }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                  border: '1px solid #e5e7eb',
+                  backgroundColor: 'rgba(255, 250, 242, 0.95)',
+                  border: '1px solid #efe4d0',
                   borderRadius: '8px',
                   padding: '12px',
                 }}
               />
               <Legend />
-              <Bar dataKey="count" fill="#2563eb" radius={[8, 8, 0, 0]}>
+              <Bar dataKey="count" fill="#103c37" radius={[8, 8, 0, 0]}>
                 {temporalHeatmapData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={getSeverityColor(entry.severity)} />
                 ))}
@@ -302,24 +302,24 @@ function EpidemiologicalHeatmap() {
         return (
           <ResponsiveContainer width="100%" height={400}>
             <BarChart data={severityData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="severity" stroke="#6b7280" style={{ fontSize: '12px' }} />
-              <YAxis stroke="#6b7280" style={{ fontSize: '12px' }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#efe4d0" />
+              <XAxis dataKey="severity" stroke="#152420" style={{ fontSize: '12px' }} />
+              <YAxis stroke="#152420" style={{ fontSize: '12px' }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                  border: '1px solid #e5e7eb',
+                  backgroundColor: 'rgba(255, 250, 242, 0.95)',
+                  border: '1px solid #efe4d0',
                   borderRadius: '8px',
                   padding: '12px',
                 }}
               />
               <Legend />
-              <Bar dataKey="total" fill="#2563eb" radius={[8, 8, 0, 0]}>
+              <Bar dataKey="total" fill="#103c37" radius={[8, 8, 0, 0]}>
                 {severityData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={getSeverityColor(entry.severity)} />
                 ))}
               </Bar>
-              <Bar dataKey="districts" fill="#6b7280" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="districts" fill="#a3998a" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         );
@@ -328,28 +328,28 @@ function EpidemiologicalHeatmap() {
         return (
           <ResponsiveContainer width="100%" height={400}>
             <BarChart data={correlationData} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#efe4d0" />
               <XAxis
                 dataKey="location"
-                stroke="#6b7280"
+                stroke="#152420"
                 style={{ fontSize: '12px' }}
                 angle={-45}
                 textAnchor="end"
                 height={100}
               />
-              <YAxis stroke="#6b7280" style={{ fontSize: '12px' }} />
+              <YAxis stroke="#152420" style={{ fontSize: '12px' }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                  border: '1px solid #e5e7eb',
+                  backgroundColor: 'rgba(255, 250, 242, 0.95)',
+                  border: '1px solid #efe4d0',
                   borderRadius: '8px',
                   padding: '12px',
                 }}
               />
               <Legend />
-              <Bar dataKey="highSeverityRate" stackId="a" fill="#ef4444" />
-              <Bar dataKey="mediumSeverityRate" stackId="a" fill="#f97316" />
-              <Bar dataKey="lowSeverityRate" stackId="a" fill="#22c55e" />
+              <Bar dataKey="highSeverityRate" stackId="a" fill="#8a2f10" />
+              <Bar dataKey="mediumSeverityRate" stackId="a" fill="#d9683f" />
+              <Bar dataKey="lowSeverityRate" stackId="a" fill="#103c37" />
             </BarChart>
           </ResponsiveContainer>
         );
@@ -504,19 +504,19 @@ function EpidemiologicalHeatmap() {
           <h4>Leyenda de Intensidad</h4>
           <div className="legend-items">
             <div className="legend-item">
-              <div className="legend-color" style={{ backgroundColor: '#ef4444' }} />
+              <div className="legend-color" style={{ backgroundColor: '#8a2f10' }} />
               <span>Alta Intensidad (&gt;70%)</span>
             </div>
             <div className="legend-item">
-              <div className="legend-color" style={{ backgroundColor: '#f97316' }} />
+              <div className="legend-color" style={{ backgroundColor: '#d9683f' }} />
               <span>Media Intensidad (40-70%)</span>
             </div>
             <div className="legend-item">
-              <div className="legend-color" style={{ backgroundColor: '#fbbf24' }} />
+              <div className="legend-color" style={{ backgroundColor: '#f0a677' }} />
               <span>Baja Intensidad (20-40%)</span>
             </div>
             <div className="legend-item">
-              <div className="legend-color" style={{ backgroundColor: '#22c55e' }} />
+              <div className="legend-color" style={{ backgroundColor: '#103c37' }} />
               <span>Muy Baja Intensidad (&lt;20%)</span>
             </div>
           </div>

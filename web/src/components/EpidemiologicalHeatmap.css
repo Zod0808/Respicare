@@ -1,41 +1,74 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   RespiCare · EpidemiologicalHeatmap — "Clinical Breath"
+   Unlike AnalyticsDashboard/TemporalTrends/DiseaseReports (Phases 9-11),
+   this component ships its own genuine dark-mode overrides rather than
+   relying on Analytics.css's --color-* reset, so it gets a real
+   .theme-dark block here (same convention as AppointmentCalendar.css).
+
+   All selectors below are scoped under .epidemiological-heatmap: several
+   generic class names here (.chart-header, .chart-subtitle, .control-group,
+   .control-select, .stat-card, ...) are reused unscoped by sibling tab
+   components (e.g. AnalyticsDashboard.css), and those files are
+   light-island-only with no dark-mode counterpart — leaving a bare
+   selector here would let their light-mode-only declarations (e.g.
+   .chart-header's cream background) leak in and silently win in dark mode.
+   ────────────────────────────────────────────────────────────────────────── */
+
 .epidemiological-heatmap {
+  --rc-ink:          #152420;
+  --rc-paper:        #f8f1e4;
+  --rc-paper-dim:    #efe4d0;
+  --rc-petrol:       #103c37;
+  --rc-petrol-ink:   #0a2b27;
+  --rc-clay:         #d9683f;
+  --rc-clay-soft:    #f0a677;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body:    'Manrope', 'Segoe UI', sans-serif;
+
   padding: 24px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: #fffaf2;
+  border-radius: 2px 16px 16px 16px;
+  box-shadow: 0 14px 30px -18px rgba(16, 60, 55, 0.18);
+  border: 1px solid var(--rc-paper-dim);
   margin-bottom: 24px;
+  font-family: var(--rc-font-body);
 }
 
-.chart-header {
+.epidemiological-heatmap .chart-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 24px;
   padding-bottom: 16px;
-  border-bottom: 2px solid #e5e7eb;
+  border-bottom: 2px solid var(--rc-paper-dim);
+  /* AnalyticsDashboard.css declares an unscoped .chart-header background;
+     this explicit transparent neutralizes that cross-file leak. */
+  background: transparent;
 }
 
-.chart-header h3 {
+.epidemiological-heatmap .chart-header h3 {
   margin: 0 0 8px 0;
-  font-size: 24px;
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--rc-petrol-ink);
 }
 
-.chart-subtitle {
+.epidemiological-heatmap .chart-subtitle {
   margin: 0;
   font-size: 14px;
-  color: #6b7280;
+  color: rgba(21, 36, 32, 0.6);
 }
 
-.chart-actions {
+.epidemiological-heatmap .chart-actions {
   display: flex;
   gap: 8px;
 }
 
-.btn-refresh {
-  background: #f3f4f6;
-  border: 1px solid #d1d5db;
+.epidemiological-heatmap .btn-refresh {
+  background: var(--rc-paper);
+  border: 1px solid var(--rc-paper-dim);
   border-radius: 8px;
   padding: 8px 12px;
   cursor: pointer;
@@ -43,144 +76,149 @@
   transition: all 0.2s;
 }
 
-.btn-refresh:hover {
-  background: #e5e7eb;
+.epidemiological-heatmap .btn-refresh:hover {
+  background: var(--rc-paper-dim);
   transform: rotate(90deg);
 }
 
-.chart-controls {
+.epidemiological-heatmap .chart-controls {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 24px;
   padding: 16px;
-  background: #f9fafb;
-  border-radius: 8px;
+  background: var(--rc-paper);
+  border-radius: 10px;
 }
 
-.control-group {
+.epidemiological-heatmap .control-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
   min-width: 150px;
 }
 
-.control-group label {
+.epidemiological-heatmap .control-group label {
   font-size: 14px;
-  font-weight: 500;
-  color: #374151;
+  font-weight: 600;
+  color: var(--rc-petrol-ink);
 }
 
-.control-select {
+.epidemiological-heatmap .control-select {
   padding: 8px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border: 2px solid var(--rc-paper-dim);
+  border-radius: 8px;
   font-size: 14px;
-  background: #ffffff;
-  color: #111827;
+  background: #fffaf2;
+  color: var(--rc-ink);
+  font-family: inherit;
   cursor: pointer;
   transition: border-color 0.2s;
 }
 
-.control-select:hover {
-  border-color: #2563eb;
+.epidemiological-heatmap .control-select:hover {
+  border-color: var(--rc-clay);
 }
 
-.control-select:focus {
+.epidemiological-heatmap .control-select:focus {
   outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  border-color: var(--rc-clay);
+  box-shadow: 0 0 0 3px rgba(217, 104, 63, 0.15);
 }
 
-.heatmap-stats {
+.epidemiological-heatmap .heatmap-stats {
   display: flex;
   gap: 16px;
   margin-bottom: 24px;
   flex-wrap: wrap;
 }
 
-.stat-card {
+.epidemiological-heatmap .stat-card {
   flex: 1;
   min-width: 150px;
   padding: 16px;
-  background: #f9fafb;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  background: var(--rc-paper);
+  border-radius: 10px;
+  border: 1px solid var(--rc-paper-dim);
   text-align: center;
 }
 
-.stat-card.warning {
-  border-color: #f97316;
-  background: #fff7ed;
+.epidemiological-heatmap .stat-card.warning {
+  border-color: var(--rc-clay);
+  background: rgba(240, 166, 119, 0.18);
 }
 
-.stat-value {
+.epidemiological-heatmap .stat-value {
   display: block;
   font-size: 28px;
-  font-weight: 600;
-  color: #111827;
+  font-weight: 700;
+  color: var(--rc-petrol-ink);
   margin-bottom: 4px;
 }
 
-.stat-label {
+.epidemiological-heatmap .stat-label {
   display: block;
   font-size: 12px;
-  color: #6b7280;
+  color: rgba(21, 36, 32, 0.6);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.chart-container {
+.epidemiological-heatmap .chart-container {
   margin-bottom: 24px;
   min-height: 400px;
+  /* TemporalTrends.css/DiseaseReports.css declare an unscoped
+     .chart-container background; this explicit transparent neutralizes
+     that cross-file leak. */
+  background: transparent;
 }
 
-.geographic-heatmap {
+.epidemiological-heatmap .geographic-heatmap {
   width: 100%;
 }
 
-.heatmap-grid {
+.epidemiological-heatmap .heatmap-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
   margin-bottom: 24px;
 }
 
-.heatmap-cell {
+.epidemiological-heatmap .heatmap-cell {
   padding: 16px;
-  border-radius: 8px;
-  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  border: 2px solid var(--rc-paper-dim);
   transition: all 0.2s;
   cursor: pointer;
-  color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  color: #fffaf2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.heatmap-cell:hover {
+.epidemiological-heatmap .heatmap-cell:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 14px 28px -16px rgba(16, 60, 55, 0.4);
 }
 
-.cell-label {
+.epidemiological-heatmap .cell-label {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 8px;
 }
 
-.cell-value {
+.epidemiological-heatmap .cell-value {
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 8px;
 }
 
-.cell-details {
+.epidemiological-heatmap .cell-details {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
   margin-top: 8px;
 }
 
-.severity-badge {
+.epidemiological-heatmap .severity-badge {
   display: inline-block;
   padding: 2px 6px;
   border-radius: 4px;
@@ -190,9 +228,9 @@
   backdrop-filter: blur(4px);
 }
 
-.chart-loading,
-.chart-error,
-.chart-empty {
+.epidemiological-heatmap .chart-loading,
+.epidemiological-heatmap .chart-error,
+.epidemiological-heatmap .chart-empty {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -201,138 +239,144 @@
   padding: 48px;
 }
 
-.chart-loading .spinner {
+.epidemiological-heatmap .chart-loading .spinner {
   width: 48px;
   height: 48px;
-  border: 4px solid #e5e7eb;
-  border-top-color: #2563eb;
+  border: 4px solid var(--rc-paper-dim);
+  border-top-color: var(--rc-petrol);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: epi-heatmap-spin 1s linear infinite;
 }
 
-@keyframes spin {
+@keyframes epi-heatmap-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-.chart-loading p {
+.epidemiological-heatmap .chart-loading p {
   margin-top: 16px;
-  color: #6b7280;
+  color: rgba(21, 36, 32, 0.6);
   font-size: 14px;
 }
 
-.chart-error {
-  color: #dc2626;
+.epidemiological-heatmap .chart-error {
+  color: #8a2f10;
 }
 
-.chart-error button {
+.epidemiological-heatmap .chart-error button {
   margin-top: 16px;
   padding: 8px 16px;
-  background: #dc2626;
-  color: #ffffff;
+  background: #8a2f10;
+  color: #fffaf2;
   border: none;
-  border-radius: 6px;
+  border-radius: 999px;
+  font-family: var(--rc-font-body);
+  font-weight: 700;
   cursor: pointer;
   font-size: 14px;
   transition: background 0.2s;
 }
 
-.chart-error button:hover {
-  background: #b91c1c;
+.epidemiological-heatmap .chart-error button:hover {
+  background: #6e2409;
 }
 
-.chart-empty {
-  color: #6b7280;
+.epidemiological-heatmap .chart-empty {
+  color: rgba(21, 36, 32, 0.6);
   font-size: 14px;
 }
 
-.heatmap-legend {
+.epidemiological-heatmap .heatmap-legend {
   margin-top: 24px;
   padding-top: 24px;
-  border-top: 2px solid #e5e7eb;
+  border-top: 2px solid var(--rc-paper-dim);
 }
 
-.heatmap-legend h4 {
+.epidemiological-heatmap .heatmap-legend h4 {
   margin: 0 0 16px 0;
+  font-family: var(--rc-font-display);
+  font-style: italic;
   font-size: 18px;
   font-weight: 600;
-  color: #111827;
+  color: var(--rc-petrol-ink);
 }
 
-.legend-items {
+.epidemiological-heatmap .legend-items {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
 }
 
-.legend-item {
+.epidemiological-heatmap .legend-item {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: #6b7280;
+  color: rgba(21, 36, 32, 0.6);
 }
 
-.legend-color {
+.epidemiological-heatmap .legend-color {
   width: 24px;
   height: 24px;
   border-radius: 4px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--rc-paper-dim);
 }
 
 /* ── Dark mode ── */
 .theme-dark .epidemiological-heatmap,
-[data-theme="dark"] .epidemiological-heatmap { background: #1e293b; }
+[data-theme="dark"] .epidemiological-heatmap { background: #1c2823; border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.5); }
 
-.theme-dark .chart-header,
-[data-theme="dark"] .chart-header,
-.theme-dark .heatmap-legend,
-[data-theme="dark"] .heatmap-legend          { border-color: #334155; }
+.theme-dark .epidemiological-heatmap .chart-header,
+[data-theme="dark"] .epidemiological-heatmap .chart-header,
+.theme-dark .epidemiological-heatmap .heatmap-legend,
+[data-theme="dark"] .epidemiological-heatmap .heatmap-legend          { border-color: rgba(255, 255, 255, 0.08); }
 
-.theme-dark .chart-header h3,
-[data-theme="dark"] .chart-header h3,
-.theme-dark .heatmap-legend h4,
-[data-theme="dark"] .heatmap-legend h4       { color: #f9fafb; }
+.theme-dark .epidemiological-heatmap .chart-header h3,
+[data-theme="dark"] .epidemiological-heatmap .chart-header h3,
+.theme-dark .epidemiological-heatmap .heatmap-legend h4,
+[data-theme="dark"] .epidemiological-heatmap .heatmap-legend h4       { color: #f8f1e4; }
 
-.theme-dark .chart-subtitle,
-[data-theme="dark"] .chart-subtitle,
-.theme-dark .legend-item,
-[data-theme="dark"] .legend-item,
-.theme-dark .chart-empty,
-[data-theme="dark"] .chart-empty,
-.theme-dark .chart-loading p,
-[data-theme="dark"] .chart-loading p,
-.theme-dark .stat-label,
-[data-theme="dark"] .stat-label               { color: #9ca3af; }
+.theme-dark .epidemiological-heatmap .chart-subtitle,
+[data-theme="dark"] .epidemiological-heatmap .chart-subtitle,
+.theme-dark .epidemiological-heatmap .legend-item,
+[data-theme="dark"] .epidemiological-heatmap .legend-item,
+.theme-dark .epidemiological-heatmap .chart-empty,
+[data-theme="dark"] .epidemiological-heatmap .chart-empty,
+.theme-dark .epidemiological-heatmap .chart-loading p,
+[data-theme="dark"] .epidemiological-heatmap .chart-loading p,
+.theme-dark .epidemiological-heatmap .stat-label,
+[data-theme="dark"] .epidemiological-heatmap .stat-label               { color: rgba(248, 241, 228, 0.65); }
 
-.theme-dark .btn-refresh,
-[data-theme="dark"] .btn-refresh             { background: #0f172a; border-color: #334155; color: #e5e7eb; }
+.theme-dark .epidemiological-heatmap .btn-refresh,
+[data-theme="dark"] .epidemiological-heatmap .btn-refresh             { background: #16201d; border-color: rgba(255, 255, 255, 0.12); color: #f8f1e4; }
 
-.theme-dark .btn-refresh:hover,
-[data-theme="dark"] .btn-refresh:hover       { background: #273449; }
+.theme-dark .epidemiological-heatmap .btn-refresh:hover,
+[data-theme="dark"] .epidemiological-heatmap .btn-refresh:hover       { background: #1c2823; }
 
-.theme-dark .chart-controls,
-[data-theme="dark"] .chart-controls          { background: #0f172a; }
+.theme-dark .epidemiological-heatmap .chart-controls,
+[data-theme="dark"] .epidemiological-heatmap .chart-controls          { background: #16201d; }
 
-.theme-dark .control-group label,
-[data-theme="dark"] .control-group label     { color: #9ca3af; }
+.theme-dark .epidemiological-heatmap .control-group label,
+[data-theme="dark"] .epidemiological-heatmap .control-group label     { color: rgba(248, 241, 228, 0.65); }
 
-.theme-dark .control-select,
-[data-theme="dark"] .control-select          { background: #1e293b; border-color: #334155; color: #e5e7eb; }
+.theme-dark .epidemiological-heatmap .control-select,
+[data-theme="dark"] .epidemiological-heatmap .control-select          { background: #1c2823; border-color: rgba(255, 255, 255, 0.12); color: #f8f1e4; }
 
-.theme-dark .stat-card,
-[data-theme="dark"] .stat-card               { background: #0f172a; border-color: #334155; }
+.theme-dark .epidemiological-heatmap .stat-card,
+[data-theme="dark"] .epidemiological-heatmap .stat-card               { background: #16201d; border-color: rgba(255, 255, 255, 0.08); }
 
-.theme-dark .stat-card.warning,
-[data-theme="dark"] .stat-card.warning       { background: #3a2410; border-color: #f97316; }
+.theme-dark .epidemiological-heatmap .stat-card.warning,
+[data-theme="dark"] .epidemiological-heatmap .stat-card.warning       { background: rgba(217, 104, 63, 0.14); border-color: var(--rc-clay-soft); }
 
-.theme-dark .stat-value,
-[data-theme="dark"] .stat-value              { color: #f9fafb; }
+.theme-dark .epidemiological-heatmap .stat-value,
+[data-theme="dark"] .epidemiological-heatmap .stat-value              { color: #f8f1e4; }
 
-.theme-dark .chart-loading .spinner,
-[data-theme="dark"] .chart-loading .spinner  { border-color: #334155; }
+.theme-dark .epidemiological-heatmap .heatmap-cell,
+[data-theme="dark"] .epidemiological-heatmap .heatmap-cell            { border-color: rgba(255, 255, 255, 0.12); }
 
-.theme-dark .legend-color,
-[data-theme="dark"] .legend-color            { border-color: #334155; }
+.theme-dark .epidemiological-heatmap .chart-loading .spinner,
+[data-theme="dark"] .epidemiological-heatmap .chart-loading .spinner  { border-color: rgba(255, 255, 255, 0.12); }
 
+.theme-dark .epidemiological-heatmap .legend-color,
+[data-theme="dark"] .epidemiological-heatmap .legend-color            { border-color: rgba(255, 255, 255, 0.12); }
