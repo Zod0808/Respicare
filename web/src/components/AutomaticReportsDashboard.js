@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import './AutomaticReportsDashboard.css';
 import { API_BASE } from '../utils/apiBase';
+import { useThemeContext } from './ThemeProvider';
 
 const REPORT_TYPES = {
   daily: 'Diario',
@@ -19,19 +20,39 @@ const REPORT_TYPES = {
   monthly: 'Mensual',
 };
 
+/* Light-mode badge colors (STATUS_CONFIG/SEVERITY_CONFIG) are applied via
+   inline style, so they bypass the CSS cascade and can't be overridden by
+   the .theme-dark/[data-theme="dark"] stylesheet rules. Each has a
+   *_CONFIG_DARK counterpart below, picked at render time via
+   useThemeContext(), so badges stay legible against dark card backgrounds. */
 const STATUS_CONFIG = {
-  pending: { label: 'Pendiente', color: '#f59e0b', bg: '#fef3c7', icon: '⏳' },
-  generating: { label: 'Generando', color: '#3b82f6', bg: '#dbeafe', icon: '⚙️' },
-  completed: { label: 'Completado', color: '#10b981', bg: '#d1fae5', icon: '✓' },
-  failed: { label: 'Fallido', color: '#ef4444', bg: '#fee2e2', icon: '✗' },
-  exported: { label: 'Exportado', color: '#8b5cf6', bg: '#ede9fe', icon: '↓' },
+  pending: { label: 'Pendiente', color: 'rgba(21, 36, 32, 0.55)', bg: 'rgba(21, 36, 32, 0.06)', icon: '⏳' },
+  generating: { label: 'Generando', color: '#b85530', bg: 'rgba(217, 104, 63, 0.14)', icon: '⚙️' },
+  completed: { label: 'Completado', color: '#103c37', bg: 'rgba(16, 60, 55, 0.1)', icon: '✓' },
+  failed: { label: 'Fallido', color: '#8a2f10', bg: 'rgba(138, 47, 16, 0.12)', icon: '✗' },
+  exported: { label: 'Exportado', color: '#0a2b27', bg: 'rgba(10, 43, 39, 0.12)', icon: '↓' },
+};
+
+const STATUS_CONFIG_DARK = {
+  pending: { label: 'Pendiente', color: 'rgba(248, 241, 228, 0.6)', bg: 'rgba(248, 241, 228, 0.08)', icon: '⏳' },
+  generating: { label: 'Generando', color: '#f0a677', bg: 'rgba(240, 166, 119, 0.2)', icon: '⚙️' },
+  completed: { label: 'Completado', color: '#f0a677', bg: 'rgba(240, 166, 119, 0.12)', icon: '✓' },
+  failed: { label: 'Fallido', color: '#f3a98f', bg: '#2e130a', icon: '✗' },
+  exported: { label: 'Exportado', color: 'rgba(248, 241, 228, 0.85)', bg: 'rgba(248, 241, 228, 0.12)', icon: '↓' },
 };
 
 const SEVERITY_CONFIG = {
-  low: { label: 'Leve', color: '#f59e0b', bg: '#fef3c7', icon: '●' },
-  medium: { label: 'Moderado', color: '#f97316', bg: '#ffedd5', icon: '●●' },
-  high: { label: 'Alto', color: '#ef4444', bg: '#fee2e2', icon: '●●●' },
-  critical: { label: 'Crítico', color: '#dc2626', bg: '#fee2e2', icon: '⚠' },
+  low: { label: 'Leve', color: '#103c37', bg: 'rgba(16, 60, 55, 0.08)', icon: '●' },
+  medium: { label: 'Moderado', color: '#b85530', bg: 'rgba(217, 104, 63, 0.14)', icon: '●●' },
+  high: { label: 'Alto', color: '#8a2f10', bg: 'rgba(138, 47, 16, 0.12)', icon: '●●●' },
+  critical: { label: 'Crítico', color: '#5c1d0a', bg: 'rgba(92, 29, 10, 0.16)', icon: '⚠' },
+};
+
+const SEVERITY_CONFIG_DARK = {
+  low: { label: 'Leve', color: '#f0a677', bg: 'rgba(240, 166, 119, 0.1)', icon: '●' },
+  medium: { label: 'Moderado', color: '#f0a677', bg: 'rgba(240, 166, 119, 0.2)', icon: '●●' },
+  high: { label: 'Alto', color: '#f3a98f', bg: '#2e130a', icon: '●●●' },
+  critical: { label: 'Crítico', color: '#ff9c75', bg: '#3d1309', icon: '⚠' },
 };
 
 const METRIC_LABELS = {
@@ -83,7 +104,9 @@ function formatPercentage(value) {
 }
 
 function ReportSummaryBadge({ report }) {
-  const statusCfg = STATUS_CONFIG[report.status] || STATUS_CONFIG.pending;
+  const { theme } = useThemeContext();
+  const statusConfigSet = theme.mode === 'dark' ? STATUS_CONFIG_DARK : STATUS_CONFIG;
+  const statusCfg = statusConfigSet[report.status] || statusConfigSet.pending;
   const typeCfg = REPORT_TYPES[report.reportType] || report.reportType;
   const anomalyCount = report.anomalies?.length || 0;
 
@@ -160,6 +183,8 @@ function ReportSummaryBadge({ report }) {
 }
 
 function ReportDetailModal({ report, onClose }) {
+  const { theme } = useThemeContext();
+  const severityConfigSet = theme.mode === 'dark' ? SEVERITY_CONFIG_DARK : SEVERITY_CONFIG;
   if (!report) return null;
   const m = report.metrics || {};
   const grow = m.growthMetrics || {};
@@ -287,7 +312,7 @@ function ReportDetailModal({ report, onClose }) {
               </p>
               <div className="anomalies-list">
                 {report.anomalies.map((anomaly, index) => {
-                  const sev = SEVERITY_CONFIG[anomaly.severity] || SEVERITY_CONFIG.low;
+                  const sev = severityConfigSet[anomaly.severity] || severityConfigSet.low;
                   return (
                     <div
                       key={index}

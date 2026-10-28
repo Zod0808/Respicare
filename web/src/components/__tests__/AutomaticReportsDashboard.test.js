@@ -6,6 +6,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import AutomaticReportsDashboard from '../AutomaticReportsDashboard';
+import { ThemeProvider } from '../ThemeProvider';
 
 jest.mock('axios');
 jest.mock('../../utils/apiBase', () => ({ API_BASE: 'http://test-api' }));
@@ -14,6 +15,10 @@ global.URL.createObjectURL = jest.fn(() => 'blob:mock-url');
 global.URL.revokeObjectURL = jest.fn();
 
 const mockedAxios = axios;
+
+function renderWithTheme(ui) {
+  return render(<ThemeProvider>{ui}</ThemeProvider>);
+}
 
 describe('AutomaticReportsDashboard', () => {
   const mockReports = [
@@ -58,12 +63,12 @@ describe('AutomaticReportsDashboard', () => {
 
   it('should render loading state initially', () => {
     mockedAxios.get.mockImplementation(() => new Promise(() => {}));
-    render(<AutomaticReportsDashboard />);
+    renderWithTheme(<AutomaticReportsDashboard />);
     expect(screen.getByText(/cargando reportes/i)).toBeInTheDocument();
   });
 
   it('should fetch and display reports', async () => {
-    render(<AutomaticReportsDashboard autoRefresh={false} />);
+    renderWithTheme(<AutomaticReportsDashboard autoRefresh={false} />);
     await waitFor(() => expect(mockedAxios.get).toHaveBeenCalled());
     expect(mockedAxios.get).toHaveBeenCalledWith(
       expect.stringContaining('reports/automatic'),
@@ -72,22 +77,22 @@ describe('AutomaticReportsDashboard', () => {
   });
 
   it('should display stats total after load', async () => {
-    render(<AutomaticReportsDashboard autoRefresh={false} />);
+    renderWithTheme(<AutomaticReportsDashboard autoRefresh={false} />);
     await waitFor(() => expect(screen.getAllByText('10').length).toBeGreaterThan(0));
   });
 
   it('should display stats by type', async () => {
-    render(<AutomaticReportsDashboard autoRefresh={false} />);
+    renderWithTheme(<AutomaticReportsDashboard autoRefresh={false} />);
     await waitFor(() => expect(screen.getAllByText('5').length).toBeGreaterThan(0));
   });
 
   it('should filter reports - all button exists', async () => {
-    render(<AutomaticReportsDashboard autoRefresh={false} />);
+    renderWithTheme(<AutomaticReportsDashboard autoRefresh={false} />);
     await waitFor(() => expect(screen.getByText('Todos')).toBeInTheDocument());
   });
 
   it('should filter reports - clicking Diarios filters by daily', async () => {
-    render(<AutomaticReportsDashboard autoRefresh={false} />);
+    renderWithTheme(<AutomaticReportsDashboard autoRefresh={false} />);
     await waitFor(() => screen.getByText('Todos'));
     const dailyBtn = screen.getAllByText(/diarios/i).find(el => el.tagName === 'BUTTON');
     fireEvent.click(dailyBtn);
@@ -100,7 +105,7 @@ describe('AutomaticReportsDashboard', () => {
   });
 
   it('should generate daily report on button click', async () => {
-    render(<AutomaticReportsDashboard autoRefresh={false} />);
+    renderWithTheme(<AutomaticReportsDashboard autoRefresh={false} />);
     await waitFor(() => screen.getByText(/reportes automáticos/i));
     const btn = screen.getByText(/generar diario/i);
     fireEvent.click(btn);
@@ -113,7 +118,7 @@ describe('AutomaticReportsDashboard', () => {
   });
 
   it('should generate weekly report', async () => {
-    render(<AutomaticReportsDashboard autoRefresh={false} />);
+    renderWithTheme(<AutomaticReportsDashboard autoRefresh={false} />);
     await waitFor(() => screen.getByText(/reportes automáticos/i));
     fireEvent.click(screen.getByText(/generar semanal/i));
     await waitFor(() =>
@@ -125,7 +130,7 @@ describe('AutomaticReportsDashboard', () => {
   });
 
   it('should generate monthly report', async () => {
-    render(<AutomaticReportsDashboard autoRefresh={false} />);
+    renderWithTheme(<AutomaticReportsDashboard autoRefresh={false} />);
     await waitFor(() => screen.getByText(/reportes automáticos/i));
     fireEvent.click(screen.getByText(/generar mensual/i));
     await waitFor(() =>
@@ -138,20 +143,20 @@ describe('AutomaticReportsDashboard', () => {
 
   it('should display error message on fetch failure', async () => {
     mockedAxios.get.mockRejectedValue(new Error('Network Error'));
-    render(<AutomaticReportsDashboard autoRefresh={false} />);
+    renderWithTheme(<AutomaticReportsDashboard autoRefresh={false} />);
     await waitFor(() =>
       expect(document.querySelector('.error-message')).toBeInTheDocument()
     );
   });
 
   it('should display reports section after loading', async () => {
-    render(<AutomaticReportsDashboard autoRefresh={false} />);
+    renderWithTheme(<AutomaticReportsDashboard autoRefresh={false} />);
     await waitFor(() => expect(mockedAxios.get).toHaveBeenCalled());
     expect(document.querySelector('.automatic-reports-dashboard')).toBeInTheDocument();
   });
 
   it('should render subtitle text', async () => {
-    render(<AutomaticReportsDashboard autoRefresh={false} />);
+    renderWithTheme(<AutomaticReportsDashboard autoRefresh={false} />);
     await waitFor(() =>
       expect(screen.getByText(/resúmenes periódicos/i)).toBeInTheDocument()
     );
@@ -159,7 +164,7 @@ describe('AutomaticReportsDashboard', () => {
 
   it('should not auto-refresh when autoRefresh is false', async () => {
     jest.useFakeTimers();
-    render(<AutomaticReportsDashboard autoRefresh={false} />);
+    renderWithTheme(<AutomaticReportsDashboard autoRefresh={false} />);
     const callsAfterMount = mockedAxios.get.mock.calls.length;
     jest.advanceTimersByTime(60000);
     expect(mockedAxios.get.mock.calls.length).toBe(callsAfterMount);
