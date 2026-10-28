@@ -1,9 +1,29 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   RespiCare · DiseaseReports — "Clinical Breath"
+   Local --rc-* block (mirrors TemporalTrends.css/AnalyticsDashboard.css).
+   Renders inside Analytics.css's .analytics-content, which resets --color-*
+   vars to light-mode values for unmigrated sub-dashboards in dark mode — so
+   this is written as a light "island" with no separate .theme-dark block.
+   ────────────────────────────────────────────────────────────────────────── */
+
 .disease-reports-container {
-  background: white;
-  border-radius: 12px;
+  --rc-ink:          #152420;
+  --rc-paper:        #f8f1e4;
+  --rc-paper-dim:    #efe4d0;
+  --rc-petrol:       #103c37;
+  --rc-petrol-ink:   #0a2b27;
+  --rc-clay:         #d9683f;
+  --rc-clay-soft:    #f0a677;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body:    'Manrope', 'Segoe UI', sans-serif;
+
+  background: #fffaf2;
+  border-radius: 2px 16px 16px 16px;
   padding: 24px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 14px 30px -18px rgba(16, 60, 55, 0.18);
+  border: 1px solid var(--rc-paper-dim);
   margin-bottom: 24px;
+  font-family: var(--rc-font-body);
 }
 
 .disease-header {
@@ -12,13 +32,16 @@
 }
 
 .disease-header h3 {
-  color: #2d3748;
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  font-weight: 600;
+  color: var(--rc-petrol-ink);
   margin: 0 0 8px 0;
   font-size: 1.5rem;
 }
 
 .disease-header p {
-  color: #718096;
+  color: rgba(21, 36, 32, 0.6);
   margin: 0;
   font-size: 0.95rem;
 }
@@ -28,8 +51,8 @@
   gap: 16px;
   margin-bottom: 24px;
   padding: 16px;
-  background: #f7fafc;
-  border-radius: 8px;
+  background: var(--rc-paper);
+  border-radius: 10px;
   flex-wrap: wrap;
   align-items: center;
 }
@@ -44,39 +67,43 @@
 .control-group label {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #4a5568;
+  color: var(--rc-petrol-ink);
 }
 
 .control-select {
   padding: 8px 12px;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  background: white;
+  border: 2px solid var(--rc-paper-dim);
+  border-radius: 8px;
+  background: #fffaf2;
+  font-family: inherit;
   font-size: 0.9rem;
-  color: #2d3748;
+  color: var(--rc-ink);
   transition: border-color 0.2s;
 }
 
 .control-select:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--rc-clay);
+  box-shadow: 0 0 0 3px rgba(217, 104, 63, 0.15);
 }
 
 .refresh-button {
   padding: 8px 16px;
-  background: #667eea;
-  color: white;
+  background: var(--rc-petrol);
+  color: #fffaf2;
   border: none;
-  border-radius: 6px;
+  border-radius: 999px;
+  font-family: var(--rc-font-body);
+  font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
   align-self: flex-end;
 }
 
 .refresh-button:hover {
-  background: #5a67d8;
+  background: var(--rc-clay);
+  transform: translateY(-1px);
 }
 
 .disease-charts {
@@ -87,15 +114,16 @@
 }
 
 .chart-container {
-  background: #fafafa;
+  background: var(--rc-paper);
   padding: 20px;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  border: 1px solid var(--rc-paper-dim);
 }
 
 .chart-container h4 {
   margin: 0 0 16px 0;
-  color: #2d3748;
+  font-family: var(--rc-font-display);
+  color: var(--rc-petrol-ink);
   font-size: 1.1rem;
   text-align: center;
 }
@@ -106,14 +134,14 @@
   align-items: center;
   justify-content: center;
   padding: 40px;
-  color: #718096;
+  color: rgba(21, 36, 32, 0.6);
 }
 
 .spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #667eea;
+  border: 4px solid var(--rc-paper-dim);
+  border-top: 4px solid var(--rc-petrol);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 16px;
@@ -130,7 +158,7 @@
   align-items: center;
   padding: 40px;
   text-align: center;
-  color: #e53e3e;
+  color: #8a2f10;
 }
 
 .error-icon {
@@ -141,16 +169,18 @@
 .retry-button {
   margin-top: 16px;
   padding: 8px 16px;
-  background: #e53e3e;
-  color: white;
+  background: #8a2f10;
+  color: #fffaf2;
   border: none;
-  border-radius: 6px;
+  border-radius: 999px;
+  font-family: var(--rc-font-body);
+  font-weight: 700;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .retry-button:hover {
-  background: #c53030;
+  background: #6e2409;
 }
 
 .disease-summary {
@@ -159,7 +189,8 @@
 
 .disease-summary h4 {
   margin: 0 0 16px 0;
-  color: #2d3748;
+  font-family: var(--rc-font-display);
+  color: var(--rc-petrol-ink);
   font-size: 1.1rem;
   text-align: center;
 }
@@ -172,17 +203,18 @@
 
 .disease-card {
   display: flex;
-  background: white;
-  border-radius: 8px;
+  background: #fffaf2;
+  border-radius: 10px;
   padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 22px -16px rgba(16, 60, 55, 0.25);
+  border: 1px solid var(--rc-paper-dim);
   border-left: 4px solid transparent;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .disease-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 14px 28px -16px rgba(16, 60, 55, 0.35);
 }
 
 .disease-card .disease-color {
@@ -194,13 +226,13 @@
 
 .disease-info h5 {
   margin: 0 0 8px 0;
-  color: #2d3748;
+  color: var(--rc-petrol-ink);
   font-size: 1rem;
 }
 
 .disease-count {
   margin: 0 0 4px 0;
-  color: #667eea;
+  color: var(--rc-petrol);
   font-weight: 600;
   font-size: 0.9rem;
 }
@@ -208,20 +240,21 @@
 .disease-confidence,
 .disease-urgency {
   margin: 0 0 4px 0;
-  color: #718096;
+  color: rgba(21, 36, 32, 0.6);
   font-size: 0.8rem;
 }
 
 .symptoms-table {
-  background: #f7fafc;
+  background: var(--rc-paper);
+  border-radius: 10px;
   padding: 20px;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--rc-paper-dim);
 }
 
 .symptoms-table h4 {
   margin: 0 0 16px 0;
-  color: #2d3748;
+  font-family: var(--rc-font-display);
+  color: var(--rc-petrol-ink);
   font-size: 1.1rem;
   text-align: center;
 }
@@ -233,21 +266,21 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
-  border-radius: 8px;
+  background: #fffaf2;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 22px -16px rgba(16, 60, 55, 0.25);
 }
 
 thead {
-  background: #667eea;
-  color: white;
+  background: var(--rc-petrol);
+  color: #fffaf2;
 }
 
 th, td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--rc-paper-dim);
 }
 
 th {
@@ -260,55 +293,44 @@ td {
 }
 
 .symptom-name {
-  font-weight: 600;
-  color: #2d3748;
-}
-
-.symptom-count {
-  color: #667eea;
+  color: var(--rc-petrol);
   font-weight: 600;
 }
 
 .severity-badge {
   padding: 4px 8px;
   border-radius: 12px;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  text-transform: uppercase;
 }
 
 .severity-1 {
-  background: #c6f6d5;
-  color: #22543d;
+  background: rgba(16, 60, 55, 0.1);
+  color: var(--rc-petrol);
 }
 
 .severity-2 {
-  background: #fef5e7;
-  color: #744210;
+  background: rgba(240, 166, 119, 0.3);
+  color: #8a4a2f;
 }
 
 .severity-3 {
-  background: #fed7d7;
-  color: #742a2a;
+  background: rgba(217, 104, 63, 0.22);
+  color: #8a2f10;
 }
 
 .severity-4 {
-  background: #fbb6ce;
-  color: #702459;
+  background: rgba(138, 47, 16, 0.18);
+  color: #6e2409;
 }
 
 .symptom-districts {
-  color: #718096;
+  color: rgba(21, 36, 32, 0.6);
 }
 
 .symptom-categories {
-  color: #718096;
+  color: rgba(21, 36, 32, 0.6);
   font-size: 0.8rem;
-}
-
-/* Simple Chart Styles */
-.simple-chart {
-  padding: 20px 0;
 }
 
 .virtualized-list {
@@ -322,26 +344,33 @@ td {
 
 .empty-state {
   text-align: center;
-  color: #718096;
-  background: #f7fafc;
+  color: rgba(21, 36, 32, 0.6);
+  background: #fffaf2;
   padding: 16px;
-  border-radius: 8px;
-  border: 1px dashed #cbd5f5;
+  border-radius: 10px;
+  border: 1px dashed var(--rc-paper-dim);
   font-size: 0.9rem;
 }
 
-.disease-item {
+.disease-item,
+.symptom-analysis-item,
+.district-item,
+.confidence-item {
   display: flex;
   align-items: center;
   padding: 12px 16px;
-  background: #f7fafc;
-  border-radius: 8px;
+  background: #fffaf2;
+  border-radius: 10px;
+  border: 1px solid var(--rc-paper-dim);
   margin-bottom: 8px;
   transition: background-color 0.2s;
 }
 
-.disease-item:hover {
-  background: #e2e8f0;
+.disease-item:hover,
+.symptom-analysis-item:hover,
+.district-item:hover,
+.confidence-item:hover {
+  background: var(--rc-paper-dim);
 }
 
 .disease-item .disease-color {
@@ -358,41 +387,26 @@ td {
 
 .disease-name {
   font-weight: 600;
-  color: #2d3748;
+  color: var(--rc-petrol-ink);
   margin-bottom: 4px;
 }
 
 .disease-percentage {
-  color: #718096;
-  font-size: 0.9rem;
+  color: rgba(21, 36, 32, 0.6);
 }
 
-.disease-count {
-  color: var(--primary-color);
-  font-weight: bold;
-  background: var(--secondary-color);
+/* Scoped pill treatment: the pie-list "N consultas" count reads better as a
+   chip, matching the sibling symptom-count/confidence-value pills below. The
+   .disease-count rule above alone (plain text) still applies to the summary
+   .disease-card count line, which stays unscoped. */
+.disease-item .disease-count {
+  margin: 0;
+  background: var(--rc-paper-dim);
   padding: 4px 12px;
   border-radius: 12px;
 }
 
-.symptom-analysis-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  background: #f7fafc;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  transition: background-color 0.2s;
-}
-
-.symptom-analysis-item:hover {
-  background: #e2e8f0;
-}
-
-.symptom-name {
-  font-weight: 600;
-  color: #2d3748;
+.symptom-analysis-item .symptom-name {
   flex: 1;
 }
 
@@ -405,63 +419,30 @@ td {
 .symptom-count,
 .symptom-severity,
 .symptom-districts {
-  color: var(--primary-color);
+  color: var(--rc-petrol);
   font-size: 0.9rem;
-  background: var(--secondary-color);
+  background: var(--rc-paper-dim);
   padding: 4px 8px;
   border-radius: 8px;
 }
 
-.district-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  background: #f7fafc;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  transition: background-color 0.2s;
-}
-
-.district-item:hover {
-  background: #e2e8f0;
-}
-
 .district-name {
   font-weight: 600;
-  color: #2d3748;
+  color: var(--rc-petrol-ink);
   flex: 1;
 }
 
 .district-count {
-  color: var(--primary-color);
+  color: var(--rc-petrol);
   font-weight: bold;
   margin-right: 12px;
 }
 
 .district-symptom {
-  color: #718096;
-  font-size: 0.9rem;
+  color: rgba(21, 36, 32, 0.6);
 }
 
-.confidence-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  background: #f7fafc;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  transition: background-color 0.2s;
-}
-
-.confidence-item:hover {
-  background: #e2e8f0;
-}
-
-.disease-name {
-  font-weight: 600;
-  color: #2d3748;
+.confidence-item .disease-name {
   flex: 1;
 }
 
@@ -474,9 +455,9 @@ td {
 .confidence-value,
 .urgency-value,
 .consultation-count {
-  color: var(--primary-color);
+  color: var(--rc-petrol);
   font-size: 0.9rem;
-  background: var(--secondary-color);
+  background: var(--rc-paper-dim);
   padding: 4px 8px;
   border-radius: 8px;
 }
@@ -486,32 +467,28 @@ td {
   .disease-charts {
     grid-template-columns: 1fr;
   }
-  
+
   .disease-controls {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .control-group {
     min-width: auto;
   }
-  
+
   .summary-cards {
     grid-template-columns: 1fr;
   }
-  
-  .chart-container {
-    padding: 16px;
-  }
-  
+
   .table-container {
     font-size: 0.8rem;
   }
-  
+
   th, td {
     padding: 8px;
   }
-  
+
   .symptom-details,
   .confidence-details {
     flex-direction: column;
@@ -523,97 +500,16 @@ td {
   .disease-reports-container {
     padding: 16px;
   }
-  
+
   .disease-header h3 {
     font-size: 1.3rem;
   }
-  
+
   .disease-card {
     padding: 12px;
   }
-  
+
   .disease-info h5 {
     font-size: 0.9rem;
   }
 }
-
-/* ── Dark mode ── */
-.theme-dark .disease-reports-container,
-[data-theme="dark"] .disease-reports-container { background: #1e293b; }
-
-.theme-dark .disease-header h3,
-[data-theme="dark"] .disease-header h3,
-.theme-dark .chart-container h4,
-[data-theme="dark"] .chart-container h4,
-.theme-dark .disease-summary h4,
-[data-theme="dark"] .disease-summary h4,
-.theme-dark .symptoms-table h4,
-[data-theme="dark"] .symptoms-table h4,
-.theme-dark .disease-info h5,
-[data-theme="dark"] .disease-info h5,
-.theme-dark .symptom-name,
-[data-theme="dark"] .symptom-name,
-.theme-dark .disease-name,
-[data-theme="dark"] .disease-name,
-.theme-dark .district-name,
-[data-theme="dark"] .district-name              { color: #f9fafb; }
-
-.theme-dark .disease-header p,
-[data-theme="dark"] .disease-header p,
-.theme-dark .control-group label,
-[data-theme="dark"] .control-group label,
-.theme-dark .loading-overlay,
-[data-theme="dark"] .loading-overlay,
-.theme-dark .disease-confidence,
-[data-theme="dark"] .disease-confidence,
-.theme-dark .disease-urgency,
-[data-theme="dark"] .disease-urgency,
-.theme-dark .symptom-districts,
-[data-theme="dark"] .symptom-districts,
-.theme-dark .symptom-categories,
-[data-theme="dark"] .symptom-categories,
-.theme-dark .disease-percentage,
-[data-theme="dark"] .disease-percentage,
-.theme-dark .district-symptom,
-[data-theme="dark"] .district-symptom           { color: #9ca3af; }
-
-.theme-dark .disease-controls,
-[data-theme="dark"] .disease-controls,
-.theme-dark .chart-container,
-[data-theme="dark"] .chart-container,
-.theme-dark .symptoms-table,
-[data-theme="dark"] .symptoms-table,
-.theme-dark .empty-state,
-[data-theme="dark"] .empty-state,
-.theme-dark .disease-item,
-[data-theme="dark"] .disease-item,
-.theme-dark .symptom-analysis-item,
-[data-theme="dark"] .symptom-analysis-item,
-.theme-dark .district-item,
-[data-theme="dark"] .district-item,
-.theme-dark .confidence-item,
-[data-theme="dark"] .confidence-item            { background: #0f172a; border-color: #334155; }
-
-.theme-dark .disease-item:hover,
-[data-theme="dark"] .disease-item:hover,
-.theme-dark .symptom-analysis-item:hover,
-[data-theme="dark"] .symptom-analysis-item:hover,
-.theme-dark .district-item:hover,
-[data-theme="dark"] .district-item:hover,
-.theme-dark .confidence-item:hover,
-[data-theme="dark"] .confidence-item:hover      { background: #273449; }
-
-.theme-dark .control-select,
-[data-theme="dark"] .control-select,
-.theme-dark .disease-card,
-[data-theme="dark"] .disease-card,
-.theme-dark table,
-[data-theme="dark"] table                       { background: #1e293b; color: #e5e7eb; border-color: #334155; }
-
-.theme-dark th,
-[data-theme="dark"] th,
-.theme-dark td,
-[data-theme="dark"] td                          { border-color: #334155; color: #e5e7eb; }
-
-.theme-dark .spinner,
-[data-theme="dark"] .spinner                    { border-color: #334155; border-top-color: #667eea; }

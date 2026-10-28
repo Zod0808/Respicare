@@ -24,14 +24,14 @@ const PERIODS = [
 ];
 
 const DISEASE_COLORS = {
-  Asma: '#ff6b6b',
-  Bronquitis: '#4ecdc4',
-  'COVID-19': '#45b7d1',
-  Gripe: '#96ceb4',
-  Neumonía: '#feca57',
-  EPOC: '#ff9ff3',
-  Resfriado: '#54a0ff',
-  'Síntoma General': '#a4b0be'
+  Asma: '#8a2f10',
+  Bronquitis: '#103c37',
+  'COVID-19': '#d9683f',
+  Gripe: '#5c7a52',
+  Neumonía: '#7a6f9b',
+  EPOC: '#b08968',
+  Resfriado: '#0a2b27',
+  'Síntoma General': '#a3998a'
 };
 
 const SEVERITY_MAP = {
@@ -42,7 +42,7 @@ const SEVERITY_MAP = {
 };
 
 const getDiseaseColor = (diseaseName) =>
-  DISEASE_COLORS[diseaseName] || '#a4b0be';
+  DISEASE_COLORS[diseaseName] || '#a3998a';
 
 const formatSeverity = (severity) => {
   if (!severity && severity !== 0) {
