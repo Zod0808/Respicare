@@ -1,10 +1,21 @@
 /* PatientMonitoringReport.css */
 
 .patient-monitoring {
+  --rc-ink: #152420;
+  --rc-paper: #f8f1e4;
+  --rc-paper-dim: #efe4d0;
+  --rc-petrol: #103c37;
+  --rc-petrol-ink: #0a2b27;
+  --rc-clay: #d9683f;
+  --rc-clay-soft: #f0a677;
+  --rc-clay-dark: #8a2f10;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body: 'Manrope', 'Segoe UI', sans-serif;
+
   padding: 24px;
   max-width: 1200px;
   margin: 0 auto;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--rc-font-body);
 }
 
 /* ── Header ─────────────────────────────────────────── */
@@ -18,22 +29,23 @@
 }
 
 .monitoring-title {
+  font-family: var(--rc-font-display);
   font-size: 1.75rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--rc-ink);
   margin: 0 0 4px 0;
 }
 
 .monitoring-subtitle {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: rgba(21, 36, 32, 0.6);
   margin: 0;
 }
 
 .btn-refresh {
   padding: 10px 20px;
-  background: #3b82f6;
-  color: white;
+  background: var(--rc-petrol);
+  color: var(--rc-paper);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -44,7 +56,7 @@
 }
 
 .btn-refresh:hover {
-  background: #2563eb;
+  background: var(--rc-petrol-ink);
 }
 
 /* ── Loading & Error ─────────────────────────────────── */
@@ -54,15 +66,15 @@
   gap: 12px;
   padding: 48px;
   justify-content: center;
-  color: #6b7280;
+  color: rgba(21, 36, 32, 0.6);
   font-size: 1rem;
 }
 
 .loading-spinner {
   width: 24px;
   height: 24px;
-  border: 3px solid #e5e7eb;
-  border-top-color: #3b82f6;
+  border: 3px solid var(--rc-paper-dim);
+  border-top-color: var(--rc-petrol);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -72,9 +84,9 @@
 }
 
 .monitoring-error {
-  background: #fee2e2;
-  color: #dc2626;
-  border: 1px solid #fca5a5;
+  background: rgba(138, 47, 16, 0.1);
+  color: var(--rc-clay-dark);
+  border: 1px solid rgba(138, 47, 16, 0.3);
   border-radius: 8px;
   padding: 12px 16px;
   margin-bottom: 20px;
@@ -108,6 +120,7 @@
 }
 
 .overall-title {
+  font-family: var(--rc-font-display);
   font-size: 1.25rem;
   font-weight: 700;
   margin: 0 0 6px 0;
@@ -115,14 +128,14 @@
 
 .overall-message {
   font-size: 0.95rem;
-  color: #374151;
+  color: var(--rc-ink);
   margin: 0;
   line-height: 1.5;
 }
 
 .overall-emergency {
-  background: #dc2626;
-  color: white;
+  background: var(--rc-clay-dark);
+  color: var(--rc-paper);
   padding: 8px 14px;
   border-radius: 8px;
   font-size: 0.85rem;
@@ -132,15 +145,16 @@
 
 /* ── Section titles ──────────────────────────────────── */
 .section-title {
+  font-family: var(--rc-font-display);
   font-size: 1.1rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--rc-ink);
   margin: 0 0 16px 0;
 }
 
 .section-subtitle {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: rgba(21, 36, 32, 0.6);
   margin: -10px 0 16px 0;
 }
 
@@ -157,10 +171,10 @@
 
 /* ── Vital Card ──────────────────────────────────────── */
 .vital-card {
-  background: #ffffff;
+  background: var(--rc-paper);
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 4px rgba(21, 36, 32, 0.08);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -168,7 +182,7 @@
 }
 
 .vital-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(21, 36, 32, 0.14);
 }
 
 .vital-card-top {
@@ -192,7 +206,7 @@
 .vital-title {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #6b7280;
+  color: rgba(21, 36, 32, 0.6);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -206,19 +220,19 @@
 .vital-unit {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #9ca3af;
+  color: rgba(21, 36, 32, 0.4);
 }
 
 .vital-description {
   font-size: 0.875rem;
-  color: #374151;
+  color: var(--rc-ink);
   line-height: 1.5;
   margin: 0;
 }
 
 .vital-reference {
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: rgba(21, 36, 32, 0.4);
   margin-top: 4px;
 }
 
@@ -234,8 +248,8 @@
 }
 
 .average-item {
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: var(--rc-paper-dim);
+  border: 1px solid rgba(21, 36, 32, 0.12);
   border-radius: 10px;
   padding: 16px;
   display: flex;
@@ -254,29 +268,29 @@
 
 .avg-label {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: rgba(21, 36, 32, 0.6);
   margin-bottom: 4px;
 }
 
 .avg-value {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #111827;
+  color: var(--rc-ink);
 }
 
 .avg-range {
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: rgba(21, 36, 32, 0.4);
   margin-top: 2px;
 }
 
 /* ── Chart Section ───────────────────────────────────── */
 .chart-section {
   margin-bottom: 32px;
-  background: #ffffff;
+  background: var(--rc-paper);
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 4px rgba(21, 36, 32, 0.08);
 }
 
 .chart-wrapper {
@@ -289,14 +303,14 @@
   flex-wrap: wrap;
   margin-top: 12px;
   font-size: 0.8rem;
-  color: #6b7280;
+  color: rgba(21, 36, 32, 0.6);
 }
 
 /* ── No Data ─────────────────────────────────────────── */
 .no-data-state {
   text-align: center;
   padding: 60px 20px;
-  color: #6b7280;
+  color: rgba(21, 36, 32, 0.6);
 }
 
 .no-data-icon {
@@ -305,8 +319,9 @@
 }
 
 .no-data-state h3 {
+  font-family: var(--rc-font-display);
   font-size: 1.25rem;
-  color: #374151;
+  color: var(--rc-ink);
   margin: 0 0 8px 0;
 }
 
@@ -329,16 +344,17 @@
 }
 
 .reference-card {
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: var(--rc-paper-dim);
+  border: 1px solid rgba(21, 36, 32, 0.12);
   border-radius: 10px;
   padding: 16px;
   font-size: 0.875rem;
 }
 
 .ref-header {
+  font-family: var(--rc-font-display);
   font-weight: 700;
-  color: #111827;
+  color: var(--rc-ink);
   margin-bottom: 12px;
   display: flex;
   align-items: center;
@@ -350,7 +366,7 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 8px;
-  color: #374151;
+  color: var(--rc-ink);
 }
 
 .ref-badge {
@@ -362,18 +378,18 @@
 }
 
 .ref-badge--normal {
-  background: #d1fae5;
-  color: #065f46;
+  background: rgba(16, 60, 55, 0.1);
+  color: var(--rc-petrol);
 }
 
 .ref-badge--warning {
-  background: #fef3c7;
-  color: #92400e;
+  background: rgba(217, 104, 63, 0.14);
+  color: #b85530;
 }
 
 .ref-badge--danger {
-  background: #fee2e2;
-  color: #991b1b;
+  background: rgba(138, 47, 16, 0.12);
+  color: var(--rc-clay-dark);
 }
 
 /* ── Responsive ──────────────────────────────────────── */
@@ -401,49 +417,69 @@
   }
 }
 
-/* ── Dark mode ── */
-.theme-dark .monitoring-title,
-[data-theme="dark"] .monitoring-title,
-.theme-dark .section-title,
-[data-theme="dark"] .section-title,
-.theme-dark .avg-value,
-[data-theme="dark"] .avg-value,
-.theme-dark .ref-header,
-[data-theme="dark"] .ref-header,
-.theme-dark .no-data-state h3,
-[data-theme="dark"] .no-data-state h3           { color: #f9fafb; }
+/* ── Dark mode ──
+   The Analytics tab content area keeps a light (#fffaf2) background in dark
+   mode by design (see Analytics.css), so only headings/text sitting inside
+   this component's own dark-bg'd cards get the cream treatment below.
+   .monitoring-title/.monitoring-subtitle and the 3 page-level .section-title
+   instances (vitals/averages/reference sections) sit directly on that light
+   page background and intentionally keep their default --rc-ink color. */
+.theme-dark .patient-monitoring .chart-section .section-title,
+[data-theme="dark"] .patient-monitoring .chart-section .section-title,
+.theme-dark .patient-monitoring .overall-title,
+[data-theme="dark"] .patient-monitoring .overall-title,
+.theme-dark .patient-monitoring .avg-value,
+[data-theme="dark"] .patient-monitoring .avg-value,
+.theme-dark .patient-monitoring .ref-header,
+[data-theme="dark"] .patient-monitoring .ref-header,
+.theme-dark .patient-monitoring .no-data-state h3,
+[data-theme="dark"] .patient-monitoring .no-data-state h3   { color: #f8f1e4; }
 
-.theme-dark .monitoring-subtitle,
-[data-theme="dark"] .monitoring-subtitle,
-.theme-dark .monitoring-loading,
-[data-theme="dark"] .monitoring-loading,
-.theme-dark .section-subtitle,
-[data-theme="dark"] .section-subtitle,
-.theme-dark .vital-title,
-[data-theme="dark"] .vital-title,
-.theme-dark .avg-label,
-[data-theme="dark"] .avg-label,
-.theme-dark .chart-legend-help,
-[data-theme="dark"] .chart-legend-help,
-.theme-dark .no-data-state,
-[data-theme="dark"] .no-data-state              { color: #9ca3af; }
+.theme-dark .patient-monitoring .chart-section .section-subtitle,
+[data-theme="dark"] .patient-monitoring .chart-section .section-subtitle,
+.theme-dark .patient-monitoring .vital-title,
+[data-theme="dark"] .patient-monitoring .vital-title,
+.theme-dark .patient-monitoring .vital-unit,
+[data-theme="dark"] .patient-monitoring .vital-unit,
+.theme-dark .patient-monitoring .vital-reference,
+[data-theme="dark"] .patient-monitoring .vital-reference,
+.theme-dark .patient-monitoring .avg-label,
+[data-theme="dark"] .patient-monitoring .avg-label,
+.theme-dark .patient-monitoring .avg-range,
+[data-theme="dark"] .patient-monitoring .avg-range,
+.theme-dark .patient-monitoring .chart-legend-help,
+[data-theme="dark"] .patient-monitoring .chart-legend-help,
+.theme-dark .patient-monitoring .no-data-state,
+[data-theme="dark"] .patient-monitoring .no-data-state       { color: rgba(248, 241, 228, 0.6); }
 
-.theme-dark .vital-card,
-[data-theme="dark"] .vital-card,
-.theme-dark .chart-section,
-[data-theme="dark"] .chart-section              { background: #1e293b; }
+.theme-dark .patient-monitoring .vital-card,
+[data-theme="dark"] .patient-monitoring .vital-card,
+.theme-dark .patient-monitoring .chart-section,
+[data-theme="dark"] .patient-monitoring .chart-section        { background: #1c2823; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); }
 
-.theme-dark .average-item,
-[data-theme="dark"] .average-item,
-.theme-dark .reference-card,
-[data-theme="dark"] .reference-card             { background: #0f172a; border-color: #334155; }
+.theme-dark .patient-monitoring .average-item,
+[data-theme="dark"] .patient-monitoring .average-item,
+.theme-dark .patient-monitoring .reference-card,
+[data-theme="dark"] .patient-monitoring .reference-card       { background: #16201d; border-color: rgba(255, 255, 255, 0.1); }
 
-.theme-dark .vital-description,
-[data-theme="dark"] .vital-description,
-.theme-dark .ref-row,
-[data-theme="dark"] .ref-row,
-.theme-dark .overall-message,
-[data-theme="dark"] .overall-message            { color: #d1d5db; }
+.theme-dark .patient-monitoring .vital-description,
+[data-theme="dark"] .patient-monitoring .vital-description,
+.theme-dark .patient-monitoring .ref-row,
+[data-theme="dark"] .patient-monitoring .ref-row,
+.theme-dark .patient-monitoring .overall-message,
+[data-theme="dark"] .patient-monitoring .overall-message       { color: rgba(248, 241, 228, 0.85); }
 
-.theme-dark .loading-spinner,
-[data-theme="dark"] .loading-spinner            { border-color: #334155; border-top-color: #3b82f6; }
+.theme-dark .patient-monitoring .loading-spinner,
+[data-theme="dark"] .patient-monitoring .loading-spinner       { border-color: rgba(255, 255, 255, 0.12); border-top-color: var(--rc-clay-soft); }
+
+.theme-dark .patient-monitoring .monitoring-error,
+[data-theme="dark"] .patient-monitoring .monitoring-error      { background: #2e130a; color: #f3a98f; border-color: rgba(243, 169, 143, 0.3); }
+
+.theme-dark .patient-monitoring .ref-badge--normal,
+[data-theme="dark"] .patient-monitoring .ref-badge--normal     { background: rgba(240, 166, 119, 0.12); color: var(--rc-clay-soft); }
+
+.theme-dark .patient-monitoring .ref-badge--warning,
+[data-theme="dark"] .patient-monitoring .ref-badge--warning    { background: rgba(240, 166, 119, 0.2); color: var(--rc-clay-soft); }
+
+.theme-dark .patient-monitoring .ref-badge--danger,
+[data-theme="dark"] .patient-monitoring .ref-badge--danger     { background: #2e130a; color: #f3a98f; }

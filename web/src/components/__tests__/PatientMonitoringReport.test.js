@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import PatientMonitoringReport from '../PatientMonitoringReport';
+import { ThemeProvider } from '../ThemeProvider';
 
 jest.mock('axios');
 jest.mock('../../utils/apiBase', () => ({ API_BASE: 'http://test-api' }));
@@ -45,6 +46,10 @@ const mockHistory = [
   },
 ];
 
+function renderWithTheme(ui) {
+  return render(<ThemeProvider>{ui}</ThemeProvider>);
+}
+
 function setupMocks(metricsData = mockMetrics, historyData = mockHistory) {
   axios.get.mockImplementation((url) => {
     if (url.includes('wearables/metrics')) {
@@ -65,55 +70,55 @@ beforeEach(() => {
 describe('PatientMonitoringReport', () => {
   it('shows loading state initially', () => {
     axios.get.mockReturnValue(new Promise(() => {}));
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     expect(screen.getByText(/cargando datos de monitoreo/i)).toBeInTheDocument();
   });
 
   it('renders main heading after data loads', async () => {
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() =>
       expect(screen.getByText(/monitor de salud del paciente/i)).toBeInTheDocument()
     );
   });
 
   it('renders subtitle text', async () => {
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() =>
       expect(screen.getAllByText(/resumen de las últimas 24 horas/i).length).toBeGreaterThan(0)
     );
   });
 
   it('renders vitals section heading', async () => {
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() =>
       expect(screen.getByText(/signos vitales en tiempo real/i)).toBeInTheDocument()
     );
   });
 
   it('displays heart rate value', async () => {
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() => expect(screen.getByText('72')).toBeInTheDocument());
   });
 
   it('displays oxygen saturation value', async () => {
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() => expect(screen.getByText('98')).toBeInTheDocument());
   });
 
   it('displays respiratory rate value', async () => {
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() => expect(screen.getByText('16')).toBeInTheDocument());
   });
 
   it('renders refresh button', async () => {
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() =>
       expect(screen.getByText(/actualizar/i)).toBeInTheDocument()
     );
   });
 
   it('calls API again when refresh button clicked', async () => {
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() => screen.getByText(/monitor de salud/i));
     const callsBefore = axios.get.mock.calls.length;
     fireEvent.click(screen.getByText(/actualizar/i));
@@ -123,7 +128,7 @@ describe('PatientMonitoringReport', () => {
   it('shows 401 error message', async () => {
     const err = { response: { status: 401 } };
     axios.get.mockRejectedValue(err);
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() =>
       expect(screen.getByText(/iniciar sesión/i)).toBeInTheDocument()
     );
@@ -132,7 +137,7 @@ describe('PatientMonitoringReport', () => {
   it('shows 404 error message', async () => {
     const err = { response: { status: 404 } };
     axios.get.mockRejectedValue(err);
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() =>
       expect(screen.getByText(/no se pudieron cargar los datos/i)).toBeInTheDocument()
     );
@@ -140,35 +145,35 @@ describe('PatientMonitoringReport', () => {
 
   it('shows generic error message on network failure', async () => {
     axios.get.mockRejectedValue(new Error('Server Error'));
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() =>
       expect(screen.getByText(/error al cargar los datos/i)).toBeInTheDocument()
     );
   });
 
   it('shows overall status card when metrics loaded', async () => {
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() =>
       expect(screen.getByText(/estado general/i)).toBeInTheDocument()
     );
   });
 
   it('shows "Normal" status when vitals are in range', async () => {
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() =>
       expect(screen.getByText(/todos tus signos vitales/i)).toBeInTheDocument()
     );
   });
 
   it('shows activity steps', async () => {
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() =>
       expect(screen.getByText(/actividad del día/i)).toBeInTheDocument()
     );
   });
 
   it('shows averages section when metrics loaded', async () => {
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() =>
       expect(screen.getAllByText(/resumen de las últimas 24 horas/i).length).toBeGreaterThanOrEqual(2)
     );
@@ -181,7 +186,7 @@ describe('PatientMonitoringReport', () => {
       }
       return Promise.resolve({ data: { data: { data: [] } } });
     });
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() =>
       expect(screen.getByText(/monitor de salud del paciente/i)).toBeInTheDocument()
     );
@@ -193,7 +198,7 @@ describe('PatientMonitoringReport', () => {
       oxygenSaturation: { current: 92, average: 91, min: 90, max: 93 },
     };
     setupMocks(lowOxygenMetrics);
-    render(<PatientMonitoringReport />);
+    renderWithTheme(<PatientMonitoringReport />);
     await waitFor(() =>
       expect(screen.getAllByText(/precaución/i).length).toBeGreaterThan(0)
     );

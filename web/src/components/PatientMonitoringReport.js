@@ -12,13 +12,36 @@ import {
 } from 'recharts';
 import { API_BASE } from '../utils/apiBase';
 import { useAuth } from '../contexts/AuthContext';
+import { useThemeContext } from './ThemeProvider';
 import './PatientMonitoringReport.css';
 
+/* Status/chart colors are applied via inline style, so they bypass the CSS
+   cascade and can't be overridden by the .theme-dark/[data-theme="dark"]
+   stylesheet rules. Each has a *_DARK counterpart below, picked at render
+   time via useThemeContext(), so badges and chart lines stay legible
+   against dark card backgrounds. */
 const STATUS_CONFIG = {
-  normal: { color: '#10b981', bg: '#d1fae5', border: '#6ee7b7', label: 'Normal', icon: '✓' },
-  precaucion: { color: '#f59e0b', bg: '#fef3c7', border: '#fcd34d', label: 'Precaución', icon: '!' },
-  atencion: { color: '#ef4444', bg: '#fee2e2', border: '#fca5a5', label: 'Atención', icon: '⚠' },
-  'sin-datos': { color: '#9ca3af', bg: '#f3f4f6', border: '#e5e7eb', label: 'Sin datos', icon: '—' },
+  normal: { color: '#103c37', bg: 'rgba(16, 60, 55, 0.08)', border: 'rgba(16, 60, 55, 0.3)', label: 'Normal', icon: '✓' },
+  precaucion: { color: '#b85530', bg: 'rgba(217, 104, 63, 0.14)', border: 'rgba(217, 104, 63, 0.4)', label: 'Precaución', icon: '!' },
+  atencion: { color: '#8a2f10', bg: 'rgba(138, 47, 16, 0.12)', border: 'rgba(138, 47, 16, 0.4)', label: 'Atención', icon: '⚠' },
+  'sin-datos': { color: 'rgba(21, 36, 32, 0.55)', bg: 'rgba(21, 36, 32, 0.06)', border: 'rgba(21, 36, 32, 0.2)', label: 'Sin datos', icon: '—' },
+};
+
+const STATUS_CONFIG_DARK = {
+  normal: { color: '#f0a677', bg: 'rgba(240, 166, 119, 0.1)', border: 'rgba(240, 166, 119, 0.3)', label: 'Normal', icon: '✓' },
+  precaucion: { color: '#f0a677', bg: 'rgba(240, 166, 119, 0.2)', border: 'rgba(240, 166, 119, 0.45)', label: 'Precaución', icon: '!' },
+  atencion: { color: '#f3a98f', bg: '#2e130a', border: 'rgba(243, 169, 143, 0.4)', label: 'Atención', icon: '⚠' },
+  'sin-datos': { color: 'rgba(248, 241, 228, 0.55)', bg: 'rgba(248, 241, 228, 0.07)', border: 'rgba(248, 241, 228, 0.18)', label: 'Sin datos', icon: '—' },
+};
+
+const ACTIVITY_ACCENT = {
+  light: { color: '#103c37', bg: 'rgba(16, 60, 55, 0.08)', border: 'rgba(16, 60, 55, 0.3)' },
+  dark: { color: '#f0a677', bg: 'rgba(240, 166, 119, 0.12)', border: 'rgba(240, 166, 119, 0.35)' },
+};
+
+const CHART_COLORS = {
+  light: { heartRate: '#8a2f10', oxygenSaturation: '#103c37', respiratoryRate: '#5c7a52' },
+  dark: { heartRate: '#f3a98f', oxygenSaturation: '#f0a677', respiratoryRate: '#8fb37a' },
 };
 
 const VITAL_DESCRIPTIONS = {
@@ -91,8 +114,10 @@ function formatTime(timestamp) {
 }
 
 function VitalCard({ icon, title, value, unit, metric, referenceRange }) {
+  const { theme } = useThemeContext();
   const status = getVitalStatus(metric, value);
-  const config = STATUS_CONFIG[status];
+  const configSet = theme.mode === 'dark' ? STATUS_CONFIG_DARK : STATUS_CONFIG;
+  const config = configSet[status];
   const description = VITAL_DESCRIPTIONS[metric]?.[status] || '';
 
   return (
@@ -123,7 +148,9 @@ function VitalCard({ icon, title, value, unit, metric, referenceRange }) {
 }
 
 function OverallStatusCard({ status, metrics }) {
-  const config = STATUS_CONFIG[status];
+  const { theme } = useThemeContext();
+  const configSet = theme.mode === 'dark' ? STATUS_CONFIG_DARK : STATUS_CONFIG;
+  const config = configSet[status];
   const emoji =
     status === 'normal' ? '😊' :
     status === 'precaucion' ? '😐' :
@@ -182,6 +209,10 @@ function customLegendFormatter(value) {
 
 function PatientMonitoringReport() {
   const { token } = useAuth();
+  const { theme } = useThemeContext();
+  const isDark = theme.mode === 'dark';
+  const activityAccent = isDark ? ACTIVITY_ACCENT.dark : ACTIVITY_ACCENT.light;
+  const chartColors = isDark ? CHART_COLORS.dark : CHART_COLORS.light;
   const [metrics, setMetrics] = useState(null);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -310,19 +341,19 @@ function PatientMonitoringReport() {
           {/* Activity card */}
           <div
             className="vital-card vital-card--activity"
-            style={{ borderTopColor: '#6366f1', borderTopWidth: 4, borderTopStyle: 'solid' }}
+            style={{ borderTopColor: activityAccent.color, borderTopWidth: 4, borderTopStyle: 'solid' }}
           >
             <div className="vital-card-top">
               <span className="vital-icon">🚶</span>
               <span
                 className="vital-status-badge"
-                style={{ background: '#ede9fe', color: '#6366f1', borderColor: '#c4b5fd' }}
+                style={{ background: activityAccent.bg, color: activityAccent.color, borderColor: activityAccent.border }}
               >
                 Actividad
               </span>
             </div>
             <div className="vital-title">Actividad del Día</div>
-            <div className="vital-value" style={{ color: '#6366f1' }}>
+            <div className="vital-value" style={{ color: activityAccent.color }}>
               {metrics?.activity?.steps
                 ? metrics.activity.steps.toLocaleString('es-PE')
                 : '—'}
@@ -414,7 +445,7 @@ function PatientMonitoringReport() {
                 data={history}
                 margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#efe4d0" />
                 <XAxis dataKey="time" tick={{ fontSize: 11 }} />
                 <YAxis yAxisId="hr" domain={[40, 160]} hide />
                 <YAxis yAxisId="spo2" orientation="right" domain={[85, 100]} hide />
@@ -424,7 +455,7 @@ function PatientMonitoringReport() {
                   yAxisId="hr"
                   type="monotone"
                   dataKey="heartRate"
-                  stroke="#ef4444"
+                  stroke={chartColors.heartRate}
                   strokeWidth={2}
                   dot={false}
                   connectNulls
@@ -433,7 +464,7 @@ function PatientMonitoringReport() {
                   yAxisId="spo2"
                   type="monotone"
                   dataKey="oxygenSaturation"
-                  stroke="#3b82f6"
+                  stroke={chartColors.oxygenSaturation}
                   strokeWidth={2}
                   dot={false}
                   connectNulls
@@ -442,7 +473,7 @@ function PatientMonitoringReport() {
                   yAxisId="hr"
                   type="monotone"
                   dataKey="respiratoryRate"
-                  stroke="#10b981"
+                  stroke={chartColors.respiratoryRate}
                   strokeWidth={2}
                   dot={false}
                   connectNulls
@@ -451,9 +482,9 @@ function PatientMonitoringReport() {
             </ResponsiveContainer>
           </div>
           <div className="chart-legend-help">
-            <span style={{ color: '#ef4444' }}>— Ritmo cardíaco (lpm)</span>
-            <span style={{ color: '#3b82f6' }}>— Saturación O₂ (%)</span>
-            <span style={{ color: '#10b981' }}>— Frec. respiratoria (resp/min)</span>
+            <span style={{ color: chartColors.heartRate }}>— Ritmo cardíaco (lpm)</span>
+            <span style={{ color: chartColors.oxygenSaturation }}>— Saturación O₂ (%)</span>
+            <span style={{ color: chartColors.respiratoryRate }}>— Frec. respiratoria (resp/min)</span>
           </div>
         </section>
       )}
