@@ -27,13 +27,13 @@ const DISTRICT_COORDINATES = {
 // Los datos históricos ahora vienen del backend, no se usan datos hardcoded
 
 const ALERT_COLORS = {
-  emergency: '#ef4444',
-  alert: '#f59e0b',
-  normal: '#10b981'
+  emergency: '#8a2f10',
+  alert: '#d9683f',
+  normal: '#103c37'
 };
 
 const getEpidemiologicalColor = (alertLevel) =>
-  ALERT_COLORS[alertLevel] || '#6b7280';
+  ALERT_COLORS[alertLevel] || '#a3998a';
 
 const getCircleRadius = (count) => {
   if (count >= 50) return 1000;
