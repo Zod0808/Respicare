@@ -201,9 +201,9 @@ function TemporalTrends() {
                 <div className="trend-bar">
                   <div 
                     className="trend-fill" 
-                    style={{ 
+                    style={{
                       width: `${(day.total / Math.max(...dailyData.map(d => d.total))) * 100}%`,
-                      backgroundColor: '#667eea'
+                      backgroundColor: '#103c37'
                     }}
                   ></div>
                 </div>

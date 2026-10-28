@@ -1,9 +1,30 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   RespiCare · TemporalTrends — "Clinical Breath"
+   Local --rc-* block (mirrors clinical.css/AnalyticsDashboard.css). Like
+   AnalyticsDashboard, this renders inside Analytics.css's .analytics-content,
+   which resets --color-* vars to light-mode values for unmigrated
+   sub-dashboards in dark mode — so this component is written as a light
+   "island" with no separate .theme-dark block.
+   ────────────────────────────────────────────────────────────────────────── */
+
 .temporal-trends-container {
-  background: white;
-  border-radius: 12px;
+  --rc-ink:          #152420;
+  --rc-paper:        #f8f1e4;
+  --rc-paper-dim:    #efe4d0;
+  --rc-petrol:       #103c37;
+  --rc-petrol-ink:   #0a2b27;
+  --rc-clay:         #d9683f;
+  --rc-clay-soft:    #f0a677;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body:    'Manrope', 'Segoe UI', sans-serif;
+
+  background: #fffaf2;
+  border-radius: 2px 16px 16px 16px;
   padding: 24px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 14px 30px -18px rgba(16, 60, 55, 0.18);
+  border: 1px solid var(--rc-paper-dim);
   margin-bottom: 24px;
+  font-family: var(--rc-font-body);
 }
 
 .trends-header {
@@ -12,13 +33,16 @@
 }
 
 .trends-header h3 {
-  color: #2d3748;
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  font-weight: 600;
+  color: var(--rc-petrol-ink);
   margin: 0 0 8px 0;
   font-size: 1.5rem;
 }
 
 .trends-header p {
-  color: #718096;
+  color: rgba(21, 36, 32, 0.6);
   margin: 0;
   font-size: 0.95rem;
 }
@@ -28,8 +52,8 @@
   gap: 16px;
   margin-bottom: 24px;
   padding: 16px;
-  background: #f7fafc;
-  border-radius: 8px;
+  background: var(--rc-paper);
+  border-radius: 10px;
   flex-wrap: wrap;
   align-items: center;
 }
@@ -44,39 +68,43 @@
 .control-group label {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #4a5568;
+  color: var(--rc-petrol-ink);
 }
 
 .control-select {
   padding: 8px 12px;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  background: white;
+  border: 2px solid var(--rc-paper-dim);
+  border-radius: 8px;
+  background: #fffaf2;
+  font-family: inherit;
   font-size: 0.9rem;
-  color: #2d3748;
+  color: var(--rc-ink);
   transition: border-color 0.2s;
 }
 
 .control-select:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--rc-clay);
+  box-shadow: 0 0 0 3px rgba(217, 104, 63, 0.15);
 }
 
 .refresh-button {
   padding: 8px 16px;
-  background: #667eea;
-  color: white;
+  background: var(--rc-petrol);
+  color: #fffaf2;
   border: none;
-  border-radius: 6px;
+  border-radius: 999px;
+  font-family: var(--rc-font-body);
+  font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.2s;
   align-self: flex-end;
 }
 
 .refresh-button:hover {
-  background: #5a67d8;
+  background: var(--rc-clay);
+  transform: translateY(-1px);
 }
 
 .trends-charts {
@@ -87,15 +115,16 @@
 }
 
 .chart-container {
-  background: #fafafa;
+  background: var(--rc-paper);
   padding: 20px;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  border: 1px solid var(--rc-paper-dim);
 }
 
 .chart-container h4 {
   margin: 0 0 16px 0;
-  color: #2d3748;
+  font-family: var(--rc-font-display);
+  color: var(--rc-petrol-ink);
   font-size: 1.1rem;
   text-align: center;
 }
@@ -106,14 +135,14 @@
   align-items: center;
   justify-content: center;
   padding: 40px;
-  color: #718096;
+  color: rgba(21, 36, 32, 0.6);
 }
 
 .spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #667eea;
+  border: 4px solid var(--rc-paper-dim);
+  border-top: 4px solid var(--rc-petrol);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 16px;
@@ -130,7 +159,7 @@
   align-items: center;
   padding: 40px;
   text-align: center;
-  color: #e53e3e;
+  color: #8a2f10;
 }
 
 .error-icon {
@@ -141,28 +170,31 @@
 .retry-button {
   margin-top: 16px;
   padding: 8px 16px;
-  background: #e53e3e;
-  color: white;
+  background: #8a2f10;
+  color: #fffaf2;
   border: none;
-  border-radius: 6px;
+  border-radius: 999px;
+  font-family: var(--rc-font-body);
+  font-weight: 700;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .retry-button:hover {
-  background: #c53030;
+  background: #6e2409;
 }
 
 .trends-summary {
-  background: #f7fafc;
+  background: var(--rc-paper);
   padding: 20px;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  border: 1px solid var(--rc-paper-dim);
 }
 
 .trends-summary h4 {
   margin: 0 0 16px 0;
-  color: #2d3748;
+  font-family: var(--rc-font-display);
+  color: var(--rc-petrol-ink);
   font-size: 1.1rem;
   text-align: center;
 }
@@ -178,49 +210,45 @@
   flex-direction: column;
   align-items: center;
   padding: 16px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background: #fffaf2;
+  border-radius: 10px;
+  border: 1px solid var(--rc-paper-dim);
 }
 
 .stat-value {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  color: #667eea;
+  color: var(--rc-petrol);
   margin-bottom: 4px;
 }
 
 .stat-label {
   font-size: 0.85rem;
-  color: #718096;
+  color: rgba(21, 36, 32, 0.6);
   text-align: center;
 }
 
 /* Simple Chart Styles */
-.simple-chart {
-  padding: 20px 0;
-}
-
 .trend-item {
   margin-bottom: 16px;
   padding: 12px;
-  background: #f7fafc;
-  border-radius: 8px;
+  background: #fffaf2;
+  border-radius: 10px;
+  border: 1px solid var(--rc-paper-dim);
 }
 
 .trend-date {
   font-weight: 600;
-  color: #2d3748;
+  color: var(--rc-petrol-ink);
   margin-bottom: 8px;
 }
 
 .trend-bar {
   width: 100%;
   height: 20px;
-  background: #e2e8f0;
+  background: var(--rc-paper-dim);
   border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 8px;
 }
 
 .trend-fill {
@@ -231,7 +259,7 @@
 
 .trend-count {
   font-weight: bold;
-  color: var(--primary-color);
+  color: var(--rc-petrol);
   text-align: right;
 }
 
@@ -239,24 +267,25 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  background: #f7fafc;
-  border-radius: 8px;
+  padding: 12px;
   margin-bottom: 8px;
+  background: #fffaf2;
+  border-radius: 10px;
+  border: 1px solid var(--rc-paper-dim);
 }
 
 .week-name {
   font-weight: 600;
-  color: #2d3748;
+  color: var(--rc-petrol-ink);
 }
 
 .week-count {
-  color: var(--primary-color);
+  color: var(--rc-petrol);
   font-weight: bold;
 }
 
 .week-severity {
-  color: #718096;
+  color: rgba(21, 36, 32, 0.6);
   font-size: 0.9rem;
 }
 
@@ -265,27 +294,25 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  background: #f7fafc;
-  border-radius: 8px;
+  background: #fffaf2;
+  border-radius: 10px;
+  border: 1px solid var(--rc-paper-dim);
   margin-bottom: 8px;
   transition: background-color 0.2s;
 }
 
 .symptom-item:hover {
-  background: #e2e8f0;
+  background: var(--rc-paper-dim);
 }
 
 .symptom-name {
   font-weight: 600;
-  color: #2d3748;
+  color: var(--rc-petrol-ink);
 }
 
 .symptom-count {
-  color: var(--primary-color);
+  color: var(--rc-petrol);
   font-weight: bold;
-  background: var(--secondary-color);
-  padding: 4px 12px;
-  border-radius: 12px;
 }
 
 /* Responsive Design */
@@ -294,86 +321,28 @@
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .control-group {
     min-width: auto;
   }
-  
+
   .summary-stats {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .chart-container {
     padding: 16px;
   }
-}
 
-@media (max-width: 480px) {
   .temporal-trends-container {
     padding: 16px;
   }
-  
+
   .trends-header h3 {
     font-size: 1.3rem;
   }
-  
+
   .stat-value {
     font-size: 1.5rem;
   }
 }
-
-/* ── Dark mode ── */
-.theme-dark .temporal-trends-container,
-[data-theme="dark"] .temporal-trends-container { background: #1e293b; }
-
-.theme-dark .trends-header h3,
-[data-theme="dark"] .trends-header h3,
-.theme-dark .chart-container h4,
-[data-theme="dark"] .chart-container h4,
-.theme-dark .trends-summary h4,
-[data-theme="dark"] .trends-summary h4,
-.theme-dark .trend-date,
-[data-theme="dark"] .trend-date,
-.theme-dark .week-name,
-[data-theme="dark"] .week-name,
-.theme-dark .symptom-name,
-[data-theme="dark"] .symptom-name              { color: #f9fafb; }
-
-.theme-dark .trends-header p,
-[data-theme="dark"] .trends-header p,
-.theme-dark .control-group label,
-[data-theme="dark"] .control-group label,
-.theme-dark .loading-overlay,
-[data-theme="dark"] .loading-overlay,
-.theme-dark .stat-label,
-[data-theme="dark"] .stat-label,
-.theme-dark .week-severity,
-[data-theme="dark"] .week-severity             { color: #9ca3af; }
-
-.theme-dark .trends-controls,
-[data-theme="dark"] .trends-controls,
-.theme-dark .trends-summary,
-[data-theme="dark"] .trends-summary,
-.theme-dark .trend-item,
-[data-theme="dark"] .trend-item,
-.theme-dark .week-item,
-[data-theme="dark"] .week-item,
-.theme-dark .symptom-item,
-[data-theme="dark"] .symptom-item              { background: #0f172a; }
-
-.theme-dark .symptom-item:hover,
-[data-theme="dark"] .symptom-item:hover        { background: #273449; }
-
-.theme-dark .control-select,
-[data-theme="dark"] .control-select,
-.theme-dark .chart-container,
-[data-theme="dark"] .chart-container           { background: #0f172a; border-color: #334155; color: #e5e7eb; }
-
-.theme-dark .stat-item,
-[data-theme="dark"] .stat-item                 { background: #1e293b; }
-
-.theme-dark .trend-bar,
-[data-theme="dark"] .trend-bar                 { background: #334155; }
-
-.theme-dark .spinner,
-[data-theme="dark"] .spinner                   { border-color: #334155; border-top-color: #667eea; }
