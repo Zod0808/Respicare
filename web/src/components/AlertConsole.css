@@ -1,29 +1,49 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   RespiCare · AlertConsole — "Clinical Breath"
+   Local --rc-* block (mirrors clinical.css/AppointmentCalendar.css) so this
+   component looks correct whether it's embedded in a migrated page or the
+   still-legacy ones.
+   ────────────────────────────────────────────────────────────────────────── */
+
 .alert-console {
-  background: #ffffff;
-  border: 1px solid #e3f2fd;
-  border-radius: 16px;
+  --rc-ink:          #152420;
+  --rc-paper:        #f8f1e4;
+  --rc-paper-dim:    #efe4d0;
+  --rc-petrol:       #103c37;
+  --rc-petrol-ink:   #0a2b27;
+  --rc-clay:         #d9683f;
+  --rc-clay-soft:    #f0a677;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body:    'Manrope', 'Segoe UI', sans-serif;
+
+  background: #fffaf2;
+  border: 1px solid var(--rc-paper-dim);
+  border-radius: 2px 20px 20px 20px;
   padding: 24px;
   margin-bottom: 40px;
-  box-shadow: 0 10px 30px rgba(33, 150, 243, 0.15);
+  font-family: var(--rc-font-body);
+  box-shadow: 0 14px 30px -18px rgba(16, 60, 55, 0.18);
 }
 
 .alert-console-header h3 {
   margin: 0 0 10px 0;
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  font-weight: 600;
   font-size: 1.6rem;
-  color: #0d47a1;
-  font-weight: 700;
+  color: var(--rc-petrol-ink);
 }
 
 .alert-console-header p {
   margin: 0;
-  color: #546e7a;
+  color: rgba(21, 36, 32, 0.6);
   font-size: 0.95rem;
 }
 
 .alert-console-form {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
   margin: 25px 0;
 }
 
@@ -31,24 +51,25 @@
   display: flex;
   flex-direction: column;
   font-weight: 600;
-  color: #0d47a1;
+  color: var(--rc-petrol-ink);
   font-size: 0.95rem;
 }
 
 .alert-console-form input {
   margin-top: 8px;
-  border-radius: 8px;
-  border: 1px solid #bbdefb;
-  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid var(--rc-paper-dim);
+  padding: 10px 12px;
   font-size: 0.95rem;
-  background: #f5faff;
-  transition: border 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+  background: var(--rc-paper);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .alert-console-form input:focus {
-  border-color: #2196f3;
+  border-color: var(--rc-clay);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+  box-shadow: 0 0 0 3px rgba(217, 104, 63, 0.18);
 }
 
 .alert-console-actions {
@@ -59,52 +80,56 @@
 }
 
 .alert-console-actions button {
-  background: linear-gradient(135deg, #2196f3 0%, #1e88e5 100%);
-  color: white;
+  background: var(--rc-petrol);
+  color: #fffaf2;
   border: none;
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 999px;
   cursor: pointer;
-  font-weight: 600;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+  font-family: var(--rc-font-body);
+  font-weight: 700;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 22px -10px rgba(16, 60, 55, 0.45);
 }
 
 .alert-console-actions button:hover {
+  background: var(--rc-clay);
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(33, 150, 243, 0.4);
+  box-shadow: 0 14px 26px -10px rgba(217, 104, 63, 0.5);
 }
 
 .alert-console-message {
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: 2px 10px 10px 2px;
   margin-bottom: 20px;
   font-weight: 600;
+  border-left: 3px solid transparent;
 }
 
 .alert-console-message.success {
-  background: #e8f5e9;
-  color: #2e7d32;
-  border: 1px solid #a5d6a7;
+  background: rgba(16, 60, 55, 0.08);
+  color: var(--rc-petrol);
+  border-left-color: var(--rc-petrol);
 }
 
 .alert-console-message.error {
-  background: #ffebee;
-  color: #c62828;
-  border: 1px solid #ef9a9a;
+  background: #fdece3;
+  color: #8a2f10;
+  border-left-color: var(--rc-clay);
 }
 
 .alert-monitoring-card {
-  background: #f8f9ff;
-  border-radius: 12px;
+  background: var(--rc-paper);
+  border-radius: 2px 16px 16px 16px;
   padding: 18px;
-  border: 1px solid #e3f2fd;
+  border: 1px solid var(--rc-paper-dim);
   margin-bottom: 24px;
 }
 
 .alert-monitoring-card h4 {
   margin: 0 0 14px 0;
-  color: #0d47a1;
+  font-family: var(--rc-font-display);
+  color: var(--rc-petrol-ink);
 }
 
 .monitoring-grid {
@@ -114,22 +139,22 @@
 }
 
 .monitoring-grid div {
-  background: white;
-  border-radius: 8px;
+  background: #fffaf2;
+  border-radius: 10px;
   padding: 12px;
-  border: 1px solid #e3f2fd;
+  border: 1px solid var(--rc-paper-dim);
 }
 
 .monitoring-grid span {
   display: block;
   font-size: 0.8rem;
-  color: #607d8b;
+  color: rgba(21, 36, 32, 0.6);
   margin-bottom: 6px;
 }
 
 .monitoring-grid strong {
   font-size: 1.1rem;
-  color: #0d47a1;
+  color: var(--rc-petrol-ink);
 }
 
 .recent-failures {
@@ -138,7 +163,7 @@
 
 .recent-failures h5 {
   margin: 0 0 10px;
-  color: #c62828;
+  color: #8a2f10;
 }
 
 .recent-failures ul {
@@ -148,37 +173,36 @@
 }
 
 .recent-failures li {
-  background: white;
-  border: 1px solid #ffcdd2;
-  border-radius: 8px;
+  background: #fffaf2;
+  border: 1px solid rgba(179, 38, 30, 0.3);
+  border-radius: 2px 10px 10px 10px;
   padding: 12px;
   margin-bottom: 10px;
 }
 
 .recent-failures li strong {
   display: block;
-  color: #b71c1c;
+  color: #8a2f10;
 }
 
 .recent-failures li span {
   display: block;
-  color: #c62828;
+  color: #8a2f10;
   font-size: 0.9rem;
   margin-top: 4px;
 }
 
 .recent-failures li time {
   display: block;
-  color: #78909c;
+  color: rgba(21, 36, 32, 0.5);
   font-size: 0.8rem;
   margin-top: 6px;
 }
 
 .alert-table-wrapper {
   overflow-x: auto;
-  border-radius: 12px;
-  border: 1px solid #e3f2fd;
-  box-shadow: inset 0 0 0 1px rgba(33, 150, 243, 0.05);
+  border-radius: 2px 12px 12px 12px;
+  border: 1px solid var(--rc-paper-dim);
 }
 
 .alert-table {
@@ -190,18 +214,18 @@
 .alert-table td {
   padding: 12px 14px;
   text-align: left;
-  border-bottom: 1px solid #e3f2fd;
+  border-bottom: 1px solid var(--rc-paper-dim);
   font-size: 0.9rem;
 }
 
 .alert-table th {
-  background: #f1f7ff;
-  color: #0d47a1;
+  background: rgba(16, 60, 55, 0.08);
+  color: var(--rc-petrol-ink);
   font-weight: 700;
 }
 
 .alert-table tbody tr:hover {
-  background: #f8fbff;
+  background: var(--rc-paper);
 }
 
 .priority {
@@ -209,47 +233,50 @@
   text-transform: capitalize;
 }
 
+/* Same 4-tier semantics as clinical.css: petrol = medium, clay = high,
+   deep red = critical/emergency, neutral = low. */
 .priority.priority-critical {
-  color: #c62828;
+  color: #8a2f10;
 }
 
 .priority.priority-high {
-  color: #ef6c00;
+  color: var(--rc-clay);
 }
 
 .priority.priority-medium {
-  color: #1976d2;
+  color: var(--rc-petrol);
 }
 
 .priority.priority-low {
-  color: #2e7d32;
+  color: rgba(21, 36, 32, 0.55);
 }
 
 .ack-button {
-  background: #43a047;
-  color: white;
+  background: var(--rc-petrol);
+  color: #fffaf2;
   border: none;
-  border-radius: 6px;
+  border-radius: 999px;
   padding: 8px 14px;
   cursor: pointer;
-  font-weight: 600;
+  font-family: var(--rc-font-body);
+  font-weight: 700;
   transition: background 0.2s, transform 0.2s;
 }
 
 .ack-button:hover {
-  background: #2e7d32;
+  background: var(--rc-clay);
   transform: translateY(-1px);
 }
 
 .ack-button:disabled {
-  background: #b0bec5;
+  background: rgba(21, 36, 32, 0.25);
   cursor: not-allowed;
   transform: none;
 }
 
 .empty-alerts {
   text-align: center;
-  color: #607d8b;
+  color: rgba(21, 36, 32, 0.55);
   padding: 20px;
   font-size: 0.95rem;
 }
@@ -274,84 +301,99 @@
 
 /* ── Dark mode — triggered by body.theme-dark OR data-theme="dark" ── */
 .theme-dark .alert-console,
-[data-theme="dark"] .alert-console                { background: #1e293b; border-color: #334155; }
+[data-theme="dark"] .alert-console                { background: #1c2823; border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.5); }
 
 .theme-dark .alert-console-header h3,
-[data-theme="dark"] .alert-console-header h3      { color: #f9fafb; }
+[data-theme="dark"] .alert-console-header h3      { color: #f8f1e4; }
 
 .theme-dark .alert-console-header p,
-[data-theme="dark"] .alert-console-header p       { color: #9ca3af; }
+[data-theme="dark"] .alert-console-header p       { color: rgba(248, 241, 228, 0.65); }
 
 .theme-dark .alert-console-form label,
-[data-theme="dark"] .alert-console-form label     { color: #e5e7eb; }
+[data-theme="dark"] .alert-console-form label     { color: #f8f1e4; }
 
 .theme-dark .alert-console-form input,
-[data-theme="dark"] .alert-console-form input     { background: #0f172a; border-color: #334155; color: #e5e7eb; }
+[data-theme="dark"] .alert-console-form input     { background: #16201d; border-color: rgba(255, 255, 255, 0.12); color: #f8f1e4; }
 
 .theme-dark .alert-console-message.success,
-[data-theme="dark"] .alert-console-message.success { background: #0f3324; color: #6ee7a0; border-color: #166534; }
+[data-theme="dark"] .alert-console-message.success { background: rgba(240, 166, 119, 0.12); color: var(--rc-clay-soft); border-left-color: var(--rc-clay-soft); }
 
 .theme-dark .alert-console-message.error,
-[data-theme="dark"] .alert-console-message.error   { background: #450a0a; color: #fca5a5; border-color: #7f1d1d; }
+[data-theme="dark"] .alert-console-message.error   { background: #2e130a; color: #f3a98f; border-left-color: var(--rc-clay-soft); }
 
 .theme-dark .alert-monitoring-card,
-[data-theme="dark"] .alert-monitoring-card        { background: #0f172a; border-color: #334155; }
+[data-theme="dark"] .alert-monitoring-card        { background: #16201d; border-color: rgba(255, 255, 255, 0.08); }
 
 .theme-dark .alert-monitoring-card h4,
-[data-theme="dark"] .alert-monitoring-card h4     { color: #f9fafb; }
+[data-theme="dark"] .alert-monitoring-card h4     { color: #f8f1e4; }
 
 .theme-dark .monitoring-grid div,
-[data-theme="dark"] .monitoring-grid div          { background: #1e293b; border-color: #334155; }
+[data-theme="dark"] .monitoring-grid div          { background: #1c2823; border-color: rgba(255, 255, 255, 0.08); }
 
 .theme-dark .monitoring-grid span,
-[data-theme="dark"] .monitoring-grid span         { color: #9ca3af; }
+[data-theme="dark"] .monitoring-grid span         { color: rgba(248, 241, 228, 0.6); }
 
 .theme-dark .monitoring-grid strong,
-[data-theme="dark"] .monitoring-grid strong       { color: #f9fafb; }
+[data-theme="dark"] .monitoring-grid strong       { color: #f8f1e4; }
 
 .theme-dark .recent-failures h5,
-[data-theme="dark"] .recent-failures h5           { color: #fca5a5; }
+[data-theme="dark"] .recent-failures h5           { color: #ffab91; }
 
 .theme-dark .recent-failures li,
-[data-theme="dark"] .recent-failures li           { background: #1e293b; border-color: #7f1d1d; }
+[data-theme="dark"] .recent-failures li           { background: #1c2823; border-color: rgba(239, 128, 109, 0.35); }
 
 .theme-dark .recent-failures li strong,
-[data-theme="dark"] .recent-failures li strong    { color: #fca5a5; }
+[data-theme="dark"] .recent-failures li strong    { color: #ffab91; }
 
 .theme-dark .recent-failures li span,
-[data-theme="dark"] .recent-failures li span      { color: #fca5a5; }
+[data-theme="dark"] .recent-failures li span      { color: #ffab91; }
 
 .theme-dark .recent-failures li time,
-[data-theme="dark"] .recent-failures li time      { color: #9ca3af; }
+[data-theme="dark"] .recent-failures li time      { color: rgba(248, 241, 228, 0.5); }
 
 .theme-dark .alert-table-wrapper,
-[data-theme="dark"] .alert-table-wrapper          { border-color: #334155; }
+[data-theme="dark"] .alert-table-wrapper          { border-color: rgba(255, 255, 255, 0.08); }
 
 .theme-dark .alert-table th,
 [data-theme="dark"] .alert-table th,
 .theme-dark .alert-table td,
-[data-theme="dark"] .alert-table td               { border-color: #334155; color: #e5e7eb; }
+[data-theme="dark"] .alert-table td               { border-color: rgba(255, 255, 255, 0.08); color: #f8f1e4; }
 
 .theme-dark .alert-table th,
-[data-theme="dark"] .alert-table th               { background: #0f172a; color: #f9fafb; }
+[data-theme="dark"] .alert-table th               { background: rgba(255, 255, 255, 0.06); color: #f8f1e4; }
 
 .theme-dark .alert-table tbody tr:hover,
-[data-theme="dark"] .alert-table tbody tr:hover   { background: #273449; }
+[data-theme="dark"] .alert-table tbody tr:hover   { background: rgba(255, 255, 255, 0.04); }
+
+/* .alert-table prefix needed: specificity must beat the generic
+   `.theme-dark .alert-table td` color rule above, since the priority
+   classes live on a <span>/<td> nested in the table, same pitfall as
+   AppointmentCalendar's status colors. */
+.theme-dark .alert-table .priority-critical,
+[data-theme="dark"] .alert-table .priority-critical { color: #ffab91; }
+
+.theme-dark .alert-table .priority-high,
+[data-theme="dark"] .alert-table .priority-high     { color: var(--rc-clay-soft); }
+
+.theme-dark .alert-table .priority-medium,
+[data-theme="dark"] .alert-table .priority-medium   { color: var(--rc-clay-soft); }
+
+.theme-dark .alert-table .priority-low,
+[data-theme="dark"] .alert-table .priority-low      { color: rgba(248, 241, 228, 0.6); }
 
 .theme-dark .ack-button:disabled,
-[data-theme="dark"] .ack-button:disabled          { background: #475569; }
+[data-theme="dark"] .ack-button:disabled          { background: rgba(255, 255, 255, 0.12); }
 
 .theme-dark .empty-alerts,
-[data-theme="dark"] .empty-alerts                 { color: #9ca3af; }
+[data-theme="dark"] .empty-alerts                 { color: rgba(248, 241, 228, 0.5); }
 
 /* Fallback for system preference when no class is set */
 @media (prefers-color-scheme: dark) {
-  body:not(.theme-light) .alert-console             { background: #1e293b; border-color: #334155; }
-  body:not(.theme-light) .alert-console-header h3   { color: #f9fafb; }
-  body:not(.theme-light) .alert-monitoring-card     { background: #0f172a; border-color: #334155; }
-  body:not(.theme-light) .monitoring-grid div       { background: #1e293b; border-color: #334155; }
-  body:not(.theme-light) .monitoring-grid strong    { color: #f9fafb; }
-  body:not(.theme-light) .alert-table th            { background: #0f172a; color: #f9fafb; border-color: #334155; }
-  body:not(.theme-light) .alert-table td            { color: #e5e7eb; border-color: #334155; }
+  body:not(.theme-light) .alert-console             { background: #1c2823; border-color: rgba(255, 255, 255, 0.08); }
+  body:not(.theme-light) .alert-console-header h3   { color: #f8f1e4; }
+  body:not(.theme-light) .alert-monitoring-card     { background: #16201d; border-color: rgba(255, 255, 255, 0.08); }
+  body:not(.theme-light) .monitoring-grid div       { background: #1c2823; border-color: rgba(255, 255, 255, 0.08); }
+  body:not(.theme-light) .monitoring-grid strong    { color: #f8f1e4; }
+  body:not(.theme-light) .alert-table th            { background: rgba(255, 255, 255, 0.06); color: #f8f1e4; }
+  body:not(.theme-light) .alert-table td            { color: #f8f1e4; }
 }
-
