@@ -1,10 +1,29 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   RespiCare · FhirResourceViewer — "Clinical Breath"
+   Local --rc-* block (mirrors clinical.css/AppointmentCalendar.css) so this
+   component looks correct whether it's embedded in FhirPage's modal or
+   rendered elsewhere.
+   ────────────────────────────────────────────────────────────────────────── */
+
 .fhir-resource-viewer {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  --rc-ink:          #152420;
+  --rc-paper:        #f8f1e4;
+  --rc-paper-dim:    #efe4d0;
+  --rc-petrol:       #103c37;
+  --rc-petrol-ink:   #0a2b27;
+  --rc-clay:         #d9683f;
+  --rc-clay-soft:    #f0a677;
+  --rc-clay-dark:    #8a2f10;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body:    'Manrope', 'Segoe UI', sans-serif;
+
+  background: #fffaf2;
+  border: 1px solid var(--rc-paper-dim);
+  border-radius: 2px 20px 20px 20px;
   padding: 20px;
   margin: 20px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 14px 30px -18px rgba(16, 60, 55, 0.18);
+  font-family: var(--rc-font-body);
 }
 
 .fhir-resource-header {
@@ -13,41 +32,38 @@
   justify-content: space-between;
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #1976d2;
+  border-bottom: 2px solid var(--rc-petrol);
 }
 
 .fhir-resource-header h3 {
   margin: 0;
-  color: #1976d2;
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  color: var(--rc-petrol-ink);
   font-size: 1.5rem;
 }
 
 .fhir-resource-type {
-  background: #e3f2fd;
-  color: #1976d2;
+  background: rgba(16, 60, 55, 0.12);
+  color: var(--rc-petrol);
   padding: 4px 12px;
-  border-radius: 4px;
+  border-radius: 999px;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .fhir-close-btn {
-  background: #f44336;
-  color: white;
+  background: none;
   border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  font-size: 1.5rem;
+  line-height: 1;
   cursor: pointer;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
+  color: rgba(21, 36, 32, 0.45);
+  padding: 0;
 }
 
 .fhir-close-btn:hover {
-  background: #d32f2f;
+  color: var(--rc-ink);
 }
 
 .fhir-resource-content {
@@ -57,7 +73,7 @@
 }
 
 .fhir-key {
-  color: #1976d2;
+  color: var(--rc-petrol-ink);
   font-weight: 600;
   cursor: pointer;
   margin-right: 8px;
@@ -68,29 +84,30 @@
 }
 
 .fhir-string {
-  color: #2e7d32;
+  color: var(--rc-petrol);
 }
 
 .fhir-number {
-  color: #f57c00;
+  color: var(--rc-clay-dark);
 }
 
 .fhir-boolean {
-  color: #7b1fa2;
+  color: var(--rc-petrol-ink);
+  font-weight: 600;
 }
 
 .fhir-date {
-  color: #0288d1;
+  color: var(--rc-clay);
 }
 
 .fhir-null {
-  color: #9e9e9e;
+  color: rgba(21, 36, 32, 0.45);
   font-style: italic;
 }
 
 .fhir-object {
   margin-left: 20px;
-  border-left: 2px solid #e0e0e0;
+  border-left: 2px solid var(--rc-paper-dim);
   padding-left: 10px;
 }
 
@@ -105,57 +122,64 @@
 .fhir-array-item {
   margin: 4px 0;
   padding-left: 10px;
-  border-left: 2px solid #ff9800;
+  border-left: 2px solid var(--rc-clay-soft);
 }
 
 .fhir-collapsed {
-  color: #9e9e9e;
+  color: rgba(21, 36, 32, 0.45);
   cursor: pointer;
   font-style: italic;
 }
 
 .fhir-collapsed:hover {
-  color: #1976d2;
+  color: var(--rc-petrol);
 }
 
-/* Dark mode — controlled by body.theme-dark */
-.theme-dark .fhir-resource-viewer {
-  background: #1e2433;
-  border-color: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.87);
-}
+/* ── Dark mode ──────────────────────────────────────────────────── */
+.theme-dark .fhir-resource-viewer,
+[data-theme="dark"] .fhir-resource-viewer           { background: #1c2823; border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.5); }
 
-.theme-dark .fhir-resource-header {
-  border-bottom-color: #42a5f5;
-}
+.theme-dark .fhir-resource-header,
+[data-theme="dark"] .fhir-resource-header           { border-bottom-color: var(--rc-clay-soft); }
 
-.theme-dark .fhir-resource-header h3 {
-  color: #90caf9;
-}
+.theme-dark .fhir-resource-header h3,
+[data-theme="dark"] .fhir-resource-header h3        { color: #f8f1e4; }
 
-.theme-dark .fhir-resource-type {
-  background: #1565c0;
-  color: #e3f2fd;
-}
+.theme-dark .fhir-resource-type,
+[data-theme="dark"] .fhir-resource-type             { background: rgba(240, 166, 119, 0.18); color: var(--rc-clay-soft); }
 
-.theme-dark .fhir-object {
-  border-left-color: rgba(255,255,255,0.15);
-}
+.theme-dark .fhir-close-btn,
+[data-theme="dark"] .fhir-close-btn                 { color: rgba(248, 241, 228, 0.5); }
 
-.theme-dark .fhir-array-item {
-  border-left-color: #ff9800;
-}
+.theme-dark .fhir-close-btn:hover,
+[data-theme="dark"] .fhir-close-btn:hover           { color: #f8f1e4; }
 
-.theme-dark .fhir-collapsed {
-  color: #90caf9;
-}
+.theme-dark .fhir-key,
+[data-theme="dark"] .fhir-key                       { color: #f8f1e4; }
 
-/* Fallback para sistema sin clase explícita */
-@media (prefers-color-scheme: dark) {
-  body:not(.theme-light) .fhir-resource-viewer    { background: #1e1e1e; border-color: #424242; color: #e0e0e0; }
-  body:not(.theme-light) .fhir-resource-header    { border-bottom-color: #64b5f6; }
-  body:not(.theme-light) .fhir-resource-header h3 { color: #64b5f6; }
-  body:not(.theme-light) .fhir-object             { border-left-color: #424242; }
-  body:not(.theme-light) .fhir-array-item         { border-left-color: #ff9800; }
-}
+.theme-dark .fhir-string,
+[data-theme="dark"] .fhir-string                    { color: var(--rc-clay-soft); }
 
+.theme-dark .fhir-number,
+[data-theme="dark"] .fhir-number                    { color: #ffab91; }
+
+.theme-dark .fhir-boolean,
+[data-theme="dark"] .fhir-boolean                   { color: #f8f1e4; }
+
+.theme-dark .fhir-date,
+[data-theme="dark"] .fhir-date                      { color: var(--rc-clay-soft); }
+
+.theme-dark .fhir-null,
+[data-theme="dark"] .fhir-null                      { color: rgba(248, 241, 228, 0.45); }
+
+.theme-dark .fhir-object,
+[data-theme="dark"] .fhir-object                    { border-left-color: rgba(255, 255, 255, 0.12); }
+
+.theme-dark .fhir-array-item,
+[data-theme="dark"] .fhir-array-item                { border-left-color: var(--rc-clay-soft); }
+
+.theme-dark .fhir-collapsed,
+[data-theme="dark"] .fhir-collapsed                 { color: rgba(248, 241, 228, 0.45); }
+
+.theme-dark .fhir-collapsed:hover,
+[data-theme="dark"] .fhir-collapsed:hover           { color: var(--rc-clay-soft); }
