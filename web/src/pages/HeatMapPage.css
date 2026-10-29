@@ -1,4 +1,9 @@
 .heatmap-page {
+  --rc-petrol:       #103c37;
+  --rc-petrol-ink:   #0a2b27;
+  --rc-paper:        #f8f1e4;
+  --rc-font-body:    'Manrope', 'Segoe UI', sans-serif;
+
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -12,10 +17,11 @@
   justify-content: center;
   height: 100vh;
   width: 100%;
+  font-family: var(--rc-font-body);
   font-size: 1.1rem;
-  color: #1565c0;
   font-weight: 600;
-  background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%);
+  color: var(--rc-petrol-ink);
+  background: var(--rc-paper);
 }
 
 /* Responsive Design */
@@ -27,6 +33,6 @@
 
 .theme-dark .heatmap-loading,
 [data-theme="dark"] .heatmap-loading {
-  color: #93c5fd;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #f8f1e4;
+  background: #16201d;
 }
