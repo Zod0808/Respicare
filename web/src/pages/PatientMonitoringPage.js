@@ -20,6 +20,7 @@ import {
   Tooltip,
 } from 'recharts';
 import { useAuth } from '../contexts/AuthContext';
+import { useThemeContext } from '../components/ThemeProvider';
 import { API_BASE } from '../utils/apiBase';
 import './PatientMonitoringPage.css';
 
@@ -127,6 +128,11 @@ function playBeep(critical = false) {
 
 export default function PatientMonitoringPage() {
   const { token } = useAuth();
+  const { theme } = useThemeContext();
+  const isDark = theme.mode === 'dark';
+  const spo2Stroke = isDark ? '#f0a677' : '#103c37';
+  const spo2Fill = isDark ? '#f0a67733' : '#103c3733';
+  const gridStroke = isDark ? 'rgba(248, 241, 228, 0.12)' : 'rgba(16, 60, 55, 0.14)';
   const navigate = useNavigate();
   const wsRef = useRef(null);
   const reconnectTimer = useRef(null);
@@ -562,11 +568,11 @@ export default function PatientMonitoringPage() {
           ) : (
             <ResponsiveContainer width="100%" height={220}>
               <AreaChart data={spo2Trend}>
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
                 <XAxis dataKey="day" />
                 <YAxis domain={[80, 100]} unit="%" />
                 <Tooltip />
-                <Area type="monotone" dataKey="spo2" name="SpO₂ promedio" stroke="#0ea5e9" fill="#0ea5e933" />
+                <Area type="monotone" dataKey="spo2" name="SpO₂ promedio" stroke={spo2Stroke} fill={spo2Fill} />
               </AreaChart>
             </ResponsiveContainer>
           )}

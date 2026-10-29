@@ -5,14 +5,26 @@
  * Requerimiento: RF-007 - Panel del doctor (rediseño Sprint 13: stat-cards, tabla
  * de pacientes con badge de riesgo de 4 niveles, gráfico de tendencia SpO2 y feed
  * de alertas) / RF-014 - Wearables como validación clínica
- * Descripción: Estilos del Panel del médico rediseñado.
+ * Descripción: Estilos del Panel del médico rediseñado (Clinical Breath).
  */
 
 .monitoring-page {
+  --rc-ink: #152420;
+  --rc-paper: #f8f1e4;
+  --rc-paper-dim: #efe4d0;
+  --rc-petrol: #103c37;
+  --rc-petrol-ink: #0a2b27;
+  --rc-clay: #d9683f;
+  --rc-clay-soft: #f0a677;
+  --rc-clay-dark: #8a2f10;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body: 'Manrope', 'Segoe UI', sans-serif;
+
   padding: 1.5rem;
   max-width: 1400px;
   margin: 0 auto;
-  font-family: var(--font-sans, system-ui, sans-serif);
+  font-family: var(--rc-font-body);
+  background: var(--rc-paper);
 }
 
 /* ── Header ──────────────────────────────────────────────────────── */
@@ -26,9 +38,11 @@
 }
 
 .monitoring-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--color-text, #111827);
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--rc-petrol-ink);
   margin: 0;
 }
 
@@ -37,7 +51,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.875rem;
-  color: var(--color-text-secondary, #6b7280);
+  color: rgba(21, 36, 32, 0.65);
 }
 
 .monitoring-dot {
@@ -47,10 +61,10 @@
   flex-shrink: 0;
 }
 
-.monitoring-dot--on  { background: #22c55e; }
-.monitoring-dot--off { background: #ef4444; animation: pulse-red 1.2s ease-in-out infinite; }
+.monitoring-dot--on  { background: var(--rc-petrol); }
+.monitoring-dot--off { background: var(--rc-clay-dark); animation: pulse-clay 1.2s ease-in-out infinite; }
 
-@keyframes pulse-red {
+@keyframes pulse-clay {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.4; }
 }
@@ -59,7 +73,7 @@
 .monitoring-empty {
   text-align: center;
   padding: 4rem 1rem;
-  color: var(--color-text-secondary, #6b7280);
+  color: rgba(21, 36, 32, 0.6);
 }
 
 .monitoring-empty__sub {
@@ -76,45 +90,48 @@
 }
 
 .stat-card {
-  background: var(--color-surface, #fff);
-  border-radius: 12px;
+  background: #fffaf2;
+  border-radius: 2px 16px 16px 16px;
   padding: 1.1rem 1.25rem;
-  border-left: 4px solid #3b82f6;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  border-left: 4px solid var(--rc-petrol);
+  box-shadow: 0 14px 30px -18px rgba(16, 60, 55, 0.18);
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
 }
 
-.stat-card--warn     { border-left-color: #f59e0b; }
-.stat-card--critical { border-left-color: #ef4444; }
-.stat-card--live     { border-left-color: #22c55e; }
+.stat-card--warn     { border-left-color: var(--rc-clay-soft); }
+.stat-card--critical { border-left-color: var(--rc-clay-dark); }
+.stat-card--live      { border-left-color: var(--rc-petrol); }
 
 .stat-card__value {
+  font-family: var(--rc-font-display);
   font-size: 1.75rem;
-  font-weight: 800;
-  color: var(--color-text, #111827);
+  font-weight: 700;
+  color: var(--rc-petrol-ink);
 }
 
 .stat-card__label {
   font-size: 0.8rem;
-  color: var(--color-text-secondary, #6b7280);
+  color: rgba(21, 36, 32, 0.6);
 }
 
 /* ── Patient table ───────────────────────────────────────────────── */
 .monitoring-table-card {
-  background: var(--color-surface, #fff);
-  border-radius: 12px;
+  background: #fffaf2;
+  border-radius: 2px 16px 16px 16px;
   padding: 1.25rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  box-shadow: 0 14px 30px -18px rgba(16, 60, 55, 0.18);
   margin-bottom: 1.5rem;
 }
 
 .monitoring-table-card__title {
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  font-weight: 600;
   margin: 0 0 1rem;
-  color: var(--color-text, #111827);
+  color: var(--rc-petrol-ink);
 }
 
 .monitoring-table-wrapper {
@@ -133,43 +150,44 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--color-text-secondary, #6b7280);
-  border-bottom: 2px solid var(--color-border, #e5e7eb);
+  color: rgba(21, 36, 32, 0.55);
+  border-bottom: 2px solid rgba(16, 60, 55, 0.14);
   white-space: nowrap;
 }
 
 .monitoring-table td {
   padding: 0.6rem 0.75rem;
-  border-bottom: 1px solid var(--color-border, #f1f5f9);
-  color: var(--color-text, #111827);
+  border-bottom: 1px solid rgba(16, 60, 55, 0.08);
+  color: var(--rc-ink);
   white-space: nowrap;
 }
 
-.monitoring-row--critical { background: #fef2f2; }
-.monitoring-row--high     { background: #fffbeb; }
+.monitoring-row--critical { background: rgba(138, 47, 16, 0.07); }
+.monitoring-row--high     { background: rgba(240, 166, 119, 0.14); }
 
 .monitoring-table__name {
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.monitoring-table__metric--high     { color: #b45309; font-weight: 700; }
-.monitoring-table__metric--medium   { color: #a16207; font-weight: 600; }
-.monitoring-table__metric--critical { color: #dc2626; font-weight: 700; }
+.monitoring-table__metric--high     { color: var(--rc-clay-dark); font-weight: 700; }
+.monitoring-table__metric--medium   { color: var(--rc-clay); font-weight: 600; }
+.monitoring-table__metric--critical { color: var(--rc-clay-dark); font-weight: 700; }
 
 .monitoring-table__action {
-  background: #eff6ff;
-  color: #1d4ed8;
+  background: rgba(16, 60, 55, 0.08);
+  color: var(--rc-petrol);
   border: none;
-  border-radius: 6px;
-  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  transition: background 0.15s ease;
 }
 
-.monitoring-table__action:hover { background: #dbeafe; }
+.monitoring-table__action:hover { background: var(--rc-petrol); color: #fffaf2; }
 
-/* ── Risk badge (4 tiers) ────────────────────────────────────────── */
+/* ── Risk badge (5 tiers) ────────────────────────────────────────── */
 .risk-badge {
   display: inline-block;
   font-size: 0.7rem;
@@ -180,11 +198,11 @@
   letter-spacing: 0.04em;
 }
 
-.risk-badge--critical { background: #fee2e2; color: #dc2626; }
-.risk-badge--high     { background: #fef3c7; color: #b45309; }
-.risk-badge--medium   { background: #fef9c3; color: #a16207; }
-.risk-badge--ok       { background: #dcfce7; color: #15803d; }
-.risk-badge--waiting  { background: #f3f4f6; color: #6b7280; }
+.risk-badge--critical { background: var(--rc-clay-dark); color: #fffaf2; }
+.risk-badge--high     { background: #fdece3; color: var(--rc-clay-dark); }
+.risk-badge--medium   { background: rgba(240, 166, 119, 0.22); color: var(--rc-clay-dark); }
+.risk-badge--ok       { background: rgba(16, 60, 55, 0.08); color: var(--rc-petrol); }
+.risk-badge--waiting  { background: rgba(21, 36, 32, 0.08); color: rgba(21, 36, 32, 0.55); }
 
 /* ── Two-column section: chart + alert feed ─────────────────────── */
 .monitoring-columns {
@@ -199,23 +217,25 @@
 
 .monitoring-chart-card,
 .monitoring-feed-card {
-  background: var(--color-surface, #fff);
-  border-radius: 12px;
+  background: #fffaf2;
+  border-radius: 2px 16px 16px 16px;
   padding: 1.25rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  box-shadow: 0 14px 30px -18px rgba(16, 60, 55, 0.18);
 }
 
 .monitoring-chart-card__title,
 .monitoring-feed-card__title {
+  font-family: var(--rc-font-display);
+  font-style: italic;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 600;
   margin: 0 0 1rem;
-  color: var(--color-text, #111827);
+  color: var(--rc-petrol-ink);
 }
 
 .monitoring-chart-card__empty,
 .monitoring-feed-card__empty {
-  color: var(--color-text-secondary, #6b7280);
+  color: rgba(21, 36, 32, 0.55);
   font-size: 0.875rem;
   padding: 1rem 0;
 }
@@ -237,12 +257,12 @@
   align-items: flex-start;
   gap: 0.6rem;
   padding: 0.5rem 0.6rem;
-  border-radius: 8px;
-  background: var(--color-bg-subtle, #f9fafb);
+  border-radius: 10px;
+  background: var(--rc-paper-dim);
 }
 
-.monitoring-feed__item--critical { background: #fee2e2; }
-.monitoring-feed__item--high     { background: #fef3c7; }
+.monitoring-feed__item--critical { background: rgba(138, 47, 16, 0.1); }
+.monitoring-feed__item--high     { background: rgba(240, 166, 119, 0.2); }
 
 .monitoring-feed__dot {
   width: 8px;
@@ -250,11 +270,11 @@
   border-radius: 50%;
   margin-top: 0.4rem;
   flex-shrink: 0;
-  background: #6b7280;
+  background: rgba(21, 36, 32, 0.4);
 }
 
-.monitoring-feed__item--critical .monitoring-feed__dot { background: #dc2626; }
-.monitoring-feed__item--high     .monitoring-feed__dot { background: #b45309; }
+.monitoring-feed__item--critical .monitoring-feed__dot { background: var(--rc-clay-dark); }
+.monitoring-feed__item--high     .monitoring-feed__dot { background: var(--rc-clay); }
 
 .monitoring-feed__body {
   flex: 1;
@@ -267,59 +287,59 @@
 .monitoring-feed__patient {
   font-weight: 700;
   font-size: 0.82rem;
-  color: var(--color-text, #111827);
+  color: var(--rc-petrol-ink);
 }
 
 .monitoring-feed__msg {
   font-size: 0.78rem;
-  color: #374151;
+  color: rgba(21, 36, 32, 0.75);
   line-height: 1.3;
 }
 
 .monitoring-feed__time {
   font-size: 0.72rem;
-  color: var(--color-text-secondary, #6b7280);
+  color: rgba(21, 36, 32, 0.5);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .monitoring-feed__ack {
   flex-shrink: 0;
-  background: rgba(0,0,0,0.08);
+  background: rgba(16, 60, 55, 0.1);
   border: none;
-  border-radius: 6px;
-  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
   font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
-  color: inherit;
+  color: var(--rc-petrol);
 }
 
-.monitoring-feed__ack:hover { background: rgba(0,0,0,0.16); }
+.monitoring-feed__ack:hover { background: var(--rc-petrol); color: #fffaf2; }
 
 /* ── Sound toggle button ─────────────────────────────────────────── */
 .monitoring-sound-btn {
   background: none;
-  border: 1px solid #d1d5db;
+  border: 1px solid rgba(16, 60, 55, 0.25);
   border-radius: 8px;
   padding: 0.2rem 0.45rem;
   cursor: pointer;
   font-size: 1rem;
   line-height: 1;
-  transition: background 0.15s;
+  transition: background 0.15s, border-color 0.15s;
 }
 
-.monitoring-sound-btn:hover { background: #f3f4f6; }
-.monitoring-sound-btn--on   { border-color: #22c55e; background: #dcfce7; }
+.monitoring-sound-btn:hover { background: rgba(16, 60, 55, 0.08); }
+.monitoring-sound-btn--on   { border-color: var(--rc-petrol); background: rgba(16, 60, 55, 0.1); }
 
 /* ── Error banner ────────────────────────────────────────────────── */
 .monitoring-error {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: #fee2e2;
-  border: 1px solid #fca5a5;
-  color: #7f1d1d;
+  background: #fdece3;
+  border-left: 3px solid var(--rc-clay);
+  color: var(--rc-clay-dark);
   border-radius: 10px;
   padding: 0.75rem 1rem;
   margin-bottom: 1.25rem;
@@ -333,7 +353,7 @@
   border: none;
   cursor: pointer;
   font-size: 1rem;
-  color: #7f1d1d;
+  color: var(--rc-clay-dark);
   padding: 0.1rem 0.3rem;
   border-radius: 4px;
   opacity: 0.7;
@@ -344,84 +364,128 @@
 /* ── Wearable polling indicator ──────────────────────────────────── */
 .monitoring-poll-info {
   font-size: 0.75rem;
-  color: var(--color-text-secondary, #6b7280);
+  color: rgba(21, 36, 32, 0.5);
   margin-left: auto;
 }
 
 /* ── Dark mode — triggered by body.theme-dark OR data-theme="dark" ── */
+.theme-dark .monitoring-page,
+[data-theme="dark"] .monitoring-page          { background: #16201d; }
+
 .theme-dark .monitoring-title,
-[data-theme="dark"] .monitoring-title        { color: #f9fafb; }
+[data-theme="dark"] .monitoring-title         { color: #f8f1e4; }
 
 .theme-dark .stat-card,
-[data-theme="dark"] .stat-card               { background: #1e293b; }
+[data-theme="dark"] .stat-card                { background: #1c2823; box-shadow: none; }
 
 .theme-dark .stat-card__value,
-[data-theme="dark"] .stat-card__value        { color: #f9fafb; }
+[data-theme="dark"] .stat-card__value         { color: #f8f1e4; }
 
 .theme-dark .stat-card__label,
-[data-theme="dark"] .stat-card__label        { color: #9ca3af; }
+[data-theme="dark"] .stat-card__label         { color: rgba(248, 241, 228, 0.6); }
 
 .theme-dark .monitoring-table-card,
 [data-theme="dark"] .monitoring-table-card,
 .theme-dark .monitoring-chart-card,
 [data-theme="dark"] .monitoring-chart-card,
 .theme-dark .monitoring-feed-card,
-[data-theme="dark"] .monitoring-feed-card    { background: #1e293b; }
+[data-theme="dark"] .monitoring-feed-card     { background: #1c2823; box-shadow: none; }
 
 .theme-dark .monitoring-table-card__title,
 [data-theme="dark"] .monitoring-table-card__title,
 .theme-dark .monitoring-chart-card__title,
 [data-theme="dark"] .monitoring-chart-card__title,
 .theme-dark .monitoring-feed-card__title,
-[data-theme="dark"] .monitoring-feed-card__title { color: #f9fafb; }
+[data-theme="dark"] .monitoring-feed-card__title { color: #f8f1e4; }
 
 .theme-dark .monitoring-table td,
-[data-theme="dark"] .monitoring-table td     { color: #e5e7eb; border-color: #334155; }
+[data-theme="dark"] .monitoring-table td      { color: rgba(248, 241, 228, 0.85); border-color: rgba(255, 255, 255, 0.1); }
 
 .theme-dark .monitoring-table th,
-[data-theme="dark"] .monitoring-table th     { color: #9ca3af; border-color: #334155; }
+[data-theme="dark"] .monitoring-table th      { color: rgba(248, 241, 228, 0.55); border-color: rgba(255, 255, 255, 0.12); }
 
 .theme-dark .monitoring-row--critical,
-[data-theme="dark"] .monitoring-row--critical { background: #450a0a; }
+[data-theme="dark"] .monitoring-row--critical { background: rgba(243, 169, 143, 0.12); }
 .theme-dark .monitoring-row--high,
-[data-theme="dark"] .monitoring-row--high     { background: #451a03; }
+[data-theme="dark"] .monitoring-row--high     { background: rgba(240, 166, 119, 0.1); }
+
+.theme-dark .monitoring-table__metric--high,
+[data-theme="dark"] .monitoring-table__metric--high,
+.theme-dark .monitoring-table__metric--critical,
+[data-theme="dark"] .monitoring-table__metric--critical { color: #f3a98f; }
+.theme-dark .monitoring-table__metric--medium,
+[data-theme="dark"] .monitoring-table__metric--medium   { color: var(--rc-clay-soft); }
+
+.theme-dark .monitoring-table__action,
+[data-theme="dark"] .monitoring-table__action { background: rgba(143, 179, 122, 0.18); color: #8fb37a; }
+.theme-dark .monitoring-table__action:hover,
+[data-theme="dark"] .monitoring-table__action:hover { background: #8fb37a; color: #16201d; }
+
+.theme-dark .risk-badge--critical,
+[data-theme="dark"] .risk-badge--critical     { background: #f3a98f; color: #2e130a; }
+.theme-dark .risk-badge--high,
+[data-theme="dark"] .risk-badge--high         { background: rgba(243, 169, 143, 0.16); color: #f3a98f; }
+.theme-dark .risk-badge--medium,
+[data-theme="dark"] .risk-badge--medium       { background: rgba(240, 166, 119, 0.18); color: var(--rc-clay-soft); }
+.theme-dark .risk-badge--ok,
+[data-theme="dark"] .risk-badge--ok           { background: rgba(143, 179, 122, 0.18); color: #8fb37a; }
+.theme-dark .risk-badge--waiting,
+[data-theme="dark"] .risk-badge--waiting      { background: rgba(248, 241, 228, 0.1); color: rgba(248, 241, 228, 0.55); }
 
 .theme-dark .monitoring-feed__item,
-[data-theme="dark"] .monitoring-feed__item   { background: #0f172a; }
+[data-theme="dark"] .monitoring-feed__item    { background: #16201d; }
 .theme-dark .monitoring-feed__item--critical,
-[data-theme="dark"] .monitoring-feed__item--critical { background: #450a0a; }
+[data-theme="dark"] .monitoring-feed__item--critical { background: rgba(243, 169, 143, 0.14); }
 .theme-dark .monitoring-feed__item--high,
-[data-theme="dark"] .monitoring-feed__item--high     { background: #451a03; }
+[data-theme="dark"] .monitoring-feed__item--high     { background: rgba(240, 166, 119, 0.12); }
+.theme-dark .monitoring-feed__item--critical .monitoring-feed__dot,
+[data-theme="dark"] .monitoring-feed__item--critical .monitoring-feed__dot { background: #f3a98f; }
+.theme-dark .monitoring-feed__item--high .monitoring-feed__dot,
+[data-theme="dark"] .monitoring-feed__item--high .monitoring-feed__dot     { background: var(--rc-clay-soft); }
 .theme-dark .monitoring-feed__patient,
-[data-theme="dark"] .monitoring-feed__patient { color: #f9fafb; }
+[data-theme="dark"] .monitoring-feed__patient { color: #f8f1e4; }
 .theme-dark .monitoring-feed__msg,
-[data-theme="dark"] .monitoring-feed__msg    { color: #d1d5db; }
+[data-theme="dark"] .monitoring-feed__msg     { color: rgba(248, 241, 228, 0.75); }
+.theme-dark .monitoring-feed__time,
+[data-theme="dark"] .monitoring-feed__time    { color: rgba(248, 241, 228, 0.5); }
+.theme-dark .monitoring-feed__ack,
+[data-theme="dark"] .monitoring-feed__ack     { background: rgba(143, 179, 122, 0.18); color: #8fb37a; }
+.theme-dark .monitoring-feed__ack:hover,
+[data-theme="dark"] .monitoring-feed__ack:hover { background: #8fb37a; color: #16201d; }
+
+.theme-dark .monitoring-sound-btn,
+[data-theme="dark"] .monitoring-sound-btn     { border-color: rgba(255, 255, 255, 0.18); }
+.theme-dark .monitoring-sound-btn:hover,
+[data-theme="dark"] .monitoring-sound-btn:hover { background: rgba(255, 255, 255, 0.06); }
+.theme-dark .monitoring-sound-btn--on,
+[data-theme="dark"] .monitoring-sound-btn--on { border-color: #8fb37a; background: rgba(143, 179, 122, 0.16); }
 
 .theme-dark .monitoring-status,
-[data-theme="dark"] .monitoring-status       { color: #d1d5db; }
+[data-theme="dark"] .monitoring-status        { color: rgba(248, 241, 228, 0.65); }
 
 .theme-dark .monitoring-poll-info,
-[data-theme="dark"] .monitoring-poll-info    { color: #9ca3af; }
+[data-theme="dark"] .monitoring-poll-info     { color: rgba(248, 241, 228, 0.5); }
 
 .theme-dark .monitoring-error,
-[data-theme="dark"] .monitoring-error        { background: #450a0a; border-color: #7f1d1d; color: #fca5a5; }
+[data-theme="dark"] .monitoring-error         { background: #2e130a; color: #f3a98f; border-left-color: var(--rc-clay-soft); }
 
 .theme-dark .monitoring-error__dismiss,
-[data-theme="dark"] .monitoring-error__dismiss { color: #fca5a5; }
+[data-theme="dark"] .monitoring-error__dismiss { color: #f3a98f; }
 
 .theme-dark .monitoring-empty,
-[data-theme="dark"] .monitoring-empty        { color: #9ca3af; }
+[data-theme="dark"] .monitoring-empty         { color: rgba(248, 241, 228, 0.6); }
 
 /* Fallback for system preference when no class is set */
 @media (prefers-color-scheme: dark) {
-  body:not(.theme-light) .monitoring-title         { color: #f9fafb; }
-  body:not(.theme-light) .stat-card                { background: #1e293b; }
-  body:not(.theme-light) .stat-card__value         { color: #f9fafb; }
+  body:not(.theme-light) .monitoring-page          { background: #16201d; }
+  body:not(.theme-light) .monitoring-title         { color: #f8f1e4; }
+  body:not(.theme-light) .stat-card                { background: #1c2823; }
+  body:not(.theme-light) .stat-card__value         { color: #f8f1e4; }
   body:not(.theme-light) .monitoring-table-card,
   body:not(.theme-light) .monitoring-chart-card,
-  body:not(.theme-light) .monitoring-feed-card     { background: #1e293b; }
+  body:not(.theme-light) .monitoring-feed-card     { background: #1c2823; }
   body:not(.theme-light) .monitoring-table-card__title,
   body:not(.theme-light) .monitoring-chart-card__title,
-  body:not(.theme-light) .monitoring-feed-card__title { color: #f9fafb; }
-  body:not(.theme-light) .monitoring-table td      { color: #e5e7eb; }
+  body:not(.theme-light) .monitoring-feed-card__title { color: #f8f1e4; }
+  body:not(.theme-light) .monitoring-table td      { color: rgba(248, 241, 228, 0.85); }
 }
