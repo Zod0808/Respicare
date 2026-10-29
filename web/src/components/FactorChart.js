@@ -5,10 +5,24 @@
  */
 
 import React, { useState, useMemo } from 'react';
+import { useThemeContext } from './ThemeProvider';
 import './FactorChart.css';
 
-const FactorChart = ({ 
-  factors = [], 
+/* Categorical palette (Clinical Breath) — same petrol/clay/moss/lavender
+   family introduced by ShapDashboard's FEATURE_COLORS, extended to 8 tones
+   so larger factor sets stay distinguishable. Picked at render time via
+   useThemeContext(), same precedent as ShapDashboard's CONTRIBUTION_COLORS. */
+const CATEGORY_COLORS_LIGHT = [
+  '#103c37', '#8a2f10', '#d9683f', '#5c7a52',
+  '#7a6f9b', '#0a2b27', '#b85530', '#3d6b63',
+];
+const CATEGORY_COLORS_DARK = [
+  '#8fb37a', '#f3a98f', '#f0a677', '#c9b88a',
+  '#b7a8c9', '#9ad9bc', '#f0b088', '#7fb8ac',
+];
+
+const FactorChart = ({
+  factors = [],
   type = 'bar', // bar, pie, radar, heatmap
   title = 'Factores de Influencia',
   showLegend = true,
@@ -16,11 +30,17 @@ const FactorChart = ({
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [selectedFactor, setSelectedFactor] = useState(null);
+  const { theme } = useThemeContext();
+  const isDark = theme.mode === 'dark';
+  const gridStroke = isDark ? 'rgba(248, 241, 228, 0.18)' : 'rgba(21, 36, 32, 0.15)';
+  const radarAccent = isDark ? '#f0a677' : '#103c37';
+  const radarFill = isDark ? 'rgba(240, 166, 119, 0.18)' : 'rgba(16, 60, 55, 0.14)';
+  const pieCenterFill = isDark ? '#1c2823' : '#fffaf2';
 
   // Procesar datos
   const processedFactors = useMemo(() => {
     if (!factors || factors.length === 0) return [];
-    
+
     return factors.map((factor, idx) => {
       if (typeof factor === 'string') {
         return {
@@ -38,7 +58,8 @@ const FactorChart = ({
         category: factor.category || '',
       };
     });
-  }, [factors]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [factors, isDark]);
 
   const maxValue = useMemo(() => {
     if (processedFactors.length === 0) return 1;
@@ -47,10 +68,7 @@ const FactorChart = ({
 
   // Obtener color por índice
   function getColorForIndex(idx) {
-    const colors = [
-      '#1976d2', '#4caf50', '#ff9800', '#f44336', '#9c27b0',
-      '#00bcd4', '#ffc107', '#795548', '#607d8b', '#e91e63'
-    ];
+    const colors = isDark ? CATEGORY_COLORS_DARK : CATEGORY_COLORS_LIGHT;
     return colors[idx % colors.length];
   }
 
@@ -145,7 +163,7 @@ const FactorChart = ({
               />
             );
           })}
-          <circle cx="100" cy="100" r="50" fill="white" />
+          <circle cx="100" cy="100" r="50" fill={pieCenterFill} />
           <text x="100" y="100" textAnchor="middle" dominantBaseline="middle" className="pie-center-text">
             {title}
           </text>
@@ -207,11 +225,11 @@ const FactorChart = ({
               cy={centerY}
               r={radius * scale}
               fill="none"
-              stroke="#e0e0e0"
+              stroke={gridStroke}
               strokeWidth="1"
             />
           ))}
-          
+
           {/* Axis lines */}
           {points.map((point, idx) => (
             <line
@@ -220,16 +238,16 @@ const FactorChart = ({
               y1={centerY}
               x2={centerX + radius * Math.cos(point.angle)}
               y2={centerY + radius * Math.sin(point.angle)}
-              stroke="#e0e0e0"
+              stroke={gridStroke}
               strokeWidth="1"
             />
           ))}
-          
+
           {/* Data polygon */}
           <path
             d={pathData}
-            fill="rgba(25, 118, 210, 0.2)"
-            stroke="#1976d2"
+            fill={radarFill}
+            stroke={radarAccent}
             strokeWidth="2"
             className="radar-polygon"
           />

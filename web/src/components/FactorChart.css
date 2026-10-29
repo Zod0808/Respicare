@@ -1,9 +1,28 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   RespiCare · FactorChart — "Clinical Breath"
+   Local --rc-* block (mirrors Hl7MessageViewer.css) since this component is
+   embedded both in AnalyticsDashboard and ChatBotEnhanced, which can't be
+   relied on to always provide the vars.
+   ────────────────────────────────────────────────────────────────────────── */
+
 .factor-chart {
-  background: white;
-  border-radius: 12px;
+  --rc-ink:          #152420;
+  --rc-paper:        #f8f1e4;
+  --rc-paper-dim:    #efe4d0;
+  --rc-petrol:       #103c37;
+  --rc-petrol-ink:   #0a2b27;
+  --rc-clay:         #d9683f;
+  --rc-clay-soft:    #f0a677;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body:    'Manrope', 'Segoe UI', sans-serif;
+
+  background: #fffaf2;
+  border: 1px solid var(--rc-paper-dim);
+  border-radius: 2px 16px 16px 16px;
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 14px 30px -18px rgba(16, 60, 55, 0.18);
   margin: 15px 0;
+  font-family: var(--rc-font-body);
 }
 
 .factor-chart-header {
@@ -12,27 +31,28 @@
 
 .factor-chart-header h4 {
   margin: 0 0 10px 0;
-  color: #1976d2;
+  font-family: var(--rc-font-display);
+  color: var(--rc-petrol-ink);
   font-size: 1.2rem;
 }
 
 .factor-detail {
-  background: #f5f5f5;
+  background: var(--rc-paper);
   padding: 12px;
   border-radius: 8px;
-  border-left: 4px solid #1976d2;
+  border-left: 4px solid var(--rc-clay);
   margin-top: 10px;
 }
 
 .factor-detail strong {
   display: block;
   margin-bottom: 5px;
-  color: #333;
+  color: var(--rc-petrol-ink);
 }
 
 .factor-detail p {
   margin: 0;
-  color: #666;
+  color: rgba(21, 36, 32, 0.65);
   font-size: 0.9rem;
 }
 
@@ -54,16 +74,16 @@
 }
 
 .bar-item:hover {
-  background: #f5f5f5;
+  background: var(--rc-paper);
 }
 
 .bar-item.hovered {
-  background: #e3f2fd;
+  background: rgba(16, 60, 55, 0.08);
 }
 
 .bar-item.selected {
-  background: #bbdefb;
-  border: 2px solid #1976d2;
+  background: rgba(16, 60, 55, 0.12);
+  border: 2px solid var(--rc-petrol);
 }
 
 .bar-label-container {
@@ -76,13 +96,13 @@
 .bar-label {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #333;
+  color: var(--rc-ink);
 }
 
 .bar-category {
   font-size: 0.75rem;
-  color: #666;
-  background: #e0e0e0;
+  color: rgba(21, 36, 32, 0.6);
+  background: var(--rc-paper-dim);
   padding: 2px 8px;
   border-radius: 10px;
 }
@@ -90,7 +110,7 @@
 .bar-wrapper {
   width: 100%;
   height: 35px;
-  background: #f5f5f5;
+  background: var(--rc-paper);
   border-radius: 6px;
   overflow: hidden;
   position: relative;
@@ -106,7 +126,7 @@
 }
 
 .bar-value {
-  color: white;
+  color: #fffaf2;
   font-size: 0.85rem;
   font-weight: 600;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -114,10 +134,10 @@
 
 .bar-tooltip {
   font-size: 0.8rem;
-  color: #666;
+  color: rgba(21, 36, 32, 0.65);
   margin-top: 5px;
   padding: 8px;
-  background: white;
+  background: #fffaf2;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -149,7 +169,7 @@
 .pie-center-text {
   font-size: 0.9rem;
   font-weight: 600;
-  fill: #1976d2;
+  fill: var(--rc-petrol);
 }
 
 .pie-legend {
@@ -171,16 +191,16 @@
 }
 
 .legend-item:hover {
-  background: #f5f5f5;
+  background: var(--rc-paper);
 }
 
 .legend-item.hovered {
-  background: #e3f2fd;
+  background: rgba(16, 60, 55, 0.08);
 }
 
 .legend-item.selected {
-  background: #bbdefb;
-  border: 2px solid #1976d2;
+  background: rgba(16, 60, 55, 0.12);
+  border: 2px solid var(--rc-petrol);
 }
 
 .legend-color {
@@ -193,13 +213,13 @@
 .legend-name {
   flex: 1;
   font-size: 0.9rem;
-  color: #333;
+  color: var(--rc-ink);
 }
 
 .legend-value {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #666;
+  color: rgba(21, 36, 32, 0.6);
 }
 
 /* Radar Chart */
@@ -229,14 +249,14 @@
 
 .radar-label {
   font-size: 0.75rem;
-  fill: #333;
+  fill: var(--rc-ink);
   font-weight: 500;
 }
 
 .factor-chart-empty {
   padding: 40px;
   text-align: center;
-  color: #999;
+  color: rgba(21, 36, 32, 0.45);
 }
 
 @media (max-width: 768px) {
@@ -259,21 +279,27 @@
   }
 }
 
-/* ── Dark mode ── */
+/* ── Dark mode ──────────────────────────────────────────────────── */
 .theme-dark .factor-chart,
-[data-theme="dark"] .factor-chart              { background: #1e293b; }
+[data-theme="dark"] .factor-chart              { background: #16201d; border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.5); }
+
+.theme-dark .factor-chart-header h4,
+[data-theme="dark"] .factor-chart-header h4    { color: #f8f1e4; }
 
 .theme-dark .factor-detail,
 [data-theme="dark"] .factor-detail,
 .theme-dark .bar-tooltip,
-[data-theme="dark"] .bar-tooltip               { background: #0f172a; }
+[data-theme="dark"] .bar-tooltip               { background: #1c2823; }
+
+.theme-dark .factor-detail,
+[data-theme="dark"] .factor-detail             { border-left-color: var(--rc-clay-soft); }
 
 .theme-dark .factor-detail strong,
 [data-theme="dark"] .factor-detail strong,
 .theme-dark .bar-label,
 [data-theme="dark"] .bar-label,
 .theme-dark .legend-name,
-[data-theme="dark"] .legend-name               { color: #f9fafb; }
+[data-theme="dark"] .legend-name               { color: #f8f1e4; }
 
 .theme-dark .factor-detail p,
 [data-theme="dark"] .factor-detail p,
@@ -282,31 +308,30 @@
 .theme-dark .legend-value,
 [data-theme="dark"] .legend-value,
 .theme-dark .factor-chart-empty,
-[data-theme="dark"] .factor-chart-empty        { color: #9ca3af; }
+[data-theme="dark"] .factor-chart-empty        { color: rgba(248, 241, 228, 0.65); }
 
 .theme-dark .bar-item:hover,
 [data-theme="dark"] .bar-item:hover,
 .theme-dark .legend-item:hover,
-[data-theme="dark"] .legend-item:hover         { background: #273449; }
+[data-theme="dark"] .legend-item:hover         { background: rgba(255, 255, 255, 0.06); }
 
 .theme-dark .bar-item.hovered,
 [data-theme="dark"] .bar-item.hovered,
 .theme-dark .legend-item.hovered,
-[data-theme="dark"] .legend-item.hovered       { background: #1e3a5f; }
+[data-theme="dark"] .legend-item.hovered       { background: rgba(240, 166, 119, 0.14); }
 
 .theme-dark .bar-item.selected,
 [data-theme="dark"] .bar-item.selected,
 .theme-dark .legend-item.selected,
-[data-theme="dark"] .legend-item.selected      { background: #1e4976; }
+[data-theme="dark"] .legend-item.selected      { background: rgba(240, 166, 119, 0.2); border-color: var(--rc-clay-soft); }
 
 .theme-dark .bar-category,
 [data-theme="dark"] .bar-category,
 .theme-dark .bar-wrapper,
-[data-theme="dark"] .bar-wrapper               { background: #334155; color: #d1d5db; }
+[data-theme="dark"] .bar-wrapper               { background: #1c2823; color: rgba(248, 241, 228, 0.65); }
 
 .theme-dark .pie-center-text,
-[data-theme="dark"] .pie-center-text           { fill: #93c5fd; }
+[data-theme="dark"] .pie-center-text           { fill: var(--rc-clay-soft); }
 
 .theme-dark .radar-label,
-[data-theme="dark"] .radar-label               { fill: #e5e7eb; }
-
+[data-theme="dark"] .radar-label               { fill: #f8f1e4; }

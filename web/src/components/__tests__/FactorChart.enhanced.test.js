@@ -6,6 +6,11 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import FactorChart from '../FactorChart';
+import { ThemeProvider } from '../ThemeProvider';
+
+function renderWithTheme(ui) {
+  return render(<ThemeProvider>{ui}</ThemeProvider>);
+}
 
 describe('FactorChart Enhanced Tests', () => {
   const mockFactors = [
@@ -20,7 +25,7 @@ describe('FactorChart Enhanced Tests', () => {
         { name: 'Negative Factor', value: -0.5 }
       ];
       
-      render(<FactorChart factors={negativeFactors} />);
+      renderWithTheme(<FactorChart factors={negativeFactors} />);
       expect(screen.getByText('Negative Factor')).toBeInTheDocument();
     });
 
@@ -29,7 +34,7 @@ describe('FactorChart Enhanced Tests', () => {
         { name: 'Large Factor', value: 1000 }
       ];
       
-      render(<FactorChart factors={largeFactors} />);
+      renderWithTheme(<FactorChart factors={largeFactors} />);
       expect(screen.getByText('Large Factor')).toBeInTheDocument();
     });
 
@@ -38,7 +43,7 @@ describe('FactorChart Enhanced Tests', () => {
         { name: 'Zero Factor', value: 0 }
       ];
       
-      render(<FactorChart factors={zeroFactors} />);
+      renderWithTheme(<FactorChart factors={zeroFactors} />);
       expect(screen.getByText('Zero Factor')).toBeInTheDocument();
     });
 
@@ -49,7 +54,7 @@ describe('FactorChart Enhanced Tests', () => {
         {} // Empty object
       ];
       
-      render(<FactorChart factors={incompleteFactors} />);
+      renderWithTheme(<FactorChart factors={incompleteFactors} />);
       // Should not crash
       expect(screen.getByText('Factores de Influencia')).toBeInTheDocument();
     });
@@ -59,7 +64,7 @@ describe('FactorChart Enhanced Tests', () => {
         { name: 'A'.repeat(100), value: 0.5 }
       ];
       
-      render(<FactorChart factors={longNameFactors} />);
+      renderWithTheme(<FactorChart factors={longNameFactors} />);
       expect(screen.getByText('A'.repeat(100))).toBeInTheDocument();
     });
 
@@ -69,7 +74,7 @@ describe('FactorChart Enhanced Tests', () => {
         { name: 'Factor & "quotes"', value: 0.3 }
       ];
       
-      render(<FactorChart factors={specialFactors} />);
+      renderWithTheme(<FactorChart factors={specialFactors} />);
       // Should render safely (hay más de un factor cuyo nombre contiene "Factor")
       expect(screen.getAllByText(/Factor/).length).toBeGreaterThan(0);
     });
@@ -77,7 +82,7 @@ describe('FactorChart Enhanced Tests', () => {
 
   describe('Chart Type Edge Cases', () => {
     it('should handle invalid chart type gracefully', () => {
-      render(<FactorChart factors={mockFactors} type="invalid" />);
+      renderWithTheme(<FactorChart factors={mockFactors} type="invalid" />);
       // Should default to bar or handle gracefully
       expect(screen.getByText('Factores de Influencia')).toBeInTheDocument();
     });
@@ -85,23 +90,23 @@ describe('FactorChart Enhanced Tests', () => {
     it('should switch between all chart types', () => {
       // El tipo "pie" repite el título dentro del SVG (pie-center-text),
       // además del <h4> del header, por eso se usa getAllByText ahí.
-      const { rerender } = render(<FactorChart factors={mockFactors} type="bar" />);
+      const { rerender } = renderWithTheme(<FactorChart factors={mockFactors} type="bar" />);
       expect(screen.getByText('Factores de Influencia')).toBeInTheDocument();
 
-      rerender(<FactorChart factors={mockFactors} type="pie" />);
+      rerender(<ThemeProvider><FactorChart factors={mockFactors} type="pie" /></ThemeProvider>);
       expect(screen.getAllByText('Factores de Influencia').length).toBeGreaterThan(0);
 
-      rerender(<FactorChart factors={mockFactors} type="radar" />);
+      rerender(<ThemeProvider><FactorChart factors={mockFactors} type="radar" /></ThemeProvider>);
       expect(screen.getByText('Factores de Influencia')).toBeInTheDocument();
 
-      rerender(<FactorChart factors={mockFactors} type="heatmap" />);
+      rerender(<ThemeProvider><FactorChart factors={mockFactors} type="heatmap" /></ThemeProvider>);
       expect(screen.getByText('Factores de Influencia')).toBeInTheDocument();
     });
   });
 
   describe('Interaction Edge Cases', () => {
     it('should handle hover on all factors', () => {
-      render(<FactorChart factors={mockFactors} interactive={true} />);
+      renderWithTheme(<FactorChart factors={mockFactors} interactive={true} />);
       
       const factors = screen.getAllByText(/Factor/);
       factors.forEach(factor => {
@@ -117,7 +122,7 @@ describe('FactorChart Enhanced Tests', () => {
     });
 
     it('should handle rapid clicks', () => {
-      render(<FactorChart factors={mockFactors} interactive={true} />);
+      renderWithTheme(<FactorChart factors={mockFactors} interactive={true} />);
       
       const firstFactor = screen.getByText('Factor 1');
       const parent = firstFactor.closest('.factor-chart__item, .bar-item');
@@ -134,7 +139,7 @@ describe('FactorChart Enhanced Tests', () => {
     });
 
     it('should handle click when interactive is false', () => {
-      render(<FactorChart factors={mockFactors} interactive={false} />);
+      renderWithTheme(<FactorChart factors={mockFactors} interactive={false} />);
       
       const firstFactor = screen.getByText('Factor 1');
       const parent = firstFactor.closest('.factor-chart__item, .bar-item');
@@ -161,7 +166,7 @@ describe('FactorChart Enhanced Tests', () => {
         }
       ];
       
-      render(<FactorChart factors={completeFactors} />);
+      renderWithTheme(<FactorChart factors={completeFactors} />);
       expect(screen.getByText('Complete Factor')).toBeInTheDocument();
     });
 
@@ -173,7 +178,7 @@ describe('FactorChart Enhanced Tests', () => {
         { label: 'Label Factor', weight: 0.2 }
       ];
       
-      render(<FactorChart factors={mixedFactors} />);
+      renderWithTheme(<FactorChart factors={mixedFactors} />);
       expect(screen.getByText('String Factor')).toBeInTheDocument();
       expect(screen.getByText('Object Factor')).toBeInTheDocument();
       expect(screen.getByText('Feature Factor')).toBeInTheDocument();
@@ -186,7 +191,7 @@ describe('FactorChart Enhanced Tests', () => {
         { name: 'Negative', value: -0.6 }
       ];
       
-      render(<FactorChart factors={mixedFactors} />);
+      renderWithTheme(<FactorChart factors={mixedFactors} />);
       // Should handle absolute values for max calculation
       expect(screen.getByText('Positive')).toBeInTheDocument();
       expect(screen.getByText('Negative')).toBeInTheDocument();
@@ -196,14 +201,14 @@ describe('FactorChart Enhanced Tests', () => {
   describe('Legend Edge Cases', () => {
     it('should show legend with single factor', () => {
       // La leyenda solo existe en el chart de tipo "pie".
-      const { container } = render(
+      const { container } = renderWithTheme(
         <FactorChart factors={[{ name: 'Single', value: 0.5 }]} type="pie" showLegend={true} />
       );
       expect(container.querySelector('.pie-legend')).toBeInTheDocument();
     });
 
     it('should hide legend when showLegend is false', () => {
-      const { container } = render(<FactorChart factors={mockFactors} type="pie" showLegend={false} />);
+      const { container } = renderWithTheme(<FactorChart factors={mockFactors} type="pie" showLegend={false} />);
       expect(container.querySelector('.pie-legend')).not.toBeInTheDocument();
     });
   });

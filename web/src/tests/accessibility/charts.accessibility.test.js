@@ -22,8 +22,13 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import '@testing-library/jest-dom';
+import { ThemeProvider } from '../../components/ThemeProvider';
 
 expect.extend(toHaveNoViolations);
+
+function renderWithTheme(ui) {
+  return render(<ThemeProvider>{ui}</ThemeProvider>);
+}
 
 // ─── Mocks ────────────────────────────────────────────────────────────────────
 
@@ -278,14 +283,14 @@ describe('FactorChart — WCAG 2.1 AA (axe-core)', () => {
       { name: 'Fiebre', value: 0.15 },
     ];
 
-    const { container } = render(<FactorChart factors={factors} />);
+    const { container } = renderWithTheme(<FactorChart factors={factors} />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it('should have no violations when empty', async () => {
     if (!FactorChart) return;
-    const { container } = render(<FactorChart factors={[]} />);
+    const { container } = renderWithTheme(<FactorChart factors={[]} />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

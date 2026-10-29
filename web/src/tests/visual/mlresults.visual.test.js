@@ -16,9 +16,14 @@ import '@testing-library/jest-dom';
 import axios from 'axios';
 import MLAdvancedResults from '../../components/MLAdvancedResults';
 import SHAPVisualization from '../../components/SHAPVisualization';
+import { ThemeProvider } from '../../components/ThemeProvider';
 
 jest.mock('axios');
 const mockedAxios = axios;
+
+function renderWithTheme(ui) {
+  return render(<ThemeProvider>{ui}</ThemeProvider>);
+}
 
 const mockToken = 'visual-test-token';
 const mockAnalysisId = 'analysis-123';
@@ -83,12 +88,12 @@ afterEach(() => {
 
 describe('MLAdvancedResults — Snapshot Visual Regression', () => {
   it('matches DOM snapshot with only tabs (no ids provided)', () => {
-    const { asFragment } = render(<MLAdvancedResults />);
+    const { asFragment } = renderWithTheme(<MLAdvancedResults />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('matches DOM snapshot with SHAP explanations loaded', async () => {
-    const { asFragment } = render(<MLAdvancedResults analysisId={mockAnalysisId} />);
+    const { asFragment } = renderWithTheme(<MLAdvancedResults analysisId={mockAnalysisId} />);
     await waitFor(() => {
       expect(screen.getByText('Explicaciones SHAP Detalladas')).toBeInTheDocument();
     });
@@ -96,7 +101,7 @@ describe('MLAdvancedResults — Snapshot Visual Regression', () => {
   });
 
   it('matches DOM snapshot with model comparison table', async () => {
-    const { asFragment } = render(<MLAdvancedResults />);
+    const { asFragment } = renderWithTheme(<MLAdvancedResults />);
     fireEvent.click(screen.getByText(/Comparación de Modelos/));
     await waitFor(() => {
       expect(screen.getByText('XGBoost')).toBeInTheDocument();
@@ -105,7 +110,7 @@ describe('MLAdvancedResults — Snapshot Visual Regression', () => {
   });
 
   it('matches DOM snapshot with RL recommendations loaded', async () => {
-    const { asFragment } = render(<MLAdvancedResults sessionId="session-789" />);
+    const { asFragment } = renderWithTheme(<MLAdvancedResults sessionId="session-789" />);
     fireEvent.click(screen.getByText(/Recomendaciones Optimizadas/));
     await waitFor(() => {
       expect(screen.getByText(/Reforzar seguimiento respiratorio/i)).toBeInTheDocument();
@@ -118,7 +123,7 @@ describe('MLAdvancedResults — Snapshot Visual Regression', () => {
 
 describe('MLAdvancedResults — Visual de Tabs', () => {
   it('should render all 4 tabs', () => {
-    render(<MLAdvancedResults />);
+    renderWithTheme(<MLAdvancedResults />);
     expect(screen.getByText(/Explicaciones SHAP/)).toBeInTheDocument();
     expect(screen.getByText(/Comparación de Modelos/)).toBeInTheDocument();
     expect(screen.getByText(/Recomendaciones Optimizadas/)).toBeInTheDocument();
@@ -126,7 +131,7 @@ describe('MLAdvancedResults — Visual de Tabs', () => {
   });
 
   it('should mark explanations tab as active by default', () => {
-    render(<MLAdvancedResults />);
+    renderWithTheme(<MLAdvancedResults />);
     const explanationsTab = screen.getByText(/Explicaciones SHAP/).closest('button');
     expect(explanationsTab).toHaveClass('active');
   });
@@ -136,14 +141,14 @@ describe('MLAdvancedResults — Visual de Tabs', () => {
 
 describe('MLAdvancedResults — Visual de Explicaciones SHAP', () => {
   it('should display SHAP feature names once loaded', async () => {
-    render(<MLAdvancedResults analysisId={mockAnalysisId} />);
+    renderWithTheme(<MLAdvancedResults analysisId={mockAnalysisId} />);
     await waitFor(() => {
       expect(screen.getByText(/sibilancias/i)).toBeInTheDocument();
     });
   });
 
   it('should not render the explanations block without analysisId', () => {
-    render(<MLAdvancedResults />);
+    renderWithTheme(<MLAdvancedResults />);
     expect(screen.queryByText('Explicaciones SHAP Detalladas')).not.toBeInTheDocument();
   });
 });
@@ -152,7 +157,7 @@ describe('MLAdvancedResults — Visual de Explicaciones SHAP', () => {
 
 describe('MLAdvancedResults — Visual de Comparación de Modelos', () => {
   it('should display model names and percentage metrics', async () => {
-    render(<MLAdvancedResults />);
+    renderWithTheme(<MLAdvancedResults />);
     fireEvent.click(screen.getByText(/Comparación de Modelos/));
 
     await waitFor(() => {
@@ -167,7 +172,7 @@ describe('MLAdvancedResults — Visual de Comparación de Modelos', () => {
 
 describe('MLAdvancedResults — Visual de Recomendaciones RL', () => {
   it('should display recommendation confidence badge', async () => {
-    render(<MLAdvancedResults sessionId="session-789" />);
+    renderWithTheme(<MLAdvancedResults sessionId="session-789" />);
     fireEvent.click(screen.getByText(/Recomendaciones Optimizadas/));
 
     await waitFor(() => {
@@ -180,7 +185,7 @@ describe('MLAdvancedResults — Visual de Recomendaciones RL', () => {
 
 describe('MLAdvancedResults — Visual de Historial de Experimentos', () => {
   it('should display experiment status badge', async () => {
-    render(<MLAdvancedResults experimentId="experiment-456" />);
+    renderWithTheme(<MLAdvancedResults experimentId="experiment-456" />);
     fireEvent.click(screen.getByText(/Historial de Experimentos/));
 
     await waitFor(() => {
@@ -194,13 +199,13 @@ describe('MLAdvancedResults — Visual de Historial de Experimentos', () => {
 describe('MLAdvancedResults — Estados Visuales de Carga y Error', () => {
   it('should show loading indicator while fetching', () => {
     mockedAxios.get.mockImplementation(() => new Promise(() => {}));
-    render(<MLAdvancedResults analysisId={mockAnalysisId} />);
+    renderWithTheme(<MLAdvancedResults analysisId={mockAnalysisId} />);
     expect(screen.getByText(/cargando/i)).toBeInTheDocument();
   });
 
   it('should show error message when the request fails', async () => {
     mockedAxios.get.mockRejectedValue(new Error('Network error'));
-    render(<MLAdvancedResults analysisId={mockAnalysisId} />);
+    renderWithTheme(<MLAdvancedResults analysisId={mockAnalysisId} />);
 
     await waitFor(() => {
       expect(screen.getByText(/Error cargando datos de análisis/i)).toBeInTheDocument();
@@ -212,19 +217,19 @@ describe('MLAdvancedResults — Estados Visuales de Carga y Error', () => {
 
 describe('SHAPVisualization — Snapshot Visual Regression', () => {
   it('matches DOM snapshot with SHAP data', () => {
-    const { asFragment } = render(
+    const { asFragment } = renderWithTheme(
       <SHAPVisualization shapData={mockShapFactors} disease="Asma bronquial" confidence={0.87} />
     );
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('should render SHAP feature names', () => {
-    render(<SHAPVisualization shapData={mockShapFactors} disease="Asma bronquial" confidence={0.87} />);
+    renderWithTheme(<SHAPVisualization shapData={mockShapFactors} disease="Asma bronquial" confidence={0.87} />);
     expect(screen.getByText(/sibilancias/i)).toBeInTheDocument();
   });
 
   it('should render an empty state without SHAP data', () => {
-    render(<SHAPVisualization shapData={null} />);
+    renderWithTheme(<SHAPVisualization shapData={null} />);
     expect(screen.getByText(/No hay datos de explicación disponibles/i)).toBeInTheDocument();
   });
 });
