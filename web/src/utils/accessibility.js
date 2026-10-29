@@ -161,16 +161,16 @@ export function enhanceFocusIndicators() {
   const style = document.createElement('style');
   style.textContent = `
     *:focus-visible {
-      outline: 2px solid var(--color-primary, #1976d2);
+      outline: 2px solid var(--color-primary, #103c37);
       outline-offset: 2px;
       border-radius: 2px;
     }
-    
+
     .skip-link {
       position: absolute;
       top: -40px;
       left: 0;
-      background: var(--color-primary, #1976d2);
+      background: var(--color-primary, #103c37);
       color: white;
       padding: 8px 16px;
       text-decoration: none;

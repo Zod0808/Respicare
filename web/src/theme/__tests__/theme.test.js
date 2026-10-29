@@ -49,9 +49,9 @@ describe('Theme System', () => {
     });
 
     it('should have primary colors', () => {
-      expect(colors.primary.main).toBe('#1976d2');
-      expect(colors.primary.light).toBe('#42a5f5');
-      expect(colors.primary.dark).toBe('#1565c0');
+      expect(colors.primary.main).toBe('#103c37');
+      expect(colors.primary.light).toBe('#1d5c54');
+      expect(colors.primary.dark).toBe('#0a2b27');
       expect(colors.primary.contrastText).toBe('#ffffff');
     });
 
@@ -68,8 +68,8 @@ describe('Theme System', () => {
     });
 
     it('should have palette with light colors', () => {
-      expect(lightTheme.palette.background.default).toBe('#ffffff');
-      expect(lightTheme.palette.text.primary).toBe('rgba(0, 0, 0, 0.87)');
+      expect(lightTheme.palette.background.default).toBe('#f8f1e4');
+      expect(lightTheme.palette.text.primary).toBe('#152420');
     });
 
     it('should have typography settings', () => {
@@ -109,8 +109,8 @@ describe('Theme System', () => {
     });
 
     it('should have palette with dark colors', () => {
-      expect(darkTheme.palette.background.default).toBe('#121212');
-      expect(darkTheme.palette.text.primary).toBe('rgba(255, 255, 255, 0.87)');
+      expect(darkTheme.palette.background.default).toBe('#16201d');
+      expect(darkTheme.palette.text.primary).toBe('#f8f1e4');
     });
 
     it('should inherit from lightTheme', () => {
@@ -129,13 +129,13 @@ describe('Theme System', () => {
     it('should return light theme for light mode', () => {
       const theme = getTheme('light');
       expect(theme.mode).toBe('light');
-      expect(theme.palette.background.default).toBe('#ffffff');
+      expect(theme.palette.background.default).toBe('#f8f1e4');
     });
 
     it('should return dark theme for dark mode', () => {
       const theme = getTheme('dark');
       expect(theme.mode).toBe('dark');
-      expect(theme.palette.background.default).toBe('#121212');
+      expect(theme.palette.background.default).toBe('#16201d');
     });
 
     it('should detect system preference for auto mode', () => {
@@ -264,23 +264,23 @@ describe('Theme System', () => {
     it('should have proper color contrast in light theme', () => {
       const textColor = lightTheme.palette.text.primary;
       const bgColor = lightTheme.palette.background.default;
-      
+
       expect(textColor).toBeDefined();
       expect(bgColor).toBeDefined();
-      // Light theme should have dark text on light background
-      expect(textColor).toContain('0, 0, 0');
-      expect(bgColor).toBe('#ffffff');
+      // Light theme should have dark ink text on paper background
+      expect(textColor).toBe('#152420');
+      expect(bgColor).toBe('#f8f1e4');
     });
 
     it('should have proper color contrast in dark theme', () => {
       const textColor = darkTheme.palette.text.primary;
       const bgColor = darkTheme.palette.background.default;
-      
+
       expect(textColor).toBeDefined();
       expect(bgColor).toBeDefined();
-      // Dark theme should have light text on dark background
-      expect(textColor).toContain('255, 255, 255');
-      expect(bgColor).toBe('#121212');
+      // Dark theme should have paper-light text on dark background
+      expect(textColor).toBe('#f8f1e4');
+      expect(bgColor).toBe('#16201d');
     });
   });
 });

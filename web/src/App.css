@@ -2,31 +2,31 @@
 
 /* Variables CSS para temas */
 :root {
-  --color-primary: #1976d2;
-  --color-primary-light: #42a5f5;
-  --color-primary-dark: #1565c0;
-  --color-background: #ffffff;
-  --color-background-paper: #f5f5f5;
-  --color-text-primary: rgba(0, 0, 0, 0.87);
-  --color-text-secondary: rgba(0, 0, 0, 0.6);
-  --color-divider: rgba(0, 0, 0, 0.12);
-  --color-action-hover: rgba(0, 0, 0, 0.04);
+  --color-primary: #103c37;
+  --color-primary-light: #1d5c54;
+  --color-primary-dark: #0a2b27;
+  --color-background: #f8f1e4;
+  --color-background-paper: #fffaf2;
+  --color-text-primary: #152420;
+  --color-text-secondary: rgba(21, 36, 32, 0.6);
+  --color-divider: rgba(21, 36, 32, 0.12);
+  --color-action-hover: rgba(16, 60, 55, 0.06);
 }
 
 /* Dark theme */
 .theme-dark {
-  --color-background: #121212;
-  --color-background-paper: #1e1e1e;
-  --color-surface: #1e1e1e;
-  --color-bg-subtle: #0f172a;
-  --color-text-primary: rgba(255, 255, 255, 0.87);
-  --color-text-secondary: rgba(255, 255, 255, 0.6);
-  --color-text: rgba(255, 255, 255, 0.87);
-  --color-divider: rgba(255, 255, 255, 0.12);
-  --color-border: rgba(255, 255, 255, 0.15);
-  --color-border-hover: rgba(255, 255, 255, 0.3);
-  --color-background-hover: rgba(255, 255, 255, 0.08);
-  --color-action-hover: rgba(255, 255, 255, 0.08);
+  --color-background: #16201d;
+  --color-background-paper: #1c2823;
+  --color-surface: #1c2823;
+  --color-bg-subtle: #101714;
+  --color-text-primary: #f8f1e4;
+  --color-text-secondary: rgba(248, 241, 228, 0.6);
+  --color-text: #f8f1e4;
+  --color-divider: rgba(248, 241, 228, 0.12);
+  --color-border: rgba(248, 241, 228, 0.15);
+  --color-border-hover: rgba(248, 241, 228, 0.3);
+  --color-background-hover: rgba(248, 241, 228, 0.08);
+  --color-action-hover: rgba(248, 241, 228, 0.08);
   color-scheme: dark;
 }
 
@@ -52,6 +52,12 @@
 
 .skip-link:focus {
   top: 0;
+}
+
+/* En modo oscuro --color-primary es clay-soft (claro): texto oscuro en vez de blanco */
+.theme-dark .skip-link,
+[data-theme="dark"] .skip-link {
+  color: #2e130a;
 }
 
 /* Loading fallback */
