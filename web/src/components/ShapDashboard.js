@@ -14,6 +14,7 @@ import {
 } from 'recharts';
 import './ShapDashboard.css';
 import API_BASE from '../utils/apiBase';
+import { useThemeContext } from './ThemeProvider';
 
 const FAIRNESS_OPTIONS = [
   { value: 'gender', label: 'Género' },
@@ -28,13 +29,42 @@ const DAYS_OPTIONS = [
   { value: 30, label: 'Últimos 30 días' },
 ];
 
-const FEATURE_COLORS = ['#2563eb', '#16a34a', '#f97316', '#dc2626', '#0ea5e9'];
-const PIE_COLORS = ['#22c55e', '#f97316', '#ef4444'];
+/* Bar/Pie fill colors are passed via inline props, so they bypass the CSS
+   cascade and can't be overridden by the .theme-dark/[data-theme="dark"]
+   stylesheet rules. Each set has a light/dark pair picked at render time
+   via useThemeContext(), so chart series stay legible against the dark
+   .shap-card background, following the pattern established for inline
+   chart colors in PatientMonitoringReport.js. */
+const CONTRIBUTION_COLORS = {
+  light: { positive: '#103c37', negative: '#8a2f10' },
+  dark: { positive: '#8fb37a', negative: '#f3a98f' },
+};
+
+const CONFIDENCE_PIE_COLORS = {
+  light: ['#103c37', '#d9683f', '#8a2f10'],
+  dark: ['#8fb37a', '#f0a677', '#f3a98f'],
+};
+
+const FEATURE_COLORS = {
+  light: ['#103c37', '#8a2f10', '#d9683f', '#5c7a52', '#7a6f9b'],
+  dark: ['#8fb37a', '#f3a98f', '#f0a677', '#c9b88a', '#b7a8c9'],
+};
+
+const FAIRNESS_BAR_COLORS = {
+  light: { avgConfidence: '#103c37', highConfidence: '#d9683f', count: '#a3998a' },
+  dark: { avgConfidence: '#f0a677', highConfidence: '#8fb37a', count: 'rgba(248, 241, 228, 0.5)' },
+};
 
 const formatPercentage = (value) => `${Number(value ?? 0).toFixed(1)}%`;
 const formatContribution = (value) => Number(value ?? 0).toFixed(3);
 
 function ShapDashboard() {
+  const { theme } = useThemeContext();
+  const isDark = theme.mode === 'dark';
+  const contributionColors = isDark ? CONTRIBUTION_COLORS.dark : CONTRIBUTION_COLORS.light;
+  const confidencePieColors = isDark ? CONFIDENCE_PIE_COLORS.dark : CONFIDENCE_PIE_COLORS.light;
+  const featureColors = isDark ? FEATURE_COLORS.dark : FEATURE_COLORS.light;
+  const fairnessBarColors = isDark ? FAIRNESS_BAR_COLORS.dark : FAIRNESS_BAR_COLORS.light;
   const [metrics, setMetrics] = useState(null);
   const [featureInfluence, setFeatureInfluence] = useState(null);
   const [fairness, setFairness] = useState({});
@@ -199,8 +229,8 @@ function ShapDashboard() {
                   }}
                 />
                 <Legend />
-                <Bar dataKey="positive" stackId="a" name="Contribución positiva" fill="#16a34a" />
-                <Bar dataKey="negative" stackId="a" name="Contribución negativa" fill="#ef4444" />
+                <Bar dataKey="positive" stackId="a" name="Contribución positiva" fill={contributionColors.positive} />
+                <Bar dataKey="negative" stackId="a" name="Contribución negativa" fill={contributionColors.negative} />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -226,7 +256,7 @@ function ShapDashboard() {
             <PieChart>
               <Pie data={confidenceSummary} dataKey="value" nameKey="name" innerRadius={50} outerRadius={80} label>
                 {confidenceSummary.map((entry, index) => (
-                  <Cell key={entry.name} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                  <Cell key={entry.name} fill={confidencePieColors[index % confidencePieColors.length]} />
                 ))}
               </Pie>
               <Tooltip formatter={(value) => formatPercentage(value)} />
@@ -246,7 +276,7 @@ function ShapDashboard() {
                 <Tooltip />
                 <Bar dataKey="value" name="Casos">
                   {diseaseDistribution.map((entry, index) => (
-                    <Cell key={entry.name} fill={FEATURE_COLORS[index % FEATURE_COLORS.length]} />
+                    <Cell key={entry.name} fill={featureColors[index % featureColors.length]} />
                   ))}
                 </Bar>
               </BarChart>
@@ -292,9 +322,9 @@ function ShapDashboard() {
                 }}
                 />
                 <Legend />
-                <Bar dataKey="avgConfidence" name="Confianza promedio" fill="#0ea5e9" />
-                <Bar dataKey="highConfidence" name="Alta confianza" fill="#22c55e" />
-                <Bar dataKey="count" name="Total de predicciones" fill="#64748b" />
+                <Bar dataKey="avgConfidence" name="Confianza promedio" fill={fairnessBarColors.avgConfidence} />
+                <Bar dataKey="highConfidence" name="Alta confianza" fill={fairnessBarColors.highConfidence} />
+                <Bar dataKey="count" name="Total de predicciones" fill={fairnessBarColors.count} />
               </BarChart>
             </ResponsiveContainer>
           )}

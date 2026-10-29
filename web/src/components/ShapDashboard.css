@@ -1,11 +1,23 @@
 .shap-dashboard {
+  --rc-ink: #152420;
+  --rc-paper: #f8f1e4;
+  --rc-paper-dim: #efe4d0;
+  --rc-petrol: #103c37;
+  --rc-petrol-ink: #0a2b27;
+  --rc-clay: #d9683f;
+  --rc-clay-soft: #f0a677;
+  --rc-clay-dark: #8a2f10;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body: 'Manrope', 'Segoe UI', sans-serif;
+
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   padding: 1.5rem;
+  font-family: var(--rc-font-body);
 }
 
-.shap-header {
+.shap-dashboard .shap-header {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -13,68 +25,79 @@
   gap: 1rem;
 }
 
-.shap-header h2 {
+.shap-dashboard .shap-header h2 {
   margin: 0;
+  font-family: var(--rc-font-display);
   font-size: 1.75rem;
-  color: #1f2937;
+  font-weight: 700;
+  color: var(--rc-ink);
 }
 
-.shap-header p {
+.shap-dashboard .shap-header p {
   margin: 0.25rem 0 0;
-  color: #4b5563;
+  color: rgba(21, 36, 32, 0.65);
 }
 
-.shap-controls {
+.shap-dashboard .shap-controls {
   display: flex;
   gap: 1rem;
 }
 
-.shap-controls .control {
+.shap-dashboard .shap-controls .control {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
   font-size: 0.9rem;
-  color: #475569;
+  color: rgba(21, 36, 32, 0.65);
 }
 
-.shap-controls select {
+.shap-dashboard .shap-controls select {
   padding: 0.45rem 0.75rem;
   border-radius: 8px;
-  border: 1px solid #cbd5f5;
+  border: 1px solid var(--rc-paper-dim);
   background: #fff;
+  color: var(--rc-ink);
   font-size: 0.95rem;
   min-width: 180px;
 }
 
-.shap-grid {
+.shap-dashboard .shap-grid {
   display: grid;
   gap: 1.25rem;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
-.shap-card {
-  background: #fff;
-  border: 1px solid #e2e8f0;
+.shap-dashboard .shap-card {
+  background: var(--rc-paper);
+  border: 1px solid var(--rc-paper-dim);
   border-radius: 16px;
   padding: 1.25rem;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 12px rgba(21, 36, 32, 0.08);
   display: flex;
   flex-direction: column;
   gap: 1rem;
   min-height: 260px;
 }
 
-.shap-card h3 {
+.shap-dashboard .shap-card h3 {
   margin: 0;
+  font-family: var(--rc-font-display);
   font-size: 1.2rem;
-  color: #1f2937;
+  font-weight: 700;
+  color: var(--rc-ink);
 }
 
-.shap-card--wide {
+.shap-dashboard .shap-card--wide {
   grid-column: span 2;
 }
 
-.shap-summary {
+.shap-dashboard .shap-card p {
+  margin: 0;
+  color: rgba(21, 36, 32, 0.6);
+  font-size: 0.9rem;
+}
+
+.shap-dashboard .shap-summary {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -83,39 +106,39 @@
   gap: 0.65rem;
 }
 
-.shap-summary li {
+.shap-dashboard .shap-summary li {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.95rem;
-  color: #374151;
+  color: rgba(21, 36, 32, 0.7);
 }
 
-.shap-summary strong {
+.shap-dashboard .shap-summary strong {
   font-size: 1.05rem;
-  color: #111827;
+  color: var(--rc-ink);
 }
 
-.shap-summary--column li {
+.shap-dashboard .shap-summary--column li {
   flex-direction: column;
   align-items: flex-start;
 }
 
-.shap-tags {
+.shap-dashboard .shap-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
 
-.shap-tag {
-  background: #f1f5f9;
-  color: #1e3a8a;
+.shap-dashboard .shap-tag {
+  background: rgba(16, 60, 55, 0.08);
+  color: var(--rc-petrol);
   padding: 0.3rem 0.6rem;
   border-radius: 999px;
   font-size: 0.8rem;
 }
 
-.shap-key-factors {
+.shap-dashboard .shap-key-factors {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -123,101 +146,108 @@
   gap: 0.75rem;
 }
 
-.shap-key-factors li {
+.shap-dashboard .shap-key-factors li {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
   padding: 0.6rem;
   border-radius: 10px;
-  background: #f8fafc;
-  color: #1f2937;
+  background: var(--rc-paper-dim);
+  color: var(--rc-ink);
   font-size: 0.9rem;
 }
 
-.shap-loading,
-.shap-error {
+.shap-dashboard .shap-loading,
+.shap-dashboard .shap-error {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   min-height: 320px;
-  background: #fff;
-  border: 1px solid #e2e8f0;
+  background: var(--rc-paper);
+  border: 1px solid var(--rc-paper-dim);
   border-radius: 16px;
 }
 
-.shap-error button {
+.shap-dashboard .shap-error span,
+.shap-dashboard .shap-loading p {
+  color: var(--rc-ink);
+}
+
+.shap-dashboard .shap-error button {
   padding: 0.45rem 0.9rem;
   border-radius: 8px;
   border: none;
-  background: #2563eb;
-  color: #fff;
+  background: var(--rc-petrol);
+  color: var(--rc-paper);
   cursor: pointer;
 }
 
-.shap-error button:hover {
-  background: #1d4ed8;
+.shap-dashboard .shap-error button:hover {
+  background: var(--rc-petrol-ink);
 }
 
-.spinner {
+.shap-dashboard .spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid rgba(59, 130, 246, 0.35);
-  border-top-color: #2563eb;
+  border: 4px solid rgba(16, 60, 55, 0.2);
+  border-top-color: var(--rc-petrol);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: shap-spin 1s linear infinite;
 }
 
-@keyframes spin {
+@keyframes shap-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
 @media (max-width: 768px) {
-  .shap-controls {
+  .shap-dashboard .shap-controls {
     width: 100%;
     flex-direction: column;
   }
 
-  .shap-card--wide {
+  .shap-dashboard .shap-card--wide {
     grid-column: span 1;
   }
 }
 
-/* ── Dark mode ── */
-.theme-dark .shap-header h2,
-[data-theme="dark"] .shap-header h2         { color: #f9fafb; }
+/* ── Dark mode ──
+   The Analytics tab content area keeps a light (#fffaf2) background in dark
+   mode by design (see Analytics.css), so .shap-header/.shap-controls (which
+   sit directly on that light page background, not inside a dark-bg'd card)
+   keep their default ink color. Only .shap-card/.shap-loading/.shap-error
+   and their contents (which get their own dark card background below) use
+   the cream treatment. Select dropdowns set their own dark background
+   directly, so they stay legible regardless of the page background. */
+.theme-dark .shap-dashboard .shap-controls select,
+[data-theme="dark"] .shap-dashboard .shap-controls select   { background: #16201d; border-color: rgba(255, 255, 255, 0.12); color: #f8f1e4; }
 
-.theme-dark .shap-header p,
-[data-theme="dark"] .shap-header p          { color: #9ca3af; }
+.theme-dark .shap-dashboard .shap-card,
+[data-theme="dark"] .shap-dashboard .shap-card,
+.theme-dark .shap-dashboard .shap-loading,
+[data-theme="dark"] .shap-dashboard .shap-loading,
+.theme-dark .shap-dashboard .shap-error,
+[data-theme="dark"] .shap-dashboard .shap-error             { background: #1c2823; border-color: rgba(255, 255, 255, 0.1); }
 
-.theme-dark .shap-controls .control,
-[data-theme="dark"] .shap-controls .control { color: #9ca3af; }
+.theme-dark .shap-dashboard .shap-card h3,
+[data-theme="dark"] .shap-dashboard .shap-card h3,
+.theme-dark .shap-dashboard .shap-error span,
+[data-theme="dark"] .shap-dashboard .shap-error span,
+.theme-dark .shap-dashboard .shap-loading p,
+[data-theme="dark"] .shap-dashboard .shap-loading p,
+.theme-dark .shap-dashboard .shap-summary strong,
+[data-theme="dark"] .shap-dashboard .shap-summary strong    { color: #f8f1e4; }
 
-.theme-dark .shap-controls select,
-[data-theme="dark"] .shap-controls select   { background: #0f172a; border-color: #334155; color: #e5e7eb; }
+.theme-dark .shap-dashboard .shap-summary li,
+[data-theme="dark"] .shap-dashboard .shap-summary li,
+.theme-dark .shap-dashboard .shap-card p,
+[data-theme="dark"] .shap-dashboard .shap-card p             { color: rgba(248, 241, 228, 0.65); }
 
-.theme-dark .shap-card,
-[data-theme="dark"] .shap-card,
-.theme-dark .shap-loading,
-[data-theme="dark"] .shap-loading,
-.theme-dark .shap-error,
-[data-theme="dark"] .shap-error             { background: #1e293b; border-color: #334155; }
+.theme-dark .shap-dashboard .shap-tag,
+[data-theme="dark"] .shap-dashboard .shap-tag               { background: rgba(240, 166, 119, 0.14); color: var(--rc-clay-soft); }
 
-.theme-dark .shap-card h3,
-[data-theme="dark"] .shap-card h3           { color: #f9fafb; }
-
-.theme-dark .shap-summary li,
-[data-theme="dark"] .shap-summary li        { color: #d1d5db; }
-
-.theme-dark .shap-summary strong,
-[data-theme="dark"] .shap-summary strong    { color: #f9fafb; }
-
-.theme-dark .shap-tag,
-[data-theme="dark"] .shap-tag               { background: #1e3a5f; color: #93c5fd; }
-
-.theme-dark .shap-key-factors li,
-[data-theme="dark"] .shap-key-factors li    { background: #0f172a; color: #e5e7eb; }
-
+.theme-dark .shap-dashboard .shap-key-factors li,
+[data-theme="dark"] .shap-dashboard .shap-key-factors li    { background: #16201d; color: rgba(248, 241, 228, 0.85); }

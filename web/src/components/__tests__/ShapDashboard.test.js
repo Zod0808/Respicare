@@ -3,6 +3,7 @@ import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import ShapDashboard from '../ShapDashboard';
+import { ThemeProvider } from '../ThemeProvider';
 
 jest.mock('axios');
 
@@ -13,6 +14,10 @@ beforeAll(() => {
     disconnect() {}
   };
 });
+
+function renderWithTheme(ui) {
+  return render(<ThemeProvider>{ui}</ThemeProvider>);
+}
 
 const mockMetrics = {
   summary: {
@@ -109,7 +114,7 @@ describe('ShapDashboard component', () => {
   });
 
   it('muestra el dashboard de explicabilidad con datos', async () => {
-    render(<ShapDashboard />);
+    renderWithTheme(<ShapDashboard />);
 
     await waitFor(() => {
       expect(screen.getByText(/Explicabilidad de la IA/i)).toBeInTheDocument();
@@ -123,7 +128,7 @@ describe('ShapDashboard component', () => {
   it('muestra un mensaje de error cuando fallan las peticiones', async () => {
     axios.get.mockRejectedValueOnce(new Error('Network error'));
 
-    render(<ShapDashboard />);
+    renderWithTheme(<ShapDashboard />);
 
     await waitFor(() => {
       expect(screen.getByText(/Network error/i)).toBeInTheDocument();
