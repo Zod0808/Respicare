@@ -1,3 +1,11 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   RespiCare · LanguageSelector — "Clinical Breath"
+   Lives inside .navbar, so --rc-petrol/--rc-clay/--rc-clay-soft/--rc-paper
+   and the fonts are inherited from Navbar.css. The trigger button matches
+   the translucent-pill-on-petrol language used by .nav-link; the dropdown
+   matches .nav-dropdown-menu/.nav-dropdown-item.
+   ────────────────────────────────────────────────────────────────────────── */
+
 .language-selector {
   position: relative;
   display: inline-block;
@@ -7,38 +15,41 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: var(--color-background, #fff);
-  border: 1px solid var(--color-border, #ddd);
-  border-radius: 0.5rem;
+  padding: 7px 14px;
+  background: rgba(255, 250, 242, 0.08);
+  border: 1px solid rgba(255, 250, 242, 0.25);
+  border-radius: 999px;
   cursor: pointer;
-  font-size: 0.875rem;
-  color: var(--color-text, #333);
-  transition: all 0.2s ease;
+  font-family: var(--rc-font-body);
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--rc-paper);
+  transition: background 0.18s, border-color 0.18s, transform 0.12s;
 }
 
 .language-selector__button:hover {
-  background: var(--color-background-hover, #f5f5f5);
-  border-color: var(--color-border-hover, #bbb);
+  background: rgba(255, 250, 242, 0.16);
+  border-color: rgba(255, 250, 242, 0.4);
+  transform: translateY(-1px);
 }
 
 .language-selector__button:focus {
-  outline: 2px solid var(--color-primary, #1976d2);
+  outline: 2px solid var(--rc-clay-soft);
   outline-offset: 2px;
 }
 
 .language-selector__icon {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
 }
 
 .language-selector__text {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .language-selector__arrow {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   transition: transform 0.2s ease;
-  color: var(--color-text-secondary, #666);
+  color: rgba(255, 250, 242, 0.7);
 }
 
 .language-selector__arrow.open {
@@ -49,20 +60,20 @@
   position: absolute;
   top: calc(100% + 0.5rem);
   right: 0;
-  background: var(--color-background, #fff);
-  border: 1px solid var(--color-border, #ddd);
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  min-width: 180px;
-  z-index: 1000;
+  background: var(--rc-paper);
+  border-radius: 2px 14px 14px 14px;
+  border-top: 3px solid var(--rc-clay);
+  box-shadow: 0 20px 44px -12px rgba(10, 43, 39, 0.35);
+  min-width: 190px;
+  z-index: 2000;
   overflow: hidden;
-  animation: fadeIn 0.2s ease;
+  animation: language-dropdown-in 0.15s ease;
 }
 
-@keyframes fadeIn {
+@keyframes language-dropdown-in {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-6px);
   }
   to {
     opacity: 1;
@@ -75,28 +86,30 @@
   align-items: center;
   gap: 0.75rem;
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 10px 14px;
   background: transparent;
   border: none;
   cursor: pointer;
+  font-family: var(--rc-font-body);
   font-size: 0.875rem;
-  color: var(--color-text, #333);
+  color: #3a332a;
   text-align: left;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.13s, color 0.13s;
 }
 
 .language-selector__option:hover {
-  background: var(--color-background-hover, #f5f5f5);
+  background: #fdece3;
+  color: var(--rc-clay);
 }
 
 .language-selector__option.active {
-  background: var(--color-primary-light, #e3f2fd);
-  color: var(--color-primary, #1976d2);
-  font-weight: 500;
+  background: rgba(16, 60, 55, 0.08);
+  color: var(--rc-petrol);
+  font-weight: 600;
 }
 
 .language-selector__option-flag {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   flex-shrink: 0;
 }
 
@@ -105,50 +118,23 @@
 }
 
 .language-selector__option-check {
-  color: var(--color-primary, #1976d2);
+  color: var(--rc-petrol);
   font-weight: bold;
   flex-shrink: 0;
 }
 
-/* Dark theme support */
-.theme-dark .language-selector__button,
-[data-theme='dark'] .language-selector__button {
-  background: var(--color-background-paper, #1e1e1e);
-  border-color: var(--color-border, rgba(255,255,255,0.15));
-  color: var(--color-text-primary, #fff);
-}
-
-.theme-dark .language-selector__button:hover,
-[data-theme='dark'] .language-selector__button:hover {
-  background: var(--color-background-hover, rgba(255,255,255,0.08));
-  border-color: var(--color-border-hover, rgba(255,255,255,0.3));
-}
-
+/* ── Dark mode ──────────────────────────────────────────────────── */
 .theme-dark .language-selector__dropdown,
-[data-theme='dark'] .language-selector__dropdown {
-  background: var(--color-background-paper, #1e1e1e);
-  border-color: var(--color-border, rgba(255,255,255,0.15));
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-}
+[data-theme="dark"] .language-selector__dropdown    { background: #1c2823; box-shadow: 0 20px 44px -12px rgba(0, 0, 0, 0.5); }
 
 .theme-dark .language-selector__option,
-[data-theme='dark'] .language-selector__option {
-  color: var(--color-text-primary, rgba(255,255,255,0.87));
-}
+[data-theme="dark"] .language-selector__option       { color: #d9d0c0; }
 
 .theme-dark .language-selector__option:hover,
-[data-theme='dark'] .language-selector__option:hover {
-  background: var(--color-background-hover, rgba(255,255,255,0.08));
-}
+[data-theme="dark"] .language-selector__option:hover { background: rgba(255, 255, 255, 0.06); color: var(--rc-clay-soft); }
 
 .theme-dark .language-selector__option.active,
-[data-theme='dark'] .language-selector__option.active {
-  background: rgba(25, 118, 210, 0.3);
-  color: #90caf9;
-}
+[data-theme="dark"] .language-selector__option.active { background: rgba(240, 166, 119, 0.16); color: var(--rc-clay-soft); }
 
-.theme-dark .language-selector__arrow,
-[data-theme='dark'] .language-selector__arrow {
-  color: var(--color-text-secondary, rgba(255,255,255,0.6));
-}
-
+.theme-dark .language-selector__option-check,
+[data-theme="dark"] .language-selector__option-check { color: var(--rc-clay-soft); }
