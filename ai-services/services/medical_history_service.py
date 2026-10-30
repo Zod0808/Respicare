@@ -286,8 +286,7 @@ class MedicalHistoryService:
         try:
             symptoms = processing_result.get("symptoms", [])
             entities = processing_result.get("entities", [])
-            risk_factors = processing_result.get("risk_factors", [])
-            
+
             risk_assessment = {
                 "overall_risk_level": "low",
                 "identified_risks": [],
@@ -386,9 +385,11 @@ class MedicalHistoryService:
         try:
             symptoms = processing_result.get("symptoms", [])
             entities = processing_result.get("entities", [])
-            risk_factors = processing_result.get("risk_factors", [])
-            diagnosis_suggestions = processing_result.get("diagnosis_suggestions", [])
-            
+            # Datos reales: el risk_assessment y el diagnosis_analysis quedan anidados
+            # por process_medical_history_comprehensive(), no en la raíz de processing_result.
+            risk_factors = processing_result.get("risk_assessment", {}).get("risk_factors", [])
+            diagnosis_suggestions = processing_result.get("diagnosis_analysis", {}).get("primary_suggestions", [])
+
             summary = {
                 "patient_summary": {
                     "total_symptoms": len(symptoms),
@@ -454,9 +455,11 @@ class MedicalHistoryService:
         """Generate comprehensive care recommendations"""
         try:
             symptoms = processing_result.get("symptoms", [])
-            diagnosis_suggestions = processing_result.get("diagnosis_suggestions", [])
-            risk_factors = processing_result.get("risk_factors", [])
-            
+            # Datos reales: el risk_assessment y el diagnosis_analysis quedan anidados
+            # por process_medical_history_comprehensive(), no en la raíz de processing_result.
+            diagnosis_suggestions = processing_result.get("diagnosis_analysis", {}).get("primary_suggestions", [])
+            risk_factors = processing_result.get("risk_assessment", {}).get("risk_factors", [])
+
             recommendations = {
                 "immediate_care": [],
                 "short_term_care": [],
@@ -496,14 +499,14 @@ class MedicalHistoryService:
                 recommendations["investigations_needed"].append("Hemograma completo")
             
             # Risk factor specific recommendations
-            if "diabetes" in risk_factors:
+            if any("diabetes" in rf.lower() for rf in risk_factors):
                 recommendations["medication_recommendations"].extend([
                     "Continuar medicación para diabetes",
                     "Monitoreo de glucosa",
                     "Cuidado de los pies"
                 ])
-            
-            if "hipertensión" in risk_factors:
+
+            if any("hipertensión" in rf.lower() for rf in risk_factors):
                 recommendations["medication_recommendations"].extend([
                     "Continuar antihipertensivos",
                     "Monitoreo de presión arterial",

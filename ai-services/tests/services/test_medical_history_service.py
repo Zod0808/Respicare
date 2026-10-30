@@ -316,10 +316,98 @@ class TestMedicalHistoryService:
         processing_result = {"symptoms": ["tos"], "diagnosis": "Bronquitis"}
         
         result = await medical_history_service._generate_care_recommendations(processing_result)
-        
+
         # _generate_care_recommendations returns Dict, not list
         assert isinstance(result, dict)
-    
+
+    @pytest.mark.asyncio
+    async def test_assess_medical_risks_detects_chronic_conditions(self, medical_history_service):
+        """Las condiciones crónicas mencionadas en entities deben quedar en risk_factors"""
+        processing_result = {"symptoms": [], "entities": ["Paciente con diabetes e hipertensión"]}
+
+        result = await medical_history_service._assess_medical_risks(processing_result, {})
+
+        assert any("diabetes" in rf.lower() for rf in result["risk_factors"])
+        assert any("hipertensión" in rf.lower() for rf in result["risk_factors"])
+
+    @pytest.mark.asyncio
+    async def test_generate_care_recommendations_reads_nested_risk_factors(self, medical_history_service):
+        """Regresión: care_recommendations debe leer risk_assessment.risk_factors
+        (anidado por process_medical_history_comprehensive), no una clave plana
+        'risk_factors' que nunca se escribe."""
+        processing_result = {
+            "symptoms": [],
+            "risk_assessment": {
+                "risk_factors": ["Condición crónica: diabetes", "Condición crónica: hipertensión"]
+            },
+        }
+
+        result = await medical_history_service._generate_care_recommendations(processing_result)
+
+        meds = " ".join(result["medication_recommendations"]).lower()
+        assert "diabetes" in meds
+        assert "antihipertensivos" in meds
+
+    @pytest.mark.asyncio
+    async def test_generate_care_recommendations_reads_nested_diagnosis_suggestions(self, medical_history_service):
+        """Regresión: care_recommendations debe leer diagnosis_analysis.primary_suggestions,
+        no la clave plana 'diagnosis_suggestions' que nunca se escribe."""
+        processing_result = {
+            "symptoms": [],
+            "diagnosis_analysis": {"primary_suggestions": ["Posible diabetes mellitus descompensada"]},
+        }
+
+        result = await medical_history_service._generate_care_recommendations(processing_result)
+
+        assert "Endocrinología" in result["specialist_referrals"]
+
+    @pytest.mark.asyncio
+    async def test_generate_medical_summary_includes_nested_risk_factors(self, medical_history_service):
+        """Regresión: el resumen debe reportar los factores de riesgo reales del risk_assessment."""
+        processing_result = {
+            "symptoms": [{"symptom": "tos"}],
+            "entities": [],
+            "risk_assessment": {"risk_factors": ["Condición crónica: diabetes"]},
+        }
+
+        result = await medical_history_service._generate_medical_summary(processing_result, "patient_123")
+
+        assert any("Factores de riesgo" in kf for kf in result["key_findings"])
+
+    @pytest.mark.asyncio
+    async def test_generate_medical_summary_clinical_impression_uses_nested_diagnosis(self, medical_history_service):
+        """Regresión: la impresión clínica debe citar las sugerencias diagnósticas reales."""
+        processing_result = {
+            "symptoms": [{"symptom": "tos"}],
+            "entities": [],
+            "diagnosis_analysis": {"primary_suggestions": ["Bronquitis", "Asma"]},
+        }
+
+        result = await medical_history_service._generate_medical_summary(processing_result, "patient_123")
+
+        assert "Bronquitis" in result["clinical_impression"]
+
+    @pytest.mark.asyncio
+    async def test_comprehensive_processing_propagates_risk_factors_to_care_recommendations(
+        self, medical_history_service, sample_text
+    ):
+        """Regresión end-to-end: process_medical_history_comprehensive debe propagar el
+        risk_assessment real hacia care_recommendations en lugar de perderlo en una
+        clave plana inexistente."""
+        with patch.object(medical_history_service, '_perform_basic_processing', new_callable=AsyncMock) as mock_basic:
+            mock_basic.return_value = {"symptoms": [], "entities": ["Paciente con antecedente de diabetes"]}
+
+            result = await medical_history_service.process_medical_history_comprehensive(
+                text=sample_text,
+                patient_id="patient_123",
+                include_entity_extraction=False,
+                include_diagnosis_suggestions=False,
+                include_risk_assessment=True
+            )
+
+            meds = " ".join(result["care_recommendations"]["medication_recommendations"]).lower()
+            assert "diabetes" in meds
+
     @pytest.mark.asyncio
     async def test_error_handling(self, medical_history_service, sample_text):
         """Test error handling in comprehensive processing"""
