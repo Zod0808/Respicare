@@ -271,18 +271,15 @@ class ConversationalAIService:
                         if detected_urgency_level == 'low':
                             detected_urgency_level = 'high'
         
-        # Determine final urgency level
-        if urgency_score >= 10:
-            final_urgency = 'critical'
-        elif urgency_score >= 7:
-            final_urgency = 'high'
-        elif urgency_score >= 4:
-            final_urgency = 'medium'
-        else:
-            final_urgency = 'low'
-        
-        # The raw additive score above can exceed the bucket thresholds (e.g. multiple
-        # matched indicators), so normalize it to [0.0, 1.0] for external consumers.
+        # Determine final urgency level: usar detected_urgency_level, que escala
+        # correctamente por categoría (nunca retrocede a un nivel menor). No usar
+        # urgency_score aquí: es aditivo entre categorías no excluyentes (p.ej. el
+        # indicador genérico "medium" "tengo" sumado a un indicador "high" cruza
+        # el umbral de 10 y clasificaba como "critical" un síntoma que solo
+        # disparó un indicador "high").
+        final_urgency = detected_urgency_level
+
+        # El score aditivo sigue siendo útil como señal continua en [0.0, 1.0].
         normalized_score = min(urgency_score / 10.0, 1.0)
 
         return {

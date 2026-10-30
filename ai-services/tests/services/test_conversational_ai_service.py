@@ -116,6 +116,34 @@ class TestConversationalAIService:
         # Should flag high/critical urgency
         assert any(word in result_str for word in ['critical', 'critica', 'high', 'urgente', 'emergencia'])
 
+    # ─── _assess_urgency ──────────────────────────────────────────────────────
+
+    @pytest.mark.asyncio
+    async def test_assess_urgency_does_not_inflate_high_to_critical(self, service):
+        """Regresión: un indicador 'high' sumado al indicador genérico 'medium'
+        ('tengo') no debe cruzar el umbral aditivo y clasificar como 'critical'
+        un síntoma que solo disparó un indicador 'high'."""
+        for msg in ["Tengo tos intensa", "Tengo fiebre alta", "Tengo dificultad para respirar"]:
+            extracted = await service._extract_symptoms_and_context(msg)
+            urgency = await service._assess_urgency(msg, extracted, None)
+            assert urgency['level'] == 'high', f"{msg!r} -> {urgency['level']}"
+
+    @pytest.mark.asyncio
+    async def test_assess_urgency_real_emergency_stays_critical(self, service):
+        """Una emergencia real (indicador 'critical' real) debe seguir siendo 'critical'."""
+        msg = "No puedo respirar, me estoy ahogando, es una emergencia medica"
+        extracted = await service._extract_symptoms_and_context(msg)
+        urgency = await service._assess_urgency(msg, extracted, None)
+        assert urgency['level'] == 'critical'
+
+    @pytest.mark.asyncio
+    async def test_assess_urgency_medium_indicator_stays_medium(self, service):
+        """Un mensaje sin indicadores 'high'/'critical' no debe escalar por encima de 'medium'."""
+        msg = "Tengo tos y fiebre"
+        extracted = await service._extract_symptoms_and_context(msg)
+        urgency = await service._assess_urgency(msg, extracted, None)
+        assert urgency['level'] == 'medium'
+
     @pytest.mark.asyncio
     async def test_analyze_conversation_empty_message(self, service):
         """Should handle empty message without crashing"""

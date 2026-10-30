@@ -770,8 +770,8 @@
     "semantic_hash": ""
   },
   "ai-services/services/conversational_ai_service.py": {
-    "mtime": 1792941100.3424513,
-    "ast_hash": "972d0d0a78f7470830f6b962a8c04639",
+    "mtime": 1793394324.3951385,
+    "ast_hash": "ad75b51bc186dfdc3d787d464ae0bda7",
     "semantic_hash": ""
   },
   "ai-services/services/core_domains_support.py": {
@@ -790,8 +790,8 @@
     "semantic_hash": ""
   },
   "ai-services/services/medical_history_service.py": {
-    "mtime": 1785106956.6691072,
-    "ast_hash": "2debc1474109b15dd4168ee6eb8ca0a2",
+    "mtime": 1793388683.1106694,
+    "ast_hash": "66bcb9b5b5ed0f738e1bcf9a9a64ecf0",
     "semantic_hash": ""
   },
   "ai-services/services/medical_validation_rules.py": {
@@ -1250,8 +1250,8 @@
     "semantic_hash": ""
   },
   "ai-services/tests/services/test_conversational_ai_service.py": {
-    "mtime": 1792941110.3791082,
-    "ast_hash": "b51084786cf0292f675112cab03775ba",
+    "mtime": 1793394346.1089385,
+    "ast_hash": "f6f9213db2fe7790a1285779cb06b4e9",
     "semantic_hash": ""
   },
   "ai-services/tests/services/test_core_domains_support.py": {
@@ -1270,8 +1270,8 @@
     "semantic_hash": ""
   },
   "ai-services/tests/services/test_medical_history_service.py": {
-    "mtime": 1785877407.5018692,
-    "ast_hash": "249547b73009c6f5da86fa5ef2b524f2",
+    "mtime": 1793388743.8691149,
+    "ast_hash": "371ac7f6108db8e603dc9cbcd3759798",
     "semantic_hash": ""
   },
   "ai-services/tests/services/test_medical_validation_rules.py": {
