@@ -41,6 +41,16 @@ const RegisterPage = () => {
   const { register, isAuthenticated, user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
 
+  // Reglas de fortaleza de contraseña — se muestran como checklist en vivo
+  // para que el usuario las vea ANTES de enviar, en vez de descubrirlas
+  // una por una a través de errores sucesivos tras cada intento fallido.
+  const pwdChecks = [
+    { label: 'Al menos 8 caracteres', met: form.password.length >= 8 },
+    { label: 'Una letra mayúscula', met: /[A-Z]/.test(form.password) },
+    { label: 'Un número', met: /[0-9]/.test(form.password) },
+    { label: 'Un carácter especial (!@#$%...)', met: /[^A-Za-z0-9]/.test(form.password) },
+  ];
+
   if (!authLoading && isAuthenticated) {
     const dest = ['doctor', 'admin'].includes(user?.role) ? '/dashboard' : '/';
     return <Navigate to={dest} replace />;
@@ -198,9 +208,10 @@ const RegisterPage = () => {
                   type={showPwd ? 'text' : 'password'}
                   value={form.password}
                   onChange={set('password')}
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder="Crea una contraseña segura"
                   required
                   autoComplete="new-password"
+                  aria-describedby="reg-password-hints"
                 />
                 <button
                   type="button"
@@ -211,6 +222,14 @@ const RegisterPage = () => {
                   <EyeIcon open={showPwd} />
                 </button>
               </div>
+              <ul id="reg-password-hints" className="login-pwd-hints">
+                {pwdChecks.map(({ label, met }) => (
+                  <li key={label} className={met ? 'is-met' : ''}>
+                    <span aria-hidden="true">{met ? '✓' : '○'}</span>
+                    {label}
+                  </li>
+                ))}
+              </ul>
             </div>
 
             {/* Confirmar contraseña */}

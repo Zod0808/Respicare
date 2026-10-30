@@ -316,6 +316,42 @@
   border-bottom-width: 2px;
 }
 
+.login-pwd-hints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.login-pwd-hints li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  color: #8a7f6d;
+  transition: color 0.2s;
+}
+
+.login-pwd-hints li span {
+  font-weight: 700;
+}
+
+.login-pwd-hints li.is-met {
+  color: var(--rc-petrol);
+}
+
+.theme-dark .login-pwd-hints li,
+[data-theme="dark"] .login-pwd-hints li {
+  color: #9aa39d;
+}
+
+.theme-dark .login-pwd-hints li.is-met,
+[data-theme="dark"] .login-pwd-hints li.is-met {
+  color: var(--rc-clay-soft);
+}
+
 .login-input-wrap input::placeholder {
   color: #b8ac97;
 }
