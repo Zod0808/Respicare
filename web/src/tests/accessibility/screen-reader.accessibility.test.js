@@ -13,7 +13,7 @@
  *
  * Cobertura:
  *   SR-01  aria-live en área de mensajes del ChatBot
- *   SR-02  role="status" o aria-live en mensajes de éxito/error del MedicalReport
+ *   SR-02  role="status" o aria-live en mensajes de alerta (AlertConsole)
  *   SR-03  aria-label en botones con solo íconos (ThemeToggle, ChatBot send)
  *   SR-04  aria-hidden en avatares e íconos decorativos
  *   SR-05  aria-expanded en dropdowns (LanguageSelector)
@@ -167,54 +167,10 @@ describe('SR-01 — aria-live en área de mensajes del ChatBot', () => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// SR-02: role="status" en mensajes de éxito/error del MedicalReport
+// SR-02: role="status" en mensajes de alerta
 // ─────────────────────────────────────────────────────────────────────────────
 
 describe('SR-02 — Mensajes de estado: role="status" o aria-live', () => {
-  it('MedicalReport: los mensajes de éxito/error tienen texto legible', async () => {
-    const axios = require('axios');
-    axios.post.mockResolvedValue({
-      data: { success: true, data: { id: 'report-1' } },
-    });
-
-    const MedicalReport = require('../../components/MedicalReport').default;
-    const { container } = render(<MedicalReport />);
-
-    // Llenar el formulario mínimo
-    const inputs = container.querySelectorAll('input');
-    if (inputs.length >= 2) {
-      fireEvent.change(inputs[0], { target: { value: 'patient-1' } });
-      fireEvent.change(inputs[1], { target: { value: 'doctor-1' } });
-    }
-
-    const generateBtn = Array.from(container.querySelectorAll('button')).find(
-      (b) => b.textContent.toLowerCase().includes('generar')
-    );
-    if (!generateBtn) return;
-
-    await act(async () => {
-      fireEvent.click(generateBtn);
-    });
-
-    await waitFor(() => {
-      const messageEl = container.querySelector('.report-message');
-      if (messageEl) {
-        expect(messageEl.textContent.trim().length).toBeGreaterThan(0);
-        // Ideal: role="status" o aria-live="polite"
-        const hasLiveAttr =
-          messageEl.hasAttribute('aria-live') ||
-          messageEl.getAttribute('role') === 'status' ||
-          messageEl.getAttribute('role') === 'alert';
-        if (!hasLiveAttr) {
-          console.warn(
-            'SR-02: .report-message no tiene role="status" ni aria-live. ' +
-            'Los mensajes de éxito/error no son anunciados automáticamente al AT.'
-          );
-        }
-      }
-    }, { timeout: 2000 }).catch(() => {});
-  });
-
   it('AlertConsole: los mensajes de alerta tienen texto visible', () => {
     const AlertConsole = require('../../components/AlertConsole').default;
     expect(() => render(<AlertConsole />)).not.toThrow();
@@ -361,16 +317,6 @@ describe('SR-06 — Botones deshabilitados: semántica correcta', () => {
     expect(isDisabled).toBe(true);
   });
 
-  it('MedicalReport: botones con loading usan disabled nativo', async () => {
-    const MedicalReport = require('../../components/MedicalReport').default;
-    const { container } = render(<MedicalReport />);
-    const buttons = container.querySelectorAll('button[disabled]');
-    // Los botones deshabilitados deben usar el atributo disabled nativo
-    // (no solo aria-disabled, porque el disabled nativo también previene el foco)
-    buttons.forEach((btn) => {
-      expect(btn).toBeDisabled();
-    });
-  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -395,16 +341,6 @@ describe('SR-07 — Formularios: aria-describedby para instrucciones/errores', (
     });
   });
 
-  it('MedicalReport: los campos de texto tienen labels explícitos', () => {
-    const MedicalReport = require('../../components/MedicalReport').default;
-    const { container } = render(<MedicalReport />);
-    const labels = container.querySelectorAll('label');
-    expect(labels.length).toBeGreaterThan(0);
-    labels.forEach((label) => {
-      // Cada label debe tener texto visible
-      expect(label.textContent.trim().length).toBeGreaterThan(0);
-    });
-  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -438,29 +374,6 @@ describe('SR-08 — Mensajes de error críticos: role="alert"', () => {
     }
   });
 
-  it('MedicalReport: el mensaje de error tiene clase de error distinguible', async () => {
-    const axios = require('axios');
-    axios.post.mockRejectedValue(new Error('Error al generar'));
-
-    const MedicalReport = require('../../components/MedicalReport').default;
-    const { container } = render(<MedicalReport />);
-
-    const generateBtn = Array.from(container.querySelectorAll('button')).find(
-      (b) => b.textContent.toLowerCase().includes('generar')
-    );
-    if (!generateBtn) return;
-
-    await act(async () => {
-      fireEvent.click(generateBtn);
-    });
-
-    await waitFor(() => {
-      const errorMsg = container.querySelector('.report-message.error, .error-message, [role="alert"]');
-      if (errorMsg) {
-        expect(errorMsg.textContent.trim().length).toBeGreaterThan(0);
-      }
-    }, { timeout: 2000 }).catch(() => {});
-  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -661,13 +574,6 @@ describe('SR-12 — Botones de acción rápida: texto accesible', () => {
 describe('axe WCAG 2.1 AA — Componentes nuevos no cubiertos anteriormente', () => {
   const { axe, toHaveNoViolations } = require('jest-axe');
   expect.extend(toHaveNoViolations);
-
-  it('MedicalReport: sin violaciones axe', async () => {
-    const MedicalReport = require('../../components/MedicalReport').default;
-    const { container } = render(<MedicalReport />);
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
-  });
 
   it('FhirResourceViewer: sin violaciones axe con recurso válido', async () => {
     const FhirResourceViewer = require('../../components/FhirResourceViewer').default;

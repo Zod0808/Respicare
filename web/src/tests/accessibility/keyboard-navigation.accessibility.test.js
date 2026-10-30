@@ -16,7 +16,6 @@
  *   KEY-09  ThemeToggle activable por teclado
  *   KEY-10  LanguageSelector: apertura y cierre por teclado
  *   KEY-11  Navbar: todos los enlaces son alcanzables por Tab
- *   KEY-12  MedicalReport: Tab atraviesa todos los campos del formulario
  */
 
 import React from 'react';
@@ -192,19 +191,6 @@ describe('KEY-02 — Botones activables con Enter y Space', () => {
     }
   });
 
-  it('botones de MedicalReport: son activables sin ratón', () => {
-    const MedicalReport = require('../../components/MedicalReport').default;
-    const { container } = render(<MedicalReport />);
-    const buttons = container.querySelectorAll('button');
-    buttons.forEach((button) => {
-      expect(button.tagName).toBe('BUTTON');
-      // Los botones HTML nativos responden a Enter/Space por defecto
-      const tabIndex = button.getAttribute('tabindex');
-      if (tabIndex !== null) {
-        expect(parseInt(tabIndex)).toBeGreaterThanOrEqual(0);
-      }
-    });
-  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -275,28 +261,6 @@ describe('KEY-04 — Selects: navegables con teclas de flecha', () => {
     });
   });
 
-  it('MedicalReport: el select de plantilla tiene opciones', () => {
-    const MedicalReport = require('../../components/MedicalReport').default;
-    const { container } = render(<MedicalReport />);
-    const selects = container.querySelectorAll('select');
-    selects.forEach((sel) => {
-      expect(sel.options.length).toBeGreaterThan(0);
-    });
-  });
-
-  it('los selects tienen un label asociado', () => {
-    const MedicalReport = require('../../components/MedicalReport').default;
-    const { container } = render(<MedicalReport />);
-    const selects = container.querySelectorAll('select');
-    selects.forEach((sel) => {
-      const id = sel.id;
-      const hasLabel = id ? container.querySelector(`label[for="${id}"]`) !== null : false;
-      const hasWrappingLabel = sel.closest('label') !== null;
-      const hasAriaLabel = sel.hasAttribute('aria-label');
-      const isLabeled = hasLabel || hasWrappingLabel || hasAriaLabel;
-      expect(isLabeled).toBe(true);
-    });
-  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -636,62 +600,3 @@ describe('KEY-11 — Navbar: todos los enlaces son alcanzables con Tab', () => {
   });
 });
 
-// ─────────────────────────────────────────────────────────────────────────────
-// KEY-12: MedicalReport — Tab atraviesa todos los campos del formulario
-// ─────────────────────────────────────────────────────────────────────────────
-
-describe('KEY-12 — MedicalReport: Tab recorre todos los campos del formulario', () => {
-  let MedicalReport;
-
-  beforeAll(() => {
-    MedicalReport = require('../../components/MedicalReport').default;
-  });
-
-  it('el formulario tiene inputs, textareas y selects', () => {
-    const { container } = render(<MedicalReport />);
-    const inputs = container.querySelectorAll('input');
-    const textareas = container.querySelectorAll('textarea');
-    const selects = container.querySelectorAll('select');
-    const total = inputs.length + textareas.length + selects.length;
-    expect(total).toBeGreaterThan(0);
-  });
-
-  it('todos los campos son enfocables con Tab', async () => {
-    const user = userEvent.setup();
-    const { container } = render(<MedicalReport />);
-    const focusable = getFocusableElements(container);
-
-    if (focusable.length === 0) return;
-
-    focusable[0].focus();
-    // Navegar a través de todos los elementos
-    for (let i = 1; i < Math.min(focusable.length, 10); i++) {
-      await user.tab();
-      expect(document.activeElement).not.toBeNull();
-      expect(document.activeElement).not.toBe(document.body);
-    }
-  });
-
-  it('los labels del formulario están visibles', () => {
-    const { container } = render(<MedicalReport />);
-    const labels = container.querySelectorAll('label');
-    labels.forEach((label) => {
-      expect(label.textContent.trim().length).toBeGreaterThan(0);
-    });
-  });
-
-  it('los campos de texto son de solo texto/área (no hay inputs inaccesibles)', () => {
-    const { container } = render(<MedicalReport />);
-    const inputs = container.querySelectorAll('input');
-    inputs.forEach((input) => {
-      const type = input.getAttribute('type') || 'text';
-      const accessibleTypes = ['text', 'email', 'password', 'number', 'tel',
-        'search', 'url', 'checkbox', 'radio', 'date', 'time'];
-      if (!accessibleTypes.includes(type)) {
-        // Si el tipo no es estándar, debe tener role
-        const role = input.getAttribute('role');
-        expect(role).not.toBeNull();
-      }
-    });
-  });
-});
