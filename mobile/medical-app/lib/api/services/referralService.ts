@@ -5,39 +5,51 @@
 import { apiClient } from '../client'
 import { API_ENDPOINTS } from '../config'
 
+export type ReferralStatus = 'pending' | 'accepted' | 'in_progress' | 'completed' | 'rejected' | 'cancelled'
+export type ReferralPriority = 'low' | 'medium' | 'high' | 'urgent'
+export type ReferralType = 'consultation' | 'specialist' | 'diagnostic' | 'treatment' | 'follow_up' | 'emergency'
+
 export interface Referral {
   _id: string
   patientId: string
+  patientName: string
   referringDoctorId: string
-  referredDoctorId?: string
-  specialty: string
+  referringDoctorName: string
+  referredToDoctorId?: string
+  referredToDoctorName?: string
+  referredToSpecialty?: string
+  referralType: ReferralType
+  priority: ReferralPriority
+  status: ReferralStatus
   reason: string
-  urgency: 'routine' | 'urgent' | 'emergency'
-  status: 'pending' | 'accepted' | 'rejected' | 'completed' | 'cancelled'
-  notes?: string
-  scheduledDate?: string
-  rejectedReason?: string
-  metadata?: Record<string, any>
+  clinicalNotes?: string
+  requestedDate?: string
+  acceptedDate?: string
+  completedDate?: string
   createdAt: string
   updatedAt: string
 }
 
 export interface CreateReferralRequest {
   patientId: string
-  referredSpecialty: string
+  patientName: string
+  referringDoctorId: string
+  referringDoctorName: string
+  referralType: ReferralType
   reason: string
-  urgency?: Referral['urgency']
-  notes?: string
-  diagnosis?: string
-  referredDoctorId?: string
+  priority?: ReferralPriority
+  clinicalNotes?: string
+  referredToDoctorId?: string
+  referredToSpecialty?: string
+  requestedDate?: string
 }
 
 export interface ReferralFilters {
   page?: number
   limit?: number
-  status?: Referral['status']
+  status?: ReferralStatus
   patientId?: string
-  urgency?: Referral['urgency']
+  priority?: ReferralPriority
 }
 
 class ReferralService {
@@ -54,7 +66,7 @@ class ReferralService {
     if (filters?.limit) params.append('limit', String(filters.limit))
     if (filters?.status) params.append('status', filters.status)
     if (filters?.patientId) params.append('patientId', filters.patientId)
-    if (filters?.urgency) params.append('urgency', filters.urgency)
+    if (filters?.priority) params.append('priority', filters.priority)
 
     const query = params.toString()
     const url = query ? `${API_ENDPOINTS.referrals.list}?${query}` : API_ENDPOINTS.referrals.list
@@ -80,8 +92,8 @@ class ReferralService {
     return this.unwrap<Referral>(response)
   }
 
-  async accept(id: string, notes?: string): Promise<Referral> {
-    const response = await apiClient.post<any>(API_ENDPOINTS.referrals.accept(id), { notes })
+  async accept(id: string, referredToDoctorId: string, notes?: string): Promise<Referral> {
+    const response = await apiClient.post<any>(API_ENDPOINTS.referrals.accept(id), { referredToDoctorId, notes })
     return this.unwrap<Referral>(response)
   }
 

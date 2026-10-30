@@ -3770,8 +3770,8 @@
     "semantic_hash": ""
   },
   "mobile/medical-app/components/tabs/referrals-view.tsx": {
-    "mtime": 1785106956.8275595,
-    "ast_hash": "06deecefb0b206eb0e24a5cd030f5b88",
+    "mtime": 1793360149.1436472,
+    "ast_hash": "754ba2bcab91103f47b340f5b0bf443e",
     "semantic_hash": ""
   },
   "mobile/medical-app/components/tabs/symptom-analyzer.tsx": {
@@ -4114,11 +4114,6 @@
     "ast_hash": "39d7e38fac661cca44091d524118c797",
     "semantic_hash": ""
   },
-  "mobile/medical-app/components/views/ReferralScreen.tsx": {
-    "mtime": 1785106956.833675,
-    "ast_hash": "14d45f49fa99afed9f346b35d5eaf084",
-    "semantic_hash": ""
-  },
   "mobile/medical-app/components/views/ReportShareScreen.tsx": {
     "mtime": 1785106956.8337634,
     "ast_hash": "c845b7b38545712447672ba3b208a6bf",
@@ -4295,8 +4290,8 @@
     "semantic_hash": ""
   },
   "mobile/medical-app/lib/api/services/referralService.ts": {
-    "mtime": 1785106956.8356993,
-    "ast_hash": "11c02987829371cb5dfaec5c4c4849b1",
+    "mtime": 1793360149.143771,
+    "ast_hash": "d11eb926754816bf6605e7a79dc17889",
     "semantic_hash": ""
   },
   "mobile/medical-app/lib/api/services/reportService.ts": {
@@ -8377,6 +8372,11 @@
   "web/src/components/__tests__/AppointmentCalendar.patient.test.js": {
     "mtime": 1793333015.8293343,
     "ast_hash": "548fb7b818e25ea322b7f5e5d6d3e831",
+    "semantic_hash": ""
+  },
+  "mobile/medical-app/__tests__/tabs/referrals-view.test.tsx": {
+    "mtime": 1793359285.7266748,
+    "ast_hash": "c67d0aedc7ff640d8520d82ff640a2ed",
     "semantic_hash": ""
   }
 }
