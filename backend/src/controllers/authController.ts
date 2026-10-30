@@ -386,6 +386,19 @@ export const getUsers = asyncHandler(async (req: AuthenticatedRequest, res: Resp
   res.status(200).json(response);
 });
 
+// Listar doctores activos (cualquier usuario autenticado, para el flujo de reserva de citas)
+export const listDoctors = asyncHandler(async (_req: AuthenticatedRequest, res: Response) => {
+  const doctors = await User.findByRole('doctor');
+  const data = doctors.map((d) => ({ _id: d._id, name: d.name }));
+
+  const response: ApiResponse = {
+    success: true,
+    message: 'Doctores obtenidos exitosamente',
+    data,
+  };
+  res.status(200).json(response);
+});
+
 // Crear usuario (solo admin)
 export const adminCreateUser = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
   if (req.user?.role !== 'admin') {

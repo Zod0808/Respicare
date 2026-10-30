@@ -19,6 +19,7 @@ import {
   deactivateAccount,
   getUserStats,
   getUsers,
+  listDoctors,
   adminCreateUser,
   adminUpdateUser,
   adminToggleUserActive
@@ -49,6 +50,7 @@ router.get('/profile', getProfile);
 router.put('/profile', validateRequest(updateProfileSchema), updateProfile);
 router.put('/change-password', validateRequest(changePasswordSchema), changePassword);
 router.put('/deactivate', deactivateAccount);
+router.get('/doctors', listDoctors);
 
 // Rutas de administrador
 router.get('/users', authorize('admin'), getUsers);

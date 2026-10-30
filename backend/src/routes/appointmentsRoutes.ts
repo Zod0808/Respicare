@@ -161,7 +161,7 @@ router.get(
 
 router.get(
   '/doctor/:doctorId/availability',
-  authorize('doctor', 'admin'),
+  authorize('doctor', 'admin', 'patient'),
   [
     param('doctorId').isString().notEmpty(),
     query('start').isISO8601().withMessage('start es requerido y debe ser fecha válida'),

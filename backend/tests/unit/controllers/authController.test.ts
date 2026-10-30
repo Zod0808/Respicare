@@ -792,4 +792,42 @@ describe('Auth Controller', () => {
       expect(response.body.message).toContain('Token de acceso requerido');
     });
   });
+
+  describe('GET /api/v1/auth/doctors', () => {
+    it('returns active doctors with only id and name for a patient', async () => {
+      const doctor = await User.create({
+        name: 'Dr. Lista',
+        email: 'doctorlista@test.com',
+        password: 'password123',
+        role: 'doctor',
+        isActive: true
+      }) as UserDocument;
+      const patient = await User.create({
+        name: 'Paciente Lista',
+        email: 'pacientelista@test.com',
+        password: 'password123',
+        role: 'patient',
+        isActive: true
+      }) as UserDocument;
+      const patientToken = testUtils.generateTestToken({ userId: patient._id.toString(), role: 'patient' });
+
+      const response = await request(app)
+        .get('/api/v1/auth/doctors')
+        .set('Authorization', `Bearer ${patientToken}`)
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      const entry = response.body.data.find((d: any) => d._id === doctor._id.toString());
+      expect(entry).toBeDefined();
+      expect(entry.name).toBe('Dr. Lista');
+      expect(entry.email).toBeUndefined();
+      expect(entry.password).toBeUndefined();
+    });
+
+    it('should require authentication', async () => {
+      await request(app)
+        .get('/api/v1/auth/doctors')
+        .expect(401);
+    });
+  });
 });

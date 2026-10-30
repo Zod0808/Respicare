@@ -213,6 +213,179 @@
   letter-spacing: 0.05em;
 }
 
+/* ── Patient booking flow ── */
+.appt-book-card {
+  background: var(--rc-paper);
+  border: 1px solid var(--rc-paper-dim);
+  border-radius: 2px 16px 16px 16px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.appt-book-card h4 {
+  margin: 0 0 14px;
+  font-family: var(--rc-font-display);
+  color: var(--rc-petrol-ink);
+}
+
+.appt-book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  align-items: end;
+}
+
+.appt-book-grid label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: var(--rc-petrol-ink);
+  font-size: 0.95rem;
+}
+
+.appt-book-grid select,
+.appt-book-grid input {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 2px solid var(--rc-paper-dim);
+  background: #fffaf2;
+  font-family: inherit;
+}
+
+.appt-book-grid button {
+  background: var(--rc-petrol);
+  color: #fffaf2;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-family: var(--rc-font-body);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.appt-book-grid button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.appt-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.appt-slot {
+  border: 2px solid var(--rc-paper-dim);
+  background: #fffaf2;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.appt-slot--free:hover {
+  border-color: var(--rc-petrol);
+}
+
+.appt-slot--busy {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.appt-slot--selected {
+  background: var(--rc-petrol);
+  border-color: var(--rc-petrol);
+  color: #fffaf2;
+}
+
+.appt-confirm {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--rc-paper-dim);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: end;
+}
+
+.appt-confirm label {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 220px;
+  font-weight: 600;
+  color: var(--rc-petrol-ink);
+  font-size: 0.95rem;
+}
+
+.appt-confirm input {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 2px solid var(--rc-paper-dim);
+  background: #fffaf2;
+  font-family: inherit;
+}
+
+.appt-confirm button {
+  background: var(--rc-clay);
+  color: #fffaf2;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-family: var(--rc-font-body);
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.appt-confirm button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.appt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.appt-item {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: #fffaf2;
+  border: 1px solid var(--rc-paper-dim);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.appt-item__main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 160px;
+}
+
+.appt-item__main span {
+  color: rgba(21, 36, 32, 0.6);
+  font-size: 0.85rem;
+}
+
+.appt-item p {
+  margin: 0;
+  flex: 1;
+  min-width: 140px;
+  color: rgba(21, 36, 32, 0.75);
+  font-size: 0.9rem;
+}
+
 @media (max-width: 768px) {
   .appointment-calendar {
     padding: 18px;
@@ -292,6 +465,36 @@
 
 .theme-dark .availability-card li,
 [data-theme="dark"] .availability-card li          { background: #1c2823; border-color: rgba(255, 255, 255, 0.08); }
+
+.theme-dark .appt-book-card,
+[data-theme="dark"] .appt-book-card                { background: #16201d; border-color: rgba(255, 255, 255, 0.08); }
+
+.theme-dark .appt-book-card h4,
+[data-theme="dark"] .appt-book-card h4             { color: #f8f1e4; }
+
+.theme-dark .appt-book-grid label,
+[data-theme="dark"] .appt-book-grid label,
+.theme-dark .appt-confirm label,
+[data-theme="dark"] .appt-confirm label            { color: #f8f1e4; }
+
+.theme-dark .appt-book-grid select,
+[data-theme="dark"] .appt-book-grid select,
+.theme-dark .appt-book-grid input,
+[data-theme="dark"] .appt-book-grid input,
+.theme-dark .appt-confirm input,
+[data-theme="dark"] .appt-confirm input,
+.theme-dark .appt-slot,
+[data-theme="dark"] .appt-slot,
+.theme-dark .appt-item,
+[data-theme="dark"] .appt-item                     { background: #1c2823; border-color: rgba(255, 255, 255, 0.12); color: #f8f1e4; }
+
+.theme-dark .appt-slot--selected,
+[data-theme="dark"] .appt-slot--selected           { background: var(--rc-petrol); border-color: var(--rc-petrol); color: #fffaf2; }
+
+.theme-dark .appt-item__main span,
+[data-theme="dark"] .appt-item__main span,
+.theme-dark .appt-item p,
+[data-theme="dark"] .appt-item p                   { color: rgba(248, 241, 228, 0.65); }
 
 /* Fallback for system preference when no class is set */
 @media (prefers-color-scheme: dark) {

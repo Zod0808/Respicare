@@ -164,5 +164,19 @@ describe('Appointment Endpoints Integration', () => {
         .set('Authorization', `Bearer ${adminToken}`)
         .expect(400);
     });
+
+    it('permite a un paciente consultar la disponibilidad de un doctor para reservar', async () => {
+      const start = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+      const end = new Date(Date.now() + 26 * 60 * 60 * 1000).toISOString();
+
+      const response = await request(app)
+        .get(`/api/v1/appointments/doctor/${adminId}/availability`)
+        .query({ start, end, slotMinutes: 30 })
+        .set('Authorization', `Bearer ${patientToken}`)
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      expect(Array.isArray(response.body.data)).toBe(true);
+    });
   });
 });
