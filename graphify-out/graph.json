@@ -8898,8 +8898,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_decorators_init",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "decorators/__init__.py"
     },
     {
@@ -8909,8 +8909,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_decorators_init_rationale_1",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "decorator pattern implementation for cross-cutting concerns"
     },
     {
@@ -8975,8 +8975,8 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "ai_services_decorators_cache_decorator_with_cache",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "with_cache()"
     },
     {
@@ -9151,8 +9151,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "ai_services_decorators_cache_decorator_rationale_83",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "decorator function for adding caching to methods"
     },
     {
@@ -9316,8 +9316,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "ai_services_decorators_circuit_breaker_decorator_with_circuit_breaker",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "with_circuit_breaker()"
     },
     {
@@ -9492,8 +9492,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "ai_services_decorators_circuit_breaker_decorator_rationale_91",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "decorator function for adding circuit breaker functionality to methods"
     },
     {
@@ -9679,8 +9679,8 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "ai_services_decorators_logging_decorator_with_logging",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "with_logging()"
     },
     {
@@ -9910,8 +9910,8 @@
       "source_location": "L204",
       "_origin": "ast",
       "id": "ai_services_decorators_logging_decorator_rationale_204",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "decorator function for adding logging to methods"
     },
     {
@@ -10053,8 +10053,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_decorators_metrics_decorator",
-      "community": 11,
-      "community_name": "MetricsDecorator",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "metrics_decorator.py"
     },
     {
@@ -10152,8 +10152,8 @@
       "source_location": "L187",
       "_origin": "ast",
       "id": "ai_services_decorators_metrics_decorator_with_metrics",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "with_metrics()"
     },
     {
@@ -10317,8 +10317,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_decorators_metrics_decorator_rationale_1",
-      "community": 11,
-      "community_name": "MetricsDecorator",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "metrics decorator implementation"
     },
     {
@@ -10394,8 +10394,8 @@
       "source_location": "L194",
       "_origin": "ast",
       "id": "ai_services_decorators_metrics_decorator_rationale_194",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "decorator function for adding metrics collection to methods"
     },
     {
@@ -10636,8 +10636,8 @@
       "source_location": "L194",
       "_origin": "ast",
       "id": "ai_services_decorators_retry_decorator_exponentialbackoffretry",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "exponentialbackoffretry"
     },
     {
@@ -10647,8 +10647,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "ai_services_decorators_retry_decorator_exponentialbackoffretry_init",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".__init__()"
     },
     {
@@ -10658,8 +10658,8 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "ai_services_decorators_retry_decorator_exponentialbackoffretry_call",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".__call__()"
     },
     {
@@ -10691,8 +10691,8 @@
       "source_location": "L314",
       "_origin": "ast",
       "id": "ai_services_decorators_retry_decorator_conditionalretry",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "conditionalretry"
     },
     {
@@ -10702,8 +10702,8 @@
       "source_location": "L317",
       "_origin": "ast",
       "id": "ai_services_decorators_retry_decorator_conditionalretry_init",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".__init__()"
     },
     {
@@ -10713,8 +10713,8 @@
       "source_location": "L329",
       "_origin": "ast",
       "id": "ai_services_decorators_retry_decorator_conditionalretry_call",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".__call__()"
     },
     {
@@ -10724,8 +10724,8 @@
       "source_location": "L344",
       "_origin": "ast",
       "id": "ai_services_decorators_retry_decorator_conditionalretry_conditional_retry",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "._conditional_retry()"
     },
     {
@@ -10867,8 +10867,8 @@
       "source_location": "L195",
       "_origin": "ast",
       "id": "ai_services_decorators_retry_decorator_rationale_195",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "retry decorator with exponential backoff and custom retry conditions"
     },
     {
@@ -10878,8 +10878,8 @@
       "source_location": "L212",
       "_origin": "ast",
       "id": "ai_services_decorators_retry_decorator_rationale_212",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "apply exponential backoff retry decorator to function"
     },
     {
@@ -10911,8 +10911,8 @@
       "source_location": "L315",
       "_origin": "ast",
       "id": "ai_services_decorators_retry_decorator_rationale_315",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "retry decorator that only retries under certain conditions"
     },
     {
@@ -10922,8 +10922,8 @@
       "source_location": "L330",
       "_origin": "ast",
       "id": "ai_services_decorators_retry_decorator_rationale_330",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "apply conditional retry decorator to function"
     },
     {
@@ -10933,8 +10933,8 @@
       "source_location": "L345",
       "_origin": "ast",
       "id": "ai_services_decorators_retry_decorator_rationale_345",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "execute function with conditional retry logic"
     },
     {
@@ -17016,8 +17016,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_ml_models_reinforcement_learning",
-      "community": 383,
-      "community_name": "QLearningAgent",
+      "community": 300,
+      "community_name": "ReinforcementLearningAgent",
       "norm_label": "reinforcement_learning.py"
     },
     {
@@ -17093,8 +17093,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_ml_models_reinforcement_learning_rationale_1",
-      "community": 383,
-      "community_name": "QLearningAgent",
+      "community": 300,
+      "community_name": "ReinforcementLearningAgent",
       "norm_label": "reinforcementlearningagent - agente rl para optimizacion clinica.  usa implement"
     },
     {
@@ -17467,8 +17467,8 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "ai_services_ml_models_rl_reminder_optimizer_qlearningagent",
-      "community": 1394,
-      "community_name": ".test_process_user_message_disease_classification",
+      "community": 383,
+      "community_name": "QLearningAgent",
       "norm_label": "qlearningagent"
     },
     {
@@ -17478,8 +17478,8 @@
       "source_location": "L173",
       "_origin": "ast",
       "id": "ai_services_ml_models_rl_reminder_optimizer_qlearningagent_init",
-      "community": 1394,
-      "community_name": ".test_process_user_message_disease_classification",
+      "community": 383,
+      "community_name": "QLearningAgent",
       "norm_label": ".__init__()"
     },
     {
@@ -17522,8 +17522,8 @@
       "source_location": "L237",
       "_origin": "ast",
       "id": "ai_services_ml_models_rl_reminder_optimizer_qlearningagent_save_policy",
-      "community": 1394,
-      "community_name": ".test_process_user_message_disease_classification",
+      "community": 383,
+      "community_name": "QLearningAgent",
       "norm_label": ".save_policy()"
     },
     {
@@ -17533,8 +17533,8 @@
       "source_location": "L242",
       "_origin": "ast",
       "id": "ai_services_ml_models_rl_reminder_optimizer_qlearningagent_load_policy",
-      "community": 1394,
-      "community_name": ".test_process_user_message_disease_classification",
+      "community": 383,
+      "community_name": "QLearningAgent",
       "norm_label": ".load_policy()"
     },
     {
@@ -17566,8 +17566,8 @@
       "source_location": "L259",
       "_origin": "ast",
       "id": "ai_services_ml_models_rl_reminder_optimizer_reinforcementlearningagent_configure",
-      "community": 276,
-      "community_name": "ReminderEnvironment",
+      "community": 383,
+      "community_name": "QLearningAgent",
       "norm_label": ".configure()"
     },
     {
@@ -17665,8 +17665,8 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "ai_services_ml_models_rl_reminder_optimizer_rationale_171",
-      "community": 1394,
-      "community_name": ".test_process_user_message_disease_classification",
+      "community": 383,
+      "community_name": "QLearningAgent",
       "norm_label": "agente q-learning para optimizacion de recordatorios"
     },
     {
@@ -17709,8 +17709,8 @@
       "source_location": "L238",
       "_origin": "ast",
       "id": "ai_services_ml_models_rl_reminder_optimizer_rationale_238",
-      "community": 1394,
-      "community_name": ".test_process_user_message_disease_classification",
+      "community": 383,
+      "community_name": "QLearningAgent",
       "norm_label": "guardar politica aprendida"
     },
     {
@@ -17720,8 +17720,8 @@
       "source_location": "L243",
       "_origin": "ast",
       "id": "ai_services_ml_models_rl_reminder_optimizer_rationale_243",
-      "community": 1394,
-      "community_name": ".test_process_user_message_disease_classification",
+      "community": 383,
+      "community_name": "QLearningAgent",
       "norm_label": "cargar politica aprendida"
     },
     {
@@ -17742,8 +17742,8 @@
       "source_location": "L260",
       "_origin": "ast",
       "id": "ai_services_ml_models_rl_reminder_optimizer_rationale_260",
-      "community": 276,
-      "community_name": "ReminderEnvironment",
+      "community": 383,
+      "community_name": "QLearningAgent",
       "norm_label": "configurar agente y entorno"
     },
     {
@@ -25428,8 +25428,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_services_core_domains_support",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "services/core_domains_support.py"
     },
     {
@@ -25725,8 +25725,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_services_core_domains_support_rationale_1",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "core domains support service proporciona soporte indirecto de ai para los domini"
     },
     {
@@ -26825,8 +26825,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "medical_history_service.py"
     },
     {
@@ -26836,8 +26836,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_medicalhistoryservice",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "medicalhistoryservice"
     },
     {
@@ -26847,8 +26847,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_medicalhistoryservice_init",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": ".__init__()"
     },
     {
@@ -26858,8 +26858,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_py_with_logging",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "with_logging"
     },
     {
@@ -26869,8 +26869,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_py_with_retry",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "with_retry"
     },
     {
@@ -26880,8 +26880,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_py_with_metrics",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "with_metrics"
     },
     {
@@ -26891,8 +26891,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_medicalhistoryservice_process_medical_history_comprehensive",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": ".process_medical_history_comprehensive()"
     },
     {
@@ -26902,8 +26902,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_py_any",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "any"
     },
     {
@@ -26913,8 +26913,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_medicalhistoryservice_process_medical_history_batch",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": ".process_medical_history_batch()"
     },
     {
@@ -26924,8 +26924,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_medicalhistoryservice_perform_basic_processing",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "._perform_basic_processing()"
     },
     {
@@ -26935,8 +26935,8 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_medicalhistoryservice_extract_medical_entities",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "._extract_medical_entities()"
     },
     {
@@ -26946,8 +26946,8 @@
       "source_location": "L189",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_medicalhistoryservice_generate_diagnosis_suggestions",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "._generate_diagnosis_suggestions()"
     },
     {
@@ -26957,8 +26957,8 @@
       "source_location": "L280",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_medicalhistoryservice_assess_medical_risks",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "._assess_medical_risks()"
     },
     {
@@ -26968,8 +26968,8 @@
       "source_location": "L380",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_medicalhistoryservice_generate_medical_summary",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "._generate_medical_summary()"
     },
     {
@@ -26979,8 +26979,8 @@
       "source_location": "L453",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_medicalhistoryservice_generate_care_recommendations",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "._generate_care_recommendations()"
     },
     {
@@ -26990,8 +26990,8 @@
       "source_location": "L540",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_medicalhistoryservice_extract_context_around",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "._extract_context_around()"
     },
     {
@@ -27001,8 +27001,8 @@
       "source_location": "L554",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_medicalhistoryservice_calculate_average_confidence",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "._calculate_average_confidence()"
     },
     {
@@ -27012,8 +27012,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_rationale_1",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "medical history service - dedicated service for medical history processing"
     },
     {
@@ -27023,8 +27023,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_rationale_13",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "dedicated service for medical history processing operations"
     },
     {
@@ -27034,8 +27034,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_rationale_33",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "perform comprehensive medical history processing"
     },
     {
@@ -27045,8 +27045,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_rationale_83",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "delegates batch processing to ai service manager if disponible."
     },
     {
@@ -27056,8 +27056,8 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_rationale_96",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "perform basic medical history processing using service manager"
     },
     {
@@ -27067,8 +27067,8 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_rationale_107",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "extract and analyze medical entities from text"
     },
     {
@@ -27078,8 +27078,8 @@
       "source_location": "L190",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_rationale_190",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "generate comprehensive diagnosis suggestions"
     },
     {
@@ -27089,8 +27089,8 @@
       "source_location": "L285",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_rationale_285",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "assess medical risks based on processed history"
     },
     {
@@ -27100,8 +27100,8 @@
       "source_location": "L385",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_rationale_385",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "generate comprehensive medical summary"
     },
     {
@@ -27111,8 +27111,8 @@
       "source_location": "L454",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_rationale_454",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "generate comprehensive care recommendations"
     },
     {
@@ -27122,8 +27122,8 @@
       "source_location": "L541",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_rationale_541",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "extract context around a keyword"
     },
     {
@@ -27133,8 +27133,8 @@
       "source_location": "L555",
       "_origin": "ast",
       "id": "ai_services_services_medical_history_service_rationale_555",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "calculate average confidence score for entities"
     },
     {
@@ -27639,8 +27639,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_services_symptom_analysis_service",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "symptom_analysis_service.py"
     },
     {
@@ -27815,8 +27815,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_services_symptom_analysis_service_rationale_1",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "symptom analysis service - dedicated service for symptom analysis"
     },
     {
@@ -42500,8 +42500,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testretrydecorator",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "testretrydecorator"
     },
     {
@@ -42511,8 +42511,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_py_fixture",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "fixture"
     },
     {
@@ -42522,8 +42522,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testretrydecorator_retry_decorator",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".retry_decorator()"
     },
     {
@@ -42533,8 +42533,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_py_asyncio",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "asyncio"
     },
     {
@@ -42544,8 +42544,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testretrydecorator_test_successful_function_no_retry",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_successful_function_no_retry()"
     },
     {
@@ -42555,8 +42555,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testretrydecorator_test_function_succeeds_after_retries",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_function_succeeds_after_retries()"
     },
     {
@@ -42566,8 +42566,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testretrydecorator_test_function_fails_after_all_retries",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_function_fails_after_all_retries()"
     },
     {
@@ -42577,8 +42577,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testretrydecorator_test_retry_with_backoff",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_retry_with_backoff()"
     },
     {
@@ -42588,8 +42588,8 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testretrydecorator_test_retry_with_jitter",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_retry_with_jitter()"
     },
     {
@@ -42599,8 +42599,8 @@
       "source_location": "L105",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testretrydecorator_test_retry_without_jitter",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_retry_without_jitter()"
     },
     {
@@ -42610,8 +42610,8 @@
       "source_location": "L121",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testretrydecorator_test_retry_only_specific_exceptions",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_retry_only_specific_exceptions()"
     },
     {
@@ -42621,8 +42621,8 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testretrydecorator_test_sync_function_retry",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_sync_function_retry()"
     },
     {
@@ -42632,8 +42632,8 @@
       "source_location": "L150",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testretrydecorator_test_max_delay_limit",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_max_delay_limit()"
     },
     {
@@ -42643,8 +42643,8 @@
       "source_location": "L173",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testretrydecorator_test_with_retry_decorator_function",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_with_retry_decorator_function()"
     },
     {
@@ -42654,8 +42654,8 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testexponentialbackoffretry",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "testexponentialbackoffretry"
     },
     {
@@ -42665,8 +42665,8 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testexponentialbackoffretry_exponential_retry",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".exponential_retry()"
     },
     {
@@ -42676,8 +42676,8 @@
       "source_location": "L196",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testexponentialbackoffretry_test_exponential_backoff_success",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_exponential_backoff_success()"
     },
     {
@@ -42687,8 +42687,8 @@
       "source_location": "L214",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testexponentialbackoffretry_test_exponential_backoff_calculation",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_exponential_backoff_calculation()"
     },
     {
@@ -42698,8 +42698,8 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testexponentialbackoffretry_test_exponential_backoff_with_retry_condition",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_exponential_backoff_with_retry_condition()"
     },
     {
@@ -42709,8 +42709,8 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testexponentialbackoffretry_test_exponential_backoff_failure",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_exponential_backoff_failure()"
     },
     {
@@ -42720,8 +42720,8 @@
       "source_location": "L272",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testexponentialbackoffretry_test_with_exponential_backoff_retry_decorator_function",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_with_exponential_backoff_retry_decorator_function()"
     },
     {
@@ -42731,8 +42731,8 @@
       "source_location": "L281",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testconditionalretry",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "testconditionalretry"
     },
     {
@@ -42742,8 +42742,8 @@
       "source_location": "L285",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testconditionalretry_conditional_retry",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".conditional_retry()"
     },
     {
@@ -42753,8 +42753,8 @@
       "source_location": "L298",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testconditionalretry_test_conditional_retry_should_retry",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_conditional_retry_should_retry()"
     },
     {
@@ -42764,8 +42764,8 @@
       "source_location": "L316",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testconditionalretry_test_conditional_retry_should_not_retry",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_conditional_retry_should_not_retry()"
     },
     {
@@ -42775,8 +42775,8 @@
       "source_location": "L327",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testconditionalretry_test_conditional_retry_default_condition",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_conditional_retry_default_condition()"
     },
     {
@@ -42786,8 +42786,8 @@
       "source_location": "L350",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testconditionalretry_test_conditional_retry_failure",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_conditional_retry_failure()"
     },
     {
@@ -42797,8 +42797,8 @@
       "source_location": "L359",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_testconditionalretry_test_with_conditional_retry_decorator_function",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": ".test_with_conditional_retry_decorator_function()"
     },
     {
@@ -42819,8 +42819,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_20",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "tests for retrydecorator"
     },
     {
@@ -42830,8 +42830,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_24",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "create retry decorator instance"
     },
     {
@@ -42841,8 +42841,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_36",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test retry decorator with successful function (no retry needed)"
     },
     {
@@ -42852,8 +42852,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_47",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test retry decorator with function that succeeds after retries"
     },
     {
@@ -42863,8 +42863,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_65",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test retry decorator with function that fails after all retries"
     },
     {
@@ -42874,8 +42874,8 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_75",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test retry decorator with exponential backoff"
     },
     {
@@ -42885,8 +42885,8 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_96",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test retry decorator with jitter"
     },
     {
@@ -42896,8 +42896,8 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_106",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test retry decorator without jitter"
     },
     {
@@ -42907,8 +42907,8 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_122",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test retry decorator only retries specific exceptions"
     },
     {
@@ -42918,8 +42918,8 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_133",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test retry decorator with sync function"
     },
     {
@@ -42929,8 +42929,8 @@
       "source_location": "L151",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_151",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test retry decorator respects max_delay limit"
     },
     {
@@ -42940,8 +42940,8 @@
       "source_location": "L174",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_174",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test with_retry decorator function"
     },
     {
@@ -42951,8 +42951,8 @@
       "source_location": "L183",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_183",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "tests for exponentialbackoffretry"
     },
     {
@@ -42962,8 +42962,8 @@
       "source_location": "L187",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_187",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "create exponential backoff retry decorator"
     },
     {
@@ -42973,8 +42973,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_197",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test exponential backoff retry with success"
     },
     {
@@ -42984,8 +42984,8 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_215",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test exponential backoff delay calculation"
     },
     {
@@ -42995,8 +42995,8 @@
       "source_location": "L237",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_237",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test exponential backoff with custom retry condition"
     },
     {
@@ -43006,8 +43006,8 @@
       "source_location": "L264",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_264",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test exponential backoff retry with failure"
     },
     {
@@ -43017,8 +43017,8 @@
       "source_location": "L273",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_273",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test with_exponential_backoff_retry decorator function"
     },
     {
@@ -43028,8 +43028,8 @@
       "source_location": "L282",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_282",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "tests for conditionalretry"
     },
     {
@@ -43039,8 +43039,8 @@
       "source_location": "L286",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_286",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "create conditional retry decorator"
     },
     {
@@ -43050,8 +43050,8 @@
       "source_location": "L299",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_299",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test conditional retry when should_retry returns true"
     },
     {
@@ -43061,8 +43061,8 @@
       "source_location": "L317",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_317",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test conditional retry when should_retry returns false"
     },
     {
@@ -43072,8 +43072,8 @@
       "source_location": "L328",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_328",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test conditional retry with default condition (always retry)"
     },
     {
@@ -43083,8 +43083,8 @@
       "source_location": "L351",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_351",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test conditional retry with failure after all retries"
     },
     {
@@ -43094,8 +43094,8 @@
       "source_location": "L360",
       "_origin": "ast",
       "id": "ai_services_tests_decorators_test_retry_decorator_rationale_360",
-      "community": 34,
-      "community_name": "asyncio",
+      "community": 337,
+      "community_name": "OfflineQueue",
       "norm_label": "test with_conditional_retry decorator function"
     },
     {
@@ -45745,8 +45745,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_tests_integration_test_edge_cases",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "test_edge_cases.py"
     },
     {
@@ -46196,8 +46196,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_tests_integration_test_edge_cases_rationale_1",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "edge case tests for various modules tests boundary conditions, error cases, and"
     },
     {
@@ -46636,8 +46636,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_tests_integration_test_service_integration",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "test_service_integration.py"
     },
     {
@@ -46867,8 +46867,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_tests_integration_test_service_integration_rationale_1",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 34,
+      "community_name": "asyncio",
       "norm_label": "integration tests for service interactions tests how different services work tog"
     },
     {
@@ -49496,8 +49496,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_py_parametrize",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": "parametrize"
     },
     {
@@ -49595,8 +49595,8 @@
       "source_location": "L289",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_testpatientfriendlyexplainerquality",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": "testpatientfriendlyexplainerquality"
     },
     {
@@ -49606,8 +49606,8 @@
       "source_location": "L293",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_testpatientfriendlyexplainerquality_test_explanation_contains_disease_name",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": ".test_explanation_contains_disease_name()"
     },
     {
@@ -49617,8 +49617,8 @@
       "source_location": "L310",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_testpatientfriendlyexplainerquality_test_explanation_contains_urgency_info",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": ".test_explanation_contains_urgency_info()"
     },
     {
@@ -49628,8 +49628,8 @@
       "source_location": "L323",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_testpatientfriendlyexplainerquality_test_explanation_summary_minimum_length",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": ".test_explanation_summary_minimum_length()"
     },
     {
@@ -49639,8 +49639,8 @@
       "source_location": "L337",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_testpatientfriendlyexplainerquality_test_high_confidence_explanation_reflects_certainty",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": ".test_high_confidence_explanation_reflects_certainty()"
     },
     {
@@ -49650,8 +49650,8 @@
       "source_location": "L351",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_testpatientfriendlyexplainerquality_test_low_confidence_explanation_reflects_uncertainty",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": ".test_low_confidence_explanation_reflects_uncertainty()"
     },
     {
@@ -49661,8 +49661,8 @@
       "source_location": "L364",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_testpatientfriendlyexplainerquality_test_result_has_all_required_keys",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": ".test_result_has_all_required_keys()"
     },
     {
@@ -49672,8 +49672,8 @@
       "source_location": "L376",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_testpatientfriendlyexplainerquality_test_symptoms_list_included_in_explanation",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": ".test_symptoms_list_included_in_explanation()"
     },
     {
@@ -49683,8 +49683,8 @@
       "source_location": "L397",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_testpatientfriendlyexplainerquality_test_confidence_level_mapping",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": ".test_confidence_level_mapping()"
     },
     {
@@ -50068,8 +50068,8 @@
       "source_location": "L290",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_rationale_290",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": "evals de calidad sobre patientfriendlyexplainer."
     },
     {
@@ -50079,8 +50079,8 @@
       "source_location": "L294",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_rationale_294",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": "la explicacion debe mencionar el nombre de la enfermedad o su traduccion."
     },
     {
@@ -50090,8 +50090,8 @@
       "source_location": "L311",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_rationale_311",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": "la explicacion debe indicar el nivel de urgencia."
     },
     {
@@ -50101,8 +50101,8 @@
       "source_location": "L324",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_rationale_324",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": "el resumen debe tener longitud minima para ser informativo."
     },
     {
@@ -50112,8 +50112,8 @@
       "source_location": "L338",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_rationale_338",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": "alta confianza (>0.85) debe producir explicacion sin expresar incertidumbre alta"
     },
     {
@@ -50123,8 +50123,8 @@
       "source_location": "L352",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_rationale_352",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": "baja confianza (<0.5) debe producir explicacion con nivel apropiado."
     },
     {
@@ -50134,8 +50134,8 @@
       "source_location": "L365",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_rationale_365",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": "la explicacion debe tener todas las claves de estructura requeridas."
     },
     {
@@ -50145,8 +50145,8 @@
       "source_location": "L377",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_rationale_377",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": "los sintomas deben reflejarse en la explicacion o en la lista de factores."
     },
     {
@@ -50156,8 +50156,8 @@
       "source_location": "L398",
       "_origin": "ast",
       "id": "ai_services_tests_llm_test_response_quality_rationale_398",
-      "community": 180,
-      "community_name": "asyncio",
+      "community": 799,
+      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
       "norm_label": "la confianza debe mapearse correctamente al nivel textual."
     },
     {
@@ -57086,8 +57086,8 @@
       "source_location": "L343",
       "_origin": "ast",
       "id": "ai_services_tests_ml_models_test_rl_reminder_optimizer_testqlearningagent_test_save_load_policy",
-      "community": 1394,
-      "community_name": ".test_process_user_message_disease_classification",
+      "community": 340,
+      "community_name": "TestQLearningAgent",
       "norm_label": ".test_save_load_policy()"
     },
     {
@@ -57493,8 +57493,8 @@
       "source_location": "L344",
       "_origin": "ast",
       "id": "ai_services_tests_ml_models_test_rl_reminder_optimizer_rationale_344",
-      "community": 1394,
-      "community_name": ".test_process_user_message_disease_classification",
+      "community": 340,
+      "community_name": "TestQLearningAgent",
       "norm_label": "test policy save and load"
     },
     {
@@ -61409,8 +61409,8 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "ai_services_tests_patterns_test_strategy_pattern_testlocalmodelstrategy",
-      "community": 101,
-      "community_name": "TestRuleBasedStrategy",
+      "community": 133,
+      "community_name": "AnalysisStrategy",
       "norm_label": "testlocalmodelstrategy"
     },
     {
@@ -61431,8 +61431,8 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "ai_services_tests_patterns_test_strategy_pattern_testlocalmodelstrategy_test_local_strategy_initialization",
-      "community": 101,
-      "community_name": "TestRuleBasedStrategy",
+      "community": 133,
+      "community_name": "AnalysisStrategy",
       "norm_label": ".test_local_strategy_initialization()"
     },
     {
@@ -61695,8 +61695,8 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "ai_services_tests_patterns_test_strategy_pattern_rationale_94",
-      "community": 101,
-      "community_name": "TestRuleBasedStrategy",
+      "community": 133,
+      "community_name": "AnalysisStrategy",
       "norm_label": "test local model strategy implementation"
     },
     {
@@ -61717,8 +61717,8 @@
       "source_location": "L102",
       "_origin": "ast",
       "id": "ai_services_tests_patterns_test_strategy_pattern_rationale_102",
-      "community": 101,
-      "community_name": "TestRuleBasedStrategy",
+      "community": 133,
+      "community_name": "AnalysisStrategy",
       "norm_label": "test local strategy initialization"
     },
     {
@@ -66326,8 +66326,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks",
-      "community": 30,
-      "community_name": "EnsemblePredictor",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "test_adversarial_attacks.py"
     },
     {
@@ -66337,8 +66337,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_py_security",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "security"
     },
     {
@@ -66469,8 +66469,8 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_testmodelsecurity",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "testmodelsecurity"
     },
     {
@@ -66480,8 +66480,8 @@
       "source_location": "L210",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_testmodelsecurity_test_model_integrity_check",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": ".test_model_integrity_check()"
     },
     {
@@ -66491,8 +66491,8 @@
       "source_location": "L223",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_testmodelsecurity_test_model_version_validation",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": ".test_model_version_validation()"
     },
     {
@@ -66502,8 +66502,8 @@
       "source_location": "L232",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_testmodelsecurity_test_prediction_rate_limiting",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": ".test_prediction_rate_limiting()"
     },
     {
@@ -66513,8 +66513,8 @@
       "source_location": "L241",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_testmodelsecurity_test_prediction_logging",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": ".test_prediction_logging()"
     },
     {
@@ -66524,8 +66524,8 @@
       "source_location": "L251",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_testdataprivacy",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "testdataprivacy"
     },
     {
@@ -66535,8 +66535,8 @@
       "source_location": "L254",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_testdataprivacy_test_differential_privacy",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": ".test_differential_privacy()"
     },
     {
@@ -66546,8 +66546,8 @@
       "source_location": "L264",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_testdataprivacy_test_data_anonymization",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": ".test_data_anonymization()"
     },
     {
@@ -66557,8 +66557,8 @@
       "source_location": "L286",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_testdataprivacy_test_secure_model_storage",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": ".test_secure_model_storage()"
     },
     {
@@ -66568,8 +66568,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_rationale_1",
-      "community": 30,
-      "community_name": "EnsemblePredictor",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "security tests - adversarial attacks on ml models tests for detecting and preven"
     },
     {
@@ -66689,8 +66689,8 @@
       "source_location": "L208",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_rationale_208",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "tests for ml model security"
     },
     {
@@ -66700,8 +66700,8 @@
       "source_location": "L211",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_rationale_211",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "test model integrity verification"
     },
     {
@@ -66711,8 +66711,8 @@
       "source_location": "L224",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_rationale_224",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "test model version validation"
     },
     {
@@ -66722,8 +66722,8 @@
       "source_location": "L233",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_rationale_233",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "test rate limiting for predictions"
     },
     {
@@ -66733,8 +66733,8 @@
       "source_location": "L242",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_rationale_242",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "test that predictions are logged for security auditing"
     },
     {
@@ -66744,8 +66744,8 @@
       "source_location": "L252",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_rationale_252",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "tests for data privacy in ml models"
     },
     {
@@ -66755,8 +66755,8 @@
       "source_location": "L255",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_rationale_255",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "test differential privacy implementation"
     },
     {
@@ -66766,8 +66766,8 @@
       "source_location": "L265",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_rationale_265",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "test data anonymization before model training"
     },
     {
@@ -66777,8 +66777,8 @@
       "source_location": "L287",
       "_origin": "ast",
       "id": "ai_services_tests_security_test_adversarial_attacks_rationale_287",
-      "community": 337,
-      "community_name": "OfflineQueue",
+      "community": 114,
+      "community_name": "TestAdversarialAttacks",
       "norm_label": "test secure storage of model files"
     },
     {
@@ -69076,8 +69076,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_audio_transcription_service_testaudiotranscriptionservice",
-      "community": 51,
-      "community_name": "TestAudioTranscriptionService",
+      "community": 568,
+      "community_name": "TestPromptInjection",
       "norm_label": "testaudiotranscriptionservice"
     },
     {
@@ -69131,8 +69131,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_audio_transcription_service_testaudiotranscriptionservice_test_service_initialization",
-      "community": 51,
-      "community_name": "TestAudioTranscriptionService",
+      "community": 568,
+      "community_name": "TestPromptInjection",
       "norm_label": ".test_service_initialization()"
     },
     {
@@ -69142,8 +69142,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_audio_transcription_service_py_asyncio",
-      "community": 568,
-      "community_name": "TestPromptInjection",
+      "community": 51,
+      "community_name": "TestAudioTranscriptionService",
       "norm_label": "asyncio"
     },
     {
@@ -69175,8 +69175,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_audio_transcription_service_testaudiotranscriptionservice_test_transcribe_different_formats",
-      "community": 568,
-      "community_name": "TestPromptInjection",
+      "community": 1482,
+      "community_name": ".test_transcribe_different_formats",
       "norm_label": ".test_transcribe_different_formats()"
     },
     {
@@ -69186,8 +69186,8 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_audio_transcription_service_testaudiotranscriptionservice_test_transcribe_confidence_calculation",
-      "community": 568,
-      "community_name": "TestPromptInjection",
+      "community": 51,
+      "community_name": "TestAudioTranscriptionService",
       "norm_label": ".test_transcribe_confidence_calculation()"
     },
     {
@@ -69208,8 +69208,8 @@
       "source_location": "L175",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_audio_transcription_service_testaudiotranscriptionservice_test_transcribe_empty_text",
-      "community": 568,
-      "community_name": "TestPromptInjection",
+      "community": 51,
+      "community_name": "TestAudioTranscriptionService",
       "norm_label": ".test_transcribe_empty_text()"
     },
     {
@@ -69329,8 +69329,8 @@
       "source_location": "L441",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_audio_transcription_service_testaudiotranscriptionservice_test_transcribe_empty_audio",
-      "community": 1508,
-      "community_name": ".test_transcribe_empty_audio",
+      "community": 568,
+      "community_name": "TestPromptInjection",
       "norm_label": ".test_transcribe_empty_audio()"
     },
     {
@@ -69373,8 +69373,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_audio_transcription_service_rationale_15",
-      "community": 51,
-      "community_name": "TestAudioTranscriptionService",
+      "community": 568,
+      "community_name": "TestPromptInjection",
       "norm_label": "test audiotranscriptionservice implementation"
     },
     {
@@ -69417,8 +69417,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_audio_transcription_service_rationale_35",
-      "community": 51,
-      "community_name": "TestAudioTranscriptionService",
+      "community": 568,
+      "community_name": "TestPromptInjection",
       "norm_label": "test service initialization"
     },
     {
@@ -69450,8 +69450,8 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_audio_transcription_service_rationale_98",
-      "community": 568,
-      "community_name": "TestPromptInjection",
+      "community": 1482,
+      "community_name": ".test_transcribe_different_formats",
       "norm_label": "test transcription with different audio formats"
     },
     {
@@ -69461,8 +69461,8 @@
       "source_location": "L124",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_audio_transcription_service_rationale_124",
-      "community": 568,
-      "community_name": "TestPromptInjection",
+      "community": 51,
+      "community_name": "TestAudioTranscriptionService",
       "norm_label": "test confidence calculation from segments"
     },
     {
@@ -69483,8 +69483,8 @@
       "source_location": "L176",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_audio_transcription_service_rationale_176",
-      "community": 568,
-      "community_name": "TestPromptInjection",
+      "community": 51,
+      "community_name": "TestAudioTranscriptionService",
       "norm_label": "test transcription with empty text result"
     },
     {
@@ -69604,8 +69604,8 @@
       "source_location": "L442",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_audio_transcription_service_rationale_442",
-      "community": 1508,
-      "community_name": ".test_transcribe_empty_audio",
+      "community": 568,
+      "community_name": "TestPromptInjection",
       "norm_label": "test transcription with empty audio data"
     },
     {
@@ -73344,8 +73344,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_medical_history_service",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "test_medical_history_service.py"
     },
     {
@@ -73619,8 +73619,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_medical_history_service_rationale_1",
-      "community": 490,
-      "community_name": ".clear_models",
+      "community": 18,
+      "community_name": "MedicalHistoryService",
       "norm_label": "unit tests for medicalhistoryservice"
     },
     {
@@ -75236,8 +75236,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_symptom_analysis_service_testsymptomanalysisservice",
-      "community": 23,
-      "community_name": "TestSymptomAnalysisService",
+      "community": 533,
+      "community_name": "mlMonitoringDev.ts",
       "norm_label": "testsymptomanalysisservice"
     },
     {
@@ -75291,8 +75291,8 @@
       "source_location": "",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_symptom_analysis_service_py_asyncio",
-      "community": 533,
-      "community_name": "mlMonitoringDev.ts",
+      "community": 23,
+      "community_name": "TestSymptomAnalysisService",
       "norm_label": "asyncio"
     },
     {
@@ -75346,8 +75346,8 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_symptom_analysis_service_testsymptomanalysisservice_test_analyze_symptoms_comprehensive_follow_up",
-      "community": 533,
-      "community_name": "mlMonitoringDev.ts",
+      "community": 23,
+      "community_name": "TestSymptomAnalysisService",
       "norm_label": ".test_analyze_symptoms_comprehensive_follow_up()"
     },
     {
@@ -75401,8 +75401,8 @@
       "source_location": "L176",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_symptom_analysis_service_testsymptomanalysisservice_test_analyze_symptom_trends_error",
-      "community": 533,
-      "community_name": "mlMonitoringDev.ts",
+      "community": 23,
+      "community_name": "TestSymptomAnalysisService",
       "norm_label": ".test_analyze_symptom_trends_error()"
     },
     {
@@ -75577,8 +75577,8 @@
       "source_location": "L454",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_symptom_analysis_service_testsymptomanalysisservice_test_perform_basic_analysis_with_manager",
-      "community": 23,
-      "community_name": "TestSymptomAnalysisService",
+      "community": 1499,
+      "community_name": "Fase 10: Seguridad Avanzada (Sprint 13)",
       "norm_label": ".test_perform_basic_analysis_with_manager()"
     },
     {
@@ -75588,8 +75588,8 @@
       "source_location": "L483",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_symptom_analysis_service_testsymptomanalysisservice_test_analyze_symptom_trends",
-      "community": 1510,
-      "community_name": ".test_analyze_symptom_trends",
+      "community": 533,
+      "community_name": "mlMonitoringDev.ts",
       "norm_label": ".test_analyze_symptom_trends()"
     },
     {
@@ -75654,8 +75654,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_symptom_analysis_service_rationale_13",
-      "community": 23,
-      "community_name": "TestSymptomAnalysisService",
+      "community": 533,
+      "community_name": "mlMonitoringDev.ts",
       "norm_label": "test symptomanalysisservice implementation"
     },
     {
@@ -75742,8 +75742,8 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_symptom_analysis_service_rationale_104",
-      "community": 533,
-      "community_name": "mlMonitoringDev.ts",
+      "community": 23,
+      "community_name": "TestSymptomAnalysisService",
       "norm_label": "test follow-up plan in comprehensive analysis"
     },
     {
@@ -75797,8 +75797,8 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_symptom_analysis_service_rationale_177",
-      "community": 533,
-      "community_name": "mlMonitoringDev.ts",
+      "community": 23,
+      "community_name": "TestSymptomAnalysisService",
       "norm_label": "test symptom trends analysis with error"
     },
     {
@@ -75984,8 +75984,8 @@
       "source_location": "L455",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_symptom_analysis_service_rationale_455",
-      "community": 23,
-      "community_name": "TestSymptomAnalysisService",
+      "community": 1499,
+      "community_name": "Fase 10: Seguridad Avanzada (Sprint 13)",
       "norm_label": "test basic analysis using service manager"
     },
     {
@@ -76006,8 +76006,8 @@
       "source_location": "L484",
       "_origin": "ast",
       "id": "ai_services_tests_services_test_symptom_analysis_service_rationale_484",
-      "community": 1510,
-      "community_name": ".test_analyze_symptom_trends",
+      "community": 533,
+      "community_name": "mlMonitoringDev.ts",
       "norm_label": "test symptom trend analysis"
     },
     {
@@ -80032,8 +80032,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "ai_services_tests_utils_test_urgency_calculator_testurgencycalculator_test_considers_pediatric_age_as_risk",
-      "community": 799,
-      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
+      "community": 387,
+      "community_name": "TestUrgencyCalculator",
       "norm_label": ".test_considers_pediatric_age_as_risk()"
     },
     {
@@ -80054,8 +80054,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "ai_services_tests_utils_test_urgency_calculator_testurgencycalculator_test_combines_multiple_risk_factors",
-      "community": 387,
-      "community_name": "TestUrgencyCalculator",
+      "community": 1504,
+      "community_name": "\ud83d\udd0c Integraci\u00f3n con Backend",
       "norm_label": ".test_combines_multiple_risk_factors()"
     },
     {
@@ -80362,8 +80362,8 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "ai_services_tests_utils_test_urgency_calculator_rationale_61",
-      "community": 799,
-      "community_name": "Resumen de Cobertura Backend \u2013 Noviembre 2025",
+      "community": 387,
+      "community_name": "TestUrgencyCalculator",
       "norm_label": "test 7: edad pediatrica aumenta urgencia"
     },
     {
@@ -80384,8 +80384,8 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "ai_services_tests_utils_test_urgency_calculator_rationale_75",
-      "community": 387,
-      "community_name": "TestUrgencyCalculator",
+      "community": 1504,
+      "community_name": "\ud83d\udd0c Integraci\u00f3n con Backend",
       "norm_label": "test 9: multiples factores de riesgo"
     },
     {
@@ -82427,8 +82427,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "backend_package_dependencies_aws_sdk",
-      "community": 38,
-      "community_name": "dependencies",
+      "community": 1508,
+      "community_name": ".test_transcribe_empty_audio",
       "norm_label": "aws-sdk"
     },
     {
@@ -82438,8 +82438,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "aws_sdk",
-      "community": 38,
-      "community_name": "dependencies",
+      "community": 1508,
+      "community_name": ".test_transcribe_empty_audio",
       "norm_label": "aws-sdk"
     },
     {
@@ -82493,8 +82493,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "backend_package_dependencies_compression",
-      "community": 1310,
-      "community_name": ".test_assess_severity_many_symptoms",
+      "community": 38,
+      "community_name": "dependencies",
       "norm_label": "compression"
     },
     {
@@ -82504,8 +82504,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "compression",
-      "community": 1310,
-      "community_name": ".test_assess_severity_many_symptoms",
+      "community": 38,
+      "community_name": "dependencies",
       "norm_label": "compression"
     },
     {
@@ -86019,8 +86019,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_controllers_exportcontroller",
-      "community": 245,
-      "community_name": "AuthController.ts",
+      "community": 579,
+      "community_name": "exportService.test.ts",
       "norm_label": "exportcontroller.ts"
     },
     {
@@ -86030,8 +86030,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "backend_src_controllers_exportcontroller_exportmedicalhistories",
-      "community": 245,
-      "community_name": "AuthController.ts",
+      "community": 579,
+      "community_name": "exportService.test.ts",
       "norm_label": "exportmedicalhistories"
     },
     {
@@ -86041,8 +86041,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "backend_src_controllers_exportcontroller_exportuserstats",
-      "community": 245,
-      "community_name": "AuthController.ts",
+      "community": 579,
+      "community_name": "exportService.test.ts",
       "norm_label": "exportuserstats"
     },
     {
@@ -86052,8 +86052,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "backend_src_controllers_exportcontroller_getexportformats",
-      "community": 245,
-      "community_name": "AuthController.ts",
+      "community": 579,
+      "community_name": "exportService.test.ts",
       "norm_label": "getexportformats"
     },
     {
@@ -86063,8 +86063,8 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "backend_src_controllers_exportcontroller_getexporthistory",
-      "community": 245,
-      "community_name": "AuthController.ts",
+      "community": 579,
+      "community_name": "exportService.test.ts",
       "norm_label": "getexporthistory"
     },
     {
@@ -86228,8 +86228,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_controllers_fileuploadcontroller",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "fileuploadcontroller.ts"
     },
     {
@@ -86239,8 +86239,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "backend_src_controllers_fileuploadcontroller_uploadmedicalfiles",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "uploadmedicalfiles"
     },
     {
@@ -86250,8 +86250,8 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "backend_src_controllers_fileuploadcontroller_getfileinfo",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "getfileinfo"
     },
     {
@@ -86261,8 +86261,8 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "backend_src_controllers_fileuploadcontroller_deletefile",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "deletefile"
     },
     {
@@ -86272,8 +86272,8 @@
       "source_location": "L167",
       "_origin": "ast",
       "id": "backend_src_controllers_fileuploadcontroller_getuploadstats",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "getuploadstats"
     },
     {
@@ -86283,8 +86283,8 @@
       "source_location": "L253",
       "_origin": "ast",
       "id": "backend_src_controllers_fileuploadcontroller_cleanupoldfiles",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "cleanupoldfiles"
     },
     {
@@ -97283,8 +97283,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_routes_exportroutes",
-      "community": 245,
-      "community_name": "AuthController.ts",
+      "community": 579,
+      "community_name": "exportService.test.ts",
       "norm_label": "exportroutes.ts"
     },
     {
@@ -97294,8 +97294,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "backend_src_routes_exportroutes_router",
-      "community": 245,
-      "community_name": "AuthController.ts",
+      "community": 579,
+      "community_name": "exportService.test.ts",
       "norm_label": "router"
     },
     {
@@ -97305,8 +97305,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "backend_src_routes_exportroutes_exportmedicalhistoriesvalidation",
-      "community": 245,
-      "community_name": "AuthController.ts",
+      "community": 579,
+      "community_name": "exportService.test.ts",
       "norm_label": "exportmedicalhistoriesvalidation"
     },
     {
@@ -97316,8 +97316,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "backend_src_routes_exportroutes_paginationvalidation",
-      "community": 245,
-      "community_name": "AuthController.ts",
+      "community": 579,
+      "community_name": "exportService.test.ts",
       "norm_label": "paginationvalidation"
     },
     {
@@ -97437,8 +97437,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_routes_fileuploadroutes",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "fileuploadroutes.ts"
     },
     {
@@ -97448,8 +97448,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "backend_src_routes_fileuploadroutes_router",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "router"
     },
     {
@@ -97459,8 +97459,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "backend_src_routes_fileuploadroutes_filepathvalidation",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "filepathvalidation"
     },
     {
@@ -97470,8 +97470,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "backend_src_routes_fileuploadroutes_cleanupvalidation",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "cleanupvalidation"
     },
     {
@@ -102739,8 +102739,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_services_biconnectorservice",
-      "community": 116,
-      "community_name": "errorHandler.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "biconnectorservice.ts"
     },
     {
@@ -102750,8 +102750,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "backend_src_services_biconnectorservice_biconnectorconfig",
-      "community": 116,
-      "community_name": "errorHandler.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "biconnectorconfig"
     },
     {
@@ -102761,8 +102761,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "backend_src_services_biconnectorservice_bidataexport",
-      "community": 116,
-      "community_name": "errorHandler.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "bidataexport"
     },
     {
@@ -104103,8 +104103,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_services_exportservice",
-      "community": 245,
-      "community_name": "AuthController.ts",
+      "community": 579,
+      "community_name": "exportService.test.ts",
       "norm_label": "exportservice.ts"
     },
     {
@@ -104114,8 +104114,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "backend_src_services_exportservice_exportoptions",
-      "community": 245,
-      "community_name": "AuthController.ts",
+      "community": 579,
+      "community_name": "exportService.test.ts",
       "norm_label": "exportoptions"
     },
     {
@@ -104862,8 +104862,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_services_fileuploadservice",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "src/services/fileuploadservice.ts"
     },
     {
@@ -104873,8 +104873,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "backend_src_services_fileuploadservice_storage",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "storage"
     },
     {
@@ -104884,8 +104884,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "backend_src_services_fileuploadservice_filefilter",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "filefilter()"
     },
     {
@@ -104895,8 +104895,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "backend_src_services_fileuploadservice_upload",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "upload"
     },
     {
@@ -104906,8 +104906,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "backend_src_services_fileuploadservice_uploadfiles",
-      "community": 579,
-      "community_name": "exportService.test.ts",
+      "community": 245,
+      "community_name": "AuthController.ts",
       "norm_label": "uploadfiles"
     },
     {
@@ -116992,8 +116992,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "mobile_medical_app_tests_services_healthconnectservice_test",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": "healthconnectservice.test.ts"
     },
     {
@@ -117003,8 +117003,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "mobile_medical_app_tests_services_healthconnectservice_test_plugin",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": "plugin"
     },
     {
@@ -117014,8 +117014,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "mobile_medical_app_tests_services_healthconnectservice_test_healthconnect",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": "healthconnect()"
     },
     {
@@ -117025,8 +117025,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "mobile_medical_app_tests_services_healthconnectservice_test_buildplugin",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": "buildplugin()"
     },
     {
@@ -117036,8 +117036,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "mobile_medical_app_tests_services_healthconnectservice_test_loadservice",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": "loadservice()"
     },
     {
@@ -117102,8 +117102,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "mobile_medical_app_tests_services_nativestorage_test",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "nativestorage.test.ts"
     },
     {
@@ -124274,8 +124274,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "mobile_medical_app_hooks_usebiometricauth",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "usebiometricauth.ts"
     },
     {
@@ -124285,8 +124285,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "mobile_medical_app_hooks_usebiometricauth_biometrytype",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "biometrytype"
     },
     {
@@ -124296,8 +124296,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "mobile_medical_app_hooks_usebiometricauth_biometry_type_map",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "biometry_type_map"
     },
     {
@@ -124307,8 +124307,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "mobile_medical_app_hooks_usebiometricauth_biometricstate",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "biometricstate"
     },
     {
@@ -124318,8 +124318,8 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "mobile_medical_app_hooks_usebiometricauth_authenticateoptions",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "authenticateoptions"
     },
     {
@@ -124329,8 +124329,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "mobile_medical_app_hooks_usebiometricauth_isnative",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "isnative()"
     },
     {
@@ -124340,8 +124340,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "mobile_medical_app_hooks_usebiometricauth_biometry_labels",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "biometry_labels"
     },
     {
@@ -124351,8 +124351,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "mobile_medical_app_hooks_usebiometricauth_usebiometricauth",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "usebiometricauth()"
     },
     {
@@ -125748,8 +125748,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_api_services_labservice_labservice",
-      "community": 1040,
-      "community_name": "\u2705 Plan de Acci\u00f3n",
+      "community": 100,
+      "community_name": "parametrize",
       "norm_label": "labservice"
     },
     {
@@ -125759,8 +125759,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_api_services_labservice_labservice_unwrap",
-      "community": 1040,
-      "community_name": "\u2705 Plan de Acci\u00f3n",
+      "community": 100,
+      "community_name": "parametrize",
       "norm_label": ".unwrap()"
     },
     {
@@ -125770,8 +125770,8 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_api_services_labservice_labservice_getresults",
-      "community": 1040,
-      "community_name": "\u2705 Plan de Acci\u00f3n",
+      "community": 100,
+      "community_name": "parametrize",
       "norm_label": ".getresults()"
     },
     {
@@ -125781,8 +125781,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_api_services_labservice_labservice_getresult",
-      "community": 1040,
-      "community_name": "\u2705 Plan de Acci\u00f3n",
+      "community": 100,
+      "community_name": "parametrize",
       "norm_label": ".getresult()"
     },
     {
@@ -125792,8 +125792,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_api_services_labservice_labservice_getpatientresults",
-      "community": 1040,
-      "community_name": "\u2705 Plan de Acci\u00f3n",
+      "community": 100,
+      "community_name": "parametrize",
       "norm_label": ".getpatientresults()"
     },
     {
@@ -125803,8 +125803,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_api_services_labservice_labservice_createorder",
-      "community": 1040,
-      "community_name": "\u2705 Plan de Acci\u00f3n",
+      "community": 100,
+      "community_name": "parametrize",
       "norm_label": ".createorder()"
     },
     {
@@ -127167,8 +127167,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_healthconnectservice",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": "healthconnectservice.ts"
     },
     {
@@ -127178,8 +127178,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_healthconnectservice_storedrecord",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": "storedrecord"
     },
     {
@@ -127189,8 +127189,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_healthconnectservice_read_types",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": "read_types"
     },
     {
@@ -127200,8 +127200,8 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_healthconnectservice_healthconnectservice",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": "healthconnectservice"
     },
     {
@@ -127211,8 +127211,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_healthconnectservice_healthconnectservice_isavailable",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": ".isavailable()"
     },
     {
@@ -127222,8 +127222,8 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_healthconnectservice_healthconnectservice_requestpermissions",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": ".requestpermissions()"
     },
     {
@@ -127233,8 +127233,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_healthconnectservice_healthconnectservice_getlatestreading",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": ".getlatestreading()"
     },
     {
@@ -127244,8 +127244,8 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_healthconnectservice_latestheartrate",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": "latestheartrate()"
     },
     {
@@ -127255,8 +127255,8 @@
       "source_location": "L118",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_healthconnectservice_latestoxygensaturation",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": "latestoxygensaturation()"
     },
     {
@@ -127266,8 +127266,8 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_healthconnectservice_totalsteps",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": "totalsteps()"
     },
     {
@@ -127277,8 +127277,8 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_healthconnectservice_healthconnect",
-      "community": 272,
-      "community_name": "bleWearableService.ts",
+      "community": 1040,
+      "community_name": "\u2705 Plan de Acci\u00f3n",
       "norm_label": "healthconnect"
     },
     {
@@ -127398,8 +127398,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_nativestorage",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "nativestorage.ts"
     },
     {
@@ -127409,8 +127409,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_nativestorage_isnative",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "isnative()"
     },
     {
@@ -127420,8 +127420,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_nativestorage_nativeset",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "nativeset()"
     },
     {
@@ -127431,8 +127431,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_nativestorage_nativeget",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "nativeget()"
     },
     {
@@ -127442,8 +127442,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_nativestorage_nativeremove",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "nativeremove()"
     },
     {
@@ -127453,8 +127453,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_nativestorage_nativeclear",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "nativeclear()"
     },
     {
@@ -127464,8 +127464,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_nativestorage_nativekeys",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "nativekeys()"
     },
     {
@@ -127475,8 +127475,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_nativestorage_webset",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "webset()"
     },
     {
@@ -127486,8 +127486,8 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_nativestorage_webget",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "webget()"
     },
     {
@@ -127497,8 +127497,8 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_nativestorage_webremove",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "webremove()"
     },
     {
@@ -127508,8 +127508,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_nativestorage_webclear",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "webclear()"
     },
     {
@@ -127530,8 +127530,8 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_nativestorage_storagekeys",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "storagekeys"
     },
     {
@@ -127541,8 +127541,8 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "mobile_medical_app_lib_services_nativestorage_storagekey",
-      "community": 26,
-      "community_name": "services/index.ts",
+      "community": 490,
+      "community_name": ".clear_models",
       "norm_label": "storagekey"
     },
     {
@@ -140001,8 +140001,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "web_src_components_navbar",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "navbar.js"
     },
     {
@@ -140012,8 +140012,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "web_src_components_navbar_patient_health_links",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "patient_health_links"
     },
     {
@@ -140023,8 +140023,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "web_src_components_navbar_staff_analytics_links",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "staff_analytics_links"
     },
     {
@@ -140034,8 +140034,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "web_src_components_navbar_staff_clinical_links",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "staff_clinical_links"
     },
     {
@@ -140045,8 +140045,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "web_src_components_navbar_navdropdown",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "navdropdown()"
     },
     {
@@ -140056,8 +140056,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "web_src_components_navbar_navbar",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "navbar()"
     },
     {
@@ -140353,8 +140353,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "web_src_components_referralmanagement",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 833,
+      "community_name": "seed-users.js",
       "norm_label": "referralmanagement.js"
     },
     {
@@ -140364,8 +140364,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "web_src_components_referralmanagement_referralmanagement",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 833,
+      "community_name": "seed-users.js",
       "norm_label": "referralmanagement()"
     },
     {
@@ -141288,8 +141288,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "web_src_components_tests_navbar_test",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "navbar.test.js"
     },
     {
@@ -141299,8 +141299,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "web_src_components_tests_navbar_test_renderwithrouter",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "renderwithrouter()"
     },
     {
@@ -141310,8 +141310,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "web_src_components_tests_navbar_test_mockunauthenticated",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "mockunauthenticated()"
     },
     {
@@ -141321,8 +141321,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "web_src_components_tests_navbar_test_mockas",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "mockas()"
     },
     {
@@ -141560,7 +141560,7 @@
       "label": "mockStats",
       "file_type": "code",
       "source_file": "web/src/components/__tests__/ReferralManagement.test.js",
-      "source_location": "L45",
+      "source_location": "L47",
       "_origin": "ast",
       "id": "web_src_components_tests_referralmanagement_test_mockstats",
       "community": 833,
@@ -141571,7 +141571,7 @@
       "label": "mockDoctors",
       "file_type": "code",
       "source_file": "web/src/components/__tests__/ReferralManagement.test.js",
-      "source_location": "L47",
+      "source_location": "L49",
       "_origin": "ast",
       "id": "web_src_components_tests_referralmanagement_test_mockdoctors",
       "community": 833,
@@ -141582,7 +141582,7 @@
       "label": "mockPatients",
       "file_type": "code",
       "source_file": "web/src/components/__tests__/ReferralManagement.test.js",
-      "source_location": "L52",
+      "source_location": "L54",
       "_origin": "ast",
       "id": "web_src_components_tests_referralmanagement_test_mockpatients",
       "community": 833,
@@ -142454,8 +142454,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "web_src_pages_loginpage",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "loginpage.js"
     },
     {
@@ -142465,8 +142465,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "web_src_pages_loginpage_features",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "features"
     },
     {
@@ -142476,8 +142476,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "web_src_pages_loginpage_eyeicon",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "eyeicon()"
     },
     {
@@ -142487,8 +142487,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "web_src_pages_loginpage_role_icon_paths",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "role_icon_paths"
     },
     {
@@ -142498,8 +142498,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "web_src_pages_loginpage_roleicon",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "roleicon()"
     },
     {
@@ -142509,8 +142509,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "web_src_pages_loginpage_loginpage",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "loginpage()"
     },
     {
@@ -142674,8 +142674,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "web_src_pages_referralspage",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 833,
+      "community_name": "seed-users.js",
       "norm_label": "referralspage.js"
     },
     {
@@ -142685,8 +142685,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "web_src_pages_referralspage_referralspage",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 833,
+      "community_name": "seed-users.js",
       "norm_label": "referralspage()"
     },
     {
@@ -142696,8 +142696,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "web_src_pages_registerpage",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "registerpage.js"
     },
     {
@@ -142707,8 +142707,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "web_src_pages_registerpage_roles",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "roles"
     },
     {
@@ -142718,8 +142718,8 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "web_src_pages_registerpage_benefits",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "benefits"
     },
     {
@@ -142729,8 +142729,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "web_src_pages_registerpage_registerpage",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "registerpage()"
     },
     {
@@ -142894,8 +142894,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "web_src_pages_tests_loginpage_test",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "loginpage.test.js"
     },
     {
@@ -142905,8 +142905,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "web_src_pages_tests_loginpage_test_mocknavigate",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "mocknavigate"
     },
     {
@@ -142916,8 +142916,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "web_src_pages_tests_loginpage_test_renderlogin",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "renderlogin()"
     },
     {
@@ -142927,8 +142927,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "web_src_pages_tests_registerpage_test",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "registerpage.test.js"
     },
     {
@@ -142938,8 +142938,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "web_src_pages_tests_registerpage_test_mocknavigate",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "mocknavigate"
     },
     {
@@ -142949,8 +142949,8 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "web_src_pages_tests_registerpage_test_baseauth",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "baseauth"
     },
     {
@@ -142960,8 +142960,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "web_src_pages_tests_registerpage_test_renderregister",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "renderregister()"
     },
     {
@@ -142971,8 +142971,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "web_src_pages_tests_registerpage_test_role_button_name",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "role_button_name"
     },
     {
@@ -142982,8 +142982,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "web_src_pages_tests_registerpage_test_fillform",
-      "community": 67,
-      "community_name": "useAuth",
+      "community": 1018,
+      "community_name": "test-medical-histories-patient.js",
       "norm_label": "fillform()"
     },
     {
@@ -143884,8 +143884,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "web_src_tests_visual_responsive_visual_test",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "responsive.visual.test.js"
     },
     {
@@ -143895,8 +143895,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "web_src_tests_visual_responsive_visual_test_mockmatchmedia",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "mockmatchmedia()"
     },
     {
@@ -143906,8 +143906,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "web_src_tests_visual_responsive_visual_test_breakpoints",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "breakpoints"
     },
     {
@@ -144478,8 +144478,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "web_tests_a11y_test",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "a11y.test.js"
     },
     {
@@ -144489,8 +144489,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "web_tests_responsive_test",
-      "community": 1146,
-      "community_name": "\ud83d\udcdd Variables de Entorno",
+      "community": 67,
+      "community_name": "useAuth",
       "norm_label": "responsive.test.js"
     },
     {
@@ -161242,8 +161242,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "changelog",
-      "community": 50,
-      "community_name": "DOCUMENTATION_INDEX.md",
+      "community": 466,
+      "community_name": "2024-11-XX - Versi\u00f3n 2.1.0",
       "norm_label": "changelog.md"
     },
     {
@@ -161253,8 +161253,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "changelog_changelog_respicare",
-      "community": 50,
-      "community_name": "DOCUMENTATION_INDEX.md",
+      "community": 466,
+      "community_name": "2024-11-XX - Versi\u00f3n 2.1.0",
       "norm_label": "\ud83d\udce6 changelog - respicare"
     },
     {
@@ -161352,8 +161352,8 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "changelog_2025_11_16",
-      "community": 50,
-      "community_name": "DOCUMENTATION_INDEX.md",
+      "community": 466,
+      "community_name": "2024-11-XX - Versi\u00f3n 2.1.0",
       "norm_label": "2025-11-16"
     },
     {
@@ -161363,8 +161363,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "changelog_mobile",
-      "community": 50,
-      "community_name": "DOCUMENTATION_INDEX.md",
+      "community": 466,
+      "community_name": "2024-11-XX - Versi\u00f3n 2.1.0",
       "norm_label": "mobile"
     },
     {
@@ -161374,8 +161374,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "changelog_documentaci\u00f3n_81",
-      "community": 50,
-      "community_name": "DOCUMENTATION_INDEX.md",
+      "community": 466,
+      "community_name": "2024-11-XX - Versi\u00f3n 2.1.0",
       "norm_label": "documentacion"
     },
     {
@@ -162155,8 +162155,8 @@
       "source_location": "L643",
       "_origin": "ast",
       "id": "documentation_catalogo_pruebas_7_pruebas_de_rendimiento",
-      "community": 513,
-      "community_name": "\ud83d\udccb Cat\u00e1logo de Pruebas - RespiCare Tacna",
+      "community": 1392,
+      "community_name": "12. Pr\u00f3ximos Pasos",
       "norm_label": "7. pruebas de rendimiento"
     },
     {
@@ -162166,8 +162166,8 @@
       "source_location": "L645",
       "_origin": "ast",
       "id": "documentation_catalogo_pruebas_7_1_resumen_general",
-      "community": 513,
-      "community_name": "\ud83d\udccb Cat\u00e1logo de Pruebas - RespiCare Tacna",
+      "community": 1392,
+      "community_name": "12. Pr\u00f3ximos Pasos",
       "norm_label": "7.1 resumen general"
     },
     {
@@ -162177,8 +162177,8 @@
       "source_location": "L651",
       "_origin": "ast",
       "id": "documentation_catalogo_pruebas_7_2_tipos_de_pruebas",
-      "community": 513,
-      "community_name": "\ud83d\udccb Cat\u00e1logo de Pruebas - RespiCare Tacna",
+      "community": 1392,
+      "community_name": "12. Pr\u00f3ximos Pasos",
       "norm_label": "7.2 tipos de pruebas"
     },
     {
@@ -162408,8 +162408,8 @@
       "source_location": "L843",
       "_origin": "ast",
       "id": "documentation_catalogo_pruebas_12_pr\u00f3ximos_pasos",
-      "community": 1392,
-      "community_name": "12. Pr\u00f3ximos Pasos",
+      "community": 513,
+      "community_name": "\ud83d\udccb Cat\u00e1logo de Pruebas - RespiCare Tacna",
       "norm_label": "12. proximos pasos"
     },
     {
@@ -162419,8 +162419,8 @@
       "source_location": "L845",
       "_origin": "ast",
       "id": "documentation_catalogo_pruebas_12_1_mejoras_planificadas",
-      "community": 1392,
-      "community_name": "12. Pr\u00f3ximos Pasos",
+      "community": 513,
+      "community_name": "\ud83d\udccb Cat\u00e1logo de Pruebas - RespiCare Tacna",
       "norm_label": "12.1 mejoras planificadas"
     },
     {
@@ -162430,8 +162430,8 @@
       "source_location": "L856",
       "_origin": "ast",
       "id": "documentation_catalogo_pruebas_12_2_nuevas_pruebas",
-      "community": 1392,
-      "community_name": "12. Pr\u00f3ximos Pasos",
+      "community": 513,
+      "community_name": "\ud83d\udccb Cat\u00e1logo de Pruebas - RespiCare Tacna",
       "norm_label": "12.2 nuevas pruebas"
     },
     {
@@ -162881,8 +162881,8 @@
       "source_location": "L258",
       "_origin": "ast",
       "id": "documentation_cronograma_proyecto_fase_7_funcionalidades_core_sprints_9_10",
-      "community": 1018,
-      "community_name": "test-medical-histories-patient.js",
+      "community": 480,
+      "community_name": "2. Detalle por Fases y Sprints",
       "norm_label": "fase 7: funcionalidades core (sprints 9-10)"
     },
     {
@@ -162892,8 +162892,8 @@
       "source_location": "L265",
       "_origin": "ast",
       "id": "documentation_cronograma_proyecto_sprint_9_alertas_y_citas",
-      "community": 1018,
-      "community_name": "test-medical-histories-patient.js",
+      "community": 480,
+      "community_name": "2. Detalle por Fases y Sprints",
       "norm_label": "sprint 9: alertas y citas"
     },
     {
@@ -162903,8 +162903,8 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "documentation_cronograma_proyecto_sprint_10_prescripciones_y_reportes",
-      "community": 1018,
-      "community_name": "test-medical-histories-patient.js",
+      "community": 480,
+      "community_name": "2. Detalle por Fases y Sprints",
       "norm_label": "sprint 10: prescripciones y reportes"
     },
     {
@@ -162914,8 +162914,8 @@
       "source_location": "L293",
       "_origin": "ast",
       "id": "documentation_cronograma_proyecto_fase_8_integraciones_externas_sprint_11",
-      "community": 480,
-      "community_name": "2. Detalle por Fases y Sprints",
+      "community": 1394,
+      "community_name": ".test_process_user_message_disease_classification",
       "norm_label": "fase 8: integraciones externas (sprint 11)"
     },
     {
@@ -162925,8 +162925,8 @@
       "source_location": "L300",
       "_origin": "ast",
       "id": "documentation_cronograma_proyecto_entregables_300",
-      "community": 480,
-      "community_name": "2. Detalle por Fases y Sprints",
+      "community": 1394,
+      "community_name": ".test_process_user_message_disease_classification",
       "norm_label": "entregables"
     },
     {
@@ -162936,8 +162936,8 @@
       "source_location": "L307",
       "_origin": "ast",
       "id": "documentation_cronograma_proyecto_story_points_307",
-      "community": 480,
-      "community_name": "2. Detalle por Fases y Sprints",
+      "community": 1394,
+      "community_name": ".test_process_user_message_disease_classification",
       "norm_label": "story points"
     },
     {
@@ -162980,8 +162980,8 @@
       "source_location": "L332",
       "_origin": "ast",
       "id": "documentation_cronograma_proyecto_fase_10_seguridad_avanzada_sprint_13",
-      "community": 1499,
-      "community_name": "Fase 10: Seguridad Avanzada (Sprint 13)",
+      "community": 480,
+      "community_name": "2. Detalle por Fases y Sprints",
       "norm_label": "fase 10: seguridad avanzada (sprint 13)"
     },
     {
@@ -162991,8 +162991,8 @@
       "source_location": "L339",
       "_origin": "ast",
       "id": "documentation_cronograma_proyecto_entregables_339",
-      "community": 1499,
-      "community_name": "Fase 10: Seguridad Avanzada (Sprint 13)",
+      "community": 480,
+      "community_name": "2. Detalle por Fases y Sprints",
       "norm_label": "entregables"
     },
     {
@@ -163002,8 +163002,8 @@
       "source_location": "L348",
       "_origin": "ast",
       "id": "documentation_cronograma_proyecto_story_points_348",
-      "community": 1499,
-      "community_name": "Fase 10: Seguridad Avanzada (Sprint 13)",
+      "community": 480,
+      "community_name": "2. Detalle por Fases y Sprints",
       "norm_label": "story points"
     },
     {
@@ -163013,8 +163013,8 @@
       "source_location": "L353",
       "_origin": "ast",
       "id": "documentation_cronograma_proyecto_fase_11_ux_ui_sprint_14",
-      "community": 480,
-      "community_name": "2. Detalle por Fases y Sprints",
+      "community": 1398,
+      "community_name": "@capacitor/android",
       "norm_label": "fase 11: ux/ui (sprint 14)"
     },
     {
@@ -163024,8 +163024,8 @@
       "source_location": "L360",
       "_origin": "ast",
       "id": "documentation_cronograma_proyecto_entregables_360",
-      "community": 480,
-      "community_name": "2. Detalle por Fases y Sprints",
+      "community": 1398,
+      "community_name": "@capacitor/android",
       "norm_label": "entregables"
     },
     {
@@ -163035,8 +163035,8 @@
       "source_location": "L369",
       "_origin": "ast",
       "id": "documentation_cronograma_proyecto_story_points_369",
-      "community": 480,
-      "community_name": "2. Detalle por Fases y Sprints",
+      "community": 1398,
+      "community_name": "@capacitor/android",
       "norm_label": "story points"
     },
     {
@@ -170515,8 +170515,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "documentation_informes_plan_iteracion_sprint10_respicare",
-      "community": 727,
-      "community_name": "METODOLOGIA_AGIL_PROYECTO.md",
+      "community": 448,
+      "community_name": "Plan de Iteraci\u00f3n \u2014 Sprint 10: Integraci\u00f3n HL7 FHIR",
       "norm_label": "plan_iteracion_sprint10_respicare.md"
     },
     {
@@ -171670,8 +171670,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "documentation_informes_plan_iteracion_sprint4_respicare",
-      "community": 417,
-      "community_name": "Plan de Iteraci\u00f3n \u2014 Sprint 4: Chatbot y Analytics",
+      "community": 727,
+      "community_name": "METODOLOGIA_AGIL_PROYECTO.md",
       "norm_label": "plan_iteracion_sprint4_respicare.md"
     },
     {
@@ -180052,8 +180052,8 @@
       "source_location": "L257",
       "_origin": "ast",
       "id": "ai_services_docs_modelos_iniciales_outputs_257",
-      "community": 1076,
-      "community_name": "Pruebas de Seguridad",
+      "community": 529,
+      "community_name": "3. Healthcare Demand Forecaster",
       "norm_label": "outputs"
     },
     {
@@ -180063,8 +180063,8 @@
       "source_location": "L259",
       "_origin": "ast",
       "id": "ai_services_docs_modelos_iniciales_resourceforecast",
-      "community": 1076,
-      "community_name": "Pruebas de Seguridad",
+      "community": 529,
+      "community_name": "3. Healthcare Demand Forecaster",
       "norm_label": "`resourceforecast`"
     },
     {
@@ -180074,8 +180074,8 @@
       "source_location": "L268",
       "_origin": "ast",
       "id": "ai_services_docs_modelos_iniciales_ejemplo_de_respuesta_268",
-      "community": 1076,
-      "community_name": "Pruebas de Seguridad",
+      "community": 529,
+      "community_name": "3. Healthcare Demand Forecaster",
       "norm_label": "ejemplo de respuesta:"
     },
     {
@@ -180107,8 +180107,8 @@
       "source_location": "L297",
       "_origin": "ast",
       "id": "ai_services_docs_modelos_iniciales_ejemplos_de_uso_297",
-      "community": 529,
-      "community_name": "3. Healthcare Demand Forecaster",
+      "community": 1146,
+      "community_name": "\ud83d\udcdd Variables de Entorno",
       "norm_label": "ejemplos de uso"
     },
     {
@@ -180118,8 +180118,8 @@
       "source_location": "L299",
       "_origin": "ast",
       "id": "ai_services_docs_modelos_iniciales_uso_b\u00e1sico_299",
-      "community": 529,
-      "community_name": "3. Healthcare Demand Forecaster",
+      "community": 1146,
+      "community_name": "\ud83d\udcdd Variables de Entorno",
       "norm_label": "uso basico"
     },
     {
@@ -180129,8 +180129,8 @@
       "source_location": "L323",
       "_origin": "ast",
       "id": "ai_services_docs_modelos_iniciales_uso_con_m\u00faltiples_recursos",
-      "community": 529,
-      "community_name": "3. Healthcare Demand Forecaster",
+      "community": 1146,
+      "community_name": "\ud83d\udcdd Variables de Entorno",
       "norm_label": "uso con multiples recursos"
     },
     {
@@ -182967,8 +182967,8 @@
       "source_location": "L1016",
       "_origin": "ast",
       "id": "backend_readme_deployment",
-      "community": 405,
-      "community_name": "\ud83c\udfe5 RespiCare Backend API",
+      "community": 1295,
+      "community_name": ".test_recommend_best_slot_no_slots",
       "norm_label": "\ud83d\ude80 deployment"
     },
     {
@@ -182978,8 +182978,8 @@
       "source_location": "L1018",
       "_origin": "ast",
       "id": "backend_readme_docker",
-      "community": 405,
-      "community_name": "\ud83c\udfe5 RespiCare Backend API",
+      "community": 1295,
+      "community_name": ".test_recommend_best_slot_no_slots",
       "norm_label": "**docker:**"
     },
     {
@@ -182989,8 +182989,8 @@
       "source_location": "L1029",
       "_origin": "ast",
       "id": "backend_readme_variables_de_producci\u00f3n",
-      "community": 405,
-      "community_name": "\ud83c\udfe5 RespiCare Backend API",
+      "community": 1295,
+      "community_name": ".test_recommend_best_slot_no_slots",
       "norm_label": "**variables de produccion:**"
     },
     {
@@ -183044,8 +183044,8 @@
       "source_location": "L1056",
       "_origin": "ast",
       "id": "backend_readme_contribuci\u00f3n",
-      "community": 1295,
-      "community_name": ".test_recommend_best_slot_no_slots",
+      "community": 405,
+      "community_name": "\ud83c\udfe5 RespiCare Backend API",
       "norm_label": "\ud83e\udd1d contribucion"
     },
     {
@@ -183055,8 +183055,8 @@
       "source_location": "L1058",
       "_origin": "ast",
       "id": "backend_readme_gu\u00edas_de_desarrollo",
-      "community": 1295,
-      "community_name": ".test_recommend_best_slot_no_slots",
+      "community": 405,
+      "community_name": "\ud83c\udfe5 RespiCare Backend API",
       "norm_label": "**guias de desarrollo:**"
     },
     {
@@ -183066,8 +183066,8 @@
       "source_location": "L1065",
       "_origin": "ast",
       "id": "backend_readme_convenciones",
-      "community": 1295,
-      "community_name": ".test_recommend_best_slot_no_slots",
+      "community": 405,
+      "community_name": "\ud83c\udfe5 RespiCare Backend API",
       "norm_label": "**convenciones:**"
     },
     {
@@ -218728,8 +218728,8 @@
       "source_location": "L1691",
       "_origin": "ast",
       "id": "docs_roadmaps_project_roadmap_m\u00e9tricas_de_\u00e9xito",
-      "community": 1398,
-      "community_name": "@capacitor/android",
+      "community": 898,
+      "community_name": "FairnessVisualization.js",
       "norm_label": "\u2705 metricas de exito"
     },
     {
@@ -218739,8 +218739,8 @@
       "source_location": "L1693",
       "_origin": "ast",
       "id": "docs_roadmaps_project_roadmap_compliance_y_regulatorio",
-      "community": 1398,
-      "community_name": "@capacitor/android",
+      "community": 898,
+      "community_name": "FairnessVisualization.js",
       "norm_label": "**compliance y regulatorio**"
     },
     {
@@ -218750,8 +218750,8 @@
       "source_location": "L1699",
       "_origin": "ast",
       "id": "docs_roadmaps_project_roadmap_t\u00e9cnicas_actualizadas",
-      "community": 1398,
-      "community_name": "@capacitor/android",
+      "community": 898,
+      "community_name": "FairnessVisualization.js",
       "norm_label": "**tecnicas (actualizadas)**"
     },
     {
@@ -218761,8 +218761,8 @@
       "source_location": "L1710",
       "_origin": "ast",
       "id": "docs_roadmaps_project_roadmap_operacionales",
-      "community": 1398,
-      "community_name": "@capacitor/android",
+      "community": 898,
+      "community_name": "FairnessVisualization.js",
       "norm_label": "**operacionales**"
     },
     {
@@ -218772,8 +218772,8 @@
       "source_location": "L1716",
       "_origin": "ast",
       "id": "docs_roadmaps_project_roadmap_funcionales",
-      "community": 1398,
-      "community_name": "@capacitor/android",
+      "community": 898,
+      "community_name": "FairnessVisualization.js",
       "norm_label": "**funcionales**"
     },
     {
@@ -218783,8 +218783,8 @@
       "source_location": "L1722",
       "_origin": "ast",
       "id": "docs_roadmaps_project_roadmap_seguridad",
-      "community": 1398,
-      "community_name": "@capacitor/android",
+      "community": 898,
+      "community_name": "FairnessVisualization.js",
       "norm_label": "**seguridad**"
     },
     {
@@ -218794,8 +218794,8 @@
       "source_location": "L1728",
       "_origin": "ast",
       "id": "docs_roadmaps_project_roadmap_interoperabilidad",
-      "community": 1398,
-      "community_name": "@capacitor/android",
+      "community": 898,
+      "community_name": "FairnessVisualization.js",
       "norm_label": "**interoperabilidad**"
     },
     {
@@ -218805,8 +218805,8 @@
       "source_location": "L1733",
       "_origin": "ast",
       "id": "docs_roadmaps_project_roadmap_engagement_nuevas",
-      "community": 1398,
-      "community_name": "@capacitor/android",
+      "community": 898,
+      "community_name": "FairnessVisualization.js",
       "norm_label": "**engagement (nuevas)**"
     },
     {
@@ -219333,8 +219333,8 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "docs_roadmaps_web_roadmap_roadmap_web_respicare_tacna",
-      "community": 898,
-      "community_name": "FairnessVisualization.js",
+      "community": 1076,
+      "community_name": "Pruebas de Seguridad",
       "norm_label": "\ud83d\udd78\ufe0f roadmap web - respicare tacna"
     },
     {
@@ -219344,8 +219344,8 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "docs_roadmaps_web_roadmap_fase_1_fundamentos_y_estructura",
-      "community": 898,
-      "community_name": "FairnessVisualization.js",
+      "community": 1076,
+      "community_name": "Pruebas de Seguridad",
       "norm_label": "fase 1: fundamentos y estructura"
     },
     {
@@ -219355,8 +219355,8 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "docs_roadmaps_web_roadmap_fase_2_funcionalidad_core",
-      "community": 898,
-      "community_name": "FairnessVisualization.js",
+      "community": 1076,
+      "community_name": "Pruebas de Seguridad",
       "norm_label": "fase 2: funcionalidad core"
     },
     {
@@ -219366,8 +219366,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "docs_roadmaps_web_roadmap_fase_3_ux_ui",
-      "community": 898,
-      "community_name": "FairnessVisualization.js",
+      "community": 1076,
+      "community_name": "Pruebas de Seguridad",
       "norm_label": "fase 3: ux/ui"
     },
     {
@@ -219377,8 +219377,8 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "docs_roadmaps_web_roadmap_fase_4_integraciones",
-      "community": 898,
-      "community_name": "FairnessVisualization.js",
+      "community": 1076,
+      "community_name": "Pruebas de Seguridad",
       "norm_label": "fase 4: integraciones"
     },
     {
@@ -219388,8 +219388,8 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "docs_roadmaps_web_roadmap_fase_5_calidad",
-      "community": 898,
-      "community_name": "FairnessVisualization.js",
+      "community": 1076,
+      "community_name": "Pruebas de Seguridad",
       "norm_label": "fase 5: calidad"
     },
     {
@@ -219399,8 +219399,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "docs_roadmaps_web_roadmap_hitos_88",
-      "community": 898,
-      "community_name": "FairnessVisualization.js",
+      "community": 1076,
+      "community_name": "Pruebas de Seguridad",
       "norm_label": "hitos"
     },
     {
@@ -229893,8 +229893,8 @@
       "source_location": "L415",
       "_origin": "ast",
       "id": "docs_testing_testing_strategy_automatizaci\u00f3n_de_testing",
-      "community": 445,
-      "community_name": "\ud83d\udccb Estrategia de Testing - RespiCare",
+      "community": 1310,
+      "community_name": ".test_assess_severity_many_symptoms",
       "norm_label": "\ud83d\ude80 automatizacion de testing"
     },
     {
@@ -229904,8 +229904,8 @@
       "source_location": "L417",
       "_origin": "ast",
       "id": "docs_testing_testing_strategy_test_automation_pipeline",
-      "community": 445,
-      "community_name": "\ud83d\udccb Estrategia de Testing - RespiCare",
+      "community": 1310,
+      "community_name": ".test_assess_severity_many_symptoms",
       "norm_label": "test automation pipeline"
     },
     {
@@ -229915,8 +229915,8 @@
       "source_location": "L425",
       "_origin": "ast",
       "id": "docs_testing_testing_strategy_continuous_testing",
-      "community": 445,
-      "community_name": "\ud83d\udccb Estrategia de Testing - RespiCare",
+      "community": 1310,
+      "community_name": ".test_assess_severity_many_symptoms",
       "norm_label": "continuous testing"
     },
     {
@@ -230674,8 +230674,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_testing_backend_coverage_2025_11",
-      "community": 1482,
-      "community_name": ".test_transcribe_different_formats",
+      "community": 50,
+      "community_name": "DOCUMENTATION_INDEX.md",
       "norm_label": "backend-coverage-2025-11.md"
     },
     {
@@ -230685,8 +230685,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_testing_backend_coverage_2025_11_resumen_de_cobertura_backend_noviembre_2025",
-      "community": 1482,
-      "community_name": ".test_transcribe_different_formats",
+      "community": 50,
+      "community_name": "DOCUMENTATION_INDEX.md",
       "norm_label": "resumen de cobertura backend \u2013 noviembre 2025"
     },
     {
@@ -230696,8 +230696,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "docs_testing_backend_coverage_2025_11_resultado_global",
-      "community": 1482,
-      "community_name": ".test_transcribe_different_formats",
+      "community": 50,
+      "community_name": "DOCUMENTATION_INDEX.md",
       "norm_label": "resultado global"
     },
     {
@@ -230707,8 +230707,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "docs_testing_backend_coverage_2025_11_puntos_destacados",
-      "community": 1482,
-      "community_name": ".test_transcribe_different_formats",
+      "community": 50,
+      "community_name": "DOCUMENTATION_INDEX.md",
       "norm_label": "puntos destacados"
     },
     {
@@ -230718,8 +230718,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "docs_testing_backend_coverage_2025_11_flujo_de_ejecuci\u00f3n_recomendado",
-      "community": 1482,
-      "community_name": ".test_transcribe_different_formats",
+      "community": 50,
+      "community_name": "DOCUMENTATION_INDEX.md",
       "norm_label": "flujo de ejecucion recomendado"
     },
     {
@@ -230729,8 +230729,8 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "docs_testing_backend_coverage_2025_11_recomendaciones_de_mantenimiento",
-      "community": 1482,
-      "community_name": ".test_transcribe_different_formats",
+      "community": 50,
+      "community_name": "DOCUMENTATION_INDEX.md",
       "norm_label": "recomendaciones de mantenimiento"
     },
     {
@@ -230740,8 +230740,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "docs_testing_backend_coverage_2025_11_hist\u00f3rico_de_hitos",
-      "community": 1482,
-      "community_name": ".test_transcribe_different_formats",
+      "community": 50,
+      "community_name": "DOCUMENTATION_INDEX.md",
       "norm_label": "historico de hitos"
     },
     {
@@ -233171,8 +233171,8 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "mobile_readme_integraci\u00f3n_con_backend",
-      "community": 1504,
-      "community_name": "\ud83d\udd0c Integraci\u00f3n con Backend",
+      "community": 485,
+      "community_name": "\ud83d\udcf1 RespiCare Mobile - React Native",
       "norm_label": "\ud83d\udd0c integracion con backend"
     },
     {
@@ -233182,8 +233182,8 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "mobile_readme_endpoints_integrados",
-      "community": 1504,
-      "community_name": "\ud83d\udd0c Integraci\u00f3n con Backend",
+      "community": 485,
+      "community_name": "\ud83d\udcf1 RespiCare Mobile - React Native",
       "norm_label": "**endpoints integrados:**"
     },
     {
@@ -233193,8 +233193,8 @@
       "source_location": "L152",
       "_origin": "ast",
       "id": "mobile_readme_servicios_ai_integrados",
-      "community": 1504,
-      "community_name": "\ud83d\udd0c Integraci\u00f3n con Backend",
+      "community": 485,
+      "community_name": "\ud83d\udcf1 RespiCare Mobile - React Native",
       "norm_label": "**servicios ai integrados:**"
     },
     {
@@ -398589,7 +398589,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.8,
       "source_file": "web/src/components/ReferralManagement.js",
-      "source_location": "L97",
+      "source_location": "L101",
       "weight": 1.0,
       "_origin": "ast",
       "source": "web_src_components_referralmanagement_referralmanagement",
@@ -493228,7 +493228,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/src/components/__tests__/ReferralManagement.test.js",
-      "source_location": "L47",
+      "source_location": "L49",
       "weight": 1.0,
       "_origin": "ast",
       "source": "web_src_components_tests_referralmanagement_test",
@@ -493261,7 +493261,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/src/components/__tests__/ReferralManagement.test.js",
-      "source_location": "L52",
+      "source_location": "L54",
       "weight": 1.0,
       "_origin": "ast",
       "source": "web_src_components_tests_referralmanagement_test",
@@ -493294,7 +493294,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "web/src/components/__tests__/ReferralManagement.test.js",
-      "source_location": "L45",
+      "source_location": "L47",
       "weight": 1.0,
       "_origin": "ast",
       "source": "web_src_components_tests_referralmanagement_test",
@@ -590415,5 +590415,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0a24f3e0cb8fe1dee70f6dc9ae86b3a83b4799fe"
+  "built_at_commit": "77e3af9c2b47970ae5145c1686c0662d5c7e4b33"
 }

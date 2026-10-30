@@ -24,6 +24,7 @@ const mockReferrals = [
     _id: 'r1',
     patientName: 'Ana Flores',
     referredToSpecialty: 'Cardiología',
+    referredToDoctorId: 'doc-1',
     referralType: 'consultation',
     priority: 'high',
     status: 'pending',
@@ -34,6 +35,7 @@ const mockReferrals = [
     _id: 'r2',
     patientName: 'Carlos Ruiz',
     referredToSpecialty: 'Neumología',
+    referredToDoctorId: 'doc-1',
     referralType: 'procedure',
     priority: 'medium',
     status: 'accepted',
@@ -261,6 +263,162 @@ describe('ReferralManagement', () => {
       });
       expect(promptSpy).not.toHaveBeenCalled();
       promptSpy.mockRestore();
+    });
+  });
+
+  describe('Create payload contract', () => {
+    it('does not send referredToDoctorName when creating a referral (backend computes it server-side)', async () => {
+      const user = userEvent.setup();
+      render(<ReferralManagement />);
+      await waitFor(() => screen.getByText('Ana Flores'));
+      fireEvent.click(screen.getByRole('button', { name: /nuevo referido/i }));
+
+      const searchInput = screen.getByPlaceholderText(/escribe el nombre del paciente/i);
+      await user.type(searchInput, 'Pedro');
+      const suggestion = await screen.findByRole('button', { name: 'Pedro Sánchez' });
+      await user.click(suggestion);
+
+      await screen.findByRole('option', { name: 'Dr. Luis Paredes' });
+      const selects = screen.getAllByRole('combobox');
+      const doctorSelect = selects.find((s) =>
+        Array.from(s.options).some((o) => o.textContent === 'Dr. Luis Paredes')
+      );
+      await user.selectOptions(doctorSelect, 'doc-2');
+
+      fireEvent.change(screen.getByPlaceholderText(/cardiología, neumología/i), {
+        target: { value: 'Cardiología' },
+      });
+      const textboxes = screen.getAllByRole('textbox');
+      fireEvent.change(textboxes[textboxes.length - 2], { target: { value: 'Dolor torácico' } });
+
+      fireEvent.click(screen.getByRole('button', { name: /crear referido/i }));
+
+      await waitFor(() => {
+        expect(mockPost).toHaveBeenCalledWith(
+          '/referrals',
+          expect.not.objectContaining({ referredToDoctorName: expect.anything() })
+        );
+      });
+    });
+  });
+
+  describe('Reject referral', () => {
+    it('shows a reason form instead of using prompt()', async () => {
+      const promptSpy = jest.spyOn(window, 'prompt').mockImplementation(() => {
+        throw new Error('prompt() should not be called');
+      });
+      render(<ReferralManagement />);
+      await waitFor(() => screen.getByText('Ana Flores'));
+
+      fireEvent.click(screen.getAllByRole('button', { name: /rechazar/i })[0]);
+      expect(screen.getByText(/razón del rechazo/i)).toBeInTheDocument();
+      expect(promptSpy).not.toHaveBeenCalled();
+      promptSpy.mockRestore();
+    });
+
+    it('requires a reason before confirming rejection', async () => {
+      render(<ReferralManagement />);
+      await waitFor(() => screen.getByText('Ana Flores'));
+
+      fireEvent.click(screen.getAllByRole('button', { name: /rechazar/i })[0]);
+      fireEvent.click(screen.getByRole('button', { name: /confirmar rechazo/i }));
+
+      expect(mockPost).not.toHaveBeenCalledWith(
+        expect.stringContaining('/reject'),
+        expect.anything()
+      );
+    });
+
+    it('rejects with the typed reason', async () => {
+      render(<ReferralManagement />);
+      await waitFor(() => screen.getByText('Ana Flores'));
+
+      fireEvent.click(screen.getAllByRole('button', { name: /rechazar/i })[0]);
+      fireEvent.change(screen.getByPlaceholderText(/describe la razón del rechazo/i), {
+        target: { value: 'No corresponde a mi especialidad' },
+      });
+      fireEvent.click(screen.getByRole('button', { name: /confirmar rechazo/i }));
+
+      await waitFor(() => {
+        expect(mockPost).toHaveBeenCalledWith('/referrals/r1/reject', {
+          reason: 'No corresponde a mi especialidad',
+        });
+      });
+    });
+  });
+
+  describe('Complete referral', () => {
+    it('shows a notes form instead of using prompt()', async () => {
+      const promptSpy = jest.spyOn(window, 'prompt').mockImplementation(() => {
+        throw new Error('prompt() should not be called');
+      });
+      render(<ReferralManagement />);
+      await waitFor(() => screen.getByText('Carlos Ruiz'));
+
+      fireEvent.click(screen.getByRole('button', { name: /completar/i }));
+      expect(screen.getByText(/notas de finalización/i)).toBeInTheDocument();
+      expect(promptSpy).not.toHaveBeenCalled();
+      promptSpy.mockRestore();
+    });
+
+    it('completes with the typed notes', async () => {
+      render(<ReferralManagement />);
+      await waitFor(() => screen.getByText('Carlos Ruiz'));
+
+      fireEvent.click(screen.getByRole('button', { name: /completar/i }));
+      fireEvent.change(screen.getByPlaceholderText(/describe el resultado de la atención/i), {
+        target: { value: 'Paciente estable, alta médica' },
+      });
+      fireEvent.click(screen.getByRole('button', { name: /^confirmar$/i }));
+
+      await waitFor(() => {
+        expect(mockPost).toHaveBeenCalledWith('/referrals/r2/complete', {
+          notes: 'Paciente estable, alta médica',
+        });
+      });
+    });
+  });
+
+  describe('Assignment-aware actions for doctors', () => {
+    const assignedToOtherDoctor = [
+      {
+        _id: 'r3',
+        patientName: 'Lucía Vega',
+        referredToSpecialty: 'Cardiología',
+        referredToDoctorId: 'doc-99',
+        referralType: 'consultation',
+        priority: 'high',
+        status: 'pending',
+        reason: 'Palpitaciones',
+        createdAt: '2024-03-03T00:00:00.000Z',
+      },
+    ];
+
+    it('hides reject/accept-as-final actions a doctor cannot perform on a referral assigned to someone else', async () => {
+      mockGet.mockImplementation((url) => {
+        if (url.includes('/auth/doctors')) return Promise.resolve({ data: { data: mockDoctors } });
+        if (url.includes('/auth/patients')) return Promise.resolve({ data: { data: mockPatients } });
+        return Promise.resolve({ data: { data: assignedToOtherDoctor } });
+      });
+      render(<ReferralManagement />);
+      await waitFor(() => screen.getByText('Lucía Vega'));
+
+      expect(screen.queryByRole('button', { name: /aceptar/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /rechazar/i })).not.toBeInTheDocument();
+    });
+
+    it('shows reject when the referral is assigned to the logged-in doctor', async () => {
+      const assignedToMe = [{ ...assignedToOtherDoctor[0], referredToDoctorId: 'doc-1' }];
+      mockGet.mockImplementation((url) => {
+        if (url.includes('/auth/doctors')) return Promise.resolve({ data: { data: mockDoctors } });
+        if (url.includes('/auth/patients')) return Promise.resolve({ data: { data: mockPatients } });
+        return Promise.resolve({ data: { data: assignedToMe } });
+      });
+      render(<ReferralManagement />);
+      await waitFor(() => screen.getByText('Lucía Vega'));
+
+      expect(screen.getByRole('button', { name: /aceptar/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /rechazar/i })).toBeInTheDocument();
     });
   });
 });

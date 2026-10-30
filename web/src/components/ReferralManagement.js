@@ -23,6 +23,10 @@ const ReferralManagement = () => {
   const [doctors, setDoctors] = useState([]);
   const [patientQuery, setPatientQuery] = useState('');
   const [patientResults, setPatientResults] = useState([]);
+  const [rejectingReferral, setRejectingReferral] = useState(null);
+  const [rejectReason, setRejectReason] = useState('');
+  const [completingReferral, setCompletingReferral] = useState(null);
+  const [completeNotes, setCompleteNotes] = useState('');
 
   const [formData, setFormData] = useState({
     patientId: '',
@@ -118,8 +122,11 @@ const ReferralManagement = () => {
     if (!referredToSpecialty?.trim()) { alert('Especialidad es requerida'); return; }
     if (!reason?.trim()) { alert('Razón del referido es requerida'); return; }
     try {
+      // referredToDoctorName no es un campo aceptado por el backend al crear
+      // (se calcula del lado del servidor a partir de referredToDoctorId).
+      const { referredToDoctorName, ...createPayload } = formData;
       await apiClient.post('/referrals', {
-        ...formData,
+        ...createPayload,
         referringDoctorId: user?._id || user?.id,
         referringDoctorName: user?.name,
       });
@@ -148,13 +155,15 @@ const ReferralManagement = () => {
     }
   };
 
-  const handleRejectReferral = async (referralId) => {
-    const reason = prompt('Razón del rechazo:');
-    if (!reason) return;
+  const handleConfirmReject = async (e) => {
+    e.preventDefault();
+    if (!rejectReason.trim()) { alert('Debes indicar una razón del rechazo'); return; }
 
     try {
-      await apiClient.post(`/referrals/${referralId}/reject`, { reason });
+      await apiClient.post(`/referrals/${rejectingReferral._id}/reject`, { reason: rejectReason.trim() });
       alert('Referido rechazado');
+      setRejectingReferral(null);
+      setRejectReason('');
       loadReferrals();
       loadStats();
     } catch (error) {
@@ -163,11 +172,13 @@ const ReferralManagement = () => {
     }
   };
 
-  const handleCompleteReferral = async (referralId) => {
-    const notes = prompt('Notas de finalización (opcional):');
+  const handleConfirmComplete = async (e) => {
+    e.preventDefault();
     try {
-      await apiClient.post(`/referrals/${referralId}/complete`, { notes: notes || '' });
+      await apiClient.post(`/referrals/${completingReferral._id}/complete`, { notes: completeNotes.trim() || undefined });
       alert('Referido completado exitosamente');
+      setCompletingReferral(null);
+      setCompleteNotes('');
       loadReferrals();
       loadStats();
     } catch (error) {
@@ -326,7 +337,15 @@ const ReferralManagement = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {referrals.map((referral) => (
+            {referrals.map((referral) => {
+              const myId = user?._id || user?.id;
+              const isDoctor = user?.role === 'doctor';
+              // Un referido abierto (sin referredToDoctorId) puede ser aceptado por
+              // cualquier doctor; una vez asignado, solo ese doctor puede gestionarlo.
+              const canAccept = !isDoctor || !referral.referredToDoctorId || referral.referredToDoctorId === myId;
+              const canManage = !isDoctor || referral.referredToDoctorId === myId;
+
+              return (
               <tr key={referral._id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium">{referral.patientName}</div>
@@ -353,25 +372,25 @@ const ReferralManagement = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex gap-2">
-                    {referral.status === 'pending' && (
-                      <>
-                        <button
-                          onClick={() => handleAcceptReferral(referral._id, user?._id || user?.id)}
-                          className="text-green-600 hover:text-green-900"
-                        >
-                          Aceptar
-                        </button>
-                        <button
-                          onClick={() => handleRejectReferral(referral._id)}
-                          className="text-red-600 hover:text-red-900"
-                        >
-                          Rechazar
-                        </button>
-                      </>
-                    )}
-                    {(referral.status === 'accepted' || referral.status === 'in_progress') && (
+                    {referral.status === 'pending' && canAccept && (
                       <button
-                        onClick={() => handleCompleteReferral(referral._id)}
+                        onClick={() => handleAcceptReferral(referral._id, myId)}
+                        className="text-green-600 hover:text-green-900"
+                      >
+                        Aceptar
+                      </button>
+                    )}
+                    {referral.status === 'pending' && canManage && (
+                      <button
+                        onClick={() => setRejectingReferral(referral)}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        Rechazar
+                      </button>
+                    )}
+                    {(referral.status === 'accepted' || referral.status === 'in_progress') && canManage && (
+                      <button
+                        onClick={() => setCompletingReferral(referral)}
                         className="text-blue-600 hover:text-blue-900"
                       >
                         Completar
@@ -386,7 +405,8 @@ const ReferralManagement = () => {
                   </div>
                 </td>
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -582,6 +602,77 @@ const ReferralManagement = () => {
                 Cerrar
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Rechazo */}
+      {rejectingReferral && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h2 className="text-xl font-bold mb-4">Rechazar Referido</h2>
+            <form onSubmit={handleConfirmReject}>
+              <label className="block text-sm font-medium mb-2">Razón del Rechazo *</label>
+              <textarea
+                value={rejectReason}
+                onChange={(e) => setRejectReason(e.target.value)}
+                placeholder="Describe la razón del rechazo..."
+                className="w-full border rounded px-3 py-2"
+                rows="3"
+                maxLength={1000}
+                required
+              />
+              <div className="flex justify-end gap-2 mt-4">
+                <button
+                  type="button"
+                  onClick={() => { setRejectingReferral(null); setRejectReason(''); }}
+                  className="px-4 py-2 border rounded hover:bg-gray-50"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                >
+                  Confirmar Rechazo
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Completar */}
+      {completingReferral && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h2 className="text-xl font-bold mb-4">Completar Referido</h2>
+            <form onSubmit={handleConfirmComplete}>
+              <label className="block text-sm font-medium mb-2">Notas de Finalización (opcional)</label>
+              <textarea
+                value={completeNotes}
+                onChange={(e) => setCompleteNotes(e.target.value)}
+                placeholder="Describe el resultado de la atención..."
+                className="w-full border rounded px-3 py-2"
+                rows="3"
+                maxLength={5000}
+              />
+              <div className="flex justify-end gap-2 mt-4">
+                <button
+                  type="button"
+                  onClick={() => { setCompletingReferral(null); setCompleteNotes(''); }}
+                  className="px-4 py-2 border rounded hover:bg-gray-50"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
+                  Confirmar
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
