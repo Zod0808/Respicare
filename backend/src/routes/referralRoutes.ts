@@ -224,10 +224,14 @@ router.post(
     // Verificar que el doctor puede aceptar
     if (
       req.user?.role === 'doctor' &&
-      req.body.referredToDoctorId !== req.user._id.toString() &&
       !req.user.permissions?.includes('manage_all_referrals')
     ) {
-      throw new AppError('Solo puede aceptar referidos asignados a usted', 403);
+      if (req.body.referredToDoctorId !== req.user._id.toString()) {
+        throw new AppError('Solo puede aceptar referidos asignados a usted', 403);
+      }
+      if (referral.referredToDoctorId && referral.referredToDoctorId !== req.user._id.toString()) {
+        throw new AppError('Este referido ya está asignado a otro doctor', 403);
+      }
     }
 
     const accepted = await referralService.acceptReferral(
@@ -309,8 +313,8 @@ router.post(
 
     const completed = await referralService.completeReferral(
       req.params.id,
-      req.body.notes,
-      req.user!._id.toString()
+      req.user!._id.toString(),
+      req.body.notes
     );
 
     res.json({
@@ -346,8 +350,8 @@ router.post(
 
     const cancelled = await referralService.cancelReferral(
       req.params.id,
-      req.body.reason,
-      req.user!._id.toString()
+      req.user!._id.toString(),
+      req.body.reason
     );
 
     res.json({
@@ -378,7 +382,8 @@ router.get(
   '/pending/list',
   authorize('doctor', 'admin'),
   asyncHandler(async (req: AuthenticatedRequest, res) => {
-    const referrals = await referralService.getPendingReferrals();
+    const doctorId = req.user?.role === 'doctor' ? req.user._id.toString() : undefined;
+    const referrals = await referralService.getPendingReferrals(doctorId);
 
     res.json({
       success: true,
@@ -392,7 +397,8 @@ router.get(
   '/overdue/list',
   authorize('doctor', 'admin'),
   asyncHandler(async (req: AuthenticatedRequest, res) => {
-    const referrals = await referralService.getOverdueReferrals();
+    const doctorId = req.user?.role === 'doctor' ? req.user._id.toString() : undefined;
+    const referrals = await referralService.getOverdueReferrals(doctorId);
 
     res.json({
       success: true,

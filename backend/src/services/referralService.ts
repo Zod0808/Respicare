@@ -461,15 +461,15 @@ class ReferralService {
   /**
    * Obtener referidos pendientes
    */
-  async getPendingReferrals(): Promise<ReferralDocument[]> {
-    return ReferralModel.findPending();
+  async getPendingReferrals(doctorId?: string): Promise<ReferralDocument[]> {
+    return ReferralModel.findPending(doctorId);
   }
 
   /**
    * Obtener referidos vencidos
    */
-  async getOverdueReferrals(): Promise<ReferralDocument[]> {
-    return ReferralModel.findOverdue();
+  async getOverdueReferrals(doctorId?: string): Promise<ReferralDocument[]> {
+    return ReferralModel.findOverdue(doctorId);
   }
 }
 

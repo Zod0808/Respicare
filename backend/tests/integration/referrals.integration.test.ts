@@ -16,6 +16,8 @@ const uniqueEmail = (prefix: string) => `${prefix}-${new mongoose.Types.ObjectId
 describe('Referral Endpoints Integration', () => {
   let doctorToken: string;
   let doctorId: string;
+  let doctorToken2: string;
+  let doctorId2: string;
   let adminToken: string;
   let adminId: string;
   let patientToken: string;
@@ -38,6 +40,13 @@ describe('Referral Endpoints Integration', () => {
       role: 'doctor',
       isActive: true,
     });
+    const doctor2 = await User.create({
+      name: 'Dr. Referidos Dos',
+      email: uniqueEmail('dr-ref-2'),
+      password: STRONG_PASSWORD,
+      role: 'doctor',
+      isActive: true,
+    });
     const patient = await User.create({
       name: 'Paciente Referidos',
       email: uniqueEmail('patient-ref'),
@@ -47,10 +56,12 @@ describe('Referral Endpoints Integration', () => {
     });
 
     doctorId = doctor._id.toString();
+    doctorId2 = doctor2._id.toString();
     adminId = admin._id.toString();
     patientId = patient._id.toString();
 
     doctorToken = testUtils.generateTestToken({ userId: doctorId, role: 'doctor' });
+    doctorToken2 = testUtils.generateTestToken({ userId: doctorId2, role: 'doctor' });
     adminToken = testUtils.generateTestToken({ userId: adminId, role: 'admin' });
     patientToken = testUtils.generateTestToken({ userId: patientId, role: 'patient' });
   });
@@ -175,6 +186,82 @@ describe('Referral Endpoints Integration', () => {
         .expect(200);
 
       expect(completeRes.body.data.status).toBe('completed');
+      expect(completeRes.body.data.clinicalNotes).toContain(
+        'Paciente evaluado, sin hallazgos significativos'
+      );
+      expect(completeRes.body.data.clinicalNotes).not.toContain(adminId);
+    });
+
+    it('persiste el motivo real al cancelar (no el id del usuario)', async () => {
+      const createRes = await request(app)
+        .post('/api/v1/referrals')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send(buildReferralPayload())
+        .expect(201);
+
+      const referralId = createRes.body.data._id;
+
+      const cancelRes = await request(app)
+        .post(`/api/v1/referrals/${referralId}/cancel`)
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send({ reason: 'El paciente ya no requiere la interconsulta' })
+        .expect(200);
+
+      expect(cancelRes.body.data.status).toBe('cancelled');
+      expect(cancelRes.body.data.clinicalNotes).toContain(
+        'El paciente ya no requiere la interconsulta'
+      );
+      expect(cancelRes.body.data.clinicalNotes).not.toContain(adminId);
+    });
+  });
+
+  describe('POST /api/v1/referrals/:id/accept — seguridad de asignación', () => {
+    it('impide que un doctor acepte un referido ya pre-asignado a otro doctor', async () => {
+      const createRes = await request(app)
+        .post('/api/v1/referrals')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send(buildReferralPayload({ referredToDoctorId: doctorId }))
+        .expect(201);
+
+      const referralId = createRes.body.data._id;
+
+      await request(app)
+        .post(`/api/v1/referrals/${referralId}/accept`)
+        .set('Authorization', `Bearer ${doctorToken2}`)
+        .send({ referredToDoctorId: doctorId2 })
+        .expect(403);
+    });
+
+    it('permite que el doctor asignado acepte su propio referido', async () => {
+      const createRes = await request(app)
+        .post('/api/v1/referrals')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send(buildReferralPayload({ referredToDoctorId: doctorId }))
+        .expect(201);
+
+      const referralId = createRes.body.data._id;
+
+      await request(app)
+        .post(`/api/v1/referrals/${referralId}/accept`)
+        .set('Authorization', `Bearer ${doctorToken}`)
+        .send({ referredToDoctorId: doctorId })
+        .expect(200);
+    });
+
+    it('permite que cualquier doctor acepte un referido abierto (sin pre-asignar)', async () => {
+      const createRes = await request(app)
+        .post('/api/v1/referrals')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send(buildReferralPayload())
+        .expect(201);
+
+      const referralId = createRes.body.data._id;
+
+      await request(app)
+        .post(`/api/v1/referrals/${referralId}/accept`)
+        .set('Authorization', `Bearer ${doctorToken2}`)
+        .send({ referredToDoctorId: doctorId2 })
+        .expect(200);
     });
   });
 
@@ -246,6 +333,54 @@ describe('Referral Endpoints Integration', () => {
 
       expect(response.body.success).toBe(true);
       expect(Array.isArray(response.body.data)).toBe(true);
+    });
+
+    it('un doctor solo ve referidos pendientes propios, no los de otros doctores', async () => {
+      // Referido asignado al doctor 1
+      await request(app)
+        .post('/api/v1/referrals')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send(buildReferralPayload({ referredToDoctorId: doctorId }))
+        .expect(201);
+
+      // Referido asignado al doctor 2
+      await request(app)
+        .post('/api/v1/referrals')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send(buildReferralPayload({ referredToDoctorId: doctorId2 }))
+        .expect(201);
+
+      const response = await request(app)
+        .get('/api/v1/referrals/pending/list')
+        .set('Authorization', `Bearer ${doctorToken}`)
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      const referredIds = response.body.data.map((r: any) => r.referredToDoctorId);
+      expect(referredIds).not.toContain(doctorId2);
+    });
+
+    it('admin ve todos los referidos pendientes sin filtrar', async () => {
+      await request(app)
+        .post('/api/v1/referrals')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send(buildReferralPayload({ referredToDoctorId: doctorId }))
+        .expect(201);
+
+      await request(app)
+        .post('/api/v1/referrals')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .send(buildReferralPayload({ referredToDoctorId: doctorId2 }))
+        .expect(201);
+
+      const response = await request(app)
+        .get('/api/v1/referrals/pending/list')
+        .set('Authorization', `Bearer ${adminToken}`)
+        .expect(200);
+
+      const referredIds = response.body.data.map((r: any) => r.referredToDoctorId);
+      expect(referredIds).toContain(doctorId);
+      expect(referredIds).toContain(doctorId2);
     });
   });
 });

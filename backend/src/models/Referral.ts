@@ -73,8 +73,8 @@ export interface ReferralModel extends Model<ReferralDocument> {
   findByPatient(patientId: string, status?: ReferralStatus): Promise<ReferralDocument[]>;
   findByReferringDoctor(doctorId: string, status?: ReferralStatus): Promise<ReferralDocument[]>;
   findByReferredDoctor(doctorId: string, status?: ReferralStatus): Promise<ReferralDocument[]>;
-  findPending(): Promise<ReferralDocument[]>;
-  findOverdue(): Promise<ReferralDocument[]>;
+  findPending(doctorId?: string): Promise<ReferralDocument[]>;
+  findOverdue(doctorId?: string): Promise<ReferralDocument[]>;
 }
 
 const ReferralSchema = new Schema<ReferralDocument, ReferralModel>(
@@ -280,18 +280,32 @@ ReferralSchema.statics.findByReferredDoctor = async function(
   return this.find(query).sort({ createdAt: -1 });
 };
 
-ReferralSchema.statics.findPending = async function(): Promise<ReferralDocument[]> {
-  return this.find({ status: 'pending' }).sort({ priority: -1, createdAt: 1 });
+ReferralSchema.statics.findPending = async function(doctorId?: string): Promise<ReferralDocument[]> {
+  const query: any = { status: 'pending' };
+  if (doctorId) {
+    query.$or = [
+      { referringDoctorId: doctorId },
+      { referredToDoctorId: doctorId },
+    ];
+  }
+  return this.find(query).sort({ priority: -1, createdAt: 1 });
 };
 
-ReferralSchema.statics.findOverdue = async function(): Promise<ReferralDocument[]> {
+ReferralSchema.statics.findOverdue = async function(doctorId?: string): Promise<ReferralDocument[]> {
   const sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-  
-  return this.find({
+
+  const query: any = {
     status: { $in: ['pending', 'accepted'] },
     requestedDate: { $lt: sevenDaysAgo },
-  }).sort({ priority: -1, requestedDate: 1 });
+  };
+  if (doctorId) {
+    query.$or = [
+      { referringDoctorId: doctorId },
+      { referredToDoctorId: doctorId },
+    ];
+  }
+  return this.find(query).sort({ priority: -1, requestedDate: 1 });
 };
 
 const ReferralModel = mongoose.model<ReferralDocument, ReferralModel>('Referral', ReferralSchema);
