@@ -5,6 +5,22 @@ import ConsentManagement from '../ConsentManagement';
 
 jest.mock('axios');
 
+// Mutable mock user — the factory closes over this variable by reference, so
+// reassigning it in beforeEach/tests before render() changes what useAuth()
+// returns without needing a fresh jest.mock per describe block.
+let mockAuthUser = { _id: 'staff-1', name: 'Dr Default', role: 'doctor' };
+jest.mock('../../contexts/AuthContext', () => ({
+  useAuth: () => ({
+    user: mockAuthUser,
+    token: 'mock-token',
+    isAuthenticated: true,
+    isLoading: false,
+    login: jest.fn(),
+    logout: jest.fn(),
+  }),
+  AuthProvider: ({ children }) => children,
+}));
+
 // jsdom doesn't implement Canvas 2d context; unconditionally install a stub
 // so clearSignature() and the signature capture paths don't throw.
 // (jsdom may return null from getContext — a truthy stub is required.)
@@ -59,6 +75,7 @@ const mockStats = { total: 10, pending: 3, signed: 5, revoked: 2 };
 
 beforeEach(() => {
   localStorage.clear();
+  mockAuthUser = { _id: 'staff-1', name: 'Dr Default', role: 'doctor' };
   // Re-set implementations after resetMocks:true clears them
   axios.create.mockReturnValue(mockInstance);
   mockGet.mockResolvedValue({ data: { data: mockConsents } });
@@ -374,7 +391,7 @@ describe('ConsentManagement', () => {
   describe('Create submission', () => {
     it('submits create form and calls POST', async () => {
       window.alert = jest.fn();
-      localStorage.setItem('user', JSON.stringify({ _id: 'u1', name: 'Dr X' }));
+      mockAuthUser = { _id: 'u1', name: 'Dr X', role: 'doctor' };
 
       render(<ConsentManagement />);
       await waitFor(() => screen.getByText('Cirugía Cardíaca'));
@@ -400,7 +417,7 @@ describe('ConsentManagement', () => {
 
     it('handles create error and shows alert', async () => {
       const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
-      localStorage.setItem('user', JSON.stringify({ _id: 'u2', name: 'Dr Y' }));
+      mockAuthUser = { _id: 'u2', name: 'Dr Y', role: 'doctor' };
       mockPost.mockRejectedValueOnce({ response: { data: { message: 'Create failed' } } });
 
       render(<ConsentManagement />);
@@ -556,7 +573,7 @@ describe('ConsentManagement', () => {
   describe('Signature submission (canvas has content)', () => {
     it('submits signature when canvas has ink', async () => {
       window.alert = jest.fn();
-      localStorage.setItem('user', JSON.stringify({ _id: 'signer-1', name: 'Signer' }));
+      mockAuthUser = { _id: 'signer-1', name: 'Signer', role: 'patient' };
 
       // Override getImageData so hasContent === true
       const origGetContext = HTMLCanvasElement.prototype.getContext;
@@ -629,6 +646,49 @@ describe('ConsentManagement', () => {
 
       // No assertion needed; goal is to hit the listener code paths
       expect(canvas).toBeInTheDocument();
+    });
+  });
+
+  describe('Patient view', () => {
+    beforeEach(() => {
+      mockAuthUser = { _id: 'pat-1', name: 'Pat Uno', role: 'patient' };
+    });
+
+    it('does not show the authoring UI (create button, filters, stats)', async () => {
+      render(<ConsentManagement />);
+      await waitFor(() => screen.getByText('Cirugía Cardíaca'));
+      expect(screen.queryByRole('button', { name: /nuevo consentimiento/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
+    });
+
+    it('shows an empty state when the patient has no consents', async () => {
+      mockGet.mockResolvedValue({ data: { data: [] } });
+      render(<ConsentManagement />);
+      await waitFor(() =>
+        expect(screen.getByText(/no tienes consentimientos informados/i)).toBeInTheDocument()
+      );
+    });
+
+    it('shows a Firmar action for a pending_signature consent', async () => {
+      mockGet.mockResolvedValue({
+        data: { data: [{ ...mockConsents[0], _id: 'pv1', status: 'pending_signature', title: 'Para Firmar' }] },
+      });
+      render(<ConsentManagement />);
+      await waitFor(() => screen.getByText('Para Firmar'));
+      expect(screen.getByRole('button', { name: /^firmar$/i })).toBeInTheDocument();
+    });
+
+    it('shows a Descargar PDF action for a signed consent', async () => {
+      render(<ConsentManagement />);
+      await waitFor(() => screen.getByText('Anestesia General'));
+      expect(screen.getByRole('button', { name: /descargar pdf/i })).toBeInTheDocument();
+    });
+
+    it('opens the detail modal via Ver detalle', async () => {
+      render(<ConsentManagement />);
+      await waitFor(() => screen.getByText('Cirugía Cardíaca'));
+      fireEvent.click(screen.getAllByRole('button', { name: /ver detalle/i })[0]);
+      expect(screen.getByRole('heading', { name: /detalle del consentimiento/i })).toBeInTheDocument();
     });
   });
 

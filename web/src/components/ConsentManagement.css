@@ -1,0 +1,374 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   RespiCare · ConsentManagement — "Clinical Breath"
+   Same petrol/clay/paper system as the rest of the clinical pages. Patients
+   get a lightweight card list (review + sign); doctor/admin get the full
+   authoring table with filters, stats and the create form.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.consent-page {
+  --rc-ink:          #152420;
+  --rc-paper:        #f8f1e4;
+  --rc-paper-dim:    #efe4d0;
+  --rc-petrol:       #103c37;
+  --rc-petrol-ink:   #0a2b27;
+  --rc-clay:         #d9683f;
+  --rc-clay-soft:    #f0a677;
+  --rc-font-display: 'Fraunces', 'Iowan Old Style', serif;
+  --rc-font-body:    'Manrope', 'Segoe UI', sans-serif;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: var(--rc-font-body);
+  color: var(--rc-ink);
+}
+
+.consent-intro {
+  margin: 0 0 20px 0;
+  color: rgba(21, 36, 32, 0.65);
+  font-size: 0.95rem;
+}
+
+.consent-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+/* ── Staff toolbar / stats / filters ── */
+.consent-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.consent-toolbar h1 {
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--rc-petrol-ink);
+  margin: 0;
+}
+
+.consent-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.consent-stat {
+  background: #fffaf2;
+  border-radius: 2px 16px 16px 16px;
+  box-shadow: 0 10px 24px -16px rgba(16, 60, 55, 0.18);
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.consent-stat span {
+  font-size: 0.75rem;
+  color: rgba(21, 36, 32, 0.6);
+}
+
+.consent-stat strong {
+  font-family: var(--rc-font-display);
+  font-size: 1.4rem;
+  color: var(--rc-petrol-ink);
+}
+
+.consent-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.consent-filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(21, 36, 32, 0.7);
+}
+
+.consent-filters select {
+  padding: 8px 12px;
+  border: 2px solid var(--rc-paper-dim);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  background: #fffaf2;
+  color: var(--rc-ink);
+}
+
+.consent-actions-cell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.consent-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--rc-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.consent-link--petrol  { color: var(--rc-petrol); }
+.consent-link--green   { color: #1f7a4d; }
+.consent-link--clay    { color: var(--rc-clay); }
+.consent-link--danger  { color: #b3261e; }
+
+/* ── Buttons shared by patient cards + modals ── */
+.consent-btn {
+  padding: 10px 20px;
+  border: 2px solid var(--rc-paper-dim);
+  border-radius: 2px 12px 12px 12px;
+  background: #fffaf2;
+  color: var(--rc-ink);
+  font-family: var(--rc-font-body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.consent-btn:hover {
+  border-color: var(--rc-clay);
+}
+
+.consent-btn--primary {
+  background: var(--rc-petrol);
+  border-color: var(--rc-petrol);
+  color: #fffaf2;
+}
+
+.consent-btn--primary:hover {
+  background: var(--rc-clay);
+  border-color: var(--rc-clay);
+}
+
+.consent-btn--ghost {
+  background: transparent;
+}
+
+/* ── Modals (create / sign / detail) ── */
+.consent-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(10, 20, 18, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.consent-modal__content {
+  background: #fffaf2;
+  border-radius: 2px 28px 28px 28px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px 30px;
+  box-shadow: 0 24px 60px -16px rgba(16, 60, 55, 0.4);
+}
+
+.consent-modal__content--wide {
+  max-width: 820px;
+}
+
+.consent-modal__content h2 {
+  font-family: var(--rc-font-display);
+  font-style: italic;
+  color: var(--rc-petrol-ink);
+  font-size: 1.4rem;
+  margin: 0 0 18px 0;
+}
+
+.consent-modal__hint {
+  color: rgba(21, 36, 32, 0.65);
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.consent-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.consent-signature-canvas {
+  border: 2px solid var(--rc-paper-dim);
+  border-radius: 10px;
+  cursor: crosshair;
+  width: 100%;
+  max-width: 600px;
+  touch-action: none;
+}
+
+.consent-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.consent-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.consent-form-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--rc-ink);
+}
+
+.consent-form-field input,
+.consent-form-field select,
+.consent-form-field textarea {
+  padding: 10px 12px;
+  border: 2px solid var(--rc-paper-dim);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--rc-ink);
+}
+
+.consent-form-field input:focus,
+.consent-form-field select:focus,
+.consent-form-field textarea:focus {
+  outline: none;
+  border-color: var(--rc-clay);
+}
+
+.consent-list-adder {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.consent-list-adder input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 2px solid var(--rc-paper-dim);
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.consent-list-adder button {
+  padding: 0 18px;
+  border: none;
+  border-radius: 10px;
+  background: var(--rc-petrol);
+  color: #fffaf2;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.consent-list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.consent-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--rc-paper);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+}
+
+.consent-list-item button {
+  background: none;
+  border: none;
+  color: #b3261e;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.consent-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 0.9rem;
+}
+
+.consent-detail ul {
+  margin: 6px 0 0 0;
+  padding-left: 20px;
+}
+
+/* ── Dark mode ── */
+.theme-dark .consent-page,
+[data-theme="dark"] .consent-page { color: #f8f1e4; }
+
+.theme-dark .consent-toolbar h1,
+[data-theme="dark"] .consent-toolbar h1 { color: #f8f1e4; }
+
+.theme-dark .consent-intro,
+[data-theme="dark"] .consent-intro,
+.theme-dark .consent-filters label,
+[data-theme="dark"] .consent-filters label,
+.theme-dark .consent-stat span,
+[data-theme="dark"] .consent-stat span,
+.theme-dark .consent-modal__hint,
+[data-theme="dark"] .consent-modal__hint { color: rgba(248, 241, 228, 0.65); }
+
+.theme-dark .consent-stat,
+[data-theme="dark"] .consent-stat,
+.theme-dark .consent-modal__content,
+[data-theme="dark"] .consent-modal__content,
+.theme-dark .consent-btn,
+[data-theme="dark"] .consent-btn,
+.theme-dark .consent-filters select,
+[data-theme="dark"] .consent-filters select,
+.theme-dark .consent-form-field input,
+[data-theme="dark"] .consent-form-field input,
+.theme-dark .consent-form-field select,
+[data-theme="dark"] .consent-form-field select,
+.theme-dark .consent-form-field textarea,
+[data-theme="dark"] .consent-form-field textarea,
+.theme-dark .consent-list-adder input,
+[data-theme="dark"] .consent-list-adder input,
+.theme-dark .consent-list-item,
+[data-theme="dark"] .consent-list-item {
+  background: #1c2823;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f8f1e4;
+}
+
+.theme-dark .consent-stat strong,
+[data-theme="dark"] .consent-stat strong,
+.theme-dark .consent-modal__content h2,
+[data-theme="dark"] .consent-modal__content h2 { color: var(--rc-clay-soft); }
+
+.theme-dark .consent-btn--primary,
+[data-theme="dark"] .consent-btn--primary {
+  background: var(--rc-petrol);
+  border-color: var(--rc-petrol);
+  color: #fffaf2;
+}

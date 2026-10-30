@@ -1,13 +1,67 @@
 /**
  * Consent Management Component
- * UI para gestión de consentimientos informados médicos
+ * UI para gestión de consentimientos informados médicos. El personal clínico
+ * (doctor/admin) ve el panel de autoría con filtros, estadísticas y el
+ * formulario de creación; el paciente ve únicamente sus propios
+ * consentimientos con la acción que realmente puede ejecutar — firmar los
+ * pendientes o descargar los ya firmados.
  */
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BACKEND_BASE_URL as API_URL } from '../utils/apiBase';
+import { useAuth } from '../contexts/AuthContext';
+import '../pages/clinical.css';
+import './ConsentManagement.css';
+
+const TYPE_LABELS = {
+  procedure: 'Procedimiento',
+  treatment: 'Tratamiento',
+  surgery: 'Cirugía',
+  research: 'Investigación',
+  data_sharing: 'Compartir Datos',
+  photography: 'Fotografía',
+  video_recording: 'Grabación de Video',
+  other: 'Otro',
+};
+
+const STATUS_LABELS = {
+  draft: 'Borrador',
+  pending_signature: 'Pendiente de firma',
+  signed: 'Firmado',
+  revoked: 'Revocado',
+  expired: 'Expirado',
+};
+
+const STATUS_CLASS = {
+  draft: 'status-inactive',
+  pending_signature: 'status-pending',
+  signed: 'status-active',
+  revoked: 'status-critical',
+  expired: 'status-critical',
+};
+
+const EMPTY_FORM = {
+  patientId: '',
+  patientName: '',
+  consentType: 'procedure',
+  title: '',
+  description: '',
+  procedureDetails: '',
+  risks: [],
+  benefits: [],
+  alternatives: [],
+  expiresAt: '',
+};
+
+const getTypeLabel = (type) => TYPE_LABELS[type] || type;
+const getStatusLabel = (status) => STATUS_LABELS[status] || status;
+const getStatusClass = (status) => STATUS_CLASS[status] || 'status-pending';
 
 const ConsentManagement = () => {
+  const { user } = useAuth();
+  const isPatient = user?.role === 'patient';
+
   const [consents, setConsents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -19,18 +73,7 @@ const ConsentManagement = () => {
     consentType: '',
   });
 
-  const [formData, setFormData] = useState({
-    patientId: '',
-    patientName: '',
-    consentType: 'procedure',
-    title: '',
-    description: '',
-    procedureDetails: '',
-    risks: [],
-    benefits: [],
-    alternatives: [],
-    expiresAt: '',
-  });
+  const [formData, setFormData] = useState(EMPTY_FORM);
 
   const [newRisk, setNewRisk] = useState('');
   const [newBenefit, setNewBenefit] = useState('');
@@ -38,7 +81,7 @@ const ConsentManagement = () => {
 
   useEffect(() => {
     loadConsents();
-    loadStats();
+    if (!isPatient) loadStats();
   }, [filters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getAuthToken = () => {
@@ -89,11 +132,10 @@ const ConsentManagement = () => {
   const handleCreateConsent = async (e) => {
     e.preventDefault();
     try {
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
       await apiClient.post('/informed-consents', {
         ...formData,
-        doctorId: user._id || user.id,
-        doctorName: user.name,
+        doctorId: user?._id || user?.id,
+        doctorName: user?.name,
         risks: formData.risks.filter(r => r.trim()),
         benefits: formData.benefits.filter(b => b.trim()),
         alternatives: formData.alternatives.filter(a => a.trim()),
@@ -123,7 +165,6 @@ const ConsentManagement = () => {
 
   const handleSignConsent = async (consentId, signerRole = 'patient') => {
     try {
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
       const canvas = document.getElementById('signatureCanvas');
       if (!canvas) {
         alert('Por favor, dibuje su firma');
@@ -142,8 +183,8 @@ const ConsentManagement = () => {
       const signatureData = canvas.toDataURL('image/png');
 
       await apiClient.post(`/informed-consents/${consentId}/sign`, {
-        signerId: user._id || user.id,
-        signerName: user.name,
+        signerId: user?._id || user?.id,
+        signerName: user?.name,
         signerRole: signerRole,
         signatureData: signatureData,
         signatureMethod: 'click_to_sign',
@@ -194,18 +235,7 @@ const ConsentManagement = () => {
   };
 
   const resetForm = () => {
-    setFormData({
-      patientId: '',
-      patientName: '',
-      consentType: 'procedure',
-      title: '',
-      description: '',
-      procedureDetails: '',
-      risks: [],
-      benefits: [],
-      alternatives: [],
-      expiresAt: '',
-    });
+    setFormData(EMPTY_FORM);
     setNewRisk('');
     setNewBenefit('');
     setNewAlternative('');
@@ -312,186 +342,334 @@ const ConsentManagement = () => {
     }
   }, [showSignatureModal]);
 
-  const getStatusColor = (status) => {
-    const colors = {
-      draft: 'bg-gray-100 text-gray-800',
-      pending_signature: 'bg-yellow-100 text-yellow-800',
-      signed: 'bg-green-100 text-green-800',
-      revoked: 'bg-red-100 text-red-800',
-      expired: 'bg-orange-100 text-orange-800',
-    };
-    return colors[status] || 'bg-gray-100 text-gray-800';
-  };
-
-  const getTypeLabel = (type) => {
-    const labels = {
-      procedure: 'Procedimiento',
-      treatment: 'Tratamiento',
-      surgery: 'Cirugía',
-      research: 'Investigación',
-      data_sharing: 'Compartir Datos',
-      photography: 'Fotografía',
-      video_recording: 'Grabación de Video',
-      other: 'Otro',
-    };
-    return labels[type] || type;
-  };
-
   if (loading && consents.length === 0) {
-    return <div className="p-4">Cargando consentimientos...</div>;
+    return (
+      <div className="clinical-loading">
+        <div className="loading-spinner" />
+        <p>Cargando consentimientos…</p>
+      </div>
+    );
   }
 
+  const signatureModal = showSignatureModal && selectedConsent && (
+    <div className="consent-modal">
+      <div className="consent-modal__content consent-modal__content--sign">
+        <h2>Firmar Consentimiento</h2>
+        <p className="consent-modal__hint">Dibuje su firma en el área de abajo:</p>
+        <canvas
+          id="signatureCanvas"
+          width="600"
+          height="200"
+          className="consent-signature-canvas"
+          style={{ touchAction: 'none' }}
+        />
+        <div className="consent-modal__actions">
+          <button type="button" className="consent-btn" onClick={clearSignature}>
+            Limpiar
+          </button>
+          <button
+            type="button"
+            className="consent-btn"
+            onClick={() => {
+              setShowSignatureModal(false);
+              clearSignature();
+            }}
+          >
+            Cancelar
+          </button>
+          <button
+            type="button"
+            className="consent-btn consent-btn--primary"
+            onClick={() => handleSignConsent(selectedConsent._id)}
+          >
+            Firmar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const detailModal = selectedConsent && !showSignatureModal && (
+    <div className="consent-modal">
+      <div className="consent-modal__content consent-modal__content--wide">
+        <h2>Detalle del Consentimiento</h2>
+        <div className="consent-detail">
+          <div><strong>Paciente:</strong> {selectedConsent.patientName}</div>
+          <div><strong>Doctor:</strong> {selectedConsent.doctorName}</div>
+          <div><strong>Tipo:</strong> {getTypeLabel(selectedConsent.consentType)}</div>
+          <div><strong>Estado:</strong> {selectedConsent.status}</div>
+          <div><strong>Título:</strong> {selectedConsent.title}</div>
+          <div>
+            <strong>Descripción:</strong>
+            <p>{selectedConsent.description}</p>
+          </div>
+          {selectedConsent.procedureDetails && (
+            <div>
+              <strong>Detalles del Procedimiento:</strong>
+              <p>{selectedConsent.procedureDetails}</p>
+            </div>
+          )}
+          {selectedConsent.risks && selectedConsent.risks.length > 0 && (
+            <div>
+              <strong>Riesgos:</strong>
+              <ul>
+                {selectedConsent.risks.map((risk, index) => (
+                  <li key={index}>{risk}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {selectedConsent.benefits && selectedConsent.benefits.length > 0 && (
+            <div>
+              <strong>Beneficios:</strong>
+              <ul>
+                {selectedConsent.benefits.map((benefit, index) => (
+                  <li key={index}>{benefit}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {selectedConsent.alternatives && selectedConsent.alternatives.length > 0 && (
+            <div>
+              <strong>Alternativas:</strong>
+              <ul>
+                {selectedConsent.alternatives.map((alternative, index) => (
+                  <li key={index}>{alternative}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {selectedConsent.patientSignature && (
+            <div>
+              <strong>Firma del Paciente:</strong>
+              <p>
+                {selectedConsent.patientSignature.signerName} -{' '}
+                {new Date(selectedConsent.patientSignature.signedAt).toLocaleString()}
+              </p>
+            </div>
+          )}
+          {selectedConsent.doctorSignature && (
+            <div>
+              <strong>Firma del Doctor:</strong>
+              <p>
+                {selectedConsent.doctorSignature.signerName} -{' '}
+                {new Date(selectedConsent.doctorSignature.signedAt).toLocaleString()}
+              </p>
+            </div>
+          )}
+        </div>
+        <div className="consent-modal__actions">
+          <button type="button" className="consent-btn" onClick={() => setSelectedConsent(null)}>
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // ── Vista del paciente: solo sus consentimientos, con la acción que
+  // realmente puede ejecutar — nada de autoría, filtros ni estadísticas. ──
+  if (isPatient) {
+    return (
+      <div className="consent-page consent-page--patient">
+        <p className="consent-intro">
+          Aquí puedes revisar los consentimientos que tu médico te ha presentado y firmarlos cuando estés listo.
+        </p>
+
+        {consents.length === 0 ? (
+          <p className="clinical-empty-cards">
+            No tienes consentimientos informados por ahora. Aparecerán aquí cuando tu médico te presente uno para firmar.
+          </p>
+        ) : (
+          <div className="clinical-cards">
+            {consents.map((consent) => (
+              <article className="clinical-card" key={consent._id}>
+                <div className="clinical-card__header">
+                  <h3>{consent.title}</h3>
+                  <span className={`status-badge ${getStatusClass(consent.status)}`}>
+                    {getStatusLabel(consent.status)}
+                  </span>
+                </div>
+                <div className="clinical-card__meta">
+                  <span>{getTypeLabel(consent.consentType)}</span>
+                  {consent.doctorName && (
+                    <span className="clinical-card__label">Presentado por {consent.doctorName}</span>
+                  )}
+                  <span className="clinical-card__date">
+                    {consent.createdAt ? new Date(consent.createdAt).toLocaleDateString() : '—'}
+                  </span>
+                </div>
+                <div className="consent-card__actions">
+                  {consent.status === 'pending_signature' && (
+                    <button
+                      type="button"
+                      className="consent-btn consent-btn--primary"
+                      onClick={() => {
+                        setSelectedConsent(consent);
+                        setShowSignatureModal(true);
+                      }}
+                    >
+                      Firmar
+                    </button>
+                  )}
+                  {consent.status === 'signed' && (
+                    <button
+                      type="button"
+                      className="consent-btn"
+                      onClick={() => handleDownloadPDF(consent._id)}
+                    >
+                      Descargar PDF
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    className="consent-btn consent-btn--ghost"
+                    onClick={() => setSelectedConsent(consent)}
+                  >
+                    Ver detalle
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+
+        {signatureModal}
+        {detailModal}
+      </div>
+    );
+  }
+
+  // ── Vista del personal clínico: autoría, filtros, estadísticas y tabla. ──
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Gestión de Consentimientos Informados</h1>
+    <div className="consent-page">
+      <div className="consent-toolbar">
+        <h1>Gestión de Consentimientos Informados</h1>
         <button
+          type="button"
+          className="consent-btn consent-btn--primary"
           onClick={() => setShowCreateModal(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           + Nuevo Consentimiento
         </button>
       </div>
 
-      {/* Estadísticas */}
       {stats && (
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-sm text-gray-600">Total</div>
-            <div className="text-2xl font-bold">{stats.total}</div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-sm text-gray-600">Borrador</div>
-            <div className="text-2xl font-bold text-gray-600">{stats.draft}</div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-sm text-gray-600">Pendiente Firma</div>
-            <div className="text-2xl font-bold text-yellow-600">{stats.pendingSignature}</div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-sm text-gray-600">Firmados</div>
-            <div className="text-2xl font-bold text-green-600">{stats.signed}</div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="text-sm text-gray-600">Revocados</div>
-            <div className="text-2xl font-bold text-red-600">{stats.revoked}</div>
-          </div>
+        <div className="consent-stats">
+          <div className="consent-stat"><span>Total</span><strong>{stats.total}</strong></div>
+          <div className="consent-stat"><span>Borrador</span><strong>{stats.draft}</strong></div>
+          <div className="consent-stat"><span>Pendiente Firma</span><strong>{stats.pendingSignature}</strong></div>
+          <div className="consent-stat"><span>Firmados</span><strong>{stats.signed}</strong></div>
+          <div className="consent-stat"><span>Revocados</span><strong>{stats.revoked}</strong></div>
         </div>
       )}
 
-      {/* Filtros */}
-      <div className="bg-white p-4 rounded-lg shadow mb-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">Estado</label>
-            <select
-              value={filters.status}
-              onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-              className="w-full border rounded px-3 py-2"
-            >
-              <option value="">Todos</option>
-              <option value="draft">Borrador</option>
-              <option value="pending_signature">Pendiente Firma</option>
-              <option value="signed">Firmado</option>
-              <option value="revoked">Revocado</option>
-              <option value="expired">Expirado</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Tipo</label>
-            <select
-              value={filters.consentType}
-              onChange={(e) => setFilters({ ...filters, consentType: e.target.value })}
-              className="w-full border rounded px-3 py-2"
-            >
-              <option value="">Todos</option>
-              <option value="procedure">Procedimiento</option>
-              <option value="treatment">Tratamiento</option>
-              <option value="surgery">Cirugía</option>
-              <option value="research">Investigación</option>
-              <option value="data_sharing">Compartir Datos</option>
-              <option value="photography">Fotografía</option>
-              <option value="video_recording">Grabación de Video</option>
-              <option value="other">Otro</option>
-            </select>
-          </div>
-        </div>
+      <div className="consent-filters">
+        <label>
+          Estado
+          <select
+            value={filters.status}
+            onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+          >
+            <option value="">Todos</option>
+            <option value="draft">Borrador</option>
+            <option value="pending_signature">Pendiente Firma</option>
+            <option value="signed">Firmado</option>
+            <option value="revoked">Revocado</option>
+            <option value="expired">Expirado</option>
+          </select>
+        </label>
+        <label>
+          Tipo
+          <select
+            value={filters.consentType}
+            onChange={(e) => setFilters({ ...filters, consentType: e.target.value })}
+          >
+            <option value="">Todos</option>
+            <option value="procedure">Procedimiento</option>
+            <option value="treatment">Tratamiento</option>
+            <option value="surgery">Cirugía</option>
+            <option value="research">Investigación</option>
+            <option value="data_sharing">Compartir Datos</option>
+            <option value="photography">Fotografía</option>
+            <option value="video_recording">Grabación de Video</option>
+            <option value="other">Otro</option>
+          </select>
+        </label>
       </div>
 
-      {/* Lista de Consentimientos */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="clinical-table-wrapper">
+        <table className="clinical-table">
+          <thead>
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Paciente</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Título</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tipo</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estado</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Acciones</th>
+              <th>Paciente</th>
+              <th>Título</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Fecha</th>
+              <th>Acciones</th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody>
             {consents.map((consent) => (
-              <tr key={consent._id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium">{consent.patientName}</div>
-                  <div className="text-sm text-gray-500">{consent.doctorName}</div>
+              <tr key={consent._id}>
+                <td>
+                  <div>{consent.patientName}</div>
+                  <div className="clinical-card__label">{consent.doctorName}</div>
                 </td>
-                <td className="px-6 py-4">
-                  <div className="text-sm font-medium">{consent.title}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm">{getTypeLabel(consent.consentType)}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(consent.status)}`}>
-                    {consent.status}
+                <td>{consent.title}</td>
+                <td>{getTypeLabel(consent.consentType)}</td>
+                <td>
+                  <span className={`status-badge ${getStatusClass(consent.status)}`}>
+                    {getStatusLabel(consent.status)}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {new Date(consent.createdAt).toLocaleDateString()}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <div className="flex gap-2">
+                <td>{new Date(consent.createdAt).toLocaleDateString()}</td>
+                <td>
+                  <div className="consent-actions-cell">
                     {consent.status === 'draft' && (
                       <button
+                        type="button"
+                        className="consent-link consent-link--petrol"
                         onClick={() => handlePresentConsent(consent._id)}
-                        className="text-blue-600 hover:text-blue-900"
                       >
                         Presentar
                       </button>
                     )}
                     {consent.status === 'pending_signature' && (
                       <button
+                        type="button"
+                        className="consent-link consent-link--green"
                         onClick={() => {
                           setSelectedConsent(consent);
                           setShowSignatureModal(true);
                         }}
-                        className="text-green-600 hover:text-green-900"
                       >
                         Firmar
                       </button>
                     )}
                     {consent.status === 'signed' && (
                       <button
+                        type="button"
+                        className="consent-link consent-link--clay"
                         onClick={() => handleDownloadPDF(consent._id)}
-                        className="text-purple-600 hover:text-purple-900"
                       >
                         PDF
                       </button>
                     )}
                     {(consent.status === 'signed' || consent.status === 'pending_signature') && (
                       <button
+                        type="button"
+                        className="consent-link consent-link--danger"
                         onClick={() => handleRevokeConsent(consent._id)}
-                        className="text-red-600 hover:text-red-900"
                       >
                         Revocar
                       </button>
                     )}
                     <button
+                      type="button"
+                      className="consent-link"
                       onClick={() => setSelectedConsent(consent)}
-                      className="text-gray-600 hover:text-gray-900"
                     >
                       Ver
                     </button>
@@ -503,39 +681,35 @@ const ConsentManagement = () => {
         </table>
       </div>
 
-      {/* Modal de Creación */}
       {showCreateModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <h2 className="text-xl font-bold mb-4">Nuevo Consentimiento Informado</h2>
+        <div className="consent-modal">
+          <div className="consent-modal__content consent-modal__content--wide">
+            <h2>Nuevo Consentimiento Informado</h2>
             <form onSubmit={handleCreateConsent}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">ID del Paciente *</label>
+              <div className="consent-form-grid">
+                <div className="consent-form-field">
+                  <label>ID del Paciente *</label>
                   <input
                     type="text"
                     value={formData.patientId}
                     onChange={(e) => setFormData({ ...formData, patientId: e.target.value })}
-                    className="w-full border rounded px-3 py-2"
                     required
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Nombre del Paciente *</label>
+                <div className="consent-form-field">
+                  <label>Nombre del Paciente *</label>
                   <input
                     type="text"
                     value={formData.patientName}
                     onChange={(e) => setFormData({ ...formData, patientName: e.target.value })}
-                    className="w-full border rounded px-3 py-2"
                     required
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Tipo de Consentimiento *</label>
+                <div className="consent-form-field">
+                  <label>Tipo de Consentimiento *</label>
                   <select
                     value={formData.consentType}
                     onChange={(e) => setFormData({ ...formData, consentType: e.target.value })}
-                    className="w-full border rounded px-3 py-2"
                     required
                   >
                     <option value="procedure">Procedimiento</option>
@@ -548,169 +722,126 @@ const ConsentManagement = () => {
                     <option value="other">Otro</option>
                   </select>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Fecha de Expiración</label>
+                <div className="consent-form-field">
+                  <label>Fecha de Expiración</label>
                   <input
                     type="date"
                     value={formData.expiresAt}
                     onChange={(e) => setFormData({ ...formData, expiresAt: e.target.value })}
-                    className="w-full border rounded px-3 py-2"
                   />
                 </div>
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Título *</label>
+
+              <div className="consent-form-field">
+                <label>Título *</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full border rounded px-3 py-2"
                   required
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Descripción *</label>
+
+              <div className="consent-form-field">
+                <label>Descripción *</label>
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full border rounded px-3 py-2"
                   rows="4"
                   required
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Detalles del Procedimiento</label>
+
+              <div className="consent-form-field">
+                <label>Detalles del Procedimiento</label>
                 <textarea
                   value={formData.procedureDetails}
                   onChange={(e) => setFormData({ ...formData, procedureDetails: e.target.value })}
-                  className="w-full border rounded px-3 py-2"
                   rows="4"
                 />
               </div>
 
               {/* Riesgos */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Riesgos</label>
-                <div className="flex gap-2 mb-2">
+              <div className="consent-form-field">
+                <label>Riesgos</label>
+                <div className="consent-list-adder">
                   <input
                     type="text"
                     value={newRisk}
                     onChange={(e) => setNewRisk(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addRisk())}
-                    className="flex-1 border rounded px-3 py-2"
                     placeholder="Agregar riesgo"
                   />
-                  <button
-                    type="button"
-                    onClick={addRisk}
-                    className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
-                  >
-                    Agregar
-                  </button>
+                  <button type="button" onClick={addRisk}>Agregar</button>
                 </div>
-                <div className="space-y-1">
+                <div className="consent-list-items">
                   {formData.risks.map((risk, index) => (
-                    <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded">
-                      <span className="text-sm">- {risk}</span>
-                      <button
-                        type="button"
-                        onClick={() => removeRisk(index)}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        ×
-                      </button>
+                    <div key={index} className="consent-list-item">
+                      <span>- {risk}</span>
+                      <button type="button" onClick={() => removeRisk(index)}>×</button>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Beneficios */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Beneficios</label>
-                <div className="flex gap-2 mb-2">
+              <div className="consent-form-field">
+                <label>Beneficios</label>
+                <div className="consent-list-adder">
                   <input
                     type="text"
                     value={newBenefit}
                     onChange={(e) => setNewBenefit(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addBenefit())}
-                    className="flex-1 border rounded px-3 py-2"
                     placeholder="Agregar beneficio"
                   />
-                  <button
-                    type="button"
-                    onClick={addBenefit}
-                    className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
-                  >
-                    Agregar
-                  </button>
+                  <button type="button" onClick={addBenefit}>Agregar</button>
                 </div>
-                <div className="space-y-1">
+                <div className="consent-list-items">
                   {formData.benefits.map((benefit, index) => (
-                    <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded">
-                      <span className="text-sm">- {benefit}</span>
-                      <button
-                        type="button"
-                        onClick={() => removeBenefit(index)}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        ×
-                      </button>
+                    <div key={index} className="consent-list-item">
+                      <span>- {benefit}</span>
+                      <button type="button" onClick={() => removeBenefit(index)}>×</button>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Alternativas */}
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">Alternativas</label>
-                <div className="flex gap-2 mb-2">
+              <div className="consent-form-field">
+                <label>Alternativas</label>
+                <div className="consent-list-adder">
                   <input
                     type="text"
                     value={newAlternative}
                     onChange={(e) => setNewAlternative(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addAlternative())}
-                    className="flex-1 border rounded px-3 py-2"
                     placeholder="Agregar alternativa"
                   />
-                  <button
-                    type="button"
-                    onClick={addAlternative}
-                    className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
-                  >
-                    Agregar
-                  </button>
+                  <button type="button" onClick={addAlternative}>Agregar</button>
                 </div>
-                <div className="space-y-1">
+                <div className="consent-list-items">
                   {formData.alternatives.map((alternative, index) => (
-                    <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded">
-                      <span className="text-sm">- {alternative}</span>
-                      <button
-                        type="button"
-                        onClick={() => removeAlternative(index)}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        ×
-                      </button>
+                    <div key={index} className="consent-list-item">
+                      <span>- {alternative}</span>
+                      <button type="button" onClick={() => removeAlternative(index)}>×</button>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2">
+              <div className="consent-modal__actions">
                 <button
                   type="button"
+                  className="consent-btn"
                   onClick={() => {
                     setShowCreateModal(false);
                     resetForm();
                   }}
-                  className="px-4 py-2 border rounded hover:bg-gray-50"
                 >
                   Cancelar
                 </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                >
+                <button type="submit" className="consent-btn consent-btn--primary">
                   Crear Consentimiento
                 </button>
               </div>
@@ -719,144 +850,10 @@ const ConsentManagement = () => {
         </div>
       )}
 
-      {/* Modal de Firma */}
-      {showSignatureModal && selectedConsent && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-2xl w-full">
-            <h2 className="text-xl font-bold mb-4">Firmar Consentimiento</h2>
-            <div className="mb-4">
-              <p className="text-sm text-gray-600 mb-2">
-                Dibuje su firma en el área de abajo:
-              </p>
-              <canvas
-                id="signatureCanvas"
-                width="600"
-                height="200"
-                className="border-2 border-gray-300 rounded cursor-crosshair"
-                style={{ touchAction: 'none' }}
-              />
-            </div>
-            <div className="flex justify-end gap-2">
-              <button
-                onClick={clearSignature}
-                className="px-4 py-2 border rounded hover:bg-gray-50"
-              >
-                Limpiar
-              </button>
-              <button
-                onClick={() => {
-                  setShowSignatureModal(false);
-                  clearSignature();
-                }}
-                className="px-4 py-2 border rounded hover:bg-gray-50"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={() => handleSignConsent(selectedConsent._id)}
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-              >
-                Firmar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Modal de Detalle */}
-      {selectedConsent && !showSignatureModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <h2 className="text-xl font-bold mb-4">Detalle del Consentimiento</h2>
-            <div className="space-y-4">
-              <div>
-                <strong>Paciente:</strong> {selectedConsent.patientName}
-              </div>
-              <div>
-                <strong>Doctor:</strong> {selectedConsent.doctorName}
-              </div>
-              <div>
-                <strong>Tipo:</strong> {getTypeLabel(selectedConsent.consentType)}
-              </div>
-              <div>
-                <strong>Estado:</strong> {selectedConsent.status}
-              </div>
-              <div>
-                <strong>Título:</strong> {selectedConsent.title}
-              </div>
-              <div>
-                <strong>Descripción:</strong>
-                <p className="mt-1 whitespace-pre-wrap">{selectedConsent.description}</p>
-              </div>
-              {selectedConsent.procedureDetails && (
-                <div>
-                  <strong>Detalles del Procedimiento:</strong>
-                  <p className="mt-1 whitespace-pre-wrap">{selectedConsent.procedureDetails}</p>
-                </div>
-              )}
-              {selectedConsent.risks && selectedConsent.risks.length > 0 && (
-                <div>
-                  <strong>Riesgos:</strong>
-                  <ul className="list-disc list-inside mt-1">
-                    {selectedConsent.risks.map((risk, index) => (
-                      <li key={index}>{risk}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {selectedConsent.benefits && selectedConsent.benefits.length > 0 && (
-                <div>
-                  <strong>Beneficios:</strong>
-                  <ul className="list-disc list-inside mt-1">
-                    {selectedConsent.benefits.map((benefit, index) => (
-                      <li key={index}>{benefit}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {selectedConsent.alternatives && selectedConsent.alternatives.length > 0 && (
-                <div>
-                  <strong>Alternativas:</strong>
-                  <ul className="list-disc list-inside mt-1">
-                    {selectedConsent.alternatives.map((alternative, index) => (
-                      <li key={index}>{alternative}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {selectedConsent.patientSignature && (
-                <div>
-                  <strong>Firma del Paciente:</strong>
-                  <p className="mt-1">
-                    {selectedConsent.patientSignature.signerName} -{' '}
-                    {new Date(selectedConsent.patientSignature.signedAt).toLocaleString()}
-                  </p>
-                </div>
-              )}
-              {selectedConsent.doctorSignature && (
-                <div>
-                  <strong>Firma del Doctor:</strong>
-                  <p className="mt-1">
-                    {selectedConsent.doctorSignature.signerName} -{' '}
-                    {new Date(selectedConsent.doctorSignature.signedAt).toLocaleString()}
-                  </p>
-                </div>
-              )}
-            </div>
-            <div className="mt-6 flex justify-end">
-              <button
-                onClick={() => setSelectedConsent(null)}
-                className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
-              >
-                Cerrar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {signatureModal}
+      {detailModal}
     </div>
   );
 };
 
 export default ConsentManagement;
-
