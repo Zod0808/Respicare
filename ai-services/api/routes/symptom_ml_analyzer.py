@@ -236,11 +236,27 @@ async def analyze_symptoms_ml(input_data: SymptomMLInput, use_ensemble: bool = T
                 service = EnhancedChatbotService()
                 result = service._classify_by_patterns(symptoms_str, [], input_data.symptoms)
 
+                # _classify_by_patterns() reports urgency in Spanish
+                # ('baja'/'media'/'alta'/'critica'), but this endpoint's
+                # urgency_level/needs_medical_attention use the English
+                # taxonomy ('low'/'medium'/'high'/'critical') everywhere
+                # else in this file. Without this translation,
+                # needs_medical_attention was always False here (a Spanish
+                # value can never match ['high', 'critical']), even for a
+                # pattern match as severe as neumonia ('alta').
+                pattern_urgency_map = {
+                    'critica': 'critical',
+                    'alta': 'high',
+                    'media': 'medium',
+                    'baja': 'low'
+                }
+                pattern_urgency = pattern_urgency_map.get(result.get('urgency'), 'medium')
+
                 pattern_response = SymptomMLOutput(
                     disease=result.get('disease_name', 'Infección respiratoria'),
                     confidence=result.get('confidence', 0.6),
-                    urgency_level=result.get('urgency', 'medium'),
-                    needs_medical_attention=result.get('urgency') in ['high', 'critical']
+                    urgency_level=pattern_urgency,
+                    needs_medical_attention=pattern_urgency in ['high', 'critical']
                 )
                 return _apply_medical_validation(pattern_response, symptoms_str, input_data.patient_age, vitals=vitals_dict)
         

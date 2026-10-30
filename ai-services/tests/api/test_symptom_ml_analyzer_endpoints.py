@@ -7,6 +7,7 @@ not just inside the offline training script.
 """
 
 import pytest
+from unittest.mock import patch
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -124,3 +125,24 @@ class TestMlAnalyzeEndpoint:
         assert data['needs_medical_attention'] is False
         assert data['is_clinically_coherent'] is True
         assert data['confidence'] == pytest.approx(0.8)
+
+    def test_pattern_fallback_translates_spanish_urgency_to_english(self, client):
+        """Regresión: cuando ambos modelos ML fallan al cargar, el endpoint
+        recurre a _classify_by_patterns(), que reporta 'urgency' en español
+        ('alta' para neumonía). Sin traducir a inglés, urgency_level quedaba
+        en español (inconsistente con el resto del endpoint) y
+        needs_medical_attention quedaba siempre en False, ya que 'alta'
+        nunca es igual a 'high'/'critical'."""
+        with patch('shap_explainer.SHAPDiseaseExplainer', side_effect=Exception('no model available')):
+            response = client.post(
+                '/v1/ml-analyze?use_ensemble=false',
+                json={
+                    'symptoms': ['fiebre alto', 'dificultad para respirar', 'tos', 'dolor torácico de pecho'],
+                    'patient_age': 30
+                }
+            )
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data['urgency_level'] == 'high'
+        assert data['needs_medical_attention'] is True

@@ -375,6 +375,30 @@ class TestEnhancedChatbotService:
             assert 'message' in result
     
     @pytest.mark.asyncio
+    async def test_process_user_message_ml_urgency_propagates_as_spanish_key(self, chatbot_service, sample_user_message):
+        """Regresión: cuando la predicción ML determina urgencia 'high', el
+        resultado final debe reportar 'urgency'='alta' (clave/valores en
+        español que usan get_openai_response/_get_actionable_recommendation),
+        no la clave 'urgency_level' en inglés que escribía _predict_with_ml,
+        y la urgencia no debe degradarse silenciosamente a 'baja'."""
+        chatbot_service._use_ml = True
+        with patch.object(chatbot_service, '_predict_with_ml', return_value={
+            'disease': 'Neumonía',
+            'confidence': 0.9,
+            'urgency_level': 'high',
+            'top_contributing_features': ['fiebre'],
+        }):
+            result = await chatbot_service.process_user_message(
+                user_message=sample_user_message,
+                conversation_history=None,
+                context=None
+            )
+
+        assert result['disease_classification']['urgency'] == 'alta'
+        assert result['analysis']['urgency_level'] == 'alta'
+        assert 'URGENTE' in result['message']
+
+    @pytest.mark.asyncio
     async def test_process_user_message_error_handling(self, chatbot_service):
         """Test error handling in message processing"""
         # Mock a method to raise an error

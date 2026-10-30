@@ -856,10 +856,25 @@ class EnhancedChatbotService:
                 try:
                     ml_prediction = self._predict_with_ml(user_message, symptoms)
                     if ml_prediction:
+                        # _predict_with_ml() reports urgency_level in English
+                        # ('low'/'medium'/'high'/'critical'), but downstream
+                        # consumers (get_openai_response(),
+                        # _get_actionable_recommendation(), and the
+                        # 'analysis' block below) all read the Spanish
+                        # 'urgency' key ('baja'/'media'/'alta'/'critica').
+                        # Without this translation, ML-flagged high/critical
+                        # cases silently rendered as "baja" (low) urgency.
+                        ml_urgency_map = {
+                            'critical': 'critica',
+                            'high': 'alta',
+                            'medium': 'media',
+                            'low': 'baja'
+                        }
                         classified_disease = {
                             'disease_name': ml_prediction.get('disease', 'Infección respiratoria'),
                             'disease_id': hash(ml_prediction.get('disease', 'unknown')),
                             'confidence': ml_prediction.get('confidence', 0.7),
+                            'urgency': ml_urgency_map.get(ml_prediction.get('urgency_level'), 'baja'),
                             'urgency_level': ml_prediction.get('urgency_level', 'medium'),
                             'symptoms': symptoms,
                             'matched_symptoms': ml_prediction.get('top_contributing_features', [])[:5],
