@@ -6,8 +6,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BACKEND_BASE_URL as API_URL } from '../utils/apiBase';
+import { useAuth } from '../contexts/AuthContext';
 
 const ReferralManagement = () => {
+  const { user } = useAuth();
   const [referrals, setReferrals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -18,6 +20,9 @@ const ReferralManagement = () => {
     referralType: '',
     priority: '',
   });
+  const [doctors, setDoctors] = useState([]);
+  const [patientQuery, setPatientQuery] = useState('');
+  const [patientResults, setPatientResults] = useState([]);
 
   const [formData, setFormData] = useState({
     patientId: '',
@@ -31,11 +36,6 @@ const ReferralManagement = () => {
     clinicalNotes: '',
     requestedDate: new Date().toISOString().split('T')[0],
   });
-
-  useEffect(() => {
-    loadReferrals();
-    loadStats();
-  }, [filters]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getAuthToken = () => {
     return localStorage.getItem('auth_token');
@@ -55,6 +55,33 @@ const ReferralManagement = () => {
     }
     return config;
   });
+
+  useEffect(() => {
+    loadReferrals();
+    loadStats();
+  }, [filters]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    apiClient
+      .get('/auth/doctors')
+      .then((response) => setDoctors(response.data?.data ?? []))
+      .catch(() => undefined);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const trimmed = patientQuery.trim();
+    if (trimmed.length < 2) {
+      setPatientResults([]);
+      return;
+    }
+    const timeoutId = setTimeout(() => {
+      apiClient
+        .get('/auth/patients', { params: { q: trimmed } })
+        .then((response) => setPatientResults(response.data?.data ?? []))
+        .catch(() => setPatientResults([]));
+    }, 300);
+    return () => clearTimeout(timeoutId);
+  }, [patientQuery]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadReferrals = async () => {
     try {
@@ -86,16 +113,15 @@ const ReferralManagement = () => {
   const handleCreateReferral = async (e) => {
     e.preventDefault();
     const { patientId, referredToDoctorId, referredToSpecialty, reason } = formData;
-    if (!patientId?.trim()) { alert('ID de paciente es requerido'); return; }
-    if (!referredToDoctorId?.trim()) { alert('ID del doctor receptor es requerido'); return; }
+    if (!patientId?.trim()) { alert('Debes seleccionar un paciente de la lista de resultados'); return; }
+    if (!referredToDoctorId?.trim()) { alert('Debes seleccionar un doctor destino'); return; }
     if (!referredToSpecialty?.trim()) { alert('Especialidad es requerida'); return; }
     if (!reason?.trim()) { alert('Razón del referido es requerida'); return; }
     try {
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
       await apiClient.post('/referrals', {
         ...formData,
-        referringDoctorId: user._id || user.id,
-        referringDoctorName: user.name,
+        referringDoctorId: user?._id || user?.id,
+        referringDoctorName: user?.name,
       });
       alert('Referido creado exitosamente');
       setShowCreateModal(false);
@@ -163,6 +189,14 @@ const ReferralManagement = () => {
       clinicalNotes: '',
       requestedDate: new Date().toISOString().split('T')[0],
     });
+    setPatientQuery('');
+    setPatientResults([]);
+  };
+
+  const handleSelectPatient = (patient) => {
+    setFormData((prev) => ({ ...prev, patientId: patient._id, patientName: patient.name }));
+    setPatientQuery(patient.name);
+    setPatientResults([]);
   };
 
   const getStatusColor = (status) => {
@@ -322,10 +356,7 @@ const ReferralManagement = () => {
                     {referral.status === 'pending' && (
                       <>
                         <button
-                          onClick={() => {
-                            const doctorId = prompt('ID del doctor que acepta:');
-                            if (doctorId) handleAcceptReferral(referral._id, doctorId);
-                          }}
+                          onClick={() => handleAcceptReferral(referral._id, user?._id || user?.id)}
                           className="text-green-600 hover:text-green-900"
                         >
                           Aceptar
@@ -367,34 +398,62 @@ const ReferralManagement = () => {
             <h2 className="text-xl font-bold mb-4">Nuevo Referido</h2>
             <form onSubmit={handleCreateReferral}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">ID del Paciente *</label>
+                <div className="md:col-span-2 relative">
+                  <label className="block text-sm font-medium mb-2">Paciente *</label>
                   <input
                     type="text"
-                    value={formData.patientId}
-                    onChange={(e) => setFormData({ ...formData, patientId: e.target.value })}
+                    value={patientQuery}
+                    onChange={(e) => {
+                      setPatientQuery(e.target.value);
+                      setFormData({ ...formData, patientId: '', patientName: '' });
+                    }}
+                    placeholder="Escribe el nombre del paciente para buscarlo"
                     className="w-full border rounded px-3 py-2"
                     required
                   />
+                  {patientResults.length > 0 && (
+                    <ul className="absolute z-10 w-full bg-white border rounded shadow mt-1 max-h-40 overflow-y-auto">
+                      {patientResults.map((patient) => (
+                        <li key={patient._id}>
+                          <button
+                            type="button"
+                            onClick={() => handleSelectPatient(patient)}
+                            className="w-full text-left px-3 py-2 hover:bg-gray-100"
+                          >
+                            {patient.name}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {formData.patientId ? (
+                    <p className="text-sm text-green-700 mt-1">Paciente seleccionado: {formData.patientName}</p>
+                  ) : (
+                    <p className="text-sm text-gray-500 mt-1">Selecciona un paciente de la lista de resultados.</p>
+                  )}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Nombre del Paciente *</label>
-                  <input
-                    type="text"
-                    value={formData.patientName}
-                    onChange={(e) => setFormData({ ...formData, patientName: e.target.value })}
-                    className="w-full border rounded px-3 py-2"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">ID Doctor Destino</label>
-                  <input
-                    type="text"
+                  <label className="block text-sm font-medium mb-2">Doctor Destino *</label>
+                  <select
                     value={formData.referredToDoctorId}
-                    onChange={(e) => setFormData({ ...formData, referredToDoctorId: e.target.value })}
+                    onChange={(e) => {
+                      const selected = doctors.find((d) => d._id === e.target.value);
+                      setFormData({
+                        ...formData,
+                        referredToDoctorId: e.target.value,
+                        referredToDoctorName: selected?.name || '',
+                      });
+                    }}
                     className="w-full border rounded px-3 py-2"
-                  />
+                    required
+                  >
+                    <option value="">Selecciona un doctor</option>
+                    {doctors.map((doctor) => (
+                      <option key={doctor._id} value={doctor._id}>
+                        {doctor.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2">Especialidad</label>

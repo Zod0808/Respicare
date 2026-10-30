@@ -830,4 +830,81 @@ describe('Auth Controller', () => {
         .expect(401);
     });
   });
+
+  describe('GET /api/v1/auth/patients', () => {
+    it('returns matching active patients with only id and name for a doctor', async () => {
+      const patient = await User.create({
+        name: 'Ana Flores',
+        email: 'anaflores@test.com',
+        password: 'password123',
+        role: 'patient',
+        isActive: true
+      }) as UserDocument;
+      const doctor = await User.create({
+        name: 'Dr. Buscador',
+        email: 'drbuscador@test.com',
+        password: 'password123',
+        role: 'doctor',
+        isActive: true
+      }) as UserDocument;
+      const doctorToken = testUtils.generateTestToken({ userId: doctor._id.toString(), role: 'doctor' });
+
+      const response = await request(app)
+        .get('/api/v1/auth/patients')
+        .query({ q: 'ana' })
+        .set('Authorization', `Bearer ${doctorToken}`)
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      const entry = response.body.data.find((p: any) => p._id === patient._id.toString());
+      expect(entry).toBeDefined();
+      expect(entry.name).toBe('Ana Flores');
+      expect(entry.email).toBeUndefined();
+      expect(entry.password).toBeUndefined();
+    });
+
+    it('returns an empty list when the query is shorter than 2 characters', async () => {
+      const doctor = await User.create({
+        name: 'Dr. Corto',
+        email: 'drcorto@test.com',
+        password: 'password123',
+        role: 'doctor',
+        isActive: true
+      }) as UserDocument;
+      const doctorToken = testUtils.generateTestToken({ userId: doctor._id.toString(), role: 'doctor' });
+
+      const response = await request(app)
+        .get('/api/v1/auth/patients')
+        .query({ q: 'a' })
+        .set('Authorization', `Bearer ${doctorToken}`)
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      expect(response.body.data).toEqual([]);
+    });
+
+    it('should reject patients from searching other patients', async () => {
+      const patient = await User.create({
+        name: 'Paciente Curioso',
+        email: 'pacientecurioso@test.com',
+        password: 'password123',
+        role: 'patient',
+        isActive: true
+      }) as UserDocument;
+      const patientToken = testUtils.generateTestToken({ userId: patient._id.toString(), role: 'patient' });
+
+      await request(app)
+        .get('/api/v1/auth/patients')
+        .query({ q: 'ana' })
+        .set('Authorization', `Bearer ${patientToken}`)
+        .expect(403);
+    });
+
+    it('should require authentication', async () => {
+      await request(app)
+        .get('/api/v1/auth/patients')
+        .query({ q: 'ana' })
+        .expect(401);
+    });
+  });
 });

@@ -399,6 +399,38 @@ export const listDoctors = asyncHandler(async (_req: AuthenticatedRequest, res: 
   res.status(200).json(response);
 });
 
+// Buscar pacientes por nombre (solo personal clínico, para flujos como derivaciones)
+export const searchPatients = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+  const q = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+
+  if (q.length < 2) {
+    const response: ApiResponse = {
+      success: true,
+      message: 'Pacientes obtenidos exitosamente',
+      data: [],
+    };
+    res.status(200).json(response);
+    return;
+  }
+
+  // El nombre se cifra en reposo (applyFieldEncryption), por lo que un $regex a nivel
+  // de Mongo nunca podría coincidir con la consulta en texto plano: se filtra en memoria
+  // después de que el hook post-find lo desencripta.
+  const normalizedQuery = q.toLowerCase();
+  const patients = await User.findByRole('patient');
+  const data = patients
+    .filter((p) => p.name?.toLowerCase().includes(normalizedQuery))
+    .slice(0, 20)
+    .map((p) => ({ _id: p._id, name: p.name }));
+
+  const response: ApiResponse = {
+    success: true,
+    message: 'Pacientes obtenidos exitosamente',
+    data,
+  };
+  res.status(200).json(response);
+});
+
 // Crear usuario (solo admin)
 export const adminCreateUser = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
   if (req.user?.role !== 'admin') {
