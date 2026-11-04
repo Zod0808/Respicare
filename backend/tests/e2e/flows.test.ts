@@ -955,7 +955,8 @@ describe('E2E Tests - Flujos Completos', () => {
         role: 'admin' 
       });
 
-      // Paso 2: Crear nuevo usuario (doctor)
+      // Paso 2: Crear nuevo usuario (doctor) — vía el endpoint protegido de
+      // administración, no el autorregistro público (que solo crea pacientes).
       const newDoctorData = {
         name: 'Dr. Nuevo',
         email: uniqueEmail('nuevo-doctor'),
@@ -964,11 +965,12 @@ describe('E2E Tests - Flujos Completos', () => {
       };
 
       const createUserResponse = await request(app)
-        .post('/api/v1/auth/register')
+        .post('/api/v1/auth/users')
+        .set('Authorization', `Bearer ${adminToken}`)
         .send(newDoctorData)
         .expect(201);
 
-      const doctorId = createUserResponse.body.data.user._id;
+      const doctorId = createUserResponse.body.data._id;
 
       // Paso 3: Ver lista de usuarios
       const usersListResponse = await request(app)

@@ -277,7 +277,7 @@ export const testUtils = {
     name: 'Test User',
     email: 'test@example.com',
     password: 'Password123!',
-    role: 'doctor',
+    role: 'patient',
     ...overrides
   }),
   

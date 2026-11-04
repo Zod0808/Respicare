@@ -49,8 +49,12 @@ export const register = asyncHandler(async (req: Request<{}, ApiResponse<AuthRes
     logger.warn('Intento de registro con rol no permitido', { email, role });
     throw new AppError('Rol no válido', 400);
   }
+  // El autorregistro público solo puede crear pacientes. Cuentas de médico/admin
+  // se crean exclusivamente por un administrador vía POST /api/v1/auth/users
+  // (adminCreateUser), que sí verifica req.user.role === 'admin'.
   if (role && role !== 'patient') {
-    logger.warn('Registro con rol elevado', { email, role });
+    logger.warn('Intento de autorregistro con rol elevado bloqueado', { email, role });
+    throw new AppError('El autorregistro solo está disponible para cuentas de paciente', 403);
   }
 
   // Verificar si el usuario ya existe

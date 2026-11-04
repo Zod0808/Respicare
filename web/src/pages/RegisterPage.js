@@ -9,15 +9,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { EyeIcon, RoleIcon } from './LoginPage';
+import { EyeIcon } from './LoginPage';
 import './LoginPage.css';
 
-const ROLES = [
-  { value: 'patient', label: 'Paciente',      desc: 'Gestión de citas e historial' },
-  { value: 'doctor',  label: 'Médico',         desc: 'Monitoreo y reportes clínicos' },
-  { value: 'admin',   label: 'Administrador',  desc: 'Control completo del sistema' },
-];
-
+// El autorregistro público solo crea cuentas de paciente. Las cuentas de
+// médico/administrador las crea un administrador desde el panel de gestión
+// de usuarios (AdminPage), que llama al endpoint protegido POST /auth/users.
 const BENEFITS = [
   'Datos médicos cifrados y seguros',
   'Acceso desde cualquier dispositivo',
@@ -31,7 +28,6 @@ const RegisterPage = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'patient',
   });
   const [showPwd, setShowPwd]         = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -85,9 +81,8 @@ const RegisterPage = () => {
     setError('');
     setLoading(true);
     try {
-      const created = await register(form.name, form.email, form.password, form.role);
-      const dest = ['doctor', 'admin'].includes(created?.role ?? form.role) ? '/dashboard' : '/';
-      navigate(dest, { replace: true });
+      await register(form.name, form.email, form.password);
+      navigate('/', { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || 'Error al registrarse. Intenta de nuevo.');
     } finally {
@@ -177,25 +172,6 @@ const RegisterPage = () => {
                   required
                   autoComplete="email"
                 />
-              </div>
-            </div>
-
-            {/* Rol */}
-            <div className="login-field">
-              <label htmlFor="reg-role">Tipo de usuario</label>
-              <div className="login-roles__grid" style={{ marginTop: 4 }}>
-                {ROLES.map((r) => (
-                  <button
-                    key={r.value}
-                    type="button"
-                    className={`login-role-card${form.role === r.value ? ' is-selected' : ''}`}
-                    onClick={() => setForm(f => ({ ...f, role: r.value }))}
-                  >
-                    <RoleIcon role={r.value} />
-                    <strong>{r.label}</strong>
-                    <span>{r.desc}</span>
-                  </button>
-                ))}
               </div>
             </div>
 

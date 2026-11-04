@@ -35,23 +35,13 @@ const renderRegister = (authOverrides = {}) => {
   );
 };
 
-// El rol real no es un <select> (no hay ningún elemento con label "rol"):
-// es una grilla de botones ("Paciente"/"Médico"/"Administrador") que se
-// seleccionan haciendo click.
-const ROLE_BUTTON_NAME = {
-  patient: /paciente/i,
-  doctor: /médico/i,
-  admin: /administrador/i,
-};
-
-const fillForm = ({ name = 'Juan Pérez', email = 'j@test.com', password = 'Secure1!', confirm = 'Secure1!', role = 'patient' } = {}) => {
+// El autorregistro público solo crea pacientes: no hay selector de rol
+// (médico/admin se crean desde el panel de administración).
+const fillForm = ({ name = 'Juan Pérez', email = 'j@test.com', password = 'Secure1!', confirm = 'Secure1!' } = {}) => {
   fireEvent.change(screen.getByLabelText(/nombre completo/i), { target: { value: name } });
   fireEvent.change(screen.getByLabelText(/correo electrónico/i), { target: { value: email } });
   fireEvent.change(screen.getByLabelText(/^contraseña/i), { target: { value: password } });
   fireEvent.change(screen.getByLabelText(/confirmar contraseña/i), { target: { value: confirm } });
-  if (role !== 'patient') {
-    fireEvent.click(screen.getByRole('button', { name: ROLE_BUTTON_NAME[role] }));
-  }
 };
 
 describe('RegisterPage', () => {
@@ -74,13 +64,11 @@ describe('RegisterPage', () => {
     expect(screen.getByRole('button', { name: /crear cuenta/i })).toBeInTheDocument();
   });
 
-  it('renders role options', () => {
-    // No existe un <select>/<option> de rol: son botones ("Paciente",
-    // "Médico" — no "Doctor" —, "Administrador").
+  it('does not render role selection (self-registration is patient-only)', () => {
     renderRegister();
-    expect(screen.getByRole('button', { name: /paciente/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /médico/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /administrador/i })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /paciente/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /médico/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /administrador/i })).not.toBeInTheDocument();
   });
 
   it('renders link back to login', () => {
@@ -122,7 +110,7 @@ describe('RegisterPage', () => {
 
   // ── successful submission ─────────────────────────────────────────────────
 
-  it('calls register() and navigates to /dashboard on success', async () => {
+  it('calls register() and navigates to / on success', async () => {
     const mockRegister = jest.fn().mockResolvedValue({ name: 'Juan' });
     useAuth.mockReturnValue({ register: mockRegister, isAuthenticated: false, loading: false });
 
@@ -134,14 +122,14 @@ describe('RegisterPage', () => {
 
     // La contraseña debe cumplir las 4 reglas reales: >=8 caracteres,
     // mayúscula, número y carácter especial.
-    fillForm({ password: 'Secure1!', confirm: 'Secure1!', role: 'doctor' });
+    fillForm({ password: 'Secure1!', confirm: 'Secure1!' });
     fireEvent.submit(screen.getByLabelText(/confirmar contraseña/i).closest('form'));
 
     await waitFor(() => {
-      expect(mockRegister).toHaveBeenCalledWith('Juan Pérez', 'j@test.com', 'Secure1!', 'doctor');
+      expect(mockRegister).toHaveBeenCalledWith('Juan Pérez', 'j@test.com', 'Secure1!');
     });
-    // `created` no trae `role`, así que el destino cae al rol del formulario (doctor).
-    expect(mockNavigate).toHaveBeenCalledWith('/dashboard', { replace: true });
+    // El autorregistro siempre crea un paciente, así que el destino es '/'.
+    expect(mockNavigate).toHaveBeenCalledWith('/', { replace: true });
   });
 
   // ── registration error ────────────────────────────────────────────────────
