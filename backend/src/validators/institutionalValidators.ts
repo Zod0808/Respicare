@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: institutionalValidators
+ * Fecha de Creación: 2026-09-28
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-013 - Interoperabilidad institucional (MINSA/DIRESA/SINADEF)
+ * Descripción: Valida la sincronización por lote de centros de salud y la
+ * ingesta de alertas externas (título, mensaje, prioridad, distrito)
+ * provenientes de autoridades sanitarias.
+ */
 import Joi from 'joi';
 
 // Los campos individuales no se marcan required: institutionalIntegrationService

@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: automaticReportValidators
+ * Fecha de Creación: 2026-09-28
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Valida los payloads de generación (tipo daily/weekly/monthly,
+ * rango de fechas, exportación automática) y exportación (pdf/csv/json) de
+ * reportes automáticos antes de llegar al controlador.
+ */
 import Joi from 'joi';
 
 export const generateReportSchema = Joi.object({

@@ -1,3 +1,14 @@
+/**
+ * Nombre de Objeto: mlOrchestrationValidators
+ * Fecha de Creación: 2026-09-28
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-002/RF-006 - Diagnóstico inteligente y explicabilidad
+ * del modelo (mejora continua vía orquestación de sesiones de Reinforcement
+ * Learning y Federated Learning); no tiene un RF numerado propio en el SRS.
+ * Descripción: Valida el inicio/entrenamiento de sesiones RL, la solicitud
+ * de acciones RL y el inicio/ejecución de rondas de Federated Learning
+ * (clientes, método de agregación).
+ */
 import Joi from 'joi';
 
 export const startRLSessionSchema = Joi.object({

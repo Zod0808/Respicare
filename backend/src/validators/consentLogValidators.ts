@@ -1,3 +1,14 @@
+/**
+ * Nombre de Objeto: consentLogValidators
+ * Fecha de Creación: 2026-09-28
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RNF — Cumplimiento legal de datos de salud (consentimiento
+ * informado digital, Ley N.º 29733 de Protección de Datos Personales); no
+ * tiene un RF numerado propio en el SRS.
+ * Descripción: Valida el registro (lista de consentimientos aceptados con
+ * versión) y la revocación (motivo opcional) de consentimientos informados
+ * del paciente.
+ */
 import Joi from 'joi';
 
 export const registerConsentSchema = Joi.object({

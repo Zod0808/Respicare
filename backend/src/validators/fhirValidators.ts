@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: fhirValidators
+ * Fecha de Creación: 2026-09-28
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-013 - Interoperabilidad institucional (MINSA/DIRESA/SINADEF)
+ * Descripción: Valida las solicitudes de sincronización FHIR con hospitales
+ * externos (origen, destino, bidireccional, tipos de recurso soportados) y
+ * el parseo de mensajes HL7.
+ */
 import Joi from 'joi';
 
 const RESOURCE_TYPES_WITH_VALIDATOR = [

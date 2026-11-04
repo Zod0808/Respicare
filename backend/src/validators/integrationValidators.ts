@@ -1,3 +1,15 @@
+/**
+ * Nombre de Objeto: integrationValidators
+ * Fecha de Creación: 2026-09-28
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-013 - Interoperabilidad institucional (importación de
+ * resultados de laboratorio externos) y RF-007 - Panel del doctor
+ * (verificación de interacciones/contraindicaciones de fármacos); no
+ * aparece como objeto propio en la Matriz de Trazabilidad.
+ * Descripción: Valida la importación/sincronización de resultados de
+ * laboratorio (directa o vía HL7) y las consultas de interacciones y
+ * contraindicaciones de medicamentos contra el contexto clínico del paciente.
+ */
 import Joi from 'joi';
 
 export const importLaboratoryResultsSchema = Joi.object({

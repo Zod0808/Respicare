@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: smsWebhookValidators
+ * Fecha de Creación: 2026-09-28
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas y notificaciones (confirmación
+ * de entrega de SMS)
+ * Descripción: Valida los webhooks entrantes de proveedores SMS (Twilio,
+ * AWS SNS, MessageBird) usados para confirmar el estado de entrega de
+ * notificaciones.
+ */
 import Joi from 'joi';
 
 // Los proveedores externos pueden agregar campos a sus payloads sin previo

@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: chatConversationsValidators
+ * Fecha de Creación: 2026-09-28
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-002 - Diagnóstico inteligente de síntomas (chatbot conversacional)
+ * Descripción: Valida la creación de conversaciones del chatbot (datos de
+ * usuario, ubicación, idioma/origen) y el registro de mensajes (rol,
+ * contenido, metadata de urgencia/confianza/enfermedades detectadas).
+ */
 import Joi from 'joi';
 
 export const createConversationSchema = Joi.object({

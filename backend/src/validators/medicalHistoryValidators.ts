@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: medicalHistoryValidators
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: Valida la creación/actualización de episodios del historial
+ * clínico (síntomas con severidad/duración, ubicación, signos vitales) y la
+ * sincronización de historiales capturados offline.
+ */
 import Joi from 'joi';
 
 const symptomSchema = Joi.object({
