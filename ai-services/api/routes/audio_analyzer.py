@@ -1,5 +1,9 @@
 """
-Audio Analyzer API - Endpoints for audio analysis (cough detection and transcription)
+Nombre de Objeto: audio_analyzer (AudioAnalysisRequest/AudioAnalysisResponse)
+Fecha de Creación: 2026-11-06
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-003 - Análisis de tos por audio
+Descripción: Audio Analyzer API - Endpoints for audio analysis (cough detection and transcription)
 Uses pre-trained models - no dataset needed
 """
 
