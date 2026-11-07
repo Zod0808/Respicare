@@ -5,9 +5,22 @@
  */
 
 import * as Sentry from '@sentry/node';
-import { ProfilingIntegration } from '@sentry/profiling-node';
 
 let isInitialized = false;
+
+// @sentry/profiling-node depende de un binario nativo por versión de Node;
+// no siempre hay un build disponible para la versión de Node en uso (p. ej.
+// Node 24 todavía no tiene binario publicado). Se carga de forma perezosa y
+// opcional para que su ausencia no tumbe el arranque del backend.
+const loadProfilingIntegration = (): (new () => Sentry.Integration) | null => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    return require('@sentry/profiling-node').ProfilingIntegration;
+  } catch (error) {
+    console.warn('⚠️ @sentry/profiling-node no disponible, se omite profiling:', (error as Error).message);
+    return null;
+  }
+};
 
 export const initSentry = (): void => {
   if (isInitialized) {
@@ -24,15 +37,20 @@ export const initSentry = (): void => {
   }
 
   try {
+    const ProfilingIntegration = loadProfilingIntegration();
+    const integrations: Sentry.Integration[] = [
+      new Sentry.Integrations.Http({ tracing: true }),
+      new Sentry.Integrations.Express({ app: undefined }), // Se inicializa después
+      new Sentry.Integrations.Mongo({ useMongoose: true }),
+    ];
+    if (ProfilingIntegration) {
+      integrations.push(new ProfilingIntegration());
+    }
+
     Sentry.init({
       dsn,
       environment,
-      integrations: [
-        new ProfilingIntegration(),
-        new Sentry.Integrations.Http({ tracing: true }),
-        new Sentry.Integrations.Express({ app: undefined }), // Se inicializa después
-        new Sentry.Integrations.Mongo({ useMongoose: true }),
-      ],
+      integrations,
       // Performance Monitoring
       tracesSampleRate: environment === 'production' ? 0.1 : 1.0, // 10% en prod, 100% en dev
       profilesSampleRate: environment === 'production' ? 0.1 : 1.0,
