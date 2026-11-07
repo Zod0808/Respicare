@@ -186,6 +186,87 @@ Despliegue gradual por ambiente: **Desarrollo** (`docker-compose.dev.yml`) → *
 - [ ] Build de Vercel del web (si hubo cambios) en estado "Ready"
 - [ ] Autorización expresa para habilitar producción
 
+## Anexo B. Procedimiento paso a paso (guía práctica)
+
+Esta guía complementa la sección 7 (procedimiento operativo formal) con los comandos reales, en el orden en que se ejecutan, para desplegar el sistema de principio a fin en la VM de producción.
+
+### B.1 Descarga del código
+
+```bash
+ssh <usuario>@38.250.158.233
+cd /ruta/al/proyecto
+git fetch origin
+git checkout fabian
+git pull origin fabian
+```
+
+### B.2 Instalación y configuración
+
+```bash
+# Si no existe .env, se parte de la plantilla de la VM
+cp .env.vm .env   # scripts/deploy-vm.sh lo hace automáticamente si .env falta
+
+# Completar manualmente los secrets reales (nunca placeholders):
+# MONGO_PASSWORD, REDIS_PASSWORD, JWT_SECRET, JWT_REFRESH_SECRET,
+# FIELD_ENCRYPTION_KEY, CORS_ORIGINS, OPENAI_API_KEY
+nano .env
+
+# Construir las imágenes de backend y ai-services en la propia VM
+docker compose -f docker-compose.vm.yml build --no-cache backend ai-services
+```
+
+> `scripts/deploy-vm.sh` valida automáticamente que `MONGO_PASSWORD`, `REDIS_PASSWORD`, `JWT_SECRET` y `JWT_REFRESH_SECRET` no queden como placeholders antes de continuar; el resto de variables se revisa manualmente.
+
+### B.3 Subida/carga de datos
+
+Con `mongodb` y `redis` arriba (`docker compose -f docker-compose.vm.yml up -d mongodb redis` si aún no están levantados):
+
+```bash
+cd backend
+npm install
+npm run seed:demo             # usuarios y datos de demostración
+npm run seed:health-centers   # catálogo de centros de salud (RF-012)
+npm run seed:alerts           # alertas de ejemplo (RF-009), opcional
+cd ..
+```
+
+> `seed:demo` es solo para datos de demostración. En un despliegue con datos clínicos reales, omitir este paso y restaurar desde un respaldo verificado (`scripts/backup-vm.sh` / `mongorestore`) en su lugar.
+
+### B.4 Ejecución del sistema
+
+```bash
+./scripts/deploy-vm.sh --build
+```
+
+El script verifica Docker, valida `.env`, construye las imágenes, levanta `mongodb`, `redis`, `backend`, `ai-services`, `nginx`, `mongo-express` y `redis-commander`, y espera a que cada contenedor reporte `healthy`. Al finalizar imprime:
+
+```
+Backend API:  http://38.250.158.233/api/
+AI Service:   http://38.250.158.233/ai/
+Health:       http://38.250.158.233/health
+Dominio:      http://respicare.sytes.net
+```
+
+El frontend web **no** se despliega con este script: se actualiza solo mediante el push a `fabian`/`main`, que dispara el autodeploy de Vercel.
+
+Para exponer el sistema públicamente (si `tunnel-manager.sh` no está ya corriendo en la VM):
+
+```bash
+nohup ./scripts/tunnel-manager.sh > /dev/null 2>&1 &
+```
+
+> Es un proceso en primer plano que debe quedar corriendo en segundo plano (o como servicio) de forma continua: si se detiene, el túnel público deja de estar disponible.
+
+### B.5 Pruebas
+
+```bash
+./scripts/smoke-test-vm.sh
+```
+
+Verifica los healthchecks de los 5 contenedores, los endpoints públicos vía nginx (`/health`, `/ai/api/v1/health`, `/ai/openapi.json`) y un flujo mínimo de `auth/login`; sale con código ≠0 si algo falla.
+
+Para una validación más completa de la suite automatizada, usar `docs/testing/GUIA_QA_EJECUCION_CLI.md` y `docs/testing/CATALOGO_PRUEBAS.md`.
+
 ---
 
 ## Gaps detectados al aplicar esta plantilla al proyecto real
