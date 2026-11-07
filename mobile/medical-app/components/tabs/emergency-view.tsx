@@ -7,9 +7,11 @@
  * Requerimiento: RF-012 - Geolocalización de centros de salud
  * Descripción: Vista móvil de emergencias que obtiene la ubicación GPS del
  * paciente (useGeolocation), crea la solicitud de emergencia y muestra los
- * centros de salud cercanos obtenidos vía healthCenterService.
+ * centros de salud cercanos obtenidos vía healthCenterService, incluyendo
+ * el mapa de resultados embebido (HealthCenterMap).
  */
 import { useState } from "react"
+import dynamic from "next/dynamic"
 import { AlertTriangle, Phone, MapPin, Loader2, CheckCircle2, Clock, RefreshCw, Navigation, Hospital } from "lucide-react"
 import { ModernButton } from "@/components/ui/ModernButton"
 import { ModernCard } from "@/components/ui/ModernCard"
@@ -21,6 +23,12 @@ import { useGeolocation } from "@/hooks/useGeolocation"
 import { toast } from "sonner"
 import { format } from "date-fns"
 import { es } from "date-fns/locale"
+import "leaflet/dist/leaflet.css"
+
+const HealthCenterMap = dynamic(
+  () => import("./health-center-map").then((mod) => mod.HealthCenterMap),
+  { ssr: false, loading: () => <div className="h-64 w-full rounded-lg bg-muted animate-pulse" /> }
+)
 
 interface EmergencyViewProps { t: Translation }
 
@@ -61,6 +69,7 @@ export function EmergencyView({ t: _t }: EmergencyViewProps) {
   const [isLoadingHistory, setIsLoadingHistory] = useState(false)
   const [nearbyCenters, setNearbyCenters] = useState<HealthCenter[]>([])
   const [isLoadingCenters, setIsLoadingCenters] = useState(false)
+  const [centersSearchLocation, setCentersSearchLocation] = useState<{ latitude: number; longitude: number } | null>(null)
 
   const getLocation = async () => {
     setIsGettingLocation(true)
@@ -88,6 +97,7 @@ export function EmergencyView({ t: _t }: EmergencyViewProps) {
         maxDistanceKm: 15,
       })
       setNearbyCenters(centers)
+      setCentersSearchLocation({ latitude: coords.latitude, longitude: coords.longitude })
       if (centers.length === 0) {
         toast.error("No se encontraron centros de salud cercanos")
       }
@@ -268,6 +278,9 @@ export function EmergencyView({ t: _t }: EmergencyViewProps) {
           </ModernCard>
         ) : (
           <div className="space-y-3">
+            {centersSearchLocation && (
+              <HealthCenterMap userLocation={centersSearchLocation} centers={nearbyCenters} />
+            )}
             {nearbyCenters.map(center => (
               <ModernCard key={center.id} className="p-4 space-y-2">
                 <div className="flex items-center justify-between">
