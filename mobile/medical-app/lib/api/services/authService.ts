@@ -12,11 +12,21 @@ export class AuthService {
       API_ENDPOINTS.auth.login,
       credentials
     )
-    
+
+    // La app móvil es solo para pacientes: médicos y administradores usan el
+    // Panel del médico / Panel de administración en la plataforma web, que
+    // tiene las vistas de staff (gestión multi-paciente, validación, etc.)
+    // que esta app no implementa. No persistir tokens/usuario en ese caso.
+    if (response.user.role !== 'patient') {
+      throw new Error(
+        'La app móvil de RespiCare es solo para pacientes. Los médicos y administradores deben iniciar sesión en la plataforma web.'
+      )
+    }
+
     // Guardar tokens y usuario
     setAuthTokens(response.token, response.refreshToken)
     setUser(response.user)
-    
+
     return response
   }
 
