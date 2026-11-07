@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: serviceWorkerRegistration
+ * Fecha de Creación: 2026-11-06
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: N/A - Infraestructura PWA (registro de service worker); no
+ * implementa un RF propio, no aparece como objeto en la Matriz de Trazabilidad.
+ * Descripción: Registra/desregistra el service worker generado por Create
+ * React App, distinguiendo localhost (valida el worker antes de registrarlo)
+ * de producción, y dispara los callbacks onSuccess/onUpdate consumidos por index.js.
+ */
 // Basado en la guía oficial de CRA: https://create-react-app.dev/docs/making-a-progressive-web-app/
 
 const isLocalhost = Boolean(

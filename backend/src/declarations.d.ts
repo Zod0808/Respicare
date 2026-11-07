@@ -1,3 +1,14 @@
+/**
+ * Nombre de Objeto: declarations (ambient types)
+ * Fecha de Creación: 2026-11-06
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: N/A - Declaraciones de tipos TypeScript para dependencias sin
+ * @types; no implementa un RF propio, no aparece como objeto en la Matriz de
+ * Trazabilidad.
+ * Descripción: Declara los módulos ambiente (hpp, xss-clean, swagger-ui-express
+ * y los paquetes de OpenTelemetry) que no traen definiciones de tipos propias,
+ * permitiendo que el resto del backend los importe sin errores de compilación.
+ */
 // Type declarations for packages without @types
 
 declare module 'hpp' {

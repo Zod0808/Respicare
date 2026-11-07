@@ -1,5 +1,10 @@
 """
-Script mejorado para ver el coverage de ai-services con información detallada
+Nombre de Objeto: ver_coverage
+Fecha de Creación: 2026-11-06
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: N/A - Script de reporte de cobertura de tests; no implementa
+un RF propio, no aparece como objeto en la Matriz de Trazabilidad.
+Descripción: Script mejorado para ver el coverage de ai-services con información detallada
 y análisis de la situación real de las pruebas
 """
 import os

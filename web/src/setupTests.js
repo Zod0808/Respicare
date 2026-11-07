@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: setupTests
+ * Fecha de Creación: 2026-11-06
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: N/A - Configuración de entorno de pruebas (Jest/CRA); no
+ * implementa un RF propio, no aparece como objeto en la Matriz de Trazabilidad.
+ * Descripción: Setup global de Jest cargado antes de cada suite. Añade los
+ * polyfills de Node (TextEncoder/TextDecoder/streams/MessagePort) y los stubs
+ * de jsdom (scrollIntoView, matchMedia) que requieren los componentes web.
+ */
 import '@testing-library/jest-dom';
 import { TextEncoder, TextDecoder } from 'util';
 import { ReadableStream, WritableStream, TransformStream } from 'stream/web';

@@ -1,5 +1,10 @@
 """
-Script para organizar archivos de test en sus carpetas correspondientes
+Nombre de Objeto: organize_tests
+Fecha de Creación: 2026-11-06
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: N/A - Script de mantenimiento del repositorio de tests; no
+implementa un RF propio, no aparece como objeto en la Matriz de Trazabilidad.
+Descripción: Script para organizar archivos de test en sus carpetas correspondientes
 """
 import os
 import shutil
