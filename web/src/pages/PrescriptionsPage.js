@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: PrescriptionsPage
+ * Fecha de Creación: 2026-05-04
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-007 - Panel del doctor (gestión de prescripciones
+ * asociadas a la revisión/ajuste de diagnósticos por el médico); no
+ * aparece como objeto propio en la Matriz de Trazabilidad.
+ * Descripción: Página de listado paginado de prescripciones médicas,
+ * consumiendo GET /prescriptions del backend.
+ */
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { API_BASE } from '../utils/apiBase';

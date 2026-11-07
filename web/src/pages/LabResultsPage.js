@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: LabResultsPage
+ * Fecha de Creación: 2026-05-04
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico (resultados de
+ * laboratorio del paciente); no aparece como objeto propio en la Matriz de
+ * Trazabilidad.
+ * Descripción: Página de listado paginado de resultados de laboratorio,
+ * consumiendo GET /lab/results del backend.
+ */
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { API_BASE } from '../utils/apiBase';
