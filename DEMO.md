@@ -13,8 +13,10 @@ Guía para levantar el sistema completo con **un solo comando** en una laptop de
 ### Windows (PowerShell)
 
 ```powershell
-.\scripts\setup-demo.ps1
+.\scripts\setup-demo.bat
 ```
+
+> Usar el `.bat` evita el error `running scripts is disabled on this system`, que aparece por la política de ejecución por defecto de Windows en cualquier PC nueva. Si prefieres invocar el `.ps1` directamente, ejecuta antes `powershell -ExecutionPolicy Bypass -File .\scripts\setup-demo.ps1`, o habilita la política una vez con `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 
 ### Linux / macOS / WSL
 
@@ -124,10 +126,10 @@ Pasos:
 
 ```powershell
 # Windows: reconstruir todo desde cero (borra volúmenes y BD)
-.\scripts\setup-demo.ps1 -Reset
+.\scripts\setup-demo.bat -Reset
 
 # Windows: solo levantar servicios, sin poblar BD
-.\scripts\setup-demo.ps1 -SkipSeed
+.\scripts\setup-demo.bat -SkipSeed
 ```
 
 ```bash
