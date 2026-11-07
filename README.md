@@ -258,12 +258,37 @@ docker ps --format "table {{.Names}}\t{{.Status}}"
 
 ## Credenciales de Demo
 
+> ⚠️ Solo para desarrollo/pruebas. En producción, cambia todas las contraseñas por defecto.
+
+Las credenciales dependen de qué script de seed se ejecute. Para poblar la base de datos:
+
+```bash
+cd backend
+npm run seed
+```
+
+### Usuarios creados por `npm run seed` (`seed.ts`)
+
+| Rol | Email | Contraseña |
+|---|---|---|
+| Admin | `admin@respicare.com` | `admin123` |
+| Doctor | `doctor@respicare.com` | `password123` |
+| Doctor | `maria.garcia@respicare.com` | `password123` |
+| Paciente | `ana.lopez@email.com` | `password123` |
+| Paciente | `carlos.mendoza@email.com` | `password123` |
+| Paciente | `rosa.mamani@email.com` | `password123` |
+
+### Usuarios creados por `seed-complete-system.js` / `seed-users.js`
+
 | Rol | Email | Contraseña |
 |---|---|---|
 | Admin | `admin@demo.com` | `admin1234` |
-| Doctor | `doctor@demo.com` | `admin1234` |
-| Doctor | `laura.martinez@demo.com` | `admin1234` |
-| Paciente | `juan.perez@demo.com` | `admin1234` |
+| Doctor | `doctor@demo.com` | `demo1234` |
+| Doctor | `laura.martinez@demo.com` | `demo1234` |
+| Paciente | `paciente@demo.com` | `demo1234` |
+| Paciente | `juan.perez@demo.com` | `demo1234` |
+
+Más detalle en [`docs/guides/USUARIOS_DEMO_CREDENCIALES.md`](./docs/guides/USUARIOS_DEMO_CREDENCIALES.md).
 
 ---
 

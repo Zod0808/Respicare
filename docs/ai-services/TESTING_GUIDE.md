@@ -527,7 +527,6 @@ jobs:
 - `pytest.ini` - Configuración de pytest
 - `conftest.py` - Fixtures y configuración compartida
 - `requirements-test.txt` - Dependencias de testing
-- `TESTING_REPORT.md` - Reporte de pruebas
 - `TESTING_STRATEGY.md` - Estrategia de testing
 
 ---

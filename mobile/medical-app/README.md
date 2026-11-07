@@ -38,7 +38,7 @@ pnpm install
    NEXT_PUBLIC_AI_SERVICE_URL=http://TU_IP_LOCAL:8000
    ```
    
-   📖 **Más información**: Consulta `CONFIGURACION_RED.md` para instrucciones detalladas sobre cómo conectar la app móvil con Docker.
+   📖 **Más información**: Consulta `CONECTIVIDAD.md` para instrucciones detalladas sobre cómo conectar la app móvil con Docker.
 
 ### Ejecutar en modo desarrollo
 
@@ -89,7 +89,7 @@ La aplicación está completamente integrada con el backend de RespiCare.
 
 Si vas a usar la app en un dispositivo físico, necesitas configurar la conexión con Docker:
 
-**🚀 Guía Rápida**: Ver `GUIA_RAPIDA_CONEXION.md` para instrucciones paso a paso.
+**🚀 Guía Rápida**: Ver `CONECTIVIDAD.md` para instrucciones paso a paso.
 
 **Pasos rápidos**:
 1. Ejecuta `npm run config:ip` para configurar tu IP local
@@ -99,13 +99,11 @@ Si vas a usar la app en un dispositivo físico, necesitas configurar la conexió
 
 📖 **Guía completa para generar APK**: Ver `GENERAR_APK.md`
 
-Para más detalles, consulta `CONFIGURACION_RED.md`.
-
 ### 🌐 Acceso Externo (Sin Cables ni Misma WiFi)
 
 Si quieres usar la app en un teléfono real desde cualquier lugar (sin estar en la misma red WiFi), necesitas exponer tu backend a internet.
 
-**🚀 Guía Completa**: Ver `GUIA_ACCESO_EXTERNO.md` para todas las opciones disponibles.
+**🚀 Guía Completa**: Ver `CONECTIVIDAD.md` para todas las opciones disponibles.
 
 **Opciones rápidas:**
 
@@ -121,7 +119,7 @@ Si quieres usar la app en un teléfono real desde cualquier lugar (sin estar en 
    - ✅ Actualiza `.env.local` automáticamente con ambas URLs
    - ✅ Muestra las URLs públicas obtenidas
    
-   📖 **Guía de implementación**: Ver `GUIA_NGROK_IMPLEMENTACION.md` para instrucciones detalladas.
+   📖 **Guía de implementación**: Ver `CONECTIVIDAD.md` para instrucciones detalladas.
 
 2. **ngrok - Método Simple** (Ventanas separadas):
    ```bash
@@ -143,15 +141,12 @@ Si quieres usar la app en un teléfono real desde cualquier lugar (sin estar en 
 
 5. **Servidor en la nube** (Para producción):
    - Railway, Render, Fly.io, etc.
-   - Ver `GUIA_ACCESO_EXTERNO.md` para detalles
+   - Ver `CONECTIVIDAD.md` para detalles
 
 **Comandos útiles:**
 - `npm run tunnel:ngrok:stop` - Detiene todos los procesos de ngrok
 
-📖 **Guías detalladas**: 
-- `GUIA_NGROK_IMPLEMENTACION.md` ⭐ - **Nueva guía completa de implementación**
-- `GUIA_NGROK_COMPLETA.md` - Configuración completa con ngrok
-- `GUIA_ACCESO_EXTERNO.md` - Todas las opciones disponibles
+📖 **Guía detallada**: `CONECTIVIDAD.md` — instalación, configuración manual, troubleshooting y comparación ngrok vs Cloudflare Tunnel.
 
 ### Funcionalidades Integradas
 

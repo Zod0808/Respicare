@@ -302,7 +302,7 @@ User receives comprehensive prediction with full explainability
 - ✅ Endpoints ML integrados
 - ✅ Monitoreo de predicciones implementado
 - ✅ Sistema de feedback médico implementado
-- ✅ Documentación completa (CHATBOT_ML_INTEGRATION_COMPLETE.md)
+- ✅ Documentación completa
 
 ---
 
@@ -444,9 +444,6 @@ User receives comprehensive prediction with full explainability
 - ✅ ML Ops ligero para despliegue rápido de modelos analíticos.
 
 ### **Archivos y Documentación**:
-- ✅ `ML_SYSTEM_COMPLETE.md` - Resumen del sistema ML
-- ✅ `SHAP_EXPLAINABILITY_IMPLEMENTED.md` - Sistema SHAP
-- ✅ `CHATBOT_ML_INTEGRATION_COMPLETE.md` - Integración chatbot
 - ✅ `train_base_model.py` - Entrenamiento Random Forest
 - ✅ `train_xgboost_simple.py` - Entrenamiento XGBoost
 - ✅ `train_neural_network.py` - Entrenamiento Red Neuronal Multi-Tarea

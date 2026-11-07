@@ -27,7 +27,7 @@ cd ../mobile
 npm install
 ```
 
-> En Windows, si `pytest` no se reconoce como comando, usar siempre `python -m pytest` en vez de `pytest` (ver `ai-services/COMANDOS_PYTEST.md`).
+> En Windows, si `pytest` no se reconoce como comando, usar siempre `python -m pytest` en vez de `pytest`.
 
 ## 1. Backend (Jest) — `cd backend`
 

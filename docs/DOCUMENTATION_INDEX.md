@@ -74,7 +74,7 @@
 - **[docs/web/LAZY_LOADING.md](web/LAZY_LOADING.md)** - Optimizaciones de carga (lazy loading)
 - **[web/tests/README.md](../web/tests/README.md)** - Tests y cobertura
 
-### Mobile (React Native/Expo)
+### Mobile (Next.js/Capacitor)
 - **[mobile/README.md](../mobile/README.md)** - Documentación principal
 - **[mobile/medical-app/README.md](../mobile/medical-app/README.md)** - Documentación de la app Next.js/Capacitor
 - **[docs/mobile/README.md](mobile/README.md)** - Índice de documentación mobile
@@ -82,12 +82,6 @@
 - **[docs/mobile/INICIO_RAPIDO_APK.md](mobile/INICIO_RAPIDO_APK.md)** - Inicio rápido para generar APK
 - **[docs/mobile/ANALISIS_ROADMAP.md](mobile/ANALISIS_ROADMAP.md)** - Análisis del roadmap y estado
 - **[mobile/__tests__/README.md](../mobile/__tests__/README.md)** - Tests y cobertura
-- **[mobile/e2e/README.md](../mobile/e2e/README.md)** - Tests E2E con Detox
-- **[mobile/RespiCare-Mobile/README.md](../mobile/RespiCare-Mobile/README.md)** - Documentación de la app React Native
-- **[mobile/RespiCare-Mobile/README_CHATBOT.md](../mobile/RespiCare-Mobile/README_CHATBOT.md)** - Guía del chatbot móvil
-- **[mobile/RespiCare-Mobile/GUIA_AUDIO.md](../mobile/RespiCare-Mobile/GUIA_AUDIO.md)** - Guía de funcionalidades de audio
-- **[mobile/RespiCare-Mobile/README_SETUP.md](../mobile/RespiCare-Mobile/README_SETUP.md)** - Configuración
-- **[mobile/CONFIGURACION_PROYECTO.md](../mobile/CONFIGURACION_PROYECTO.md)** - Configuración del proyecto
 
 ---
 
@@ -155,23 +149,6 @@
 
 ---
 
-## 📊 Reportes de Implementación
-
-Los reportes de implementación están en **[docs/implementation-reports/](implementation-reports/)**:
-
-- **[ML_SYSTEM_COMPLETE.md](implementation-reports/ML_SYSTEM_COMPLETE.md)** - Sistema ML completo
-- **[CHATBOT_ML_INTEGRATION_COMPLETE.md](implementation-reports/CHATBOT_ML_INTEGRATION_COMPLETE.md)** - Integración chatbot ML
-- **[SHAP_EXPLAINABILITY_IMPLEMENTED.md](implementation-reports/SHAP_EXPLAINABILITY_IMPLEMENTED.md)** - Explicabilidad SHAP
-- **[AUTO_RETRAINING_COMPLETE.md](implementation-reports/AUTO_RETRAINING_COMPLETE.md)** - Retraining automático
-- **[RISK_PERSONALIZATION_COMPLETE.md](implementation-reports/RISK_PERSONALIZATION_COMPLETE.md)** - Personalización por riesgo
-- **[ENSEMBLE_INTEGRATION_COMPLETE.md](implementation-reports/ENSEMBLE_INTEGRATION_COMPLETE.md)** - Sistema ensemble
-- **[ANALYTICS_IMPLEMENTATION_COMPLETE.md](implementation-reports/ANALYTICS_IMPLEMENTATION_COMPLETE.md)** - Analytics y BI
-- **[MOBILE_INTEGRATION_COMPLETE.md](implementation-reports/MOBILE_INTEGRATION_COMPLETE.md)** - Integración mobile
-- **[AI_SERVICES_IMPLEMENTATION_COMPLETE.md](implementation-reports/AI_SERVICES_IMPLEMENTATION_COMPLETE.md)** - AI Services
-- **[DOCKER_SETUP_COMPLETE.md](implementation-reports/DOCKER_SETUP_COMPLETE.md)** - Setup Docker
-
----
-
 ## 🔍 Análisis de Código
 
 - **[docs/code-analysis/README.md](code-analysis/README.md)** - Índice de documentación de análisis de código
@@ -194,7 +171,6 @@ Los reportes de implementación están en **[docs/implementation-reports/](imple
 
 #### Audio/Voz
 - **[ai-services/docs/AUDIO_SERVICES.md](../ai-services/docs/AUDIO_SERVICES.md)** - Servicios de audio (Whisper + Librosa)
-- **[mobile/RespiCare-Mobile/GUIA_AUDIO.md](../mobile/RespiCare-Mobile/GUIA_AUDIO.md)** - Guía de uso en mobile
 - **[docs/roadmaps/ML_ROADMAP.md](roadmaps/ML_ROADMAP.md#fase-6-análisis-multimodal---imágenes-y-voz--completado)** - Fase 6 del roadmap ML
 - **Endpoints**:
   - `POST /api/v1/audio/cough` - Análisis de tos
@@ -205,7 +181,6 @@ Los reportes de implementación están en **[docs/implementation-reports/](imple
   - Evaluación de severidad y urgencia
 
 #### Chatbot Multimodal
-- **[mobile/RespiCare-Mobile/README_CHATBOT.md](../mobile/RespiCare-Mobile/README_CHATBOT.md)** - Guía del chatbot móvil
 - **Funcionalidades**:
   - Envío de imágenes médicas con selección de tipo
   - Grabación y análisis de audio (tos y transcripción)
@@ -216,8 +191,6 @@ Los reportes de implementación están en **[docs/implementation-reports/](imple
 ## 📝 Guías de Uso Rápido
 
 - **[QUICKSTART.md](../QUICKSTART.md)** - Inicio rápido general
-- **[mobile/GUIA_INICIO_RAPIDO.md](../mobile/GUIA_INICIO_RAPIDO.md)** - Inicio rápido mobile
-- **[mobile/RespiCare-Mobile/README_USO_RAPIDO.md](../mobile/RespiCare-Mobile/README_USO_RAPIDO.md)** - Uso rápido mobile
 
 ## 📖 Manuales de Usuario
 
@@ -230,8 +203,6 @@ Los reportes de implementación están en **[docs/implementation-reports/](imple
 
 ## 🔧 Configuración y Setup
 
-- **[mobile/CONFIGURACION_PROYECTO.md](../mobile/CONFIGURACION_PROYECTO.md)** - Configuración del proyecto mobile
-- **[mobile/RespiCare-Mobile/README_SETUP.md](../mobile/RespiCare-Mobile/README_SETUP.md)** - Setup mobile
 - **[backend/SETUP.md](../backend/SETUP.md)** - Setup backend
 
 ---
@@ -254,14 +225,12 @@ Los reportes de implementación están en **[docs/implementation-reports/](imple
 - **🔒 Seguridad**: `docs/security/` - Guías y pruebas de seguridad
 - **🏗️ Arquitectura**: `docs/architecture/` - Documentación de arquitectura y escalabilidad
 - **🔍 Análisis de Código**: `docs/code-analysis/` - Análisis estático y calidad
-- **📊 Reportes de Implementación**: `docs/implementation-reports/` - Reportes históricos de features
 - **🗺️ Roadmaps**: `docs/roadmaps/` - Roadmaps del proyecto por función y componente
 - **📚 Referencias**: `docs/reference/` - Datos de referencia y listas estáticas
-- **🗄️ Archivos Temporales**: `docs/archive/` - Archivos históricos o temporales
 
 ### Por Componente
 - **ML y AI**: `ai-services/`, `docs/roadmaps/ML_ROADMAP.md`
-- **Mobile**: `mobile/`, `mobile/RespiCare-Mobile/`
+- **Mobile**: `mobile/`, `mobile/medical-app/`
 - **Backend**: `backend/`
 - **Web**: `web/`
 - **Infraestructura**: `infrastructure/`

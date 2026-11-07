@@ -561,7 +561,7 @@ Los documentos formales de la metodología se encuentran disponibles individualm
 
 **R4:** Integrar FHIR R4 completo con el sistema de información del MINSA para habilitar la interoperabilidad con otros establecimientos de salud de la red pública. Esto requeriría coordinación con el equipo técnico del MINSA y aprobación regulatoria.
 
-**R5:** Establecer un proceso formal de reentrenamiento periódico (retraining pipeline) de los modelos ML cada 3 meses, utilizando los datos reales acumulados del sistema con validación médica previa. El módulo de auto-retraining ya está implementado (`AUTO_RETRAINING_COMPLETE.md`) pero requiere supervisión clínica formal.
+**R5:** Establecer un proceso formal de reentrenamiento periódico (retraining pipeline) de los modelos ML cada 3 meses, utilizando los datos reales acumulados del sistema con validación médica previa. El módulo de auto-retraining ya está implementado pero requiere supervisión clínica formal.
 
 **R6:** Considerar la certificación ISO/IEC 82304-1 (Health Software) para eventuales usos clínicos reales, lo que requeriría cumplir con requisitos adicionales de documentación de seguridad y gestión de riesgos del software médico.
 

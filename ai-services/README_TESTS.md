@@ -81,9 +81,4 @@ python ver_coverage.py
 | `ejecutar_tests_seguro.bat` | ✅ Script automático seguro |
 | `python ver_coverage.py` | ✅ Ver coverage actual |
 
-## 🔗 Documentación Completa
-
-- `SOLUCION_PYTEST.md` - Solución completa para pytest
-- `SOLUCION_ERROR_TORCH.md` - Solución para error de torch
-- `COMANDO_COVERAGE.md` - Comandos de coverage
 
