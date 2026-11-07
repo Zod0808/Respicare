@@ -72,6 +72,13 @@
   font-size: 1.8rem;
 }
 
+.symptom-report-subtitle {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: rgba(255, 250, 242, 0.75);
+  max-width: 420px;
+}
+
 .close-btn {
   width: 40px;
   height: 40px;

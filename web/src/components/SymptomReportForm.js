@@ -197,7 +197,13 @@ function SymptomReportForm({ onClose, onSuccess }) {
     <div className="symptom-report-modal">
       <div className="symptom-report-content">
         <div className="symptom-report-header">
-          <h2 id="symptom-report-title">📋 Reportar Síntomas</h2>
+          <div>
+            <h2 id="symptom-report-title">📋 Reportar Síntomas</h2>
+            <p className="symptom-report-subtitle">
+              Reporte anónimo para vigilancia epidemiológica. Si quieres una evaluación de tu
+              caso, usa el asistente de IA en vez de este formulario.
+            </p>
+          </div>
           <button
             className="close-btn"
             onClick={onClose}
@@ -213,7 +219,11 @@ function SymptomReportForm({ onClose, onSuccess }) {
             <div className="success-icon">✅</div>
             <h3>¡Reporte Enviado!</h3>
             <p>Tu reporte ha sido registrado exitosamente.</p>
-            <p className="success-note">Gracias por contribuir a la salud de nuestra comunidad.</p>
+            <p className="success-note">
+              Este reporte es anónimo y estadístico: ayuda a la vigilancia epidemiológica de
+              Tacna, pero no incluye una evaluación de tu caso. Si buscas un diagnóstico
+              personalizado, conversa con el asistente de IA más abajo en esta página.
+            </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="symptom-report-form">
