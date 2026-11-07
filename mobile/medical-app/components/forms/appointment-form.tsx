@@ -92,19 +92,14 @@ export function AppointmentForm({
   const [isLoadingDoctors, setIsLoadingDoctors] = useState(false)
 
   useEffect(() => {
-    if (user?.role === 'doctor') {
-      setDoctors([{ _id: user._id, name: user.name, email: user.email }])
-      setDoctorId(user._id)
-    } else {
-      setIsLoadingDoctors(true)
-      authService.listByRole('doctor')
-        .then((list) => {
-          setDoctors(list.map(d => ({ _id: d._id, name: d.name, email: d.email })))
-          if (!doctorId && list.length > 0) setDoctorId(list[0]._id)
-        })
-        .catch(() => setDoctors([]))
-        .finally(() => setIsLoadingDoctors(false))
-    }
+    setIsLoadingDoctors(true)
+    authService.listByRole('doctor')
+      .then((list) => {
+        setDoctors(list.map(d => ({ _id: d._id, name: d.name, email: d.email })))
+        if (!doctorId && list.length > 0) setDoctorId(list[0]._id)
+      })
+      .catch(() => setDoctors([]))
+      .finally(() => setIsLoadingDoctors(false))
   }, [user?._id])
 
   // Validación del formulario
@@ -261,12 +256,7 @@ export function AppointmentForm({
             <label className="text-sm font-medium dark:text-white mb-1 block">
               Doctor *
             </label>
-            {user?.role === 'doctor' ? (
-              <div className="px-3 py-2 rounded-lg border border-border/50 dark:border-slate-700 bg-secondary/50 dark:bg-slate-700/50">
-                <p className="text-sm dark:text-white">{user.name}</p>
-                <p className="text-xs text-muted-foreground">Tu perfil médico</p>
-              </div>
-            ) : isLoadingDoctors ? (
+            {isLoadingDoctors ? (
               <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-border/50 dark:border-slate-700 bg-secondary/20">
                 <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
                 <span className="text-sm text-muted-foreground">Cargando doctores...</span>

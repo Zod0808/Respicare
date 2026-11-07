@@ -41,8 +41,7 @@ export function AppointmentsView({ t, setCurrentView }: AppointmentsViewProps) {
     setIsLoading(true)
     try {
       const appointmentsData = await appointmentService.list({
-        patientId: user.role === 'patient' ? user._id : undefined,
-        doctorId: user.role === 'doctor' ? user._id : undefined,
+        patientId: user._id,
         limit: 50
       })
       const appts = Array.isArray(appointmentsData)

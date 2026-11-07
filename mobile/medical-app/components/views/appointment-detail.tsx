@@ -186,7 +186,7 @@ export function AppointmentDetail({
 
       // Si la sala de espera está habilitada, entrar primero ahí
       if (call.waitingRoomEnabled) {
-        const userRole = currentUser.role === 'doctor' ? 'doctor' : 'patient'
+        const userRole = 'patient'
         const joined = await telemedicineService.joinWaitingRoom(call.id, {
           id: currentUser._id || '',
           name: currentUser.name || 'Usuario',
@@ -204,7 +204,7 @@ export function AppointmentDetail({
         }
       } else {
         // Ir directamente a la videollamada
-        const userRole = currentUser.role === 'doctor' ? 'doctor' : 'patient'
+        const userRole = 'patient'
         await telemedicineService.joinCall(call, userRole)
         toast.success("Abriendo videollamada...")
       }

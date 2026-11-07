@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Share2, CheckCircle2, XCircle, ChevronRight, RefreshCw, ArrowLeft } from "lucide-react"
+import { Share2, ChevronRight, RefreshCw, ArrowLeft } from "lucide-react"
 import { ModernButton } from "@/components/ui/ModernButton"
 import { ModernCard } from "@/components/ui/ModernCard"
 import type { ViewState } from "@/lib/translations"
@@ -51,7 +51,7 @@ export function ReferralsView({ setCurrentView }: ReferralsViewProps) {
   }
 
   if (selected) {
-    return <ReferralDetail referral={selected} onBack={() => setSelected(null)} onUpdate={loadReferrals} />
+    return <ReferralDetail referral={selected} onBack={() => setSelected(null)} />
   }
 
   return (
@@ -112,61 +112,9 @@ export function ReferralsView({ setCurrentView }: ReferralsViewProps) {
   )
 }
 
-function ReferralDetail({ referral: ref, onBack, onUpdate }: { referral: Referral; onBack: () => void; onUpdate: () => void }) {
-  const user = useAppStore(s => s.user)
+function ReferralDetail({ referral: ref, onBack }: { referral: Referral; onBack: () => void }) {
   const sc = STATUS_CONFIG[ref.status]
   const pc = PRIORITY_CONFIG[ref.priority]
-  const isDoctor = user?.role === 'doctor'
-  const isAssignedToMe = !ref.referredToDoctorId || ref.referredToDoctorId === user?._id
-  const isMineToManage = isDoctor && ref.referredToDoctorId === user?._id
-  const [isRejecting, setIsRejecting] = useState(false)
-  const [rejectReason, setRejectReason] = useState("")
-  const [rejectError, setRejectError] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const handleAccept = async () => {
-    if (!user) return
-    setIsSubmitting(true)
-    try {
-      await referralService.accept(ref._id, user._id)
-      toast.success("Referido aceptado")
-      onUpdate(); onBack()
-    } catch {
-      toast.error("Error al aceptar referido")
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
-  const handleReject = async () => {
-    if (!rejectReason.trim()) {
-      setRejectError("Por favor proporciona una razón")
-      return
-    }
-    setIsSubmitting(true)
-    try {
-      await referralService.reject(ref._id, rejectReason.trim())
-      toast.success("Referido rechazado")
-      onUpdate(); onBack()
-    } catch {
-      toast.error("Error al rechazar referido")
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
-
-  const handleComplete = async () => {
-    setIsSubmitting(true)
-    try {
-      await referralService.complete(ref._id)
-      toast.success("Referido completado")
-      onUpdate(); onBack()
-    } catch {
-      toast.error("Error al completar referido")
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
 
   return (
     <div className="space-y-4 pb-6">
@@ -212,62 +160,6 @@ function ReferralDetail({ referral: ref, onBack, onUpdate }: { referral: Referra
           {ref.completedDate && <span>Completado: {format(new Date(ref.completedDate), "d MMM yyyy", { locale: es })}</span>}
         </div>
       </ModernCard>
-
-      {isRejecting ? (
-        <ModernCard className="p-4 space-y-3">
-          <label className="text-sm font-medium dark:text-white block">Razón del Rechazo *</label>
-          <textarea
-            value={rejectReason}
-            onChange={(e) => { setRejectReason(e.target.value); setRejectError("") }}
-            placeholder="Describe la razón del rechazo..."
-            rows={3}
-            maxLength={500}
-            className={`w-full px-3 py-2 rounded-lg border ${
-              rejectError ? 'border-red-500' : 'border-border/50 dark:border-slate-700'
-            } bg-background dark:bg-slate-900 text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none`}
-          />
-          {rejectError && <p className="text-xs text-red-500">{rejectError}</p>}
-          <div className="flex gap-3">
-            <ModernButton
-              variant="destructive"
-              className="flex-1"
-              onClick={handleReject}
-              isLoading={isSubmitting}
-              disabled={isSubmitting}
-            >
-              Confirmar Rechazo
-            </ModernButton>
-            <ModernButton
-              variant="ghost"
-              className="flex-1"
-              onClick={() => { setIsRejecting(false); setRejectReason(""); setRejectError("") }}
-              disabled={isSubmitting}
-            >
-              Cancelar
-            </ModernButton>
-          </div>
-        </ModernCard>
-      ) : (
-        <>
-          {isDoctor && ref.status === 'pending' && isAssignedToMe && (
-            <div className="flex gap-3">
-              <ModernButton variant="primary" className="flex-1" onClick={handleAccept} isLoading={isSubmitting} disabled={isSubmitting}>
-                <CheckCircle2 className="w-4 h-4 mr-2" /> Aceptar
-              </ModernButton>
-              {isMineToManage && (
-                <ModernButton variant="ghost" className="flex-1 text-red-600" onClick={() => setIsRejecting(true)} disabled={isSubmitting}>
-                  <XCircle className="w-4 h-4 mr-2" /> Rechazar
-                </ModernButton>
-              )}
-            </div>
-          )}
-          {(ref.status === 'accepted' || ref.status === 'in_progress') && isMineToManage && (
-            <ModernButton className="w-full" onClick={handleComplete} isLoading={isSubmitting} disabled={isSubmitting}>
-              <CheckCircle2 className="w-4 h-4 mr-2" /> Marcar como Completado
-            </ModernButton>
-          )}
-        </>
-      )}
     </div>
   )
 }

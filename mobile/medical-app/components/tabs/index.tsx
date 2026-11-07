@@ -38,17 +38,10 @@ export function DashboardView({ t, setCurrentView }: DashboardViewProps) {
 
     setIsLoading(true)
     try {
-      // Cargar dashboard según el rol del usuario
       let stats
       try {
-        if (user.role === 'admin') {
-          stats = await dashboardService.getAdminDashboard()
-        } else if (user.role === 'doctor') {
-          stats = await dashboardService.getDoctorDashboard()
-        } else {
-          stats = await dashboardService.getPatientDashboard()
-        }
-        
+        stats = await dashboardService.getPatientDashboard()
+
         // El backend devuelve { success: true, data: {...} }, extraer data
         if (stats && typeof stats === 'object' && 'data' in stats) {
           setDashboardStats((stats as { data: DashboardStats }).data)
