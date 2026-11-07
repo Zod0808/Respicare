@@ -730,3 +730,105 @@ Plantilla aplicada por caso: Código identificador · Requerimiento asociado · 
 **Resumen técnico.** Se analizaron 14 requerimientos funcionales reales del sistema RespiCare (RF-001 a RF-014), diseñando y verificando 28 casos de prueba (uno positivo y uno negativo por requerimiento) con respaldo en evidencia de ejecución existente dentro del repositorio del proyecto (272 archivos de prueba entre Jest/Pytest/Cypress). Se construyó la matriz de trazabilidad requerimiento→caso de uso→caso de prueba→evidencia→resultado, se documentaron los riesgos de mayor impacto clínico (motor de reglas de emergencia, validación de coherencia médica, vitales de wearables) y se identificaron tres incidencias: una ya corregida (fallback de urgencia en español), una pendiente de cierre documental (fichas de especificación faltantes para RF-013/RF-014) y una pendiente de alineación de entorno (versión mínima de Node.js declarada vs. versión real probada en CI).
 
 **Conclusión del informe.** El sistema RespiCare se encuentra en un estado de calidad verificable y trazable para los 14 requerimientos evaluados, con una base de pruebas automatizadas sólida que soporta de forma segura la evolución continua del producto, condicionado al cierre de la brecha documental identificada en este laboratorio.
+
+## Anexo D. Protocolo de Pruebas en Tiempo Real (Ejecución por Tercero)
+
+Los 28 casos de la sección XV son pruebas **automatizadas** (Jest/Pytest/Cypress) ya ejecutadas por el equipo de desarrollo. Este anexo complementa esas pruebas con un protocolo de **pruebas manuales en vivo**, pensado para que **una persona ajena al equipo de desarrollo** (sin conocimientos técnicos de programación) opere el sistema real y registre sus propios resultados, como control independiente de calidad.
+
+### D.1 Entorno de prueba
+
+Se usa un entorno local autocontenido (no el túnel de producción, que es efímero y rota su URL en cada reinicio — ver sección "Rotación de URL" en `Documentation/PLAN_DE_DESPLIEGUE.md`), de modo que el resultado de esta prueba no dependa de que la VM del autor esté encendida en el momento de la ejecución.
+
+**Preparación (la realiza el autor antes de entregar el equipo/VM al evaluador, o el propio evaluador si tiene Docker Desktop instalado):**
+
+1. Tener Docker Desktop corriendo.
+2. Desde la raíz del repositorio, ejecutar:
+   - Windows: `.\scripts\setup-demo.ps1`
+   - Linux/macOS: `bash scripts/setup-demo.sh`
+3. Esperar a que el script confirme que backend, AI services y web responden (tarda 3-5 min la primera vez).
+
+**URLs que usará el evaluador:**
+
+| Servicio | URL |
+|---|---|
+| Aplicación Web | http://localhost:3000 |
+| Estado del backend (opcional, para verificar que todo está arriba) | http://localhost:3001/health |
+
+**Credenciales de prueba** (usuarios semilla, ver `docs/guides/USUARIOS_DEMO_CREDENCIALES.md`):
+
+| Rol | Email | Contraseña |
+|---|---|---|
+| Paciente | `paciente@demo.com` | `demo1234` |
+| Doctor | `doctor@demo.com` | `demo1234` |
+| Administrador | `admin@demo.com` | `admin1234` |
+
+### D.2 Instrucciones para el evaluador
+
+- Siga cada escenario en orden; cada uno indica con qué rol iniciar sesión.
+- Ejecute solo las acciones descritas, con los datos indicados — no es necesario inventar datos propios.
+- Compare lo que observa en pantalla con la columna "Resultado esperado".
+- Registre el resultado en la tabla del escenario (Cumple / No cumple) y cualquier observación (texto raro, pantalla en blanco, demora excesiva, etc.), sin necesidad de entender la causa técnica.
+- No se requiere revertir datos entre escenarios: el entorno es una instancia de demostración aislada.
+
+### D.3 Escenarios
+
+**Escenario 1 — Inicio de sesión (RF-001).**
+1. Abrir http://localhost:3000.
+2. Ingresar email `paciente@demo.com` y contraseña `demo1234`.
+3. Presionar "Iniciar sesión".
+- Resultado esperado: se redirige al panel del paciente, visible el nombre del usuario en la pantalla.
+- Variante negativa: repetir con la contraseña `incorrecta123` → el sistema debe mostrar un mensaje de error y NO dejar entrar.
+
+**Escenario 2 — Reporte de síntomas y diagnóstico con IA (RF-002).**
+1. Con sesión de paciente activa, ir a "Reportar síntomas".
+2. Marcar: tos, fiebre, dificultad para respirar.
+3. Enviar el formulario.
+- Resultado esperado: en segundos aparece un resultado con un nivel de riesgo/urgencia y una recomendación (no debe quedar la pantalla cargando indefinidamente ni mostrar un error).
+
+**Escenario 3 — Escalamiento de emergencia (RF-004).**
+1. Con sesión de paciente, reportar síntomas severos: dificultad respiratoria intensa, saturación de oxígeno baja (si el formulario lo permite ingresar, usar un valor como 85%).
+2. Enviar el formulario.
+- Resultado esperado: el sistema marca el caso como urgente/crítico de forma visible (color rojo, alerta, o mensaje explícito de "atención inmediata"), y no lo trata como un caso leve.
+
+**Escenario 4 — Centros de salud cercanos en el mapa (RF-012, app mobile o PWA).**
+1. Levantar la PWA mobile (`bash scripts/start-mobile-pwa.sh` o `.ps1`) y abrir http://localhost:8083, o usar el APK si se dispone de dispositivo/emulador.
+2. Iniciar sesión como paciente.
+3. Ir a la sección de Emergencia → "Centros de salud cercanos".
+4. Permitir el acceso a la ubicación si el navegador lo solicita.
+- Resultado esperado: se muestra un mapa embebido con un punto rojo (la ubicación del usuario) y puntos azules (centros de salud), y al tocar un centro se abre un recuadro con su nombre, distancia y dirección.
+
+**Escenario 5 — Validación médica de un caso (RF-007).**
+1. Cerrar sesión de paciente, iniciar sesión como `doctor@demo.com` / `demo1234`.
+2. Ir al panel de casos pendientes de validación.
+3. Abrir el caso generado en el Escenario 2 o 3.
+4. Validar o ajustar el diagnóstico sugerido por la IA y guardar.
+- Resultado esperado: el caso cambia de estado a "validado por médico" y el cambio queda reflejado al volver a consultarlo.
+
+**Escenario 6 — Control de acceso al historial clínico (RF-008).**
+1. Con sesión de **paciente** (`paciente@demo.com`), intentar acceder a la URL del historial clínico de otro paciente escribiéndola directamente en el navegador (si se conoce o se infiere un ID distinto al propio).
+- Resultado esperado: el sistema debe **rechazar** el acceso (error 403/401 o redirección), nunca mostrar el historial de otro paciente.
+2. Iniciar sesión como `doctor@demo.com` y acceder al historial de un paciente asignado.
+- Resultado esperado: el doctor sí puede ver el historial clínico completo del paciente.
+
+**Escenario 7 — Alertas (RF-009).**
+1. Con sesión de doctor o admin, ir al panel de alertas.
+- Resultado esperado: se listan alertas generadas por los casos de riesgo alto/crítico (incluyendo el del Escenario 3), con fecha y nivel de severidad visibles.
+
+**Escenario 8 — Contenido educativo personalizado (RF-011).**
+1. Con sesión de paciente, ir a la sección de contenido educativo/preventivo.
+- Resultado esperado: se muestra contenido relevante al perfil/historial del paciente (p. ej. recomendaciones relacionadas con los síntomas reportados), no una lista genérica idéntica para cualquier usuario sin historial.
+
+### D.4 Hoja de registro de resultados
+
+| # Escenario | RF | Ejecutado por | Fecha | Resultado (Cumple/No cumple) | Observaciones |
+|---|---|---|---|---|---|
+| 1. Inicio de sesión | RF-001 | | | | |
+| 2. Diagnóstico IA | RF-002 | | | | |
+| 3. Escalamiento de emergencia | RF-004 | | | | |
+| 4. Mapa de centros de salud | RF-012 | | | | |
+| 5. Validación médica | RF-007 | | | | |
+| 6. Control de acceso al historial | RF-008 | | | | |
+| 7. Alertas | RF-009 | | | | |
+| 8. Contenido educativo | RF-011 | | | | |
+
+> Nota: este protocolo es complementario a la suite automatizada de la sección XV, no un sustituto. Su valor es que la verificación la realiza una persona sin relación con el desarrollo del sistema, operando únicamente la interfaz de usuario, lo que aporta una evidencia de calidad independiente del equipo que construyó el software.
