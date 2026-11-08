@@ -204,6 +204,16 @@ router.post('/register', async (req, res) => {
   try {
     const { name, email, password, role = 'patient' } = req.body;
 
+    // El autorregistro público solo puede crear pacientes. Cuentas de
+    // médico/admin se crean exclusivamente por un administrador (mismo
+    // comportamiento que src/controllers/authController.ts en producción).
+    if (role && role !== 'patient') {
+      return res.status(403).json({
+        success: false,
+        message: 'El autorregistro solo está disponible para cuentas de paciente'
+      });
+    }
+
     if (!name || !email || !password) {
       return res.status(400).json({
         success: false,
