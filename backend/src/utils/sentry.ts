@@ -52,8 +52,12 @@ export const initSentry = (): void => {
       environment,
       integrations,
       // Performance Monitoring
-      tracesSampleRate: environment === 'production' ? 0.1 : 1.0, // 10% en prod, 100% en dev
-      profilesSampleRate: environment === 'production' ? 0.1 : 1.0,
+      // IMPORTANTE: un sample rate alto aquí, combinado con la integración de
+      // Mongo (traza cada query), genera un volumen de transacciones que puede
+      // saturar el backend y la cuota de Sentry. Se mantiene bajo en todos los
+      // entornos salvo que se override explícitamente vía env var.
+      tracesSampleRate: parseFloat(process.env.SENTRY_TRACES_SAMPLE_RATE || '0.1'),
+      profilesSampleRate: parseFloat(process.env.SENTRY_PROFILES_SAMPLE_RATE || '0.1'),
       
       // Release tracking
       release: process.env.APP_VERSION || '1.0.0',
