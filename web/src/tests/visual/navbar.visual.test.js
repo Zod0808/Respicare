@@ -172,11 +172,27 @@ describe('Navbar — CSS Classes Visual', () => {
     expect(activeLinks).toHaveLength(1);
   });
 
-  it('should render ThemeToggle and LanguageSelector inside navbar-controls', () => {
+  it('should render ThemeToggle inside navbar-controls', () => {
     renderNavbar('/');
     const controls = document.querySelector('.navbar-controls');
     expect(controls).toBeInTheDocument();
     expect(controls.querySelector('[data-testid="theme-toggle"]')).toBeInTheDocument();
+  });
+
+  it('should render LanguageSelector for a patient', () => {
+    useAuth.mockReturnValue({
+      isAuthenticated: true,
+      user: { name: 'Juan Pérez', email: 'juan@example.com', role: 'patient' },
+      logout: jest.fn(),
+    });
+    renderNavbar('/');
+    const controls = document.querySelector('.navbar-controls');
     expect(controls.querySelector('[data-testid="language-selector"]')).toBeInTheDocument();
+  });
+
+  it('should NOT render LanguageSelector for doctor/admin — idioma deshabilitado para staff', () => {
+    renderNavbar('/'); // beforeEach ya mockea role: 'doctor'
+    const controls = document.querySelector('.navbar-controls');
+    expect(controls.querySelector('[data-testid="language-selector"]')).not.toBeInTheDocument();
   });
 });

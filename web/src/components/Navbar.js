@@ -191,7 +191,12 @@ function Navbar() {
 
         {/* ── Right controls ── */}
         <div className="navbar-controls">
-          <LanguageSelector className="navbar-lang" />
+          {/* Cambio de idioma: solo paciente (o visitante anónimo antes de
+              autenticarse). Médico/admin trabajan en un idioma fijo para
+              mantener consistencia en la terminología clínica. */}
+          {(!isAuthenticated || isPatient) && (
+            <LanguageSelector className="navbar-lang" />
+          )}
           <ThemeToggle className="navbar-theme" />
 
           {isAuthenticated ? (
