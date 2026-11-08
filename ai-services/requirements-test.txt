@@ -14,7 +14,7 @@ httpx==0.23.3
 
 # Database testing
 mongomock==4.1.2
-fakeredis==2.20.1
+fakeredis==2.40.0
 
 # Test data generation
 factory-boy==3.3.0
