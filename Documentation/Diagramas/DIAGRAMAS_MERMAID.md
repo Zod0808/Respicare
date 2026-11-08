@@ -9,34 +9,39 @@ Este documento contiene los diagramas arquitectónicos principales del sistema R
 ```mermaid
 graph TB
     subgraph "Frontend Layer"
-        WEB[Web App<br/>React + TypeScript<br/>Puerto 3000]
-        MOBILE[Mobile App<br/>React Native + Expo<br/>Nativa]
+        WEB[Web App<br/>React 19 + React Router<br/>Create React App - Puerto 3000]
+        MOBILE[Mobile App<br/>Next.js 16 + Capacitor 6<br/>APK Android]
     end
     
     subgraph "API Gateway"
-        NGINX[Nginx<br/>Reverse Proxy<br/>Load Balancer<br/>Puerto 80/443]
+        NGINX[Nginx<br/>Reverse Proxy<br/>Terminacion TLS<br/>Puerto 80/443]
     end
     
     subgraph "Backend Services"
         BACKEND[Backend API<br/>Node.js + TypeScript<br/>Express + Clean Architecture<br/>Puerto 3001]
-        AI[AI Services<br/>Python + FastAPI<br/>Machine Learning<br/>Puerto 8000]
+        INSTITUTIONAL[API Institucional<br/>MINSA / DIRESA / SINADEF<br/>API Key + Scopes + Rate Limit]
+        AI[AI Services<br/>Python + FastAPI<br/>Pipeline de IA<br/>Puerto 8000]
+        WEARABLES[Capa de Validacion Clinica<br/>Wearables - BLE / Health Connect / HealthKit]
     end
     
     subgraph "Data Layer"
         MONGODB[(MongoDB<br/>Base de Datos Principal<br/>Puerto 27017)]
-        REDIS[(Redis<br/>Cache & Sessions<br/>Puerto 6379)]
-        FILES[File Storage<br/>Imágenes Médicas]
+        REDIS[(Redis<br/>Cache y Sesiones<br/>Puerto 6379)]
+        FILES[Almacenamiento de Archivos<br/>Audio de tos / Imagenes]
     end
     
     subgraph "External Services"
-        OPENAI[OpenAI API<br/>Análisis Avanzado]
+        OPENAI[OpenAI API<br/>Chatbot y transcripcion]
         EMAIL[Email Service<br/>Notificaciones]
         SMS[SMS Service<br/>Alertas]
+        MINSASYS[Sistemas Institucionales<br/>MINSA / DIRESA / SINADEF]
     end
     
-    subgraph "ML Models"
-        XGBOOST[XGBoost Model<br/>99.81% Accuracy]
-        RF[Random Forest<br/>99.19% Accuracy]
+    subgraph "Modelos de IA"
+        RF[Random Forest]
+        XGBOOST[XGBoost]
+        MLP[MLP - Clasificacion de sintomas]
+        CNN[CNN - Audio de tos]
         SHAP[SHAP Explainer<br/>Explicabilidad]
     end
     
@@ -48,32 +53,45 @@ graph TB
     BACKEND --> MONGODB
     BACKEND --> REDIS
     BACKEND --> FILES
-    BACKEND --> AI
+    BACKEND -->|circuit breaker| AI
     BACKEND --> EMAIL
     BACKEND --> SMS
+    BACKEND --> INSTITUTIONAL
+    INSTITUTIONAL --> MINSASYS
     
     AI --> MONGODB
     AI --> REDIS
     AI --> OPENAI
-    AI --> XGBOOST
     AI --> RF
+    AI --> XGBOOST
+    AI --> MLP
+    AI --> CNN
     AI --> SHAP
+    AI --> WEARABLES
     
     style WEB fill:#61dafb
     style MOBILE fill:#61dafb
     style NGINX fill:#009639
     style BACKEND fill:#339933
+    style INSTITUTIONAL fill:#2e6da4,color:#fff
+    style WEARABLES fill:#8e44ad,color:#fff
     style AI fill:#3776ab
     style MONGODB fill:#47a248
     style REDIS fill:#dc382d
-    style XGBOOST fill:#ff6b6b
     style RF fill:#ff6b6b
+    style XGBOOST fill:#ff6b6b
+    style MLP fill:#ff6b6b
+    style CNN fill:#ff6b6b
     style SHAP fill:#ff6b6b
 ```
 
+*Nota: desde el Sprint 13, el backend expone una API institucional de interoperabilidad (MINSA/DIRESA/SINADEF) y el servicio de IA incorpora una capa de validacion clinica basada en reglas que consume signos vitales de wearables (BLE, Health Connect, HealthKit) como dato de apoyo.*
+
 ---
 
-## 2. 🔄 Diagrama de Microservicios
+## 2. 🔄 Diagrama de Componentes (Backend Modular + Microservicio de IA)
+
+> Nota: RespiCare no implementa una malla de microservicios independientes. Es un backend modular (Clean Architecture) con un único microservicio de IA desacoplado (ver SAD, seccion 6.2).
 
 ```mermaid
 graph LR
@@ -82,8 +100,8 @@ graph LR
     end
     
     subgraph "Presentation Layer"
-        WEB[🌐 Web Dashboard<br/>React 18 + TypeScript<br/>Vite + Tailwind CSS]
-        APP[📱 Mobile App<br/>React Native + Expo<br/>Zustand State Management]
+        WEB[🌐 Web Dashboard<br/>React 19 + React Router<br/>Create React App]
+        APP[📱 Mobile App<br/>Next.js 16 + Capacitor 6<br/>APK Android]
     end
     
     subgraph "API Gateway Layer"
@@ -107,8 +125,8 @@ graph LR
             AI[🤖 AI Services<br/>Python 3.11+ + FastAPI<br/>ML Models<br/>SHAP Explainer]
             
             subgraph "AI Modules"
-                ANALYZER[Symptom Analyzer<br/>NLP Processing]
-                ML_PRED[ML Predictor<br/>XGBoost + RF]
+                ANALYZER[Symptom Analyzer<br/>Reglas de emergencia + Pipeline ML]
+                ML_PRED[ML Predictor<br/>RF + XGBoost + MLP + CNN audio]
                 CHATBOT[Chatbot Service<br/>Medical Assistant]
                 EXPLAINER[SHAP Explainer<br/>Prediction Transparency]
             end
@@ -453,7 +471,7 @@ erDiagram
 graph TB
     subgraph "Frontend Layers"
         subgraph "Presentation"
-            UI[UI Components<br/>React / React Native]
+            UI[UI Components<br/>React - Web / Next.js + Capacitor - Mobile]
             STATE[State Management<br/>Zustand / Context]
         end
     end
@@ -497,7 +515,7 @@ graph TB
         end
         
         subgraph "ML Layer"
-            MODELS[ML Models<br/>XGBoost, Random Forest]
+            MODELS[ML Models<br/>Random Forest, XGBoost, MLP, CNN audio]
             SHAP_EXP[SHAP Explainer<br/>Interpretability]
         end
         
