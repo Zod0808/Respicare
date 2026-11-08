@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: exportService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * exportación de datos del paciente
+ * Descripción: Servicio de exportación de datos.
+ *
  * Export Service
  * Handles data export in various formats (JSON, CSV, PDF)
  */

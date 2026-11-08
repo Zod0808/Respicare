@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: image_classifier
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - ml
+avanzado / automl / aprendizaje federado / rl (no documentado en RF)
+Descripción: Imágenes classifier. Parte de: ml avanzado / automl / aprendizaje
+federado / rl (no documentado en RF).
+
 MedicalImageClassifier - Modelo de visión por computadora para imágenes médicas.
 
 Soporta carga real de modelos de visión con torch/timm cuando AI_USE_REAL_MODELS=1.

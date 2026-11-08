@@ -1,5 +1,14 @@
 'use client'
 
+/**
+ * Nombre de Objeto: checkbox
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Checkbox. Parte de: librería de componentes ui genéricos (shadcn).
+ */
+
 import * as React from 'react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import { CheckIcon } from 'lucide-react'

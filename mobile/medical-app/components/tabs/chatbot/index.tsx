@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: index
+ * Fecha de Creación: 2026-05-05
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - chatbot
+ * conversacional de ia
+ * Descripción: Principal. Parte de: chatbot conversacional de ia.
+ */
+
 import { useEffect } from "react"
 import { Bot, Loader2 } from "lucide-react"
 import { useAppStore } from "@/store/useAppStore"

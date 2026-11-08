@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: I18nContext
+ * Fecha de Creación: 2026-05-05
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - internacionalización (i18n)
+ * Descripción: Contexto React (estado global) de i18n.
+ */
+
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import {
   t as tService,

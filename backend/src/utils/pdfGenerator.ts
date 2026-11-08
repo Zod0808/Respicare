@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: pdfGenerator
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidad transversal backend
+ * Descripción: Generador de pdf.
+ *
  * PDF Generator Utility
  * Usa PDFKit para generar reportes médicos profesionales
  */

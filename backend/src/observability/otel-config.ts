@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: otel-config
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - observabilidad/monitoreo de la plataforma
+ * backend
+ * Descripción: Configuración de otel.
+ *
  * Configuración avanzada de OpenTelemetry para RespiCare Backend
  * 
  * Incluye:

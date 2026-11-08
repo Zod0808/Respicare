@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: offlineQueue
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - almacenamiento local/offline de la app
+ * móvil
+ * Descripción: Offline queue. Parte de: almacenamiento local/offline de la app móvil.
+ *
  * Cola de operaciones offline
  * Gestiona operaciones que se realizan sin conexión y las sincroniza cuando vuelve la conexión.
  *

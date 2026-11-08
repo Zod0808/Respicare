@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: external_service_circuit_breaker
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: External service circuit breaker. Parte de: infraestructura/mlops del
+microservicio de ia.
+
 External Service Circuit Breaker Implementation
 """
 

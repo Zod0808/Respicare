@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: risk_personalization
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Risk personalization. Parte de: diagnóstico inteligente de síntomas.
+
 Sistema de Personalización por Edad y Grupo de Riesgo
 
 Ajusta predicciones ML según la edad del paciente y factores de riesgo para

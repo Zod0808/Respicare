@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: InteractiveHeatMap
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Interactive heat map. Parte de: reportes y estadísticas.
+ */
+
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { MapContainer, TileLayer, Popup, Circle, useMap } from 'react-leaflet';
 import L from 'leaflet';

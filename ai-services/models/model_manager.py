@@ -1,4 +1,12 @@
-"""AI Model Manager for loading and optimising ML models."""
+"""
+Nombre de Objeto: model_manager
+Fecha de Creación: 2026-06-27
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Gestor de model.
+
+AI Model Manager for loading and optimising ML models."""
 
 from __future__ import annotations
 

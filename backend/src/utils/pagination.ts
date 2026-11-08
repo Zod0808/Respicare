@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: pagination
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidad transversal backend
+ * Descripción: Pagination. Parte de: utilidad transversal backend.
+ */
+
 import { Request } from 'express';
 
 export interface PaginationParams {

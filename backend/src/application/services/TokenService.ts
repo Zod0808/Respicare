@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: TokenService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Servicio de token.
+ */
+
 // Servicio de Tokens - Capa de Aplicación
 export interface TokenPayload {
   userId: string;

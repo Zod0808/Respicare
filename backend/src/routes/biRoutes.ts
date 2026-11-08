@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: biRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Rutas REST de inteligencia de negocio (BI).
+ *
  * BI Routes
  * Exports real MongoDB data in Power BI / Tableau / generic formats.
  */

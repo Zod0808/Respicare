@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: ChatInputBar
+ * Fecha de Creación: 2026-05-05
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - chatbot
+ * conversacional de ia
+ * Descripción: Chat input bar. Parte de: chatbot conversacional de ia.
+ */
+
 import { Mic, ImageIcon, Send, Loader2 } from "lucide-react"
 import { ModernButton } from "@/components/ui/ModernButton"
 import type { Translation } from "@/lib/translations"

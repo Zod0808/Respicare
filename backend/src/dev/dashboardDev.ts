@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: dashboardDev
+ * Fecha de Creación: 2026-07-14
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - endpoints de desarrollo/depuración local
+ * Descripción: Panel de control dev. Parte de: endpoints de desarrollo/depuración local.
+ *
  * Dashboard endpoints (dev-only)
  *
  * Simple JWT-verified handlers used by the dev/demo frontend. Mounted at

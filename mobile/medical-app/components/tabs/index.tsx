@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: index
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - layout/entrada/shell de la app móvil
+ * (next.js)
+ * Descripción: Principal. Parte de: layout/entrada/shell de la app móvil (next.js).
+ */
+
 import { useEffect, useState } from "react"
 import { Wifi, AlertTriangle, Bot, Activity, Calendar, Watch, WifiOff, Pill, Share2, FlaskConical, Siren } from "lucide-react"
 import { ModernButton } from "@/components/ui/ModernButton"

@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: conversational_ai_service
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - chatbot
+conversacional de ia
+Descripción: Servicio de conversational IA.
+
 Conversational AI Service - Advanced symptom analysis with natural conversation flow
 This service processes user messages to extract symptoms, assess severity, urgency, and provide medical guidance
 """

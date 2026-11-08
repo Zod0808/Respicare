@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: Home
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - bootstrap/configuración de la app web
+ * (CRA)
+ * Descripción: Inicio. Parte de: bootstrap/configuración de la app web (CRA).
+ */
+
 import React, { useState, useEffect } from 'react';
 import ChatBotEnhanced from '../components/ChatBotEnhanced';
 import PatientQuickAccess from '../components/PatientQuickAccess';

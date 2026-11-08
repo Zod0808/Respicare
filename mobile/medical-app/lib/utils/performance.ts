@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: performance
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidades transversales de la app móvil
+ * Descripción: Performance. Parte de: utilidades transversales de la app móvil.
+ *
  * Utilidades de optimización de rendimiento
  */
 

@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: client
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - infraestructura del cliente API móvil
+ * Descripción: Cliente de infraestructura del cliente API móvil.
+ *
  * Cliente HTTP para comunicarse con el backend RespiCare
  */
 

@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: medical_history_service
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-008 - Historial clínico electrónico
+Descripción: Servicio de médico historial.
+
 Medical History Service - Dedicated service for medical history processing
 """
 

@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: connect_real_datasets
+Fecha de Creación: 2026-06-27
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Connect real datasets. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Conecta los datasets reales aprobados científicamente al pipeline de entrenamiento ML.
 
 Datasets reales disponibles en ai-services/data/datasets/:

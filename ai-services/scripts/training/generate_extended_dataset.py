@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: generate_extended_dataset
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Generate extended dataset. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Script para Generar Dataset Extendido
 
 Genera un dataset más grande con más casos para mejorar la precisión del modelo.

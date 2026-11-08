@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: automl_manager
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - ml
+avanzado / automl / aprendizaje federado / rl (no documentado en RF)
+Descripción: Gestor de AutoML.
+
 AutoMLManager - Manager de AutoML con pipeline completo para riesgo respiratorio.
 
 Usa implementación real cuando task_type es "respiratory_risk", o stub genérico.

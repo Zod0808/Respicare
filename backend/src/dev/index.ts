@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: index
+ * Fecha de Creación: 2026-07-15
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - endpoints de desarrollo/depuración local
+ * Descripción: Principal. Parte de: endpoints de desarrollo/depuración local.
+ *
  * Dev-mode route + endpoint orchestrator.
  *
  * Call `applyDevRoutes(app)` from index.ts INSIDE a

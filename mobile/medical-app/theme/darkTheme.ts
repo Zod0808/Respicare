@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: darkTheme
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - tema visual de la interfaz
+ * Descripción: Dark theme. Parte de: tema visual de la interfaz.
+ *
  * RespiCare Dark Theme
  * Dark mode color tokens
  */

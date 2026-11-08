@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: fhirValidator
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * interoperabilidad fhir/hl7
+ * Descripción: Validador de FHIR.
+ */
+
 import { FhirResource } from './fhirService';
 import { logger } from '../utils/logger';
 import { AppError } from '../utils/AppError';

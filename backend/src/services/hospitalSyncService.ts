@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: hospitalSyncService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * integración con sistemas hospitalarios externos / oauth2
+ * Descripción: Servicio de hospitalaria sync.
+ */
+
 import { fhirService, FhirResource, FhirBundle } from './fhirService';
 import { OAuth2Service, OAuth2Config } from './oauth2Service';
 import { logger } from '../utils/logger';

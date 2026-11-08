@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: bottom-nav
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - layout/entrada/shell de la app móvil
+ * (next.js)
+ * Descripción: Bottom nav. Parte de: layout/entrada/shell de la app móvil (next.js).
+ */
+
 import { Home, Bot, HeartPulse, Calendar, User } from "lucide-react"
 import type { ViewState } from "@/lib/translations"
 

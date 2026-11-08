@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: dto-generator
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - generación automática de código
+ * (DTOs/Repositorios)
+ * Descripción: Generador de DTO.
+ *
  * DTO Generator - Automatic DTO generation from Domain Entities
  * Part of MDSD improvements
  */

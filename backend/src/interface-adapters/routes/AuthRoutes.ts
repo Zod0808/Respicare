@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: AuthRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Rutas REST de autenticación.
+ */
+
 // Rutas de Autenticación - Capa de Interfaz
 import { Router } from 'express';
 import { DependencyContainer } from '../../infrastructure/container/DependencyContainer';

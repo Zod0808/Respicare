@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: mlOrchestrationService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+ * de ia
+ * Descripción: Servicio de ML (aprendizaje automático) orchestration.
+ *
  * ML Orchestration Service
  * 
  * Servicio para orquestar sesiones de Reinforcement Learning y Federated Learning

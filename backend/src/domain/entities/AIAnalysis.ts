@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: AIAnalysis
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-007 - Panel del doctor
+ * Descripción: IA analysis. Parte de: panel del doctor / monitoreo en tiempo real.
+ */
+
 // Entidad de Análisis de IA - Capa de Dominio
 import { Symptom } from '../value-objects/Symptom';
 

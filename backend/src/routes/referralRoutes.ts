@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: referralRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - gestión
+ * de referencias/derivaciones médicas (referrals)
+ * Descripción: Rutas REST de referencias/derivaciones médicas.
+ *
  * Referral Routes
  * Gestiona CRUD y operaciones de referidos entre especialistas
  */

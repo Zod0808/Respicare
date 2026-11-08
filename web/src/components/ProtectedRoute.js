@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: ProtectedRoute
+ * Fecha de Creación: 2026-05-04
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - componente estructural de la interfaz web
+ * Descripción: Ruta REST de protected.
+ */
+
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';

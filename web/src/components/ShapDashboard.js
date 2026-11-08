@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: ShapDashboard
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-006 - Explicabilidad (SHAP)
+ * Descripción: Panel/dashboard de SHAP (explicabilidad de IA).
+ */
+
 import React, { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import {

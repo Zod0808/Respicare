@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: useChatStorage
+ * Fecha de Creación: 2026-05-05
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - chatbot
+ * conversacional de ia
+ * Descripción: Hook de chat storage.
+ */
+
 import type { ChatMessage } from "@/lib/api/services/chatService"
 
 export function useChatStorage(userId: string | undefined) {

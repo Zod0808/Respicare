@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: train_production_models
+Fecha de Creación: 2026-06-27
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Train production models. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 train_production_models.py
 ==========================
 Entrena todos los modelos del ensemble RespiCare usando los datasets disponibles

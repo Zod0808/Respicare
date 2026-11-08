@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: analyze_prediction_trends
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Analyze prediction trends. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Análisis de tendencias temporales de predicciones
 
 Lee logs de monitoreo (JSONL) en ai-services/monitoring y genera:

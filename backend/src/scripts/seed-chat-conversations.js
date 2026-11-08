@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: seed-chat-conversations
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Seed chat conversations. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Seed Chat Conversations Script - JavaScript version
  * Creates demo chat conversations for dashboard
  */

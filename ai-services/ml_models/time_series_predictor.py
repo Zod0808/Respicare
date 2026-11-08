@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: time_series_predictor
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Modelo predictivo de time series.
+
 TimeSeriesPredictor - Stub para predicción de series temporales (tendencias).
 
 Define una interfaz genérica para entrenar y predecir métricas clínicas

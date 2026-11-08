@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: seed
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Seed. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Database Seeding Script
  * Populates the database with sample data for development and testing
  */

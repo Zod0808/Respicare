@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: mongodbMonitoring
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - observabilidad/monitoreo de la plataforma
+ * backend
+ * Descripción: Mongodb monitoreo. Parte de: observabilidad/monitoreo de la plataforma
+ * backend.
+ *
  * MongoDB Monitoring
  * 
  * Monitorea slow queries, uso de índices y performance de la base de datos.

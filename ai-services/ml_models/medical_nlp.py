@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: medical_nlp
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Médico procesamiento de lenguaje natural (NLP). Parte de: diagnóstico
+inteligente de síntomas.
+
 MedicalNLPProcessor - Stub de NLP avanzado para dominio médico.
 
 Funciones incluidas (stubs):

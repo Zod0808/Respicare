@@ -1,5 +1,14 @@
 'use client'
 
+/**
+ * Nombre de Objeto: command
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Command. Parte de: librería de componentes ui genéricos (shadcn).
+ */
+
 import * as React from 'react'
 import { Command as CommandPrimitive } from 'cmdk'
 import { SearchIcon } from 'lucide-react'

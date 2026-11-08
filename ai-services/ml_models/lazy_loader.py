@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: lazy_loader
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Lazy loader. Parte de: infraestructura/mlops del microservicio de ia.
+
 Lazy Model Loader
 Sistema de carga diferida para modelos pesados (BERT, CV, etc.)
 con estrategia de descarga de modelos grandes

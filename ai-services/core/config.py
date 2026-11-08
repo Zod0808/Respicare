@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: config
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Configuración de infraestructura/mlops del microservicio de ia.
+
 Configuration settings for RespiCare AI Services
 """
 

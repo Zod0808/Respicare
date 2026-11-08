@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: labController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - gestión
+ * de resultados de laboratorio
+ * Descripción: Controlador REST de laboratorio.
+ */
+
 import { Request, Response } from 'express';
 import { asyncHandler } from '../utils/asyncHandler';
 import { AppError } from '../utils/AppError';

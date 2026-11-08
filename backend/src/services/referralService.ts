@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: referralService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - gestión
+ * de referencias/derivaciones médicas (referrals)
+ * Descripción: Servicio de referencias/derivaciones médicas.
+ *
  * Referral Service
  * Gestiona referidos entre especialistas y tracking de referidos
  */

@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: train_neural_network
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Train neural network. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Script de Entrenamiento para Red Neuronal Multi-Tarea
 
 Entrena el modelo de red neuronal multi-tarea para clasificación de enfermedades respiratorias.

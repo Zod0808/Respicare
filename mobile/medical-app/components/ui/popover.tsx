@@ -1,5 +1,14 @@
 'use client'
 
+/**
+ * Nombre de Objeto: popover
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Popover. Parte de: librería de componentes ui genéricos (shadcn).
+ */
+
 import * as React from 'react'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
 

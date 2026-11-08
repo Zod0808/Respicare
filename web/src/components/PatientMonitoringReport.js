@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: PatientMonitoringReport
+ * Fecha de Creación: 2026-04-28
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-007 - Panel del doctor
+ * Descripción: Paciente monitoreo reportes. Parte de: panel del doctor / monitoreo en
+ * tiempo real.
+ */
+
 import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import {

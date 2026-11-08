@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: ConsentLog
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * consentimiento informado y derechos sobre datos (DSR)
+ * Descripción: Consentimiento informado log. Parte de: consentimiento informado y
+ * derechos sobre datos (DSR).
+ *
  * Consent Log Model
  *
  * Modelo para registrar logs de consentimiento de usuarios (GDPR/HIPAA)

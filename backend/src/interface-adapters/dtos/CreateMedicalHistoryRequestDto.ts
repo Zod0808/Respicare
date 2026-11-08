@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: CreateMedicalHistoryRequestDto
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: DTO (objeto de transferencia de datos) de create médico historial
+ * request.
+ */
+
 // DTO para Solicitud de Crear Historial Médico - Capa de Interfaz
 import { SymptomSeverity } from '../../domain/value-objects/Symptom';
 

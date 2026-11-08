@@ -1,6 +1,13 @@
 'use client'
 
 /**
+ * Nombre de Objeto: capacitor-provider
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - layout/entrada/shell de la app móvil
+ * (next.js)
+ * Descripción: Proveedor de contexto de capacitor.
+ *
  * CapacitorProvider
  *
  * Provider raíz que inicializa todos los servicios nativos de Capacitor

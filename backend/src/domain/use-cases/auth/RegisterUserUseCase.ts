@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: RegisterUserUseCase
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Caso de uso: registro usuarios.
+ */
+
 // Caso de Uso: Registrar Usuario - Capa de Dominio
 import { UserEntity, UserRole } from '../../entities/User';
 import { UserRepository } from '../../repositories/UserRepository';

@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: useBiometricAuth
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Hook de biometric autenticación.
+ *
  * useBiometricAuth
  * ═══════════════════════════════════════════════════════════════════
  * Hook de autenticación biométrica usando capacitor-native-biometric.

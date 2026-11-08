@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: dataset_registry
+Fecha de Creación: 2026-06-27
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Registro de dataset.
+
 dataset_registry.py — Registro central de datasets por modelo RespiCare
 
 Cada modelo ML tiene su propia carpeta bajo ai-services/data/datasets/modeloN/

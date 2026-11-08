@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: i18nService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - internacionalización (i18n)
+ * Descripción: Servicio de i18n.
+ *
  * Servicio de Internacionalización (i18n) para Web
  * 
  * Soporta múltiples idiomas para la aplicación web

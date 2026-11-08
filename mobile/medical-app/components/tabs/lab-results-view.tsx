@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: lab-results-view
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - gestión
+ * de resultados de laboratorio
+ * Descripción: Vista de laboratorio results.
+ */
+
 import { useState, useEffect } from "react"
 import { FlaskConical, ChevronRight, RefreshCw, AlertTriangle, CheckCircle, ArrowLeft } from "lucide-react"
 import { ModernButton } from "@/components/ui/ModernButton"

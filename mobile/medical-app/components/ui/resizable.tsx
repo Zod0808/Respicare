@@ -1,5 +1,14 @@
 'use client'
 
+/**
+ * Nombre de Objeto: resizable
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Resizable. Parte de: librería de componentes ui genéricos (shadcn).
+ */
+
 import * as React from 'react'
 import { GripVerticalIcon } from 'lucide-react'
 import * as ResizablePrimitive from 'react-resizable-panels'

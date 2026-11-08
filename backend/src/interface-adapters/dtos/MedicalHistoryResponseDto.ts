@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: MedicalHistoryResponseDto
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: DTO (objeto de transferencia de datos) de médico historial response.
+ */
+
 // DTO para Respuesta de Historial Médico - Capa de Interfaz
 import { MedicalHistoryEntity, SyncStatus } from '../../domain/entities/MedicalHistory';
 import { SymptomSeverity } from '../../domain/value-objects/Symptom';

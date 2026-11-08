@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: config
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - configuración de la aplicación backend
+ * Descripción: Configuración de configuración de la aplicación backend.
+ */
+
 import dotenv from 'dotenv';
 import { AppConfig } from '../types';
 import { validateEnv } from './envSchema';

@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: ChatVoiceModal
+ * Fecha de Creación: 2026-05-05
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - chatbot
+ * conversacional de ia
+ * Descripción: Modal de chat voz.
+ */
+
 import { Mic, MessageSquare, Activity } from "lucide-react"
 import { ModernButton } from "@/components/ui/ModernButton"
 import { ModernCard } from "@/components/ui/ModernCard"

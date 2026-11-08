@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: laboratoryIntegrationService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * integración con sistemas hospitalarios externos / oauth2
+ * Descripción: Servicio de laboratory integración.
+ */
+
 import axios, { AxiosInstance } from 'axios';
 import { logger } from '../utils/logger';
 import { AppError } from '../utils/AppError';

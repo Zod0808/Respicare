@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: lazyLoad
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidades transversales de la app móvil
+ * Descripción: Lazy load. Parte de: utilidades transversales de la app móvil.
+ *
  * Componente para lazy loading de imágenes
  */
 

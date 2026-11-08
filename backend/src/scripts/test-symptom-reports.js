@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: test-symptom-reports
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Test síntomas reportes. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Script para verificar los reportes de síntomas directamente desde MongoDB
  */
 

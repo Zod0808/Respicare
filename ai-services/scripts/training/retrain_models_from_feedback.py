@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: retrain_models_from_feedback
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Retrain models from feedback. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Script de Retraining Automático desde Feedback Médico
 
 Ejecuta el retraining de modelos ML usando feedback médico acumulado.

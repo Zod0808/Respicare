@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: AppError
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidad transversal backend
+ * Descripción: App error. Parte de: utilidad transversal backend.
+ */
+
 // Clase personalizada para errores de la aplicación
 export class AppError extends Error {
   public statusCode: number;

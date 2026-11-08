@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: verify-relationships
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Verify relationships. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Script para verificar las relaciones entre historias médicas y usuarios
  */
 

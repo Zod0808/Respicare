@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: hl7Parser
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidad transversal backend
+ * Descripción: Analizador sintáctico de HL7.
+ */
+
 import { parseStringPromise } from 'xml2js';
 
 export interface Hl7Segment {

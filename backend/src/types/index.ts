@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: index
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - tipos compartidos de typescript
+ * Descripción: Principal. Parte de: tipos compartidos de typescript.
+ */
+
 // Tipos TypeScript para el Backend API de RespiCare
 import { Request } from 'express';
 

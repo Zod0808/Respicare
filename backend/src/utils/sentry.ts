@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: sentry
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidad transversal backend
+ * Descripción: Sentry. Parte de: utilidad transversal backend.
+ *
  * Sentry Error Tracking Integration
  * 
  * Configuración e inicialización de Sentry para tracking de errores

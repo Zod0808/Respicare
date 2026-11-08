@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: ConsentManagement
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * consentimiento informado y derechos sobre datos (DSR)
+ * Descripción: Consentimiento informado management. Parte de: consentimiento informado y
+ * derechos sobre datos (DSR).
+ *
  * Consent Management Component
  * UI para gestión de consentimientos informados médicos. El personal clínico
  * (doctor/admin) ve el panel de autoría con filtros, estadísticas y el

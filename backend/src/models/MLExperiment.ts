@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: MLExperiment
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+ * de ia
+ * Descripción: ML (aprendizaje automático) experiment. Parte de: infraestructura/mlops
+ * del microservicio de ia.
+ *
  * MLExperiment Model
  * 
  * Modelo para almacenar logs de experimentos ML, predicciones y auditoría

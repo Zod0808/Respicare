@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: rotateFieldEncryptionKey
+ * Fecha de Creación: 2026-09-19
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Rotate field cifrado key. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Rota FIELD_ENCRYPTION_KEY: re-cifra en Mongo todos los campos protegidos
  * por applyFieldEncryption() usando la clave vieja para descifrar y la
  * nueva para re-cifrar. Usa las colecciones nativas (mongoose.connection.collection)

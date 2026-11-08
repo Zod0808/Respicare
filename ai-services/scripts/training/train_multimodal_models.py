@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: train_multimodal_models
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Train multimodal models. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Train Multimodal ML Models using Synthetic Datasets
 Trains models for image analysis and cough analysis to improve chatbot responses
 """

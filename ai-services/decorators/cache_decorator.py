@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: cache_decorator
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Caché decorator. Parte de: infraestructura/mlops del microservicio de ia.
+
 Cache Decorator Implementation
 """
 

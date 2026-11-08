@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: swagger
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - configuración de la aplicación backend
+ * Descripción: Swagger. Parte de: configuración de la aplicación backend.
+ *
  * Swagger/OpenAPI Configuration
  * API documentation setup
  */

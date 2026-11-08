@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: fileUploadController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - carga genérica de archivos
+ * (infraestructura)
+ * Descripción: Controlador REST de file upload.
+ *
  * File Upload Controller
  * Handles file uploads for medical images and audio notes
  */

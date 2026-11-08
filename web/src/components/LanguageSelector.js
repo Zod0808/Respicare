@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: LanguageSelector
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - internacionalización (i18n)
+ * Descripción: Language selector. Parte de: internacionalización (i18n).
+ *
  * Language Selector Component
  * 
  * Componente para seleccionar el idioma de la aplicación

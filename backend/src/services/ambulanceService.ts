@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: ambulanceService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-004 - Reglas clínicas de emergencia
+ * Descripción: Servicio de ambulance.
+ */
+
 import axios, { AxiosInstance } from 'axios';
 import { logger } from '../utils/logger';
 import { AppError } from '../utils/AppError';

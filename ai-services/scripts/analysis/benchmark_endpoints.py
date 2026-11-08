@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: benchmark_endpoints
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Benchmark endpoints. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Benchmarks de endpoints AI Services
 
 Ejecuta cargas concurrentes contra endpoints seleccionados y calcula p50/p95/p99.

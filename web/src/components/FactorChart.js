@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: FactorChart
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Gráfico/visualización de factor.
+ *
  * Factor Chart Component
  * 
  * Gráficos interactivos para visualizar factores de riesgo y síntomas

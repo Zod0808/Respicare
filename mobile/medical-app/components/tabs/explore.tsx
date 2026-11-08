@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: explore
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - layout/entrada/shell de la app móvil
+ * (next.js)
+ * Descripción: Explore. Parte de: layout/entrada/shell de la app móvil (next.js).
+ */
+
 import { useState, useEffect } from "react"
 import { Moon, Languages, ChevronRight, LogOut, Loader2 } from "lucide-react"
 import { ModernButton } from "@/components/ui/ModernButton"

@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: MLAdvancedResults
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: ML (aprendizaje automático) advanced results. Parte de: reportes y
+ * estadísticas.
+ *
  * MLAdvancedResults Component
  * 
  * Componente para mostrar resultados avanzados de ML:

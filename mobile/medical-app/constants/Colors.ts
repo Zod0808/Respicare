@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: Colors
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidades transversales de la app móvil
+ * Descripción: Colors. Parte de: utilidades transversales de la app móvil.
+ *
  * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
  * There are many other ways to style your app. For example, [NativeWind](https://www.nativewind.dev/) uses Tailwind CSS.
  *

@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: accessibility
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidad transversal de la interfaz web
+ * Descripción: Accessibility. Parte de: utilidad transversal de la interfaz web.
+ *
  * Accessibility Utilities
  * 
  * Utilidades para mejorar accesibilidad (WCAG 2.1 AA)

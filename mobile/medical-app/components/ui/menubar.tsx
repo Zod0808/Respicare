@@ -1,5 +1,14 @@
 'use client'
 
+/**
+ * Nombre de Objeto: menubar
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Menubar. Parte de: librería de componentes ui genéricos (shadcn).
+ */
+
 import * as React from 'react'
 import * as MenubarPrimitive from '@radix-ui/react-menubar'
 import { CheckIcon, ChevronRightIcon, CircleIcon } from 'lucide-react'

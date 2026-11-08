@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: notification_service
+Fecha de Creación: 2026-08-06
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-009 - Sistema de alertas
+Descripción: Servicio de notification.
+
 Notification Service
 
 Minimal notification dispatcher used by production service suites.

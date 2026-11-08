@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: etl_pipeline
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Etl pipeline. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 RespiCare ETL Pipeline
 ======================
 Extrae datos de fuentes públicas, los transforma al esquema de RespiCare

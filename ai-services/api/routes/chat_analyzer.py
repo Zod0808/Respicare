@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: chat_analyzer
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - chatbot
+conversacional de ia
+Descripción: Analizador de chat.
+
 Chat Analyzer API - Endpoint for conversational symptom analysis
 Processes natural language conversations to extract symptoms, assess urgency, and provide medical guidance
 """

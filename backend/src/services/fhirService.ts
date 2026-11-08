@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: fhirService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * interoperabilidad fhir/hl7
+ * Descripción: Servicio de FHIR.
+ */
+
 import axios, { AxiosInstance } from 'axios';
 import { OAuth2Service, OAuth2Config } from './oauth2Service';
 import { logger } from '../utils/logger';

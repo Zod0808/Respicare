@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: fhirController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * interoperabilidad fhir/hl7
+ * Descripción: Controlador REST de FHIR.
+ */
+
 import { Request, Response } from 'express';
 import { asyncHandler } from '../utils/asyncHandler';
 import { AppError } from '../utils/AppError';

@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: useChatSession
+ * Fecha de Creación: 2026-05-05
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - chatbot
+ * conversacional de ia
+ * Descripción: Hook de chat session.
+ */
+
 import { useState, useEffect, useRef } from "react"
 import { chatService } from "@/lib/api/services/chatService"
 import { toast } from "sonner"

@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: processor
+Fecha de Creación: 2026-08-06
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Procesador de infraestructura/mlops del microservicio de ia.
+
 Medical History Processor
 Extracts structured information from medical history text
 """

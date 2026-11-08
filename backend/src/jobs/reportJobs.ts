@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: reportJobs
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Tareas programadas (cron jobs) de reportes.
+ *
  * Report Jobs
  * Genera reportes automáticos periódicos (diarios, semanales, mensuales)
  */

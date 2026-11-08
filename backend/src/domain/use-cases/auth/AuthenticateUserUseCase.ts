@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: AuthenticateUserUseCase
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Caso de uso: autenticación usuarios.
+ */
+
 // Caso de Uso: Autenticar Usuario - Capa de Dominio
 import { UserEntity, UserRole } from '../../entities/User';
 import { UserRepository } from '../../repositories/UserRepository';

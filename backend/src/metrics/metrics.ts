@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: metrics
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - observabilidad/monitoreo de la plataforma
+ * backend
+ * Descripción: Métricas. Parte de: observabilidad/monitoreo de la plataforma backend.
+ */
+
 import client, { collectDefaultMetrics, Registry, Histogram, Counter } from 'prom-client';
 import { Request, Response, NextFunction } from 'express';
 

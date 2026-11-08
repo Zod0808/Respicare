@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: seedEducationalContent
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Seed contenido educativo content. Parte de: scripts de desarrollo/seed de
+ * datos.
+ *
  * Seed script para el módulo educativo (RF-011)
  * Genera artículos de ejemplo, cubriendo contenido general y por condición
  */

@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: AdminPage
+ * Fecha de Creación: 2026-05-04
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Página web de administración.
+ */
+
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import axios from 'axios';
 import { API_BASE } from '../utils/apiBase';

@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: useCapacitorApp
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - hook transversal de la app móvil
+ * Descripción: Hook de capacitor app.
+ *
  * useCapacitorApp
  *
  * Hook central que inicializa todos los listeners nativos de Capacitor:

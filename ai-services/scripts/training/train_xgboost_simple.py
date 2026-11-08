@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: train_xgboost_simple
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Train XGBoost simple. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Simple XGBoost Training Script
 
 Trains XGBoost model with advanced features for disease classification.

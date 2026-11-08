@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: mlAnalyticsRoutes
+ * Fecha de Creación: 2026-07-14
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Rutas REST de ML (aprendizaje automático) analítica de datos.
+ *
  * ML Analytics Routes (TS)
  *
  * Thin public-access proxy to the AI service ML monitoring endpoints, with

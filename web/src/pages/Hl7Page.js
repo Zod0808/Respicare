@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: Hl7Page
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * interoperabilidad fhir/hl7
+ * Descripción: Página web de HL7.
+ */
+
 import React, { useState } from 'react';
 import Hl7MessageViewer from '../components/Hl7MessageViewer';
 import API_BASE from '../utils/apiBase';

@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: service_factory
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Service factory. Parte de: infraestructura/mlops del microservicio de ia.
+
 Service Factory for creating AI services
 """
 

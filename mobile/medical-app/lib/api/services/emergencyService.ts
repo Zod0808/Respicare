@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: emergencyService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-004 - Reglas clínicas de emergencia
+ * Descripción: Servicio de emergencias.
+ *
  * Servicio de Emergencias / SOS
  */
 

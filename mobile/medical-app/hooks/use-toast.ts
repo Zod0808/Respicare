@@ -1,5 +1,13 @@
 'use client'
 
+/**
+ * Nombre de Objeto: use-toast
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - hook transversal de la app móvil
+ * Descripción: Use toast. Parte de: hook transversal de la app móvil.
+ */
+
 // Inspired by react-hot-toast library
 import * as React from 'react'
 

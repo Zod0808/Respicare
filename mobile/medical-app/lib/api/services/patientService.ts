@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: patientService
+ * Fecha de Creación: 2026-09-11
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: Servicio de paciente.
+ */
+
 import { apiClient } from '../client'
 import { API_ENDPOINTS } from '../config'
 

@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: seed-complete-demo
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Seed complete demo. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Complete Demo Data Seed Script
  * Genera todos los datos necesarios para probar dashboards web y mobile
  * - Usuarios (pacientes, doctores, admin)

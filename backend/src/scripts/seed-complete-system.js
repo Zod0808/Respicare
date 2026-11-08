@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: seed-complete-system
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Sistema de seed complete.
+ *
  * RespiCare - Seed Completo del Sistema
  * Genera datos de prueba realistas para TODAS las colecciones
  *

@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: redisClient
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - configuración de la aplicación backend
+ * Descripción: Cliente de redis.
+ */
+
 import { createClient } from 'redis';
 type RedisClientType = ReturnType<typeof createClient>;
 import { config } from './config';

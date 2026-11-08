@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: useImageAnalyzer
+ * Fecha de Creación: 2026-05-05
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - chatbot
+ * conversacional de ia
+ * Descripción: Hook de imágenes analyzer.
+ */
+
 import { useState, useRef } from "react"
 import { toast } from "sonner"
 import { API_CONFIG, getAuthToken } from "@/lib/api/config"

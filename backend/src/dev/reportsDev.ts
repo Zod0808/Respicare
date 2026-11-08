@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: reportsDev
+ * Fecha de Creación: 2026-07-14
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - endpoints de desarrollo/depuración local
+ * Descripción: Reportes dev. Parte de: endpoints de desarrollo/depuración local.
+ *
  * Automatic Reports endpoints (dev-only)
  *
  * Read-side endpoints hit MongoDB via a loose AutomaticReport model

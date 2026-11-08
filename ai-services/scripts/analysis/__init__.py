@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: __init__
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Inicialización del módulo. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Scripts de análisis y benchmarking
 """
 

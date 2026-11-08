@@ -1,5 +1,14 @@
 'use client'
 
+/**
+ * Nombre de Objeto: radio-group
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Radio group. Parte de: librería de componentes ui genéricos (shadcn).
+ */
+
 import * as React from 'react'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import { CircleIcon } from 'lucide-react'

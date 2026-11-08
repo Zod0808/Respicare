@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: urgency_calculator
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-004 - Reglas clínicas de emergencia
+Descripción: Calculadora de urgency.
+
 Urgency Calculator Utility
 Calcula el nivel de urgencia basado en síntomas y factores de riesgo.
 Esta función será desarrollada usando TDD.

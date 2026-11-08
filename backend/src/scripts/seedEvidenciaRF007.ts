@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: seedEvidenciaRF007
+ * Fecha de Creación: 2026-10-20
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Seed evidencia rf007. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Script temporal (no forma parte del seed oficial) usado únicamente para
  * generar evidencias reales de pruebas del RF-007 (Panel del médico).
  * Crea un AIAnalysis pendiente de revisión para el paciente de evidencia QA.

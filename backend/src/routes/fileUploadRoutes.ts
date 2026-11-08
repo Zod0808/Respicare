@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: fileUploadRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - carga genérica de archivos
+ * (infraestructura)
+ * Descripción: Rutas REST de file upload.
+ *
  * File Upload Routes
  * Routes for file uploads and management
  */

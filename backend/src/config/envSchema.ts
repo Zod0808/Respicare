@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: envSchema
+ * Fecha de Creación: 2026-09-28
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - configuración de la aplicación backend
+ * Descripción: Env schema. Parte de: configuración de la aplicación backend.
+ */
+
 import { z } from 'zod';
 
 const MIN_SECRET_LENGTH = 32;

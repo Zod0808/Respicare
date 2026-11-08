@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: epidemiologicalService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Servicio de epidemiological.
+ */
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { logger } from '../utils/logger';
 

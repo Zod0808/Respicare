@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: execute_full_retraining
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Execute full retraining. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Ejecutar Retraining Completo con Dataset Aumentado
 
 Combina el dataset extendido (307k casos) con feedback médico y

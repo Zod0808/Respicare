@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: percentileMetrics
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - observabilidad/monitoreo de la plataforma
+ * backend
+ * Descripción: Percentile métricas. Parte de: observabilidad/monitoreo de la plataforma
+ * backend.
+ *
  * Percentile Metrics (p95/p99)
  * 
  * Calcula percentiles (p50, p95, p99) de latencia de requests HTTP

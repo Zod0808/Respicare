@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: RegisterRequestDto
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: DTO (objeto de transferencia de datos) de registro request.
+ */
+
 // DTO para Solicitud de Registro - Capa de Interfaz
 import { UserRole } from '../../domain/entities/User';
 

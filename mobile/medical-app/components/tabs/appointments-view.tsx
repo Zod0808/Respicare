@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: appointments-view
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - gestión
+ * de citas médicas (appointments)
+ * Descripción: Vista de citas médicas.
+ */
+
 import { useState, useEffect } from "react"
 import { Plus, Search, ChevronRight, Calendar, Clock, MapPin, Video, Eye, Edit, X } from "lucide-react"
 import { ModernButton } from "@/components/ui/ModernButton"

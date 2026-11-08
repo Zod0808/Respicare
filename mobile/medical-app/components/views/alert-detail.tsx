@@ -1,5 +1,13 @@
 "use client"
 
+/**
+ * Nombre de Objeto: alert-detail
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas
+ * Descripción: Alertas detail. Parte de: sistema de alertas/notificaciones.
+ */
+
 import { useState, useEffect } from "react"
 import {
   ArrowLeft,

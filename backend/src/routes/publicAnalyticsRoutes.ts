@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: publicAnalyticsRoutes
+ * Fecha de Creación: 2026-07-14
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Rutas REST de public analítica de datos.
+ *
  * Public Analytics Routes (TS)
  *
  * Unauthenticated dashboard endpoints backed by MongoDB aggregations.

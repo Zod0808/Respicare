@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: ReferralManagement
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - gestión
+ * de referencias/derivaciones médicas (referrals)
+ * Descripción: Referencias/derivaciones médicas management. Parte de: gestión de
+ * referencias/derivaciones médicas (referrals).
+ *
  * Referral Management Component
  * UI para crear y gestionar referidos entre especialistas
  */

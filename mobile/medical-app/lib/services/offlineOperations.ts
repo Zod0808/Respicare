@@ -1,4 +1,12 @@
 /**
+ * Nombre de Objeto: offlineOperations
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - almacenamiento local/offline de la app
+ * móvil
+ * Descripción: Offline operations. Parte de: almacenamiento local/offline de la app
+ * móvil.
+ *
  * Utilidades para operaciones offline
  * Wrappers para servicios que manejan automáticamente el modo offline
  */

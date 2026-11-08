@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: useAppStore
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidades transversales de la app móvil
+ * Descripción: Hook de app store.
+ *
  * Store global de Zustand para RespiCare Mobile
  */
 

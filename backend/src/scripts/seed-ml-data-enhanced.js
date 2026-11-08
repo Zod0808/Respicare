@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: seed-ml-data-enhanced
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Seed ML (aprendizaje automático) data enhanced. Parte de: scripts de
+ * desarrollo/seed de datos.
+ *
  * Enhanced ML Data Seed Script
  * Genera datos realistas de experimentos ML y métricas de monitoreo
  * 

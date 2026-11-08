@@ -1,5 +1,13 @@
 "use client"
 
+/**
+ * Nombre de Objeto: alerts-view
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas
+ * Descripción: Vista de alertas.
+ */
+
 import { useState, useEffect } from "react"
 import { 
   Plus, 

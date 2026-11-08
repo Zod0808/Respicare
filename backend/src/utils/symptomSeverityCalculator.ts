@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: symptomSeverityCalculator
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidad transversal backend
+ * Descripción: Calculadora de síntomas severity.
+ *
  * Symptom Severity Calculator
  * 
  * Calcula el score de severidad total basado en una lista de síntomas.

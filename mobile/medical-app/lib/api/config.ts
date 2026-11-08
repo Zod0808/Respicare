@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: config
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - infraestructura del cliente API móvil
+ * Descripción: Configuración de infraestructura del cliente API móvil.
+ *
  * Configuración de la API del backend RespiCare
  */
 

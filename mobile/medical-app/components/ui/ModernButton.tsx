@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: ModernButton
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Modern button. Parte de: librería de componentes ui genéricos (shadcn).
+ */
+
 import React from "react"
 import type { ReactNode } from "react"
 import { Loader2 } from "lucide-react"

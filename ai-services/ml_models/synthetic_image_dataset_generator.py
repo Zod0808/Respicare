@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: synthetic_image_dataset_generator
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Generador de synthetic imágenes dataset.
+
 Synthetic Dataset Generator for Medical Images
 Generates synthetic training data for image analysis models to improve chatbot responses
 """

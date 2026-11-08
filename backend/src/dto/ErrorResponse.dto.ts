@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: ErrorResponse.dto
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - dto transversal de respuesta de error/api
+ * Descripción: DTO (objeto de transferencia de datos) de error response..
+ *
  * Error Response DTO
  * 
  * DTO para respuestas de error amigables y localizables

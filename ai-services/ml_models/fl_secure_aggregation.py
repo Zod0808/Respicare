@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: fl_secure_aggregation
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - ml
+avanzado / automl / aprendizaje federado / rl (no documentado en RF)
+Descripción: Fl secure aggregation. Parte de: ml avanzado / automl / aprendizaje
+federado / rl (no documentado en RF).
+
 Federated Learning with Secure Aggregation
 Implementación real de FL con agregación segura y coordinación de rondas
 """

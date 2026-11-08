@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: labRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - gestión
+ * de resultados de laboratorio
+ * Descripción: Rutas REST de laboratorio.
+ */
+
 import { Router } from 'express';
 import { query, param, body } from 'express-validator';
 import {

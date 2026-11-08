@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: simpleAnalyticsRoutes
+ * Fecha de Creación: 2026-07-14
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Rutas REST de simple analítica de datos.
+ *
  * Simple Analytics Routes (TS)
  *
  * Lightweight, unauthenticated dashboard endpoints for the dev/demo UI.

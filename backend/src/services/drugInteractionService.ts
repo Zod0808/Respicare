@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: drugInteractionService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * integración con sistemas hospitalarios externos / oauth2
+ * Descripción: Servicio de drug interaction.
+ *
  * Drug Interaction Service
  * Integra con API externas para detectar interacciones medicamentosas
  */

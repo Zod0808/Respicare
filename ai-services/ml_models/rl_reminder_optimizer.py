@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: rl_reminder_optimizer
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - ml
+avanzado / automl / aprendizaje federado / rl (no documentado en RF)
+Descripción: Aprendizaje por refuerzo reminder optimizer. Parte de: ml avanzado /
+automl / aprendizaje federado / rl (no documentado en RF).
+
 RL Reminder Optimizer
 Reinforcement Learning para optimizar recordatorios de medicamentos
 

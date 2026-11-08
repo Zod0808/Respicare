@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: chatService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - chatbot
+ * conversacional de ia
+ * Descripción: Servicio de chat.
+ *
  * Servicio de chat/conversaciones
  */
 

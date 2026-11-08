@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: useNetworkStatus
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - hook transversal de la app móvil
+ * Descripción: Hook de network status.
+ *
  * useNetworkStatus
  * ═══════════════════════════════════════════════════════════════════
  * Detecta el estado de conexión a internet usando:

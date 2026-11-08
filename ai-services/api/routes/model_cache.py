@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: model_cache
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Model caché. Parte de: infraestructura/mlops del microservicio de ia.
+
 Model Cache API Routes
 Endpoints para gestionar y monitorear el caché de modelos
 """

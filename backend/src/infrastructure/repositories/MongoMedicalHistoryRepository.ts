@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: MongoMedicalHistoryRepository
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: Repositorio de datos de mongo médico historial.
+ */
+
 // Implementación de Repositorio de Historial Médico con MongoDB - Capa de Infraestructura
 import { MedicalHistoryEntity, SyncStatus } from '../../domain/entities/MedicalHistory';
 import { MedicalHistoryRepository } from '../../domain/repositories/MedicalHistoryRepository';

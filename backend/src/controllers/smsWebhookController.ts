@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: smsWebhookController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * notificaciones sms
+ * Descripción: Controlador REST de SMS webhook.
+ *
  * SMS Webhook Controller
  * Maneja webhooks de proveedores SMS (Twilio, AWS SNS, MessageBird)
  */

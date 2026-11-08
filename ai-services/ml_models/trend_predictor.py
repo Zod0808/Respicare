@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: trend_predictor
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Modelo predictivo de trend.
+
 Disease trend prediction utilities for the executive analytics dashboard.
 
 This module provides a lightweight predictor that can be trained with aggregated

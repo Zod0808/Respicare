@@ -1,5 +1,14 @@
 'use client'
 
+/**
+ * Nombre de Objeto: toaster
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Toaster. Parte de: librería de componentes ui genéricos (shadcn).
+ */
+
 import { useToast } from '@/hooks/use-toast'
 import {
   Toast,

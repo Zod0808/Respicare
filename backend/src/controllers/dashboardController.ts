@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: dashboardController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Controlador REST de panel de control.
+ *
  * Dashboard Controller
  * Handles dashboard analytics and statistics
  */

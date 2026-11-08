@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: AnalyticsDashboardSimple
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Analítica de datos panel de control simple. Parte de: reportes y
+ * estadísticas.
+ */
+
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './AnalyticsDashboard.css';

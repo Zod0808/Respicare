@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: fix-seed-demo
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Fix seed demo. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Fixed version of seed demo data - JavaScript version
  * This script will seed the database with demo data for dashboards
  */

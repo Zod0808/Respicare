@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: notificationService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas
+ * Descripción: Servicio de notification.
+ *
  * notificationService
  * ═══════════════════════════════════════════════════════════════════
  * Servicio de notificaciones locales médicas usando @capacitor/local-notifications.

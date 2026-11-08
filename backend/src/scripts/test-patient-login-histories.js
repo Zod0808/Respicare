@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: test-patient-login-histories
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Test paciente inicio de sesión historiales. Parte de: scripts de
+ * desarrollo/seed de datos.
+ *
  * Script para probar el login del paciente y obtener sus historias médicas
  */
 

@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: Appointment
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - gestión
+ * de citas médicas (appointments)
+ * Descripción: Citas médicas. Parte de: gestión de citas médicas (appointments).
+ */
+
 import mongoose, { Document, Model, Schema } from 'mongoose';
 import { Appointment as AppointmentDTO, AppointmentStatus } from '../types';
 import { applyFieldEncryption } from '../utils/encryption';

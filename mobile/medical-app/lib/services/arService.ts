@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: arService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - realidad
+ * aumentada (entrenamiento ar)
+ * Descripción: Servicio de realidad aumentada.
+ *
  * Servicio de Realidad Aumentada para ejercicios respiratorios
  * 
  * Soporta:

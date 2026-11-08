@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: sentry_integration
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Sentry integración. Parte de: infraestructura/mlops del microservicio de
+ia.
+
 Sentry Error Tracking Integration for AI Services
 
 Configuración e inicialización de Sentry para tracking de errores

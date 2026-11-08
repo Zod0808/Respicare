@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: circuit_breaker
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Circuit breaker. Parte de: infraestructura/mlops del microservicio de ia.
+
 Circuit Breaker Pattern Implementation
 """
 

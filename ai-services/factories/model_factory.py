@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: model_factory
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Model factory. Parte de: infraestructura/mlops del microservicio de ia.
+
 Model Factory for creating AI models
 """
 

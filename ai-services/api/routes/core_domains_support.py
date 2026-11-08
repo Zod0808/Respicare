@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: core_domains_support
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - soporte
+de ia para dominios core (citas/recetas/alertas/historial)
+Descripción: Core domains support. Parte de: soporte de ia para dominios core
+(citas/recetas/alertas/historial).
+
 API Routes for Core Domains Support
 Endpoints para soporte indirecto de AI a los dominios core
 """

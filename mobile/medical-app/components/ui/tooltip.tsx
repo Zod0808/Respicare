@@ -1,5 +1,14 @@
 'use client'
 
+/**
+ * Nombre de Objeto: tooltip
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Tooltip. Parte de: librería de componentes ui genéricos (shadcn).
+ */
+
 import * as React from 'react'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 

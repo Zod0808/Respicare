@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: appointmentService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - gestión
+ * de citas médicas (appointments)
+ * Descripción: Servicio de citas médicas.
+ *
  * Appointment Service
  * Gestiona el ciclo de vida de las citas médicas, disponibilidad y recordatorios
  */

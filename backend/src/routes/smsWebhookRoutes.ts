@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: smsWebhookRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * notificaciones sms
+ * Descripción: Rutas REST de SMS webhook.
+ *
  * SMS Webhook Routes
  * Rutas para recibir webhooks de proveedores SMS
  */

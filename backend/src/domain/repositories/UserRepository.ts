@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: UserRepository
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Repositorio de datos de usuarios.
+ */
+
 // Repositorio de Usuario - Capa de Dominio
 import { UserEntity, User } from '../entities/User';
 

@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: train_xgboost_model
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Modelo de datos de train XGBoost.
+
 Train XGBoost Model with Advanced Feature Engineering and SHAP
 
 This script:

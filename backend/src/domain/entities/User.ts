@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: User
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Usuarios. Parte de: gestión de usuarios/autenticación.
+ */
+
 // Entidad de Usuario - Capa de Dominio
 export interface User {
   id: string;

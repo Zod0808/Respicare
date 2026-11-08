@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: Dashboard
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Panel/dashboard de reportes y estadísticas.
+ */
+
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import axios from 'axios';
 import './Dashboard.css';

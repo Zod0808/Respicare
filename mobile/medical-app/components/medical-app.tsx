@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: medical-app
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - layout/entrada/shell de la app móvil
+ * (next.js)
+ * Descripción: Médico app. Parte de: layout/entrada/shell de la app móvil (next.js).
+ */
+
 import * as React from "react"
 import { Calendar } from "lucide-react"
 import { ModernButton } from "@/components/ui/ModernButton"

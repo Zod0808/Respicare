@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: smsService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * notificaciones sms
+ * Descripción: Servicio de SMS.
+ *
  * SMS Service
  * Gestiona el envío de mensajes SMS usando múltiples proveedores (Twilio, AWS SNS, MessageBird)
  */

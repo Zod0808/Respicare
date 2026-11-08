@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: HeatMapPage
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Página web de heat map.
+ */
+
 import React, { Suspense, lazy } from 'react';
 import './HeatMapPage.css';
 

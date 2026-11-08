@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: appointmentsDev
+ * Fecha de Creación: 2026-07-14
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - endpoints de desarrollo/depuración local
+ * Descripción: Citas médicas dev. Parte de: endpoints de desarrollo/depuración local.
+ *
  * Appointments endpoints (dev-only)
  *
  * JWT-verified list + upcoming + availability generator. Falls back to

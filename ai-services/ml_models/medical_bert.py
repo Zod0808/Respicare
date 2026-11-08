@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: medical_bert
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Médico BERT (modelo de lenguaje). Parte de: diagnóstico inteligente de
+síntomas.
+
 MedicalBERTModel - Modelo Transformer (BERT) para texto médico.
 
 Soporta carga real de modelos BERT con transformers cuando AI_USE_REAL_MODELS=1.

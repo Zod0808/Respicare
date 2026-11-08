@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: theme
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - tema visual de la interfaz
+ * Descripción: Theme. Parte de: tema visual de la interfaz.
+ *
  * RespiCare Light Theme
  * Color tokens and typography for the app
  */

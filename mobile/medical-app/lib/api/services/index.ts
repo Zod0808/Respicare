@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: index
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - infraestructura del cliente API móvil
+ * Descripción: Principal. Parte de: infraestructura del cliente API móvil.
+ *
  * Exportar todos los servicios API
  */
 

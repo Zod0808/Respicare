@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: SHAPVisualization
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-006 - Explicabilidad (SHAP)
+ * Descripción: SHAP (explicabilidad de IA) visualization. Parte de: explicabilidad
+ * (shap).
+ *
  * SHAP Visualization Component
  * 
  * Visualiza explicaciones SHAP de manera interactiva y comprensible

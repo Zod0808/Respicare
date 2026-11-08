@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: ApiResponse
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - dto transversal de respuesta de error/api
+ * Descripción: DTO de respuesta de API.
+ */
+
 // DTO para Respuesta de API - Capa de Interfaz
 export interface ApiResponse<T = any> {
   success: boolean;

@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: AuthController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Controlador REST de autenticación.
+ */
+
 // Controlador de Autenticación - Capa de Interfaz
 import { Request, Response } from 'express';
 import { AuthenticatedRequest } from '../../types';

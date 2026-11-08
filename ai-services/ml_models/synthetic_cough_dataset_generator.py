@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: synthetic_cough_dataset_generator
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Generador de synthetic tos dataset.
+
 Synthetic Dataset Generator for Cough Analysis
 Generates synthetic training data for cough analysis models to improve chatbot responses
 """

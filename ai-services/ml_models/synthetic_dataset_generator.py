@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: synthetic_dataset_generator
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Generador de synthetic dataset.
+
 Synthetic Dataset Generator for 124 Respiratory Diseases
 
 Generates synthetic training data based on disease definitions with realistic variations.

@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: wearableSocketHandler
+ * Fecha de Creación: 2026-05-05
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-014 - Wearables como validación clínica
+ * Descripción: Manejador de eventos websocket de wearables.
+ *
  * WebSocket handler para datos de wearables en tiempo real.
  * Monta en /ws/wearables sobre el mismo httpServer que Express.
  *

@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: ModernCard
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Tarjeta visual de modern.
+ */
+
 import type * as React from "react"
 
 export function ModernCard({

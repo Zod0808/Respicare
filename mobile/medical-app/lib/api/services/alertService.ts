@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: alertService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas
+ * Descripción: Servicio de alertas.
+ *
  * Servicio de alertas
  */
 

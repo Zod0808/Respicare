@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: AuditLog
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - auditoría transversal
+ * Descripción: Audit log. Parte de: auditoría transversal.
+ */
+
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface AuditLogDocument extends Document {

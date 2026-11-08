@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: smsMetricsService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - métricas/observabilidad de canal sms
+ * Descripción: Servicio de SMS métricas.
+ *
  * SMS Metrics Service
  * Gestiona métricas de envío de SMS (tasa de éxito, costos, etc.)
  */

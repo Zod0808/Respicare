@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: anonymization
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidad transversal backend
+ * Descripción: Anonymization. Parte de: utilidad transversal backend.
+ */
+
 import crypto from 'crypto';
 
 export type AnonymizationOptions = {

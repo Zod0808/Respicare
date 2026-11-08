@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: card
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Tarjeta visual de librería de componentes ui genéricos (shadcn).
+ */
+
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'

@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: test-dashboard-api
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Test panel de control API. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Script para probar el endpoint del dashboard con los datos insertados
  */
 

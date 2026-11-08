@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: device-metrics
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidades transversales de la app móvil
+ * Descripción: Device métricas. Parte de: utilidades transversales de la app móvil.
+ *
  * Utilidades para mediciones reales de performance en dispositivos
  * 
  * Mide:

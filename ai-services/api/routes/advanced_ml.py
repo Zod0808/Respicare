@@ -1,3 +1,13 @@
+"""
+Nombre de Objeto: advanced_ml
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - ml
+avanzado / automl / aprendizaje federado / rl (no documentado en RF)
+Descripción: Advanced ML (aprendizaje automático). Parte de: ml avanzado / automl /
+aprendizaje federado / rl (no documentado en RF).
+"""
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import List, Dict, Any, Optional

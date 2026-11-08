@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: capacitor-plugins.d
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidades transversales de la app móvil
+ * Descripción: Capacitor plugins.d. Parte de: utilidades transversales de la app móvil.
+ *
  * Declaraciones de tipos para plugins de Capacitor pendientes de instalar.
  *
  * Estos módulos están declarados en package.json. Las declaraciones aquí

@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: index
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidades transversales de la app móvil
+ * Descripción: Principal. Parte de: utilidades transversales de la app móvil.
+ *
  * Tipos TypeScript para la aplicación RespiCare
  */
 

@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: use-mobile
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Use mobile. Parte de: librería de componentes ui genéricos (shadcn).
+ */
+
 import * as React from 'react'
 
 const MOBILE_BREAKPOINT = 768

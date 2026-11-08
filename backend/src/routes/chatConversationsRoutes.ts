@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: chatConversationsRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - chatbot
+ * conversacional de ia
+ * Descripción: Rutas REST de chat conversations.
+ *
  * Chat Conversations Routes (TypeScript)
  * API endpoints for chatbot conversations
  */

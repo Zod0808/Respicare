@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: biConnectorService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Servicio de inteligencia de negocio (BI) connector.
+ *
  * BI Connector Service
  * 
  * Servicio para conectar con herramientas BI externas (Power BI, Tableau, etc.)

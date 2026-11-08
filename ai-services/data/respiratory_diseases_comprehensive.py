@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: respiratory_diseases_comprehensive
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Respiratory diseases comprehensive. Parte de: diagnóstico inteligente de
+síntomas.
+
 Comprehensive Respiratory Diseases Database
 Complete list of 124 respiratory diseases with symptoms, treatments, and classifications
 """

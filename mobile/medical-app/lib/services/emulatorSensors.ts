@@ -1,6 +1,12 @@
 "use client"
 
 /**
+ * Nombre de Objeto: emulatorSensors
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-014 - Wearables como validación clínica
+ * Descripción: Emulator sensors. Parte de: wearables como validación clínica.
+ *
  * EmulatorSensors — lee sensores virtuales del emulador Android via el
  * endpoint de sincronización del backend, y permite inyectar escenarios
  * predefinidos (reposo, ejercicio, alerta SpO2) desde la UI.

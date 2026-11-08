@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: ThemeToggle
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - tema visual de la interfaz
+ * Descripción: Theme toggle. Parte de: tema visual de la interfaz.
+ *
  * Theme Toggle Component
  * 
  * Componente para cambiar entre temas light/dark

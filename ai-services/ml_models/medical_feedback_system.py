@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: medical_feedback_system
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - ml
+avanzado / automl / aprendizaje federado / rl (no documentado en RF)
+Descripción: Sistema de médico feedback.
+
 Sistema de Feedback Médico para Mejora de Modelos ML
 
 Permite a médicos proporcionar feedback sobre predicciones del modelo,

@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: cspEnforcer
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidad transversal de la interfaz web
+ * Descripción: Csp enforcer. Parte de: utilidad transversal de la interfaz web.
+ *
  * CSP Enforcer
  * 
  * Refuerza Content Security Policy en el cliente

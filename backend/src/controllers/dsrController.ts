@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: dsrController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * consentimiento informado y derechos sobre datos (DSR)
+ * Descripción: Controlador REST de DSR (derechos sobre datos del paciente).
+ */
+
 import { Request, Response } from 'express';
 import MedicalHistory from '../models/MedicalHistory';
 import AppointmentModel from '../models/Appointment';

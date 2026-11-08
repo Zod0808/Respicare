@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: axios
+ * Fecha de Creación: 2026-09-26
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - bootstrap/configuración de la app web
+ * (CRA)
+ * Descripción: Axios. Parte de: bootstrap/configuración de la app web (CRA).
+ */
+
 const buildClient = () => {
   const client = {
     get: jest.fn(() => Promise.resolve({ data: {} })),

@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: DependencyContainer
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - contenedor de inyección de dependencias
+ * Descripción: Dependency container. Parte de: contenedor de inyección de dependencias.
+ */
+
 // Contenedor de Dependencias - Capa de Infraestructura
 import { UserRepository } from '../../domain/repositories/UserRepository';
 import { MedicalHistoryRepository } from '../../domain/repositories/MedicalHistoryRepository';

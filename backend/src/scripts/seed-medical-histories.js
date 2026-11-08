@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: seed-medical-histories
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Seed médico historiales. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Seed Medical Histories Script - JavaScript version
  * Creates medical histories for existing patients
  */

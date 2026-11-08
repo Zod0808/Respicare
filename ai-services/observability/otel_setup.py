@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: otel_setup
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Otel setup. Parte de: infraestructura/mlops del microservicio de ia.
+
 Configuración de OpenTelemetry para AI Services (Python/FastAPI)
 
 Incluye:

@@ -1,5 +1,14 @@
 'use client'
 
+/**
+ * Nombre de Objeto: use-toast
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Use toast. Parte de: librería de componentes ui genéricos (shadcn).
+ */
+
 // Inspired by react-hot-toast library
 import * as React from 'react'
 

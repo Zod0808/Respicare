@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: medical_data
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Médico data. Parte de: diagnóstico inteligente de síntomas.
+
 Medical data processing utilities and sample datasets
 """
 

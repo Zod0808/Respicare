@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: neural_network_wrapper
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Wrapper/envoltorio de neural network.
+
 Wrapper para Red Neuronal Multi-Tarea
 
 Hace compatible la red neuronal con el sistema de predicción existente,

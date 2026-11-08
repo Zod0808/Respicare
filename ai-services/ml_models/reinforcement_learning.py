@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: reinforcement_learning
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - ml
+avanzado / automl / aprendizaje federado / rl (no documentado en RF)
+Descripción: Reinforcement learning. Parte de: ml avanzado / automl / aprendizaje
+federado / rl (no documentado en RF).
+
 ReinforcementLearningAgent - Agente RL para optimización clínica.
 
 Usa implementación real para optimización de recordatorios cuando env_name es "reminder-optimizer",

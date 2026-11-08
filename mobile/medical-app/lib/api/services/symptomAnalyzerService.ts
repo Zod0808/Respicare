@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: symptomAnalyzerService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+ * Descripción: Servicio de síntomas analyzer.
+ *
  * Servicio de análisis de síntomas con IA
  */
 

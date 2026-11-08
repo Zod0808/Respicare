@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: sqliteDatabase
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - almacenamiento local/offline de la app
+ * móvil
+ * Descripción: Sqlite database. Parte de: almacenamiento local/offline de la app móvil.
+ *
  * SQLite Database Service for offline storage (Capacitor Android)
  *
  * Falls back to an in-memory store when running in a browser / SSR context

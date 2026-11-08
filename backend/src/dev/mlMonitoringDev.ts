@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: mlMonitoringDev
+ * Fecha de Creación: 2026-07-14
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - endpoints de desarrollo/depuración local
+ * Descripción: ML (aprendizaje automático) monitoreo dev. Parte de: endpoints de
+ * desarrollo/depuración local.
+ *
  * ML Monitoring endpoints (dev-only)
  *
  * Proxies /ml/monitoring, /ml/features, /ml/fairness to the AI service

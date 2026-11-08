@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: wearableAlertService
+ * Fecha de Creación: 2026-05-05
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas
+ * Descripción: Servicio de wearables alertas.
+ *
  * Wearable Alert Service
  * Verifica umbrales clínicos en cada lectura y crea alertas en MongoDB.
  * Cooldown de 5 min por paciente+métrica para evitar spam.

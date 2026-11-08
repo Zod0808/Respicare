@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: ReportShareScreen
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * generación/compartición de reportes médicos móviles
+ * Descripción: Pantalla de reportes share.
+ */
+
 import { useState, useEffect } from "react"
 import {
   Share2,

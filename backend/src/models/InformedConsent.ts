@@ -1,3 +1,13 @@
+/**
+ * Nombre de Objeto: InformedConsent
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * consentimiento informado y derechos sobre datos (DSR)
+ * Descripción: Informed consentimiento informado. Parte de: consentimiento informado y
+ * derechos sobre datos (DSR).
+ */
+
 import mongoose, { Document, Model, Schema } from 'mongoose';
 import { applyFieldEncryption } from '../utils/encryption';
 

@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: test-medical-histories-patient
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Test médico historiales paciente. Parte de: scripts de desarrollo/seed de
+ * datos.
+ *
  * Script para probar que las historias médicas están relacionadas con el paciente
  */
 

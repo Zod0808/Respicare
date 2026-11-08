@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: use-mobile
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - hook transversal de la app móvil
+ * Descripción: Use mobile. Parte de: hook transversal de la app móvil.
+ */
+
 import * as React from 'react'
 
 const MOBILE_BREAKPOINT = 768

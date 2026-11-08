@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: securityUtils
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidad transversal de la interfaz web
+ * Descripción: Security utils. Parte de: utilidad transversal de la interfaz web.
+ *
  * Security Utilities
  * 
  * Utilidades de seguridad para el cliente web:

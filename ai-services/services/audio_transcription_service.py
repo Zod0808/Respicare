@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: audio_transcription_service
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-003 - Análisis de tos por audio
+Descripción: Servicio de audio transcription.
+
 Audio Transcription Service - Uses OpenAI Whisper (pre-trained model, no dataset needed)
 """
 

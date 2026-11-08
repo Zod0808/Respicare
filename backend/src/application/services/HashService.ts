@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: HashService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Servicio de hash.
+ */
+
 // Servicio de Hash - Capa de Aplicación
 export interface HashService {
   hash(password: string): Promise<string>;

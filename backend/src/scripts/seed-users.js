@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: seed-users
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Seed usuarios. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Seed Users Script - JavaScript version
  * Creates demo users for mobile app testing
  */

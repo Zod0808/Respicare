@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: referrals-view
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - gestión
+ * de referencias/derivaciones médicas (referrals)
+ * Descripción: Vista de referencias/derivaciones médicas.
+ */
+
 import { useState, useEffect } from "react"
 import { Share2, ChevronRight, RefreshCw, ArrowLeft } from "lucide-react"
 import { ModernButton } from "@/components/ui/ModernButton"

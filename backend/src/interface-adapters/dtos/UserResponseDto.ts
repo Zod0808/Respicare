@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: UserResponseDto
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: DTO (objeto de transferencia de datos) de usuarios response.
+ */
+
 // DTO para Respuesta de Usuario - Capa de Interfaz
 import { UserEntity, UserRole } from '../../domain/entities/User';
 

@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: seed_ml_predictions
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Seed ML (aprendizaje automático) predictions. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Script para poblar datos de prueba de predicciones ML
 Útil para testing y demostración del dashboard de explicabilidad SHAP
 """

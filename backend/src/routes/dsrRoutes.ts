@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: dsrRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * consentimiento informado y derechos sobre datos (DSR)
+ * Descripción: Rutas REST de DSR (derechos sobre datos del paciente).
+ */
+
 import { Router } from 'express';
 import { auth } from '../middleware/auth';
 import { requirePermission } from '../middleware/rbac';

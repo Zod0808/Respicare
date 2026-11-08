@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: MedicalHistoryRepository
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: Repositorio de datos de médico historial.
+ */
+
 // Repositorio de Historial Médico - Capa de Dominio
 import { MedicalHistoryEntity, MedicalHistory, SyncStatus } from '../entities/MedicalHistory';
 

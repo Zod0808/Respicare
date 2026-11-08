@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: analyze_performance
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Analyze performance. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Analiza logs de rendimiento (monitoring/performance/*.jsonl) y calcula p50/p95/p99 por ruta y método.
 
 Uso:

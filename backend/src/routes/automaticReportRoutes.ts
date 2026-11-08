@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: automaticReportRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Rutas REST de automáticos reportes.
+ *
  * Automatic Report Routes
  * Rutas para gestión de reportes automáticos
  */

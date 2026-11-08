@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: seedDemoData
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Seed demo data. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Seed de datos demo para dashboards, tendencias y explicabilidad.
  * Genera usuarios básicos y ~100 casos distribuidos en reportes de síntomas,
  * historiales médicos, análisis IA, citas y alertas.

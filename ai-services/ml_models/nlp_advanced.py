@@ -1,4 +1,11 @@
 """
+Nombre de Objeto: nlp_advanced
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Procesamiento de lenguaje natural (NLP) advanced. Parte de: diagnóstico
+inteligente de síntomas.
+
 NLP Avanzado - Stub para procesamiento de lenguaje natural médico.
 
 Incluye métodos para:

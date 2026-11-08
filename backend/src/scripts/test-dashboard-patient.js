@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: test-dashboard-patient
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Test panel de control paciente. Parte de: scripts de desarrollo/seed de
+ * datos.
+ *
  * Script para probar el endpoint de dashboard del paciente
  */
 

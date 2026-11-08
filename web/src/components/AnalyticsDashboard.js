@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: AnalyticsDashboard
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Panel/dashboard de analítica de datos.
+ */
+
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import {

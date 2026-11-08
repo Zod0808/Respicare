@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: validate_models_comparison
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Validate models comparison. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Validación Comparativa de Modelos ML
 
 Evalúa los 3 modelos (XGBoost, Random Forest, Neural Network) con el dataset completo

@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: exportController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * exportación de datos del paciente
+ * Descripción: Controlador REST de exportación de datos.
+ *
  * Export Controller
  * Handles data export functionality
  */

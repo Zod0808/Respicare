@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: TemporalTrends
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Temporal trends. Parte de: reportes y estadísticas.
+ */
+
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './TemporalTrends.css';

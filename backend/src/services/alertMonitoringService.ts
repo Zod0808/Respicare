@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: alertMonitoringService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-009 - Sistema de alertas
+ * Descripción: Servicio de alertas monitoreo.
+ *
  * Alert Monitoring Service
  * Proporciona métricas en tiempo real sobre la cola de notificaciones y el estado de las alertas
  */

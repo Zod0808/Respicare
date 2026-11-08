@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: generate_dataset
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Generate dataset. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Simple script to generate synthetic dataset for 124 respiratory diseases
 Generates CSV without heavy dependencies
 """

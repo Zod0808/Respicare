@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: EpidemiologicalHeatmap
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Epidemiological heatmap. Parte de: reportes y estadísticas.
+ *
  * Epidemiological Heatmap Component
  * 
  * Heatmaps y clusters epidemiológicos:

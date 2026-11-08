@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: symptom_analysis_service
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Servicio de síntomas analysis.
+
 Symptom Analysis Service - Dedicated service for symptom analysis
 """
 

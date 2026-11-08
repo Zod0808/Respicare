@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: VirtualizedList
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - componente estructural de la interfaz web
+ * Descripción: Virtualized list. Parte de: componente estructural de la interfaz web.
+ */
+
 import React, { memo } from 'react';
 import { List } from 'react-window';
 

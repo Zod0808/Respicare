@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: generate_multimodal_datasets
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - pipeline de mlops
+(entrenamiento/validación/análisis/etl)
+Descripción: Generate multimodal datasets. Parte de: pipeline de mlops
+(entrenamiento/validación/análisis/etl).
+
 Generate Synthetic Datasets for Multimodal ML Models
 Generates datasets for image analysis and cough analysis to improve chatbot responses
 """

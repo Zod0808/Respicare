@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: AuthService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Servicio de autenticación.
+ */
+
 // Servicio de Autenticación - Capa de Aplicación
 import { UserEntity, UserRole } from '../../domain/entities/User';
 import { UserRepository } from '../../domain/repositories/UserRepository';

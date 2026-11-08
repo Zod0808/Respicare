@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: seed-symptom-reports
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Seed síntomas reportes. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Seed script for symptom reports
  * Populates the database with sample symptom reports for Tacna districts
  */

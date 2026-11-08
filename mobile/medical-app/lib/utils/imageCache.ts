@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: imageCache
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidades transversales de la app móvil
+ * Descripción: Imágenes caché. Parte de: utilidades transversales de la app móvil.
+ *
  * Cache de imágenes para mejorar rendimiento
  */
 

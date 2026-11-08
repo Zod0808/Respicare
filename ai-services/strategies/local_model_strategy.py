@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: local_model_strategy
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Local model strategy. Parte de: infraestructura/mlops del microservicio
+de ia.
+
 Local Model Strategy for AI Analysis
 """
 

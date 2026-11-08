@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: Hl7MessageViewer
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * interoperabilidad fhir/hl7
+ * Descripción: Visor de HL7 message.
+ */
+
 import React, { useState } from 'react';
 import './Hl7MessageViewer.css';
 

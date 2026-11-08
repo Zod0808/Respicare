@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: tracing
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - observabilidad/monitoreo de la plataforma
+ * backend
+ * Descripción: Tracing. Parte de: observabilidad/monitoreo de la plataforma backend.
+ */
+
 /* OpenTelemetry inicialización condicional (OTEL_ENABLED=true)
    No rompe si dependencias no están instaladas: usa imports dinámicos y captura errores. */
 

@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: seedHealthCenters
+ * Fecha de Creación: 2026-09-02
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - scripts de desarrollo/seed de datos
+ * Descripción: Seed salud centros. Parte de: scripts de desarrollo/seed de datos.
+ *
  * Seed script for HealthCenter directory (RF-012)
  * Carga un directorio de referencia de centros de salud de Tacna para
  * habilitar la búsqueda geoespacial de establecimientos cercanos.

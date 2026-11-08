@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: smsMetricsController
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - métricas/observabilidad de canal sms
+ * Descripción: Controlador REST de SMS métricas.
+ *
  * SMS Metrics Controller
  * Controlador para obtener métricas de SMS
  */

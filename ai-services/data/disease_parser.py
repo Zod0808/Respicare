@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: disease_parser
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Analizador sintáctico de disease.
+
 Disease Parser - Parse and structure all 124 respiratory diseases from markdown
 """
 

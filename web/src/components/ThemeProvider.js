@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: ThemeProvider
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - tema visual de la interfaz
+ * Descripción: Proveedor de contexto de theme.
+ *
  * Theme Provider
  * 
  * Proveedor de tema para toda la aplicación con soporte light/dark

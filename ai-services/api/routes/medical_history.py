@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: medical_history
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-008 - Historial clínico electrónico
+Descripción: Médico historial. Parte de: historial clínico electrónico.
+
 Medical History Processing API endpoints
 """
 

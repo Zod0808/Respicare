@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: circuit_breaker_decorator
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Circuit breaker decorator. Parte de: infraestructura/mlops del
+microservicio de ia.
+
 Circuit Breaker Decorator Implementation
 """
 

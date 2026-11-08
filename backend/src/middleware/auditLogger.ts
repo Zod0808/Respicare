@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: auditLogger
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - middleware transversal
+ * Descripción: Audit logger. Parte de: middleware transversal.
+ */
+
 import crypto from 'crypto';
 import { Request, Response, NextFunction } from 'express';
 import { AuditLog } from '../models/AuditLog';

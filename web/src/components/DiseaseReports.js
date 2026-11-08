@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: DiseaseReports
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-010 - Reportes y estadísticas
+ * Descripción: Disease reportes. Parte de: reportes y estadísticas.
+ */
+
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 import VirtualizedList from './VirtualizedList';

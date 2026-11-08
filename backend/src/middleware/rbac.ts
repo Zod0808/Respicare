@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: rbac
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - middleware transversal
+ * Descripción: Rbac. Parte de: middleware transversal.
+ */
+
 import { Request, Response, NextFunction, RequestHandler } from 'express';
 import { AuthenticatedRequest } from '../types';
 

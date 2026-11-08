@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: useOfflineSync
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - hook transversal de la app móvil
+ * Descripción: Hook de offline sync.
+ *
  * Hook para manejar sincronización offline
  * Detecta cuando vuelve la conexión y sincroniza operaciones pendientes
  */

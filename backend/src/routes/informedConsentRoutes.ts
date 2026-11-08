@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: informedConsentRoutes
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) -
+ * consentimiento informado y derechos sobre datos (DSR)
+ * Descripción: Rutas REST de informed consentimiento informado.
+ *
  * Informed Consent Routes
  * Gestiona consentimientos informados médicos y firmas electrónicas
  */

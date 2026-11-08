@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: localizedErrors
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - utilidad transversal backend
+ * Descripción: Localized errors. Parte de: utilidad transversal backend.
+ *
  * Localized Error Messages
  * 
  * Mensajes de error localizables y amigables para UIs

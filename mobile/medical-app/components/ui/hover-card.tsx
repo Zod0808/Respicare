@@ -1,5 +1,14 @@
 'use client'
 
+/**
+ * Nombre de Objeto: hover-card
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Tarjeta visual de hover.
+ */
+
 import * as React from 'react'
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card'
 

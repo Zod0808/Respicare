@@ -1,6 +1,12 @@
 "use client"
 
 /**
+ * Nombre de Objeto: useVitalsSource
+ * Fecha de Creación: 2026-05-07
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-014 - Wearables como validación clínica
+ * Descripción: Hook de signos vitales source.
+ *
  * useVitalsSource — Hook orquestador A + B + C
  *
  * Cadena de prioridad para obtener signos vitales en tiempo real:

@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: GetMedicalHistoryUseCase
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-008 - Historial clínico electrónico
+ * Descripción: Caso de uso: get médico historial.
+ */
+
 // Caso de Uso: Obtener Historial Médico - Capa de Dominio
 import { MedicalHistoryEntity } from '../../entities/MedicalHistory';
 import { MedicalHistoryRepository } from '../../repositories/MedicalHistoryRepository';

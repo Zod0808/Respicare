@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: ChatMessageList
+ * Fecha de Creación: 2026-05-05
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - chatbot
+ * conversacional de ia
+ * Descripción: Chat message list. Parte de: chatbot conversacional de ia.
+ */
+
 import { Bot, Loader2 } from "lucide-react"
 import type { ChatMessage } from "@/lib/api/services/chatService"
 

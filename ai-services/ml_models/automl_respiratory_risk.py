@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: automl_respiratory_risk
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - ml
+avanzado / automl / aprendizaje federado / rl (no documentado en RF)
+Descripción: AutoML respiratory risk. Parte de: ml avanzado / automl / aprendizaje
+federado / rl (no documentado en RF).
+
 AutoML Pipeline para Riesgo Respiratorio
 Pipeline completo de AutoML específico para predicción de riesgo respiratorio
 """

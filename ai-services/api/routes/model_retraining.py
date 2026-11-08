@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: model_retraining
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Model retraining. Parte de: infraestructura/mlops del microservicio de
+ia.
+
 API Endpoints para Retraining Automático
 
 Endpoints para gestionar el retraining automático de modelos ML

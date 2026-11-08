@@ -1,3 +1,12 @@
+/**
+ * Nombre de Objeto: ReferralsPage
+ * Fecha de Creación: 2026-05-04
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Funcionalidad adicional (no documentada en RF-001 a RF-014) - gestión
+ * de referencias/derivaciones médicas (referrals)
+ * Descripción: Página web de referencias/derivaciones médicas.
+ */
+
 import React from 'react';
 import ReferralManagement from '../components/ReferralManagement';
 import './clinical.css';

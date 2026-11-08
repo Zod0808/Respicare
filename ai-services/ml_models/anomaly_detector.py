@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: anomaly_detector
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Anomaly detector. Parte de: diagnóstico inteligente de síntomas.
+
 Anomaly detection utilities for analytics dashboards.
 
 Uses statistical heuristics (z-score y ventanas móviles) para detectar valores

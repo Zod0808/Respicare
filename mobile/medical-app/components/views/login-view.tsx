@@ -1,5 +1,13 @@
 "use client"
 
+/**
+ * Nombre de Objeto: login-view
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: RF-001 - Gestión de usuarios
+ * Descripción: Vista de inicio de sesión.
+ */
+
 import { useState } from "react"
 import { Activity, User, Settings, AlertCircle, AlertTriangle } from "lucide-react"
 import { ModernButton } from "@/components/ui/ModernButton"

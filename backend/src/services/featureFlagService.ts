@@ -1,4 +1,11 @@
 /**
+ * Nombre de Objeto: featureFlagService
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+ * de ia
+ * Descripción: Servicio de feature flag.
+ *
  * Feature Flag Service
  * 
  * Sistema de feature flags para habilitar/deshabilitar funcionalidades dinámicamente

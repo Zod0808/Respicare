@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: translations
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - internacionalización (i18n)
+ * Descripción: Translations. Parte de: internacionalización (i18n).
+ */
+
 export const translations = {
   es: {
     login: {

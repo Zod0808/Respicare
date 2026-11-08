@@ -1,5 +1,14 @@
 "use client"
 
+/**
+ * Nombre de Objeto: sync-indicator
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - librería de componentes ui genéricos
+ * (shadcn)
+ * Descripción: Sync indicator. Parte de: librería de componentes ui genéricos (shadcn).
+ */
+
 import { useEffect, useState } from "react"
 import { Wifi, WifiOff, RefreshCw, CheckCircle2, AlertCircle } from "lucide-react"
 import { useOfflineSync } from "@/hooks/useOfflineSync"

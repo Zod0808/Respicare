@@ -1,4 +1,10 @@
 """
+Nombre de Objeto: symptom_analyzer
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: RF-002 - Diagnóstico inteligente de síntomas
+Descripción: Analizador de síntomas.
+
 Symptom Analysis API endpoints
 """
 

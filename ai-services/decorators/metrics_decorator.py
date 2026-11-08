@@ -1,4 +1,12 @@
 """
+Nombre de Objeto: metrics_decorator
+Fecha de Creación: 2026-04-25
+Propietario: Cesar Fabian Chavez Linares
+Requerimiento: Transversal/Infraestructura - infraestructura/mlops del microservicio
+de ia
+Descripción: Métricas decorator. Parte de: infraestructura/mlops del microservicio de
+ia.
+
 Metrics Decorator Implementation
 """
 

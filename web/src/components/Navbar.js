@@ -1,3 +1,11 @@
+/**
+ * Nombre de Objeto: Navbar
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - componente estructural de la interfaz web
+ * Descripción: Navbar. Parte de: componente estructural de la interfaz web.
+ */
+
 import React, { memo, useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';

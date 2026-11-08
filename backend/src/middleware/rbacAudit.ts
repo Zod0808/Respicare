@@ -1,4 +1,10 @@
 /**
+ * Nombre de Objeto: rbacAudit
+ * Fecha de Creación: 2026-04-25
+ * Propietario: Cesar Fabian Chavez Linares
+ * Requerimiento: Transversal/Infraestructura - middleware transversal
+ * Descripción: Rbac audit. Parte de: middleware transversal.
+ *
  * RBAC Audit Middleware
  * 
  * Middleware para auditar y validar que todos los endpoints críticos
