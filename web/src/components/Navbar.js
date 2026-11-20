@@ -7,6 +7,7 @@
  */
 
 import React, { memo, useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import LanguageSelector from './LanguageSelector';
@@ -52,11 +53,17 @@ function NavDropdown({ label, icon, links, activePathname }) {
   const [menuStyle, setMenuStyle] = useState(null);
   const ref = useRef(null);
   const btnRef = useRef(null);
+  const menuRef = useRef(null);
   const isActive = links.some(l => l.to === activePathname);
 
   useEffect(() => {
+    // El menú vive en un portal fuera de .nav-dropdown (ver más abajo), así
+    // que un mousedown nativo dentro de él no hace bubbling hasta `ref` y
+    // hay que comprobarlo aparte para no cerrarlo al clickear sus opciones.
     const handler = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+      if (ref.current && ref.current.contains(e.target)) return;
+      if (menuRef.current && menuRef.current.contains(e.target)) return;
+      setOpen(false);
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
@@ -104,8 +111,15 @@ function NavDropdown({ label, icon, links, activePathname }) {
         <span>{label}</span>
         <span className={`nav-chevron ${open ? 'nav-chevron--open' : ''}`} aria-hidden="true">›</span>
       </button>
-      {open && (
-        <div className="nav-dropdown-menu" role="menu" style={menuStyle || undefined}>
+      {open && createPortal(
+        // Portal a document.body: .navbar es position:sticky + z-index:1000,
+        // lo que crea su propio stacking context y atrapa dentro a este menú
+        // (aunque sea position:fixed con z-index más alto). Dentro de ese
+        // contexto gana cualquier z-index, pero frente a OTRO stacking
+        // context hermano del navbar (p.ej. un header de página con su
+        // propio z-index) siempre pierde por quedar anidado. Sacarlo del
+        // árbol del navbar con un portal lo compara en la raíz, donde sí gana.
+        <div ref={menuRef} className="nav-dropdown-menu" role="menu" style={menuStyle || undefined}>
           {links.map(l => (
             <Link
               key={l.to}
@@ -119,7 +133,8 @@ function NavDropdown({ label, icon, links, activePathname }) {
               {activePathname === l.to && <span className="nav-dropdown-active-dot" aria-hidden="true" />}
             </Link>
           ))}
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

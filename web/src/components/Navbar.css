@@ -245,7 +245,12 @@
   box-shadow: 0 20px 44px -12px rgba(10, 43, 39, 0.35);
   min-width: 230px;
   padding: 6px;
-  z-index: 2000;
+  /* 9999, no 2000: varias páginas (InteractiveHeatMap, AdminPage, etc.)
+     usan overlays propios con z-index:2000 en el mismo stacking context
+     raíz; con el mismo valor, el empate se resolvía por orden en el DOM
+     y el overlay de la página (pintado después del navbar) tapaba este
+     menú fixed e impedía hacer clic en sus opciones. */
+  z-index: 9999;
   animation: dropdown-in 0.15s ease;
 }
 
@@ -392,7 +397,7 @@
   box-shadow: 0 20px 44px -12px rgba(10, 43, 39, 0.35);
   min-width: 240px;
   padding: 8px;
-  z-index: 2000;
+  z-index: 9999;
   animation: dropdown-in 0.15s ease;
 }
 
