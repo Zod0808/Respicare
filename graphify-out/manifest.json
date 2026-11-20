@@ -1475,8 +1475,8 @@
     "semantic_hash": ""
   },
   "backend/src/controllers/emergencyController.ts": {
-    "mtime": 1789241626.1482825,
-    "ast_hash": "ab8ea78cb339e06e4d482c9dcae02db2",
+    "mtime": 1795137339.3165367,
+    "ast_hash": "a49d337bd2d13bb135954d2a44e5e02f",
     "semantic_hash": ""
   },
   "backend/src/controllers/exportController.ts": {
@@ -2045,8 +2045,8 @@
     "semantic_hash": ""
   },
   "backend/src/routes/emergencyRoutes.ts": {
-    "mtime": 1790562965.4306157,
-    "ast_hash": "4b82216235f009e4a84c47e10c8e24a4",
+    "mtime": 1795137358.392968,
+    "ast_hash": "ee6994f33c7e203afa85d2e8ef59d7fa",
     "semantic_hash": ""
   },
   "backend/src/routes/exportRoutes.ts": {
@@ -2350,8 +2350,8 @@
     "semantic_hash": ""
   },
   "backend/src/services/emergencyService.ts": {
-    "mtime": 1789241612.6580527,
-    "ast_hash": "619ed2e600d94274eb33b9030f455b78",
+    "mtime": 1795137328.4925537,
+    "ast_hash": "efd75f62674fb3d30f54ad1a6884fe50",
     "semantic_hash": ""
   },
   "backend/src/services/epidemiologicalService.ts": {
@@ -2370,8 +2370,8 @@
     "semantic_hash": ""
   },
   "backend/src/services/fhirService.ts": {
-    "mtime": 1794175454.3061244,
-    "ast_hash": "89532e0aca6dfa7352255580829aecb4",
+    "mtime": 1795137727.2919462,
+    "ast_hash": "9a5312e1522e030596ad010bcd106474",
     "semantic_hash": ""
   },
   "backend/src/services/fhirValidator.ts": {
@@ -2875,8 +2875,8 @@
     "semantic_hash": ""
   },
   "backend/tests/unit/controllers/emergencyController.test.ts": {
-    "mtime": 1792528852.9291112,
-    "ast_hash": "484271b7d2907ac9130f4f4d91ab9cab",
+    "mtime": 1795137433.3465033,
+    "ast_hash": "2bb75f272d43212b4d3335c5e5734edf",
     "semantic_hash": ""
   },
   "backend/tests/unit/controllers/exportController.test.ts": {
@@ -4730,8 +4730,8 @@
     "semantic_hash": ""
   },
   "web/package.json": {
-    "mtime": 1794176285.9961345,
-    "ast_hash": "8e132eb1431b3b07f83a61e90453bb19",
+    "mtime": 1795135766.5336156,
+    "ast_hash": "b9bb40bcb3fdc42627dc508d1b88df5d",
     "semantic_hash": ""
   },
   "web/public/manifest.json": {
@@ -4830,8 +4830,8 @@
     "semantic_hash": ""
   },
   "web/src/components/Navbar.js": {
-    "mtime": 1795134808.898894,
-    "ast_hash": "4199fe149112e09b904cb94574cd33f0",
+    "mtime": 1795136781.9962962,
+    "ast_hash": "25322c2dd4e87eaab857a0652d0a6d19",
     "semantic_hash": ""
   },
   "web/src/components/PatientMonitoringReport.js": {

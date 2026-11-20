@@ -1,16 +1,16 @@
 # Graph Report - Sistema-Web-y-M-vil-para-la-detecci-n-de-enfermedades-respiratorias-en-Tacna-en-2026  (2026-11-19)
 
 ## Corpus Check
-- 1494 files · ~1,538,388 words
+- 1494 files · ~1,538,874 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 20581 nodes · 29962 edges · 1516 communities (1131 shown, 385 thin omitted)
+- 20585 nodes · 29967 edges · 1513 communities (1136 shown, 377 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 967 edges (avg confidence: 0.6)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7f084470`
+- Built from commit: `65f0e092`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -65,6 +65,7 @@
 - analyticsRoutes.ts
 - TestEdgeCases
 - asyncio
+- DOCUMENTATION_INDEX.md
 - TestAudioTranscriptionService
 - TestLocalModelStrategy
 - TestModelFactory
@@ -1065,7 +1066,7 @@
 - 🔄 Gestión de Servicios
 - .test_initialization_success
 - .test_analyze_symptoms_success
-- .test_considers_elderly_age_as_risk
+- .test_analyze_symptoms_comprehensive_error_handling
 - autoprefixer
 - @opentelemetry/api
 - 10. CONCLUSIONES Y RECOMENDACIONES
@@ -1078,6 +1079,7 @@
 - **Fase 10: Seguridad Avanzada** ✅ 100%
 - **Fase 11: UX/UI** ✅ 100%
 - **Fase 13: Escalabilidad & Arquitectura** ✅ 100%
+- @capacitor/filesystem
 - **Fase 17: Inteligencia de Negocio y Analítica Predictiva** ❌ 0%
 - **Fase 18: Interoperabilidad y Estándares de Salud** ⏳ ~50%
 - **Fase 19: Experiencia del Paciente y Engagement** ❌ 0%
@@ -1269,9 +1271,7 @@
 - mutpy.config.py
 - patterns/__init__.py
 - tests/services/__init__.py
-- .test_analyze_medical_history_for_insights_no_model_manager
 - .test_analyze_medical_history_for_insights_error_handling
-- .test_assess_severity_low
 - .test_perform_basic_processing_with_manager
 - .test_extract_medical_entities
 - .test_generate_diagnosis_suggestions
@@ -1284,7 +1284,6 @@
 - .test_assess_health_risks_moderate
 - .test_assess_health_risks_low
 - .test_create_follow_up_plan_required
-- .test_classify_disease_pattern_matching
 - .test_classify_disease_with_database
 - .test_get_general_question_response
 - .test_get_openai_response_urgency_levels
@@ -1327,7 +1326,6 @@
 - .test_urgency_edge_case_min_score
 - .test_get_actionable_recommendation
 - .test_increases_urgency_with_risk_factors
-- .test_analyze_symptoms_comprehensive_error_handling
 - .test_generate_detailed_recommendations
 - .test_urgency_with_high_severity_scores
 - .test_urgency_with_low_severity_scores
@@ -1482,7 +1480,7 @@
 ## Import Cycles
 - 3-file cycle: `backend/src/services/emergencyMedicalInfoService.ts -> backend/src/services/emergencyService.ts -> backend/src/services/hospitalCommunicationService.ts -> backend/src/services/emergencyMedicalInfoService.ts`
 
-## Communities (1516 total, 385 thin omitted)
+## Communities (1513 total, 377 thin omitted)
 
 ### Community 0 - "AIServiceManager"
 Cohesion: 0.07
@@ -1494,43 +1492,43 @@ Nodes (72): analyze_message(), ChatMessageInput, ChatMessageOutput, BaseModel, g
 
 ### Community 2 - "logger.ts"
 Cohesion: 0.05
-Nodes (26): asyncio, fixture, Test circuit breaker returns to open state after failure in half-open, Test circuit breaker state transitions, Test OpenAI-specific circuit breaker, Create OpenAI circuit breaker instance, Test OpenAI circuit breaker initialization, Test successful OpenAI API call (+18 more)
+Nodes (27): asyncio, fixture, Test circuit breaker returns to open state after failure in half-open, Test circuit breaker state transitions, Test OpenAI-specific circuit breaker, Create OpenAI circuit breaker instance, Test OpenAI circuit breaker initialization, Test successful OpenAI API call (+19 more)
 
 ### Community 3 - "src/services/alertService.ts"
-Cohesion: 0.03
-Nodes (78): acknowledgeAlert, ALLOWED_CHANNELS, createAlert, createCriticalSymptomAlert, getAlertDashboardSummary, getAlertMonitoringMetrics, getUserAlerts, notifyDoctorForCriticalCase (+70 more)
+Cohesion: 0.02
+Nodes (97): config, parseCommaSeparated(), parseCriticalRoles(), getRedisClient(), RedisClientType, options, swaggerJsdoc, swaggerSpec (+89 more)
 
 ### Community 4 - "CoreDomainsSupportService"
 Cohesion: 0.04
-Nodes (26): asyncio, Test risk factor extraction, Test severity assessment for high severity, Test severity assessment for medium severity, Test recommendation generation, Test successful appointment scheduling optimization, Test appointment optimization for critical urgency, Test error handling in appointment optimization (+18 more)
+Nodes (26): asyncio, Test medical history analysis without model manager, Test risk factor extraction, Test severity assessment for high severity, Test severity assessment for medium severity, Test successful appointment scheduling optimization, Test appointment optimization for critical urgency, Test error handling in appointment optimization (+18 more)
 
 ### Community 5 - "models/MedicalHistory.ts"
-Cohesion: 0.04
-Nodes (37): bulkImportResults, flagForReview, getAbnormalResults, getCriticalResults, getLabResults, getLatestResult, getPatientHistory, getPatientSummary (+29 more)
+Cohesion: 0.06
+Nodes (29): bulkImportResults, flagForReview, getAbnormalResults, getCriticalResults, getLabResults, getLatestResult, getPatientHistory, getPatientSummary (+21 more)
 
 ### Community 6 - "MedicalBERTModel"
-Cohesion: 0.04
-Nodes (68): advanced_image_inference(), advanced_text_inference(), advanced_timeseries_forecast(), Config, ForecastPoint, ForecastRequest, ForecastResponse, ImageInferenceRequest (+60 more)
+Cohesion: 0.03
+Nodes (106): advanced_image_inference(), advanced_text_inference(), advanced_timeseries_forecast(), Config, ForecastPoint, ForecastRequest, ForecastResponse, ImageInferenceRequest (+98 more)
 
 ### Community 7 - "Exception"
 Cohesion: 0.03
 Nodes (63): Execute function with exponential backoff retry, asyncio, fixture, Test initialization with production environment, Test that manager auto-initializes when used, Test warm-up when model manager is not available, Test getting existing model manager, Test AI Service Manager implementation (+55 more)
 
 ### Community 8 - "emergencyController.ts"
-Cohesion: 0.04
-Nodes (44): cancelEmergency, createEmergency, detectEmergency, getActiveEmergencies, getAmbulanceInfo, getEmergencyMedicalInfo, getEmergencyMedicalSummary, getEmergencyStatus (+36 more)
+Cohesion: 0.12
+Nodes (12): EmergencyMedicalInfo, EmergencyRequest, HospitalCommunicationConfig, HospitalCommunicationService, HospitalNotification, HospitalSelection, { ambulanceService }, axiosGet (+4 more)
 
 ### Community 9 - "src/index.ts"
-Cohesion: 0.06
-Nodes (23): appInstance, expressApp, swaggerUi, brotliCompression(), BrotliOptions, UserDocument, UserSchema, IWearableData (+15 more)
+Cohesion: 0.04
+Nodes (43): appInstance, expressApp, swaggerUi, runLabImportManually(), startLabImportJobs(), stopLabImportJobs(), brotliCompression(), BrotliOptions (+35 more)
 
 ### Community 10 - "useAppStore"
-Cohesion: 0.07
-Nodes (65): AppointmentForm(), AppointmentFormProps, DURATION_OPTIONS, REMINDER_OPTIONS, BottomNav(), BottomNavProps, MedicalApp(), OfflineSyncProvider() (+57 more)
+Cohesion: 0.06
+Nodes (70): AppointmentForm(), AppointmentFormProps, DURATION_OPTIONS, REMINDER_OPTIONS, BottomNav(), BottomNavProps, MedicalApp(), AlertsView() (+62 more)
 
 ### Community 11 - "MetricsDecorator"
-Cohesion: 0.04
-Nodes (45): LoggingDecorator, Log function execution, Log message with data, Decorator for adding logging functionality to methods, Apply logging decorator to function, Log synchronous function execution, MetricsDecorator, Any (+37 more)
+Cohesion: 0.05
+Nodes (37): LoggingDecorator, Log function execution, Log message with data, Decorator for adding logging functionality to methods, Apply logging decorator to function, Log synchronous function execution, MetricsDecorator, Any (+29 more)
 
 ### Community 12 - "CircuitBreaker"
 Cohesion: 0.05
@@ -1549,8 +1547,8 @@ Cohesion: 0.04
 Nodes (49): CacheDecorator, CacheInvalidationDecorator, ConditionalCacheDecorator, Nombre de Objeto: cache_decorator Fecha de Creación: 2026-04-25 Propietario: Ces, Decorator for conditional caching based on function result, Apply conditional cache decorator to function, Generate cache key from function name and arguments, Decorator for conditional caching (+41 more)
 
 ### Community 16 - "offlineOperations.ts"
-Cohesion: 0.06
-Nodes (35): AlertService, CreateEmergencyRequest, EmergencyService, CreateMedicalHistoryRequest, MedicalHistoryFilters, MedicalHistoryService, UpdateMedicalHistoryRequest, CreatePrescriptionRequest (+27 more)
+Cohesion: 0.05
+Nodes (50): AlertFilters, AlertService, AppointmentFilters, AppointmentService, AvailabilityRequest, CreateAppointmentRequest, UpdateAppointmentRequest, CreateMedicalHistoryRequest (+42 more)
 
 ### Community 17 - "asyncio"
 Cohesion: 0.04
@@ -1574,23 +1572,23 @@ Nodes (57): AccordionContent(), AccordionItem(), AccordionTrigger(), Avatar(), A
 
 ### Community 22 - "MedicalHistoryEntity"
 Cohesion: 0.05
-Nodes (6): MedicalHistoryEntity, MedicalHistoryRepository, MedicalHistoryRepository, GetMedicalHistoryRequest, GetMedicalHistoryResponse, MongoMedicalHistoryRepository
+Nodes (8): MedicalHistoryListResponse, MedicalHistoryResponse, MedicalHistoryEntity, MedicalHistoryRepository, MedicalHistoryRepository, CreateMedicalHistoryResponse, GetMedicalHistoryResponse, MongoMedicalHistoryRepository
 
 ### Community 23 - "TestSymptomAnalysisService"
 Cohesion: 0.17
-Nodes (7): Test SymptomAnalysisService implementation, Test basic analysis using service manager, Test symptom trends analysis, Test comprehensive symptom analysis with basic options, Test follow-up plan creation, Test comprehensive analysis with recommendations, TestSymptomAnalysisService
+Nodes (7): Test SymptomAnalysisService implementation, Test basic analysis using service manager, Test symptom trends analysis, Test generating recommendations with error, Test comprehensive symptom analysis with basic options, Test comprehensive analysis with recommendations, TestSymptomAnalysisService
 
 ### Community 24 - "seedDemoData.ts"
 Cohesion: 0.05
 Nodes (41): ALERT_CATEGORIES, ALERT_CATEGORY_OPTIONS, ALERT_PRIORITIES, ALERT_PRIORITY_OPTIONS, ALERT_STATUS_OPTIONS, ALERT_STATUSES, APPOINTMENT_STATUS_OPTIONS, APPOINTMENT_STATUSES (+33 more)
 
 ### Community 25 - "automaticReportService.ts"
-Cohesion: 0.08
-Nodes (18): generateManualReport(), safelyRun(), startReportJobs(), stopReportJobs(), AnomalySchema, AutomaticReport, AutomaticReportDocument, AutomaticReportModel (+10 more)
+Cohesion: 0.05
+Nodes (33): exportReport, generateReport, getAllReports, getLatestReport, getReportById, getReportsByType, getReportStats, generateManualReport() (+25 more)
 
 ### Community 26 - "services/index.ts"
-Cohesion: 0.05
-Nodes (39): ApiClient, ApiError, API_ENDPOINTS, clearAuthTokens(), getChatBaseURL(), getOriginalBaseURL(), getRefreshToken(), normalizeBaseURL() (+31 more)
+Cohesion: 0.03
+Nodes (48): AuthenticateOptions, BiometricState, BIOMETRY_LABELS, BIOMETRY_TYPE_MAP, BiometryType, isNative(), useBiometricAuth(), ApiClient (+40 more)
 
 ### Community 27 - "CircuitBreakerDecorator"
 Cohesion: 0.04
@@ -1605,8 +1603,8 @@ Cohesion: 0.05
 Nodes (18): _condense_xml(), pack(), Path, Pack a directory into a DOCX, PPTX, or XLSX file.  Validates with auto-repair, c, _run_validation(), main(), Command line tool to validate Office document XML files against XSD schemas and, BaseSchemaValidator (+10 more)
 
 ### Community 30 - "EnsemblePredictor"
-Cohesion: 0.05
-Nodes (24): fixture, performance, Test p99 latency of predictions, Sample medical texts for testing, Tests de performance para MedicalImageClassifier, Create image classifier instance, Sample image paths for testing, Test performance of single image classification (+16 more)
+Cohesion: 0.11
+Nodes (15): cancelEmergency, createEmergency, detectEmergency, getActiveEmergencies, getAmbulanceInfo, getEmergencies, getEmergencyMedicalInfo, getEmergencyMedicalSummary (+7 more)
 
 ### Community 31 - "run_pipeline"
 Cohesion: 0.06
@@ -1617,20 +1615,20 @@ Cohesion: 0.05
 Nodes (30): asyncio, fixture, Test logging with args disabled, Test logging with result enabled, Test logging with result disabled, Tests for LoggingDecorator, Test logging with execution time enabled, Test logging with execution time disabled (+22 more)
 
 ### Community 33 - "benchmark"
-Cohesion: 0.11
-Nodes (17): MedicalHistoryService, Any, with_logging, with_metrics, with_retry, Perform basic medical history processing using service manager, Extract and analyze medical entities from text, Dedicated service for medical history processing operations (+9 more)
+Cohesion: 0.08
+Nodes (10): validateFhirResource(), validateFhirResources(), ValidationError, ValidationResult, ValidationWarning, validators, { fhirService }, { hospitalSyncService } (+2 more)
 
 ### Community 34 - "asyncio"
 Cohesion: 0.09
-Nodes (21): AlertFilters, AppointmentFilters, AppointmentService, AvailabilityRequest, CreateAppointmentRequest, UpdateAppointmentRequest, Alert, AlertCategory (+13 more)
+Nodes (18): fixture, performance, Tests de stress (stress testing), Create ensemble predictor, Stress test: carga extrema de predicciones, Stress test: verificar uso de memoria bajo carga, Tests de resistencia (endurance testing), Create ensemble predictor (+10 more)
 
 ### Community 35 - "asyncio"
 Cohesion: 0.04
 Nodes (36): asyncio, fixture, Test soft delete functionality via delete() (BaseRepository has no separate soft, Test that create() adds audit fields (BaseRepository has no separate create_with, Test document versioning via create() (BaseRepository has no separate create_wit, Test medical history repository implementation, Test base repository implementation, Create medical history repository instance (+28 more)
 
 ### Community 36 - "CoughAnalysisService"
-Cohesion: 0.11
-Nodes (17): CoughAnalysisService, Any, ndarray, Nombre de Objeto: CoughAnalysisService Fecha de Creación: 2026-04-25 Propietario, Analyze cough characteristics based on audio features         Uses medical knowl, Use trained ML model to classify cough and provide medical diagnosis, Service for analyzing cough audio using trained ML models     Uses trained cough, Prepare feature vector from extracted audio features for ML model (+9 more)
+Cohesion: 0.12
+Nodes (16): CoughAnalysisService, Any, ndarray, Analyze cough characteristics based on audio features         Uses medical knowl, Use trained ML model to classify cough and provide medical diagnosis, Service for analyzing cough audio using trained ML models     Uses trained cough, Prepare feature vector from extracted audio features for ML model, Classify severity and urgency based on cough type (+8 more)
 
 ### Community 37 - "SymptomAnalysisService"
 Cohesion: 0.05
@@ -1641,8 +1639,8 @@ Cohesion: 0.03
 Nodes (71): aws-sdk, dependencies, aws-sdk, axios, bcryptjs, cors, csv-writer, dotenv (+63 more)
 
 ### Community 39 - "wearables.tsx"
-Cohesion: 0.10
-Nodes (9): AuthenticateOptions, BiometricState, BIOMETRY_LABELS, BIOMETRY_TYPE_MAP, BiometryType, isNative(), useBiometricAuth(), StorageKey (+1 more)
+Cohesion: 0.05
+Nodes (29): asyncio, Tests adicionales para aumentar la cobertura de código, Test get_cache cuando hay una excepción, Test set_cache cuando hay una excepción, Tests adicionales para cache decorator, Test cache decorator con resultado tipo dict, Test cache decorator con resultado tipo list, Test que el decorator maneja fallos de cache correctamente (+21 more)
 
 ### Community 40 - "TestPatientFriendlyExplainer"
 Cohesion: 0.04
@@ -1657,12 +1655,12 @@ Cohesion: 0.03
 Nodes (63): devDependencies, eslint, jest, jest-extended, jest-junit, mongodb-memory-server, nodemon, prettier (+55 more)
 
 ### Community 43 - "PROJECT_ROADMAP.md"
-Cohesion: 0.03
-Nodes (74): config, parseCommaSeparated(), parseCriticalRoles(), options, swaggerJsdoc, swaggerSpec, adminCreateUser, adminToggleUserActive (+66 more)
+Cohesion: 0.08
+Nodes (19): safelyRun(), startInstitutionalReportJobs(), stopInstitutionalReportJobs(), HealthCenterDocument, HealthCenterModel, HealthCenterNearbyResult, HealthCenterSchema, HealthCenterType (+11 more)
 
 ### Community 44 - "LazyModelLoader"
 Cohesion: 0.05
-Nodes (35): LazyModelLoader, ModelDownloader, Any, Path, Cargador lazy para modelos pesados     Solo carga modelos cuando se necesitan, Carga modelo de forma lazy (solo cuando se necesita)                  Args:, Precarga modelos en background                  Args:             model_configs:, Descarga modelo de memoria (+27 more)
+Nodes (38): get_lazy_loader(), LazyModelLoader, ModelDownloader, Any, Path, Nombre de Objeto: lazy_loader Fecha de Creación: 2026-04-25 Propietario: Cesar F, Cargador lazy para modelos pesados     Solo carga modelos cuando se necesitan, Carga modelo de forma lazy (solo cuando se necesita)                  Args: (+30 more)
 
 ### Community 45 - "TestBaseRepository"
 Cohesion: 0.05
@@ -1673,8 +1671,8 @@ Cohesion: 0.02
 Nodes (99): create_sample_datasets(), get_sample_medical_histories(), get_sample_symptoms(), MedicalDataProcessor, Any, Nombre de Objeto: medical_data Fecha de Creación: 2026-04-25 Propietario: Cesar, Calculate overall severity score based on symptoms, Get sample medical histories for testing (+91 more)
 
 ### Community 47 - "analyticsRoutes.ts"
-Cohesion: 0.02
-Nodes (95): deleteUserData(), exportUserData(), hasDoubleConfirmation(), MEDICAL_HISTORY_SCHEMA, safelyRun(), startAppointmentJobs(), stopAppointmentJobs(), AlertModel (+87 more)
+Cohesion: 0.04
+Nodes (46): mongoose, SymptomReport, symptomReportSchema, ALLOWED_GROUP_FIELDS, ChatConversation, DISTRICT_MAPPING, DistrictAggregate, MOCK_HEATMAP (+38 more)
 
 ### Community 48 - "TestEdgeCases"
 Cohesion: 0.05
@@ -1684,45 +1682,53 @@ Nodes (42): ChatBotEnhanced(), CATEGORY_COLORS_DARK, CATEGORY_COLORS_LIGHT, Fact
 Cohesion: 0.05
 Nodes (54): _analyze_overall_trend(), analyze_symptoms(), _determine_follow_up(), _generate_symptom_recommendations(), _generate_trend_recommendations(), get_general_recommendations(), get_symptom_trends(), _identify_warning_signs() (+46 more)
 
+### Community 50 - "DOCUMENTATION_INDEX.md"
+Cohesion: 0.05
+Nodes (21): Fase A1: Infra y Core, Fase A2: Modelos y Analítica, Fase A3: Avances ML/NLP/AutoML, Fase A4: Calidad y Rendimiento, Hitos, 🤖 Roadmap AI Services (FastAPI) - RespiCare Tacna, Roadmaps por Componente, Roadmaps por Área (+13 more)
+
 ### Community 51 - "TestAudioTranscriptionService"
 Cohesion: 0.06
-Nodes (25): asyncio, Test confidence calculation from segments, Test AudioTranscriptionService implementation, Test transcription with no segments, Test transcription with empty text result, Test base64 transcription, Test base64 transcription with invalid base64, Test that temporary files are cleaned up (+17 more)
+Nodes (29): asyncio, Test confidence calculation from segments, Test AudioTranscriptionService implementation, Test transcription with no segments, Test transcription with empty text result, Test base64 transcription, Test base64 transcription with invalid base64, Test that temporary files are cleaned up (+21 more)
 
 ### Community 52 - "TestLocalModelStrategy"
-Cohesion: 0.14
-Nodes (8): Test formatting symptoms for model input, Test formatting symptoms with severity and duration, Test processing symptom predictions, Test processing medical text predictions, Tests for LocalModelStrategy, Test generating recommendations from model predictions, Test that models are set to evaluation mode, TestLocalModelStrategy
+Cohesion: 0.16
+Nodes (19): createFhirResource, getCapabilities, getFhirResource, getRegisteredHospitals, parseHl7ToFhir, patchFhirResource, processFhirBundle, searchFhirResources (+11 more)
 
 ### Community 54 - "dependencies"
 Cohesion: 0.03
-Nodes (59): @capacitor/app, @capacitor/cli, @capacitor-community/bluetooth-le, @capacitor-community/sqlite, @capacitor/core, @capacitor/geolocation, @capacitor/haptics, capacitor-health-connect (+51 more)
+Nodes (59): autoprefixer, @capacitor/cli, @capacitor-community/bluetooth-le, @capacitor-community/sqlite, @capacitor/core, @capacitor/geolocation, @capacitor/haptics, capacitor-health-connect (+51 more)
 
 ### Community 55 - "lib/types/index.ts"
 Cohesion: 0.08
 Nodes (21): COMMON_SYMPTOMS, DURATION_OPTIONS, SelectedSymptom, SEVERITY_OPTIONS, SymptomAnalyzer(), ModernInput, AnalyzeResponse, HistoryResponse (+13 more)
 
 ### Community 56 - "ExternalServiceCircuitBreaker"
-Cohesion: 0.11
-Nodes (21): analyzeSymptoms, analyzeSymptomsML, getAIServiceStatus, getGeneralRecommendations, getSymptomAnalysisHistory, getSymptomStatistics, getSymptomTrends, VALID_URGENCY_LEVELS (+13 more)
+Cohesion: 0.08
+Nodes (29): analyzeSymptoms, analyzeSymptomsML, getAIServiceStatus, getGeneralRecommendations, getSymptomAnalysisHistory, getSymptomStatistics, getSymptomTrends, VALID_URGENCY_LEVELS (+21 more)
 
 ### Community 57 - "TestXGBoostDiseaseClassifier"
 Cohesion: 0.04
-Nodes (29): fixture, skipif, Test respiratory distress indicator, Test feature creation with string symptoms, Test feature creation with patient age, Test feature creation without patient age, Test hyperparameter optimization, Test basic model training (+21 more)
+Nodes (31): fixture, skipif, Test respiratory distress indicator, Test feature creation with string symptoms, Test feature creation with patient age, Test feature creation without patient age, Test hyperparameter optimization, Test basic model training (+23 more)
 
 ### Community 58 - ".error"
-Cohesion: 0.06
-Nodes (14): disconnectRedis(), createIndexes(), mongoose, clearDatabase(), connectDatabase(), sampleMedicalHistories, sampleUsers, seedDatabase() (+6 more)
+Cohesion: 0.03
+Nodes (49): disconnectRedis(), createIndexes(), mongoose, clearDatabase(), connectDatabase(), sampleMedicalHistories, sampleUsers, seedDatabase() (+41 more)
+
+### Community 59 - "ThemeProvider.js"
+Cohesion: 0.09
+Nodes (14): safelyRun(), startAppointmentJobs(), stopAppointmentJobs(), AppointmentDocument, AppointmentService, AvailabilityQuery, CreateAppointmentPayload, ReschedulePayload (+6 more)
 
 ### Community 60 - "TestPatientRepository"
 Cohesion: 0.05
 Nodes (28): asyncio, fixture, Test getting patient by patient_id when not found, Test updating last activity, Test updating last activity when patient not found, Tests for PatientRepository, Test incrementing history counter, Test incrementing AI analysis counter (+20 more)
 
 ### Community 61 - "🎨 Guía de UX/UI - RespiCare Tacna"
-Cohesion: 0.04
-Nodes (52): Accesibilidad, Accesibilidad Web, Bordes, Bounce, Características, Checklist, Checklist, Colores (+44 more)
+Cohesion: 0.20
+Nodes (9): Ejemplos de Capturas, 🎨 Guía de UX/UI - RespiCare Tacna, Mejores Prácticas, Mobile, Mobile - Home Screen, Recursos, Web, Web - Dashboard (+1 more)
 
 ### Community 62 - "api/config.ts"
 Cohesion: 0.07
-Nodes (21): ChatInputBar(), ChatMessageList(), ChatMessageListProps, useChatSession(), UseChatSessionProps, useChatStorage(), useImageAnalyzer(), UseImageAnalyzerProps (+13 more)
+Nodes (22): ChatInputBar(), ChatMessageList(), ChatMessageListProps, useChatSession(), UseChatSessionProps, useChatStorage(), useImageAnalyzer(), UseImageAnalyzerProps (+14 more)
 
 ### Community 63 - "TestExternalServiceCircuitBreaker"
 Cohesion: 0.06
@@ -1761,8 +1767,8 @@ Cohesion: 0.04
 Nodes (28): fixture, Tests for api/routes/chat_analyzer.py, Test message analysis with missing message, Test message analysis with empty message, Test message analysis with conversation history, Test message analysis with context, Test message analysis with session ID, Test message analysis with service initialization error (+20 more)
 
 ### Community 72 - "UserEntity"
-Cohesion: 0.06
-Nodes (11): User, UserEntity, UserRepository, UserRepository, AuthenticateUserRequest, AuthenticateUserResponse, RegisterUserResponse, MongoUserRepository (+3 more)
+Cohesion: 0.08
+Nodes (4): UserEntity, UserRepository, UserRepository, MongoUserRepository
 
 ### Community 73 - "🐳 Guía de Docker Compose para Desarrollo"
 Cohesion: 0.04
@@ -1777,8 +1783,8 @@ Cohesion: 0.04
 Nodes (48): 1. Naming de Spans, 2. Atributos de Spans, 3. Sampling, 4. Métricas de Negocio, 5. Performance, 6. Seguridad, AI Services, Alto uso de recursos (+40 more)
 
 ### Community 76 - "MedicalHistoryService.ts"
-Cohesion: 0.08
-Nodes (32): CreateMedicalHistoryRequest, GetMedicalHistoryRequest, MedicalHistoryListResponse, MedicalHistoryResponse, MedicalHistory, SyncStatus, CreateMedicalHistoryRequest, CreateMedicalHistoryResponse (+24 more)
+Cohesion: 0.10
+Nodes (30): CreateMedicalHistoryRequest, GetMedicalHistoryRequest, MedicalHistory, SyncStatus, CreateMedicalHistoryRequest, GetMedicalHistoryRequest, Location, Symptom (+22 more)
 
 ### Community 77 - "📊 Informe de Aplicación de Pruebas Unitarias - RespiCare"
 Cohesion: 0.13
@@ -1793,24 +1799,24 @@ Cohesion: 0.04
 Nodes (19): AvailableResult, @capacitor/geolocation, @capacitor/local-notifications, capacitor-native-biometric, @capacitor/network, @capacitor/preferences, @capacitor/splash-screen, ConnectionType (+11 more)
 
 ### Community 80 - "XGBoostDiseaseClassifier"
-Cohesion: 0.03
-Nodes (68): EnsemblePredictor, get_ensemble_predictor(), Any, Nombre de Objeto: EnsemblePredictor Fecha de Creación: 2026-04-25 Propietario: C, Predict using ensemble of models                  Args:             symptoms: Li, Weighted voting ensemble, Average confidence ensemble, Get global ensemble predictor instance (+60 more)
+Cohesion: 0.02
+Nodes (88): Nombre de Objeto: respiratory_diseases_comprehensive Fecha de Creación: 2026-04-, Nombre de Objeto: HybridRuleMLSystem Fecha de Creación: 2026-04-25 Propietario:, Initialize hybrid system, MultiTaskNeuralNetwork, Any, DataFrame, ndarray, Nombre de Objeto: MultiTaskNeuralNetwork Fecha de Creación: 2026-04-25 Propietar (+80 more)
 
 ### Community 81 - "BaseRepository"
 Cohesion: 0.08
 Nodes (24): Nombre de Objeto: ai_result_repository Fecha de Creación: 2026-04-25 Propietario, BaseRepository, IRepository, ABC, Any, Nombre de Objeto: base_repository Fecha de Creación: 2026-04-25 Propietario: Ces, Update an existing entity with versioning, Soft delete an entity (mark as deleted) (+16 more)
 
 ### Community 82 - "TestSymptomPromptStructure"
-Cohesion: 0.04
-Nodes (41): SCENARIOS, WearablesView(), WearablesViewProps, BleClientType, BleStatus, bleWearable, BleWearableService, getBleClient() (+33 more)
+Cohesion: 0.03
+Nodes (47): BleClientType, BleStatus, bleWearable, BleWearableService, getBleClient(), parseHeartRate(), parseSFLOAT(), parseSpO2() (+39 more)
 
 ### Community 83 - "TestRiskPersonalizationSystem"
 Cohesion: 0.07
 Nodes (28): AgeGroup, get_personalization_system(), Any, Enum, Nombre de Objeto: risk_personalization Fecha de Creación: 2026-04-25 Propietario, Get age group for given age, Calculate overall risk level based on age and risk factors                  Args, Adjust prediction confidence based on age and risk factors                  Args (+20 more)
 
 ### Community 84 - "test_additional_coverage.py"
-Cohesion: 0.09
-Nodes (15): safelyRun(), startInstitutionalReportJobs(), stopInstitutionalReportJobs(), HealthCenterDocument, HealthCenterModel, HealthCenterNearbyResult, HealthCenterSchema, HealthCenterType (+7 more)
+Cohesion: 0.10
+Nodes (18): Aplicación, Destrucción, Error: "Namespace ya existe", Error: "No se puede conectar al cluster", Estructura, Inicialización, Mejores Prácticas, Outputs (+10 more)
 
 ### Community 85 - "TestAIResultRepository"
 Cohesion: 0.06
@@ -1829,12 +1835,12 @@ Cohesion: 0.02
 Nodes (74): conversational_service(), explainer(), asyncio, fixture, parametrize, LLM Testing — Pruebas de Alucinaciones y Casos Borde  Estrategia:   - Verifica q, Historial de conversación vacío no provoca error., Parser devuelve dict válido ante respuesta LLM vacía. (+66 more)
 
 ### Community 89 - "✅ Retraining Automático Basado en Feedback Médico - COMPLETADO"
-Cohesion: 0.07
-Nodes (23): LocalModelStrategy, Any, ndarray, Format symptoms for model input, Process symptom classification predictions, Process medical text predictions, Determine urgency level from model predictions, Generate recommendations based on model predictions (+15 more)
+Cohesion: 0.03
+Nodes (51): LocalModelStrategy, Any, ndarray, Format symptoms for model input, Process symptom classification predictions, Process medical text predictions, Determine urgency level from model predictions, Generate recommendations based on model predictions (+43 more)
 
 ### Community 90 - "✅ RespiCare - Mejoras de Docker Completadas"
 Cohesion: 0.07
-Nodes (20): patch, Test creating local transformer model with CUDA, Test creating local transformer with custom parameters, Test creating SciSpacy model, Test creating SciSpacy model with download, Test creating custom medical model, Test creating custom medical model with kwargs, Test creating rule-based model (+12 more)
+Nodes (20): patch, Test creating local transformer with custom parameters, Test creating SciSpacy model, Test creating SciSpacy model with download, Test creating custom medical model, Test creating custom medical model with kwargs, Test creating rule-based model, Test creating model with unknown type (+12 more)
 
 ### Community 91 - "devDependencies"
 Cohesion: 0.04
@@ -1845,16 +1851,16 @@ Cohesion: 0.11
 Nodes (12): DtoConfig, DtoGenerator, FieldConfig, generateAllDtos(), Code Generators README - RespiCare MDSD, EntityConfig, generateAllRepositories(), RepositoryGenerator (+4 more)
 
 ### Community 93 - "TestDatabase"
-Cohesion: 0.06
-Nodes (40): detailed_health_check(), health_check(), liveness_check(), Any, get, Nombre de Objeto: health Fecha de Creación: 2026-04-25 Propietario: Cesar Fabian, Kubernetes readiness probe, Kubernetes liveness probe (+32 more)
+Cohesion: 0.07
+Nodes (29): close_database(), create_indexes(), get_database(), init_database(), Nombre de Objeto: database Fecha de Creación: 2026-04-25 Propietario: Cesar Fabi, Initialize database connection, Create database indexes for better performance, Get database instance (+21 more)
 
 ### Community 94 - "📊 Guía de Dashboards y KPIs - RespiCare Tacna"
 Cohesion: 0.05
 Nodes (43): 1. Dashboard Ejecutivo (Web - Administradores), 1. Revisar Dashboards Regularmente, 1. Total de Consultas, 1. Total de Pacientes Registrados, 2. Citas Programadas, 2. Dashboard Clínico (Web - Médicos), 2. Interpretar en Contexto, 2. Tasa de Crecimiento de Casos (+35 more)
 
 ### Community 95 - "TestCache"
-Cohesion: 0.02
-Nodes (101): CacheService, clear_cache_pattern(), close_cache(), delete_cache(), get_cache(), get_cache_client(), init_cache(), Any (+93 more)
+Cohesion: 0.03
+Nodes (81): detailed_health_check(), health_check(), liveness_check(), Any, get, Nombre de Objeto: health Fecha de Creación: 2026-04-25 Propietario: Cesar Fabian, Kubernetes readiness probe, Kubernetes liveness probe (+73 more)
 
 ### Community 96 - "smsService.ts"
 Cohesion: 0.09
@@ -1921,36 +1927,32 @@ Cohesion: 0.06
 Nodes (23): analyze_query(), fixture, Tests for main.py - FastAPI application, Test root endpoint returns correct response, Tests for diseases endpoint, Test get diseases endpoint, Test that expected diseases are in the list, Tests for symptoms endpoint (+15 more)
 
 ### Community 113 - "LocalModelStrategy"
-Cohesion: 0.03
-Nodes (60): createFhirResource, getCapabilities, getFhirResource, getRegisteredHospitals, parseHl7ToFhir, patchFhirResource, processFhirBundle, searchFhirResources (+52 more)
+Cohesion: 0.08
+Nodes (18): FhirBundle, FhirResource, FhirService, FhirServiceOptions, ExternalHistorySync, HospitalSyncService, HospitalSystemConfig, SyncResult (+10 more)
 
 ### Community 114 - "TestAdversarialAttacks"
-Cohesion: 0.10
-Nodes (12): fixture, Test detection of model extraction attacks, Test detection of membership inference attacks, Test input sanitization against adversarial inputs, Tests for adversarial attack detection and prevention, Test output sanitization to prevent information leakage, Create ensemble predictor instance, Create BERT model instance (+4 more)
+Cohesion: 0.05
+Nodes (24): fixture, security, Test detection of model extraction attacks, Test detection of membership inference attacks, Test input sanitization against adversarial inputs, Tests for adversarial attack detection and prevention, Test output sanitization to prevent information leakage, Tests for ML model security (+16 more)
 
 ### Community 115 - "DependencyContainer.ts"
-Cohesion: 0.06
-Nodes (14): AuthResponse, AuthService, LoginRequest, RegisterRequest, BcryptHashService, HashService, JWTTokenService, TokenPayload (+6 more)
+Cohesion: 0.08
+Nodes (9): AuthResponse, AuthService, LoginRequest, RegisterRequest, BcryptHashService, HashService, JWTTokenService, TokenPayload (+1 more)
 
 ### Community 116 - "errorHandler.ts"
-Cohesion: 0.04
-Nodes (43): AI_REVIEW_SIGNATURE_METHODS, AI_REVIEW_STATUSES, AIAnalysisDocument, AIAnalysisModel, AIAnalysisReview, AIAnalysisReviewSchema, AIAnalysisSchema, AIReviewSignature (+35 more)
+Cohesion: 0.06
+Nodes (32): AI_REVIEW_SIGNATURE_METHODS, AI_REVIEW_STATUSES, AIAnalysisDocument, AIAnalysisModel, AIAnalysisReview, AIAnalysisReviewSchema, AIAnalysisSchema, AIReviewSignature (+24 more)
 
 ### Community 117 - "alertController.ts"
-Cohesion: 0.08
-Nodes (20): ApiResponseDTO, createErrorResponse(), ErrorResponseDTO, SuccessResponseDTO, App, isDev(), errorHandler(), handleCastError() (+12 more)
+Cohesion: 0.18
+Nodes (3): EmergencyMedicalInfoService, { fhirService }, { labService }
 
 ### Community 118 - "educationalContentService.ts"
-Cohesion: 0.08
-Nodes (19): EDUCATIONAL_CONTENT_CATEGORIES, EducationalContentDocument, EducationalContentModel, EducationalContentSchema, EducationalContentViewDocument, EducationalContentViewSchema, connectDatabase(), SAMPLE_CONTENT (+11 more)
+Cohesion: 0.04
+Nodes (58): adminCreateUser, adminToggleUserActive, adminUpdateUser, changePassword, deactivateAccount, getProfile, getUsers, getUserStats (+50 more)
 
 ### Community 119 - "scripts"
 Cohesion: 0.05
 Nodes (40): scripts, analyze:bundle, analyze:bundle:build, android:build, android:emulator, android:lan, android:release, android:release:production (+32 more)
-
-### Community 120 - "TestCacheExtended"
-Cohesion: 0.11
-Nodes (4): MedicalHistoryController, ApiResponse, ApiResponseBuilder, MedicalHistoryResponseDto
 
 ### Community 121 - "TestRespiratoryRiskAutoML"
 Cohesion: 0.06
@@ -1993,16 +1995,12 @@ Cohesion: 0.05
 Nodes (36): ═══════════════════════════════════════════════════════════════════════════════, Adding Content, AI Model Compatibility, Basic Information, Best Practices, Categorization, Character Formatting, CLAUDE OFFICE SKILL - Enhanced Metadata v2.0 (+28 more)
 
 ### Community 131 - "get_model_cache"
-Cohesion: 0.10
-Nodes (21): CachedModelInfo, CacheStatsResponse, clear_cache(), get_cache_stats(), list_cached_models(), BaseModel, get, post (+13 more)
+Cohesion: 0.07
+Nodes (26): CachedModelInfo, CacheStatsResponse, clear_cache(), get_cache_stats(), list_cached_models(), BaseModel, get, post (+18 more)
 
 ### Community 132 - "SyntheticCoughDatasetGenerator"
 Cohesion: 0.08
 Nodes (24): Any, DataFrame, Nombre de Objeto: synthetic_cough_dataset_generator Fecha de Creación: 2026-04-2, Generate synthetic audio features for a cough type, Generate synthetic dataset for cough audio analysis, Determine urgency level based on cough type, severity, and features, Generate a single synthetic cough analysis case, Generate full synthetic dataset for cough analysis                  Args: (+16 more)
-
-### Community 133 - "AnalysisStrategy"
-Cohesion: 0.10
-Nodes (15): Any, DataFrame, ndarray, RandomForestDiseaseClassifier, Train Random Forest model                  Args:             X: Feature matrix, Predict disease from symptoms                  Args:             symptoms: List, Check if symptoms match emergency rules, Classify urgency based on symptoms (+7 more)
 
 ### Community 134 - "test_shap_explainer.py"
 Cohesion: 0.07
@@ -2010,11 +2008,11 @@ Nodes (15): explainer(), FakeLabelEncoder, FakeModel, FakeVectorizer, loaded_exp
 
 ### Community 135 - "wearableController.ts"
 Cohesion: 0.04
-Nodes (25): Unit tests for Core Domains Support Service, Test error handling in medical history analysis, Test CoreDomainsSupportService implementation, Test preparation tips generation, Test safety score calculation with no issues, Test safety score calculation with interactions, Test safety score calculation with allergy warnings, Test safety score doesn't go below 0 (+17 more)
+Nodes (24): Unit tests for Core Domains Support Service, Test CoreDomainsSupportService implementation, Test severity assessment for low severity, Test slot recommendation for critical urgency, Test successful prescription safety analysis, Test safety score calculation with no issues, Test safety score calculation with interactions, Test safety score calculation with allergy warnings (+16 more)
 
 ### Community 136 - "InformedConsentModel"
 Cohesion: 0.05
-Nodes (18): CONSENT_STATUSES, CONSENT_TYPES, ConsentStatus, ConsentType, ElectronicSignature, ElectronicSignatureSchema, InformedConsentDocument, InformedConsentModel (+10 more)
+Nodes (22): CONSENT_STATUSES, CONSENT_TYPES, ConsentStatus, ConsentType, ElectronicSignature, ElectronicSignatureSchema, InformedConsentDocument, InformedConsentModel (+14 more)
 
 ### Community 137 - "Documentación de Pruebas - Backend"
 Cohesion: 0.05
@@ -2033,8 +2031,8 @@ Cohesion: 0.05
 Nodes (37): 1. Web (Cypress) - 6 archivos, 2. Mobile (Detox) - 5 archivos, 3. Backend (Supertest) - 1 archivo, `analytics.cy.js` ✅ (NUEVO), Antes, `appointments-flow.e2e.ts` ✅ (NUEVO), 📚 Archivos Relacionados, `auth-flow.e2e.ts` ✅ (NUEVO) (+29 more)
 
 ### Community 141 - "useOfflineSync.ts"
-Cohesion: 0.18
-Nodes (11): _geist, _geistMono, metadata, CapacitorInit(), CapacitorProvider(), isNative(), PerformanceProvider(), Toaster() (+3 more)
+Cohesion: 0.11
+Nodes (17): MedicalHistoryService, Any, with_logging, with_metrics, with_retry, Perform basic medical history processing using service manager, Extract and analyze medical entities from text, Dedicated service for medical history processing operations (+9 more)
 
 ### Community 142 - ".agents/skills/docx/scripts/office/helpers/merge_runs.py"
 Cohesion: 0.11
@@ -2073,20 +2071,20 @@ Cohesion: 0.06
 Nodes (34): Accepting Tracked Changes, Comments, Common Pitfalls, Converting .doc to .docx, Converting to Images, Creating New Documents, Critical Rules for docx-js, Dependencies (+26 more)
 
 ### Community 151 - "AnalysisRequest"
-Cohesion: 0.13
-Nodes (17): Nombre de Objeto: respiratory_diseases_comprehensive Fecha de Creación: 2026-04-, Nombre de Objeto: HybridRuleMLSystem Fecha de Creación: 2026-04-25 Propietario:, Nombre de Objeto: MultiTaskNeuralNetwork Fecha de Creación: 2026-04-25 Propietar, Nombre de Objeto: RandomForestDiseaseClassifier Fecha de Creación: 2026-04-25 Pr, Nombre de Objeto: synthetic_dataset_generator Fecha de Creación: 2026-04-25 Prop, generate_dataset(), main(), DataFrame (+9 more)
+Cohesion: 0.20
+Nodes (10): FhirCompatibleObservation, formatHl7DateTime(), Hl7Message, Hl7Segment, mapHl7ToFhirObservation(), parseHl7Message(), parseHl7Xml(), { fhirService } (+2 more)
 
 ### Community 152 - "MultiTaskNeuralNetwork"
-Cohesion: 0.07
-Nodes (24): MultiTaskNeuralNetwork, Any, DataFrame, ndarray, Train all task-specific models                  Args:             tasks_data: Di, Predict all tasks simultaneously                  Args:             symptoms: Li, Convert symptom list to feature vector, Save trained model to file (+16 more)
+Cohesion: 0.16
+Nodes (12): main(), prediction_ids(), fixture, Script de Prueba Completo para Componentes ML  Prueba: 1. Sistema de monitoreo d, Provide prediction_ids by running the prediction monitor test first, Test medical feedback system, Test neural network training with small dataset, Test prediction monitoring system (+4 more)
 
 ### Community 153 - "symptomAnalyzerController.ts"
-Cohesion: 0.16
-Nodes (19): analyze_cough(), AudioAnalysisRequest, AudioAnalysisResponse, CoughAnalysisResult, get_cough_service(), get_transcription_service(), BaseModel, post (+11 more)
+Cohesion: 0.14
+Nodes (20): analyze_cough(), AudioAnalysisRequest, AudioAnalysisResponse, CoughAnalysisResult, get_cough_service(), get_transcription_service(), BaseModel, post (+12 more)
 
 ### Community 154 - "src/services/appointmentService.ts"
-Cohesion: 0.11
-Nodes (20): checkContraindications, checkDrugInteractions, getDrugDosage, importLaboratoryFromHl7, importLaboratoryResults, searchDrug, searchGenericDrugs, syncLaboratoryResults (+12 more)
+Cohesion: 0.20
+Nodes (7): auditLogger(), hashPayload(), redact(), SENSITIVE_FIELDS, AuditLogDocument, AuditLogSchema, { AuditLog }
 
 ### Community 155 - "seed-complete-system.js"
 Cohesion: 0.20
@@ -2121,8 +2119,8 @@ Cohesion: 0.09
 Nodes (28): augment_dataset(), execute_retraining_background(), get_retraining_status(), get_training_data_from_feedback(), Any, BaseModel, get, post (+20 more)
 
 ### Community 163 - "OpenAIStrategy"
-Cohesion: 0.20
-Nodes (4): OfflineOperation, OperationType, getPlugin(), SQLiteDatabase
+Cohesion: 0.09
+Nodes (17): _geist, _geistMono, metadata, CapacitorInit(), CapacitorProvider(), isNative(), OfflineSyncProvider(), PerformanceProvider() (+9 more)
 
 ### Community 164 - "📊 Backend API: Symptom Reports & Heatmap"
 Cohesion: 0.12
@@ -2161,8 +2159,8 @@ Cohesion: 0.12
 Nodes (11): parametrize, Evals de calidad sobre PatientFriendlyExplainer., La explicación debe mencionar el nombre de la enfermedad o su traducción., La explicación debe indicar el nivel de urgencia., El resumen debe tener longitud mínima para ser informativo., Alta confianza (>0.85) debe producir explicación sin expresar incertidumbre alta, Baja confianza (<0.5) debe producir explicación con nivel apropiado., La explicación debe tener todas las claves de estructura requeridas. (+3 more)
 
 ### Community 173 - "✅ Retraining Completo con Dataset Aumentado - COMPLETADO"
-Cohesion: 0.06
-Nodes (25): Any, DataFrame, ndarray, Optimize hyperparameters using GridSearch                  Args:             X:, Train XGBoost model          Args:             X: Feature matrix             y:, Predict disease class indices for a feature matrix, Predict class probabilities for a feature matrix, Evaluate the trained model on a labeled feature matrix (+17 more)
+Cohesion: 0.13
+Nodes (12): Any, ndarray, Optimize hyperparameters using GridSearch                  Args:             X:, Train XGBoost model          Args:             X: Feature matrix             y:, Predict disease class indices for a feature matrix, Predict class probabilities for a feature matrix, Evaluate the trained model on a labeled feature matrix, Run cross-validation and return the per-fold scores (+4 more)
 
 ### Community 174 - "nativeStorage.ts"
 Cohesion: 0.06
@@ -2242,7 +2240,7 @@ Nodes (24): analyze_symptoms_ml(), _apply_medical_validation(), get_detailed_exp
 
 ### Community 193 - "HybridRuleMLSystem"
 Cohesion: 0.11
-Nodes (16): HybridRuleMLSystem, Any, Check emergency rules, Combine predictions from all ML models, Vote-based ensemble of multiple models, Fallback pattern matching, Validate prediction using medical rules, Calculate final confidence combining ML and rules (+8 more)
+Nodes (15): HybridRuleMLSystem, Any, Check emergency rules, Combine predictions from all ML models, Vote-based ensemble of multiple models, Fallback pattern matching, Validate prediction using medical rules, Calculate final confidence combining ML and rules (+7 more)
 
 ### Community 194 - "MedicalHistoryRepository"
 Cohesion: 0.09
@@ -2312,10 +2310,6 @@ Nodes (28): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModu
 Cohesion: 0.07
 Nodes (29): 1. Pruebas Unitarias (`src/components/__tests__/`), 2. Pruebas End-to-End (E2E) (`cypress/e2e/`), 3. Pruebas de Accesibilidad (`tests/a11y.test.js`), 4. Pruebas de Diseño Responsive (`tests/responsive.test.js`), **AnalyticsDashboard.test.js**, **chatbot.cy.js**, **ChatBot.test.js**, Configuración de Variables de Entorno (+21 more)
 
-### Community 211 - "ModelManager"
-Cohesion: 0.19
-Nodes (12): AIAnalysisModel, AlertModel, AppointmentModel, bcrypt, cleanupPreviousDemoData(), connectDatabase(), main(), MedicalHistoryModel (+4 more)
-
 ### Community 212 - "MedicalValidationRules"
 Cohesion: 0.08
 Nodes (9): MedicalValidationRules, Any, Nombre de Objeto: MedicalValidationRules Fecha de Creación: 2026-09-02 Propietar, Validate if predicted disease is plausible given symptoms, age and         (opti, Medical validation rules to ensure plausible predictions, Evalúa signos vitales de wearables (SpO2, frecuencia respiratoria, frecuencia, fixture, Tests for services/medical_validation_rules.py (RF-005: coherencia médica) (+1 more)
@@ -2343,10 +2337,6 @@ Nodes (28): 1. Tests de Integración (2 archivos), 2. Tests de Performance (1 ar
 ### Community 218 - "📱 Guía para Generar APK"
 Cohesion: 0.07
 Nodes (27): 0. Configurar Android SDK (Primera vez o si hay error), 1. Compilar la App Next.js, 1. Configurar IP Local (Importante), 2. Sincronizar con Capacitor, 2. Verificar Conexión, 3. Configurar Firewall (Si es necesario), 3. Generar el APK, 🔗 Comandos Relacionados (+19 more)
-
-### Community 219 - "DeviceMetricsCollector"
-Cohesion: 0.12
-Nodes (7): DeviceInfo, deviceMetrics, DeviceMetricsCollector, PerformanceMetrics, useDeviceMetrics(), FakePO, Throw
 
 ### Community 220 - "i18nService.js"
 Cohesion: 0.28
@@ -2401,16 +2391,16 @@ Cohesion: 0.07
 Nodes (21): get_patient_explainer(), PatientFriendlyExplainer, Any, Nombre de Objeto: PatientFriendlyExplainer (services/patient_friendly_explainer., Construye la explicación principal, Construye lista de factores clave en lenguaje simple, Construye explicación del razonamiento, Convierte explicaciones técnicas a lenguaje simple para pacientes (+13 more)
 
 ### Community 233 - ".initializeMiddlewares"
-Cohesion: 0.05
-Nodes (35): hpp, xss, httpRequestDurationMs, httpRequestsTotal, metricsHandler(), metricsMiddleware(), metricsRegistry, calculatePercentiles() (+27 more)
+Cohesion: 0.04
+Nodes (49): initializeRedis(), ApiResponseDTO, createErrorResponse(), ErrorResponseDTO, SuccessResponseDTO, App, hpp, isDev() (+41 more)
 
 ### Community 234 - "Helm Charts"
 Cohesion: 0.08
 Nodes (25): Best Practices, Chart Repository, Chart Structure, Chart Testing, Chart Testing Tool (ct), Chart.yaml, Complex Upgrade/Rollback, Create Repository (+17 more)
 
 ### Community 235 - "🤖 Chatbot ML Integration Complete ✅"
-Cohesion: 0.10
-Nodes (11): Test metrics decorator with execution time tracking disabled, Test metrics decorator with success rate tracking disabled, Test custom metrics when extraction fails, Tests for MetricsDecorator, Test metrics summary with failures, Test with_metrics decorator function, Test metrics decorator with successful sync function, Test metrics decorator with failing async function (+3 more)
+Cohesion: 0.08
+Nodes (18): asyncio, Test metrics decorator with custom metric name, Test metrics decorator with execution time tracking disabled, Test metrics decorator with success rate tracking disabled, Test metrics decorator with call count tracking disabled, Test metrics decorator with custom metrics, Test custom metrics when extraction fails, Test getting metrics summary (+10 more)
 
 ### Community 236 - "✅ Funcionalidades Implementadas Recientemente"
 Cohesion: 0.08
@@ -2433,8 +2423,8 @@ Cohesion: 0.11
 Nodes (14): get_pattern_config(), Any, Get strategy pattern configuration, Get circuit breaker configuration, Get cache configuration, Get retry configuration, Get logging configuration, Get metrics configuration (+6 more)
 
 ### Community 241 - "RandomForestDiseaseClassifier"
-Cohesion: 0.11
-Nodes (10): asyncio, Test metrics decorator with custom metric name, Test metrics decorator with call count tracking disabled, Test metrics decorator with custom metrics, Test getting metrics summary, Test performance decorator with fast function, Test performance decorator with slow function, Test performance decorator with function error (+2 more)
+Cohesion: 0.17
+Nodes (7): Tests for PerformanceMetricsDecorator, Test performance decorator with fast function, Test performance decorator with slow function, Test performance decorator with function error, Test performance decorator with multiple calls, Test with_performance_metrics decorator function, TestPerformanceMetricsDecorator
 
 ### Community 242 - "SymptomAnalyzer"
 Cohesion: 0.13
@@ -2449,8 +2439,8 @@ Cohesion: 0.08
 Nodes (15): fixture, Create test client for main app, Create mock cache client, Test that FastAPI app is initialized correctly, Test that CORS middleware is configured, Test that rate limiting is disabled in testing mode, Test rate limiting middleware when enabled, Test startup event execution (+7 more)
 
 ### Community 245 - "AuthController.ts"
-Cohesion: 0.20
-Nodes (7): csvWriterMock, fsPromisesMock, medicalHistoryMock, pdfDocMock, PDFDocumentMock, userModelMock, writeRecordsMock
+Cohesion: 0.11
+Nodes (24): acknowledgeAlert, ALLOWED_CHANNELS, createAlert, createCriticalSymptomAlert, getAlertDashboardSummary, getAlertMonitoringMetrics, getUserAlerts, notifyDoctorForCriticalCase (+16 more)
 
 ### Community 246 - "otel-config.ts"
 Cohesion: 0.09
@@ -2493,8 +2483,8 @@ Cohesion: 0.08
 Nodes (24): 🔧 Configuración, 🎤 Dataset de Análisis de Tos, 🖼️ Dataset de Imágenes Médicas, Datasets Sintéticos Multimodales para Mejorar el Chatbot, Dependencias Requeridas, 📋 Descripción, 🚀 Entrenamiento de Modelos, Entrenar Modelos con los Datasets (+16 more)
 
 ### Community 256 - "MedicalHistoryProcessor"
-Cohesion: 0.03
-Nodes (67): getRedisClient(), initializeRedis(), RedisClientType, handleAWSSNSWebhook(), handleMessageBirdWebhook(), handleTwilioWebhook(), verifyTwilioWebhook(), calculateAndStoreMetrics() (+59 more)
+Cohesion: 0.02
+Nodes (79): handleAWSSNSWebhook(), handleMessageBirdWebhook(), handleTwilioWebhook(), verifyTwilioWebhook(), auditLog, auditRBAC(), clearAuditLog(), getRBACAuditReport() (+71 more)
 
 ### Community 257 - "SecureAggregator"
 Cohesion: 0.14
@@ -2514,7 +2504,7 @@ Nodes (13): Test that symptoms have confidence scores, Test disease classificati
 
 ### Community 261 - "UserRepository.ts"
 Cohesion: 0.11
-Nodes (9): UserRole, RegisterUserRequest, AuthController, AuthResponseDto, LoginRequestDto, LoginRequestDtoValidator, RegisterRequestDto, RegisterRequestDtoValidator (+1 more)
+Nodes (16): User, UserRole, AuthenticateUserRequest, AuthenticateUserResponse, RegisterUserRequest, RegisterUserResponse, UserDocument, UserModel (+8 more)
 
 ### Community 262 - "ReferralModel"
 Cohesion: 0.15
@@ -2552,10 +2542,6 @@ Nodes (24): 1. Lazy Loading de Componentes Pesados, 2. Preloading de Rutas Crít
 Cohesion: 0.10
 Nodes (24): add_inline(), add_page_number(), add_table(), convert(), parse_table(), Convert INFORME_SOLUCION_TECNOLOGICA.md to a formatted .docx per MINEDU spec., Parse **bold**, *italic*, `code` inside text., set_run_font() (+16 more)
 
-### Community 272 - "bleWearableService.ts"
-Cohesion: 0.14
-Nodes (11): Any, DataFrame, ndarray, Add realistic variations to symptoms, Generate full synthetic dataset                  Args:             samples_per_d, Convert symptoms list to feature vector (binary encoding)                  Args:, Generate augmented synthetic data for data balancing, Generate synthetic training data for ML models (+3 more)
-
 ### Community 273 - "Debugging Reference"
 Cohesion: 0.09
 Nodes (19): 1. Print Before Assertion, 2. Use logRoles for Role Queries, 3. Check Element Properties, 4. Inspect Async State, 5. Check What Queries Return, Async Element Not Appearing, Automatic Error Logging, Browser Extension (+11 more)
@@ -2565,8 +2551,8 @@ Cohesion: 0.09
 Nodes (23): 1. Accessible to Everyone (Preferred), 2. Semantic Queries, 3. Test IDs (Escape Hatch), Async Patterns, Basic Test Pattern, ✅ Best Practices, Configuration, Core Philosophy (+15 more)
 
 ### Community 275 - ".call"
-Cohesion: 0.08
-Nodes (17): CircuitBreaker, CircuitBreakerManager, Any, Check if enough time has passed to attempt reset, Reset circuit breaker to closed state, Get current circuit breaker state, Get circuit breaker metrics, Manager for multiple circuit breakers (+9 more)
+Cohesion: 0.09
+Nodes (16): CircuitBreaker, CircuitBreakerManager, Any, Check if enough time has passed to attempt reset, Reset circuit breaker to closed state, Get current circuit breaker state, Get circuit breaker metrics, Manager for multiple circuit breakers (+8 more)
 
 ### Community 276 - "ReminderEnvironment"
 Cohesion: 0.19
@@ -2581,8 +2567,8 @@ Cohesion: 0.09
 Nodes (13): fixture, Tests para el sistema de retraining automático, Fixture para crear sistema de retraining, Datos de feedback de ejemplo, Test que se activan las condiciones para retraining, Test que el sistema recolecta feedback correctamente, Test que el sistema trackea mejoras del modelo, Test que el retraining no degrada el performance (+5 more)
 
 ### Community 279 - "dev/index.ts"
-Cohesion: 0.18
-Nodes (9): router, applyDevRoutes(), authRoutesDev, fhirRoutesDev, IMPORTANT: applyDevRoutes must be called BEFORE the production, router, router, router (+1 more)
+Cohesion: 0.16
+Nodes (8): router, applyDevRoutes(), authRoutesDev, fhirRoutesDev, IMPORTANT: applyDevRoutes must be called BEFORE the production, MEDICAL_HISTORY_SCHEMA, router, router
 
 ### Community 280 - "🚀 Guía de Configuración - RespiCare Backend"
 Cohesion: 0.09
@@ -2593,20 +2579,20 @@ Cohesion: 0.09
 Nodes (22): 1. FICHA TÉCNICA DE LA ENCUESTA, 2. CUESTIONARIO APLICADO, 3. RESULTADOS DE LA ENCUESTA (50 respuestas), 4.1 Distribución por rango etario, 4.2 Distribución por rol, 4.3 Prevalencia del problema (P1), 4.4 Tiempo de espera para atención (P2), 4.5 Aceptación del sistema (P3, P5, P7 — escala 1-5) (+14 more)
 
 ### Community 282 - "Scripts de Infraestructura - RespiCare"
-Cohesion: 0.05
-Nodes (41): 1. `setup-infra.sh` - Inicialización de Infraestructura, 2. `validate-infra.sh` - Validación de Infraestructura, 3. `deploy-infra.sh` - Deployment de Infraestructura, 4. `monitor-infra.sh` - Monitoreo de Infraestructura, 5. `backup-infra.sh` - Backup y Restore, Dependencias Opcionales, Dependencias Requeridas, 📚 Documentación Adicional (+33 more)
+Cohesion: 0.09
+Nodes (23): 1. `setup-infra.sh` - Inicialización de Infraestructura, 2. `validate-infra.sh` - Validación de Infraestructura, 3. `deploy-infra.sh` - Deployment de Infraestructura, 4. `monitor-infra.sh` - Monitoreo de Infraestructura, 5. `backup-infra.sh` - Backup y Restore, Dependencias Opcionales, Dependencias Requeridas, 📚 Documentación Adicional (+15 more)
 
 ### Community 283 - "Configuración para Conectar la App Móvil con Docker"
 Cohesion: 0.25
 Nodes (4): Get information about which models are available, Test getting available models when all are available, Test getting available models without OpenAI, Test error handling in get_available_models
 
 ### Community 284 - "Comando para Ver Coverage de AI Services"
-Cohesion: 0.31
-Nodes (5): auditLog, auditRBAC(), clearAuditLog(), getRBACAuditReport(), RBACAuditEntry
+Cohesion: 0.18
+Nodes (5): DeviceInfo, deviceMetrics, PerformanceMetrics, FakePO, Throw
 
 ### Community 285 - ".create_model"
-Cohesion: 0.12
-Nodes (9): Tests for BusinessMetricsDecorator, Test business metric extraction, Test collecting multiple metric values, Test business metric when extraction fails, Test business metrics with function error, Test getting business metrics summary, Test business metrics summary with no samples, Test with_business_metrics decorator function (+1 more)
+Cohesion: 0.14
+Nodes (8): Tests for BusinessMetricsDecorator, Test collecting multiple metric values, Test business metric when extraction fails, Test business metrics with function error, Test getting business metrics summary, Test business metrics summary with no samples, Test with_business_metrics decorator function, TestBusinessMetricsDecorator
 
 ### Community 286 - "LRUModelCache"
 Cohesion: 0.25
@@ -2646,7 +2632,7 @@ Nodes (22): 🌐 Acceso, 🌐 Acceso Externo (Sin Cables ni Misma WiFi), 📱 Co
 
 ### Community 295 - "Navbar.js"
 Cohesion: 0.01
-Nodes (161): Nombre de Objeto: dependencies Fecha de Creación: 2026-08-06 Propietario: Cesar, Nombre de Objeto: config Fecha de Creación: 2026-04-25 Propietario: Cesar Fabian, DatabaseService, Object-oriented wrapper around the module-level MongoDB utilities, Decorator function for adding caching to methods, with_cache(), Decorator function for adding circuit breaker functionality to methods, with_circuit_breaker() (+153 more)
+Nodes (167): Nombre de Objeto: dependencies Fecha de Creación: 2026-08-06 Propietario: Cesar, CacheService, Object-oriented wrapper around the module-level Redis cache utilities, Nombre de Objeto: config Fecha de Creación: 2026-04-25 Propietario: Cesar Fabian, DatabaseService, Object-oriented wrapper around the module-level MongoDB utilities, Decorator function for adding caching to methods, with_cache() (+159 more)
 
 ### Community 296 - "Kubernetes Configuration Management"
 Cohesion: 0.10
@@ -2670,7 +2656,7 @@ Nodes (6): MedicalReportScreenProps, ReportShareScreen(), ReportShareScreenProps
 
 ### Community 302 - "Problemas por Categoría"
 Cohesion: 0.20
-Nodes (9): healthConnect, HealthConnectService, latestHeartRate(), latestOxygenSaturation(), READ_TYPES, StoredRecord, totalSteps(), loadService() (+1 more)
+Nodes (7): { ambulanceService }, { emergencyMedicalInfoService }, { emergencyService }, flushMicrotasks(), { hospitalCommunicationService }, runHandler(), validBody
 
 ### Community 303 - "ModelType"
 Cohesion: 0.19
@@ -2689,8 +2675,8 @@ Cohesion: 0.11
 Nodes (13): hpp, JaegerExporter, NodeSDK, @opentelemetry/auto-instrumentations-node, @opentelemetry/exporter-jaeger, @opentelemetry/exporter-trace-otlp-http, @opentelemetry/resources, @opentelemetry/sdk-node (+5 more)
 
 ### Community 307 - "LabService"
-Cohesion: 0.15
-Nodes (3): LabResultDocument, AbnormalValueAlert, LabService
+Cohesion: 0.14
+Nodes (4): LabResultDocument, LaboratoryResult, AbnormalValueAlert, LabService
 
 ### Community 308 - "Kubernetes Configuration Management"
 Cohesion: 0.10
@@ -2733,8 +2719,8 @@ Cohesion: 0.10
 Nodes (19): ⚠️ Anti-patterns, Async Test Patterns, Async Utilities Reference, Best Practices, Common Patterns, findBy Queries, Form Submission, Global Default (+11 more)
 
 ### Community 318 - "FeatureFlagService"
-Cohesion: 0.18
-Nodes (4): FeatureFlagService, getFeatureFlagService(), getFeatureValue(), isFeatureEnabled()
+Cohesion: 0.11
+Nodes (11): FeatureFlag, FeatureFlagConfig, FeatureFlagDefinition, FeatureFlagProvider, FeatureFlagService, FeatureFlagValue, getFeatureFlagService(), getFeatureValue() (+3 more)
 
 ### Community 319 - "Service Mesh"
 Cohesion: 0.10
@@ -2749,8 +2735,8 @@ Cohesion: 0.29
 Nodes (3): flushMicrotasks(), { labService }, runHandler()
 
 ### Community 323 - "🚀 Guía Completa: Configuración Remota con ngrok"
-Cohesion: 0.06
-Nodes (28): Any, Ajusta el modelo con una serie de puntos: [{ 'date': iso, 'value': float }, ...], Genera un pronóstico simple para N días. Si no hay modelo ajustado, lo simula., fixture, performance, Benchmarks de procesamiento por lotes, Create ensemble predictor, Benchmark batch ensemble predictions (+20 more)
+Cohesion: 0.05
+Nodes (23): Any, Ajusta el modelo con una serie de puntos: [{ 'date': iso, 'value': float }, ...], Genera un pronóstico simple para N días. Si no hay modelo ajustado, lo simula., Benchmark batch ensemble predictions, Benchmark batch BERT predictions, Compare ensemble vs individual models, Compara predicción sin SHAP vs explain_prediction() (con SHAP), Benchmark ensemble prediction (+15 more)
 
 ### Community 324 - "🚀 Guía: Ejecutar ngrok Manualmente con Múltiples Túneles"
 Cohesion: 0.29
@@ -2765,8 +2751,8 @@ Cohesion: 0.12
 Nodes (14): DiseaseTrendPredictor, DataFrame, Series, Nombre de Objeto: trend_predictor Fecha de Creación: 2026-04-25 Propietario: Ces, Genera una proyección a corto plazo para la enfermedad indicada.          Utiliz, Resumen estructurado de una tendencia de enfermedad., Predictor simple de tendencias para enfermedades respiratorias.      Parameters, Ajusta el predictor con datos históricos.          Espera un DataFrame con las c (+6 more)
 
 ### Community 327 - "TestParserBackwardCompatibility"
-Cohesion: 0.25
-Nodes (3): loadRateLimiter(), MockResponse, RedisMock
+Cohesion: 0.14
+Nodes (10): CreateReferralRequest, Referral, ReferralFilters, ReferralPriority, ReferralService, ReferralStatus, ReferralType, inProgressReferral (+2 more)
 
 ### Community 328 - "TestPatientFriendlyExplainerQuality"
 Cohesion: 0.14
@@ -2806,7 +2792,7 @@ Nodes (16): AlertOptions, cancelAll(), cancelNotification(), CHANNELS, ID_RANGE,
 
 ### Community 337 - "OfflineQueue"
 Cohesion: 0.03
-Nodes (50): ConditionalRetry, ExponentialBackoffRetry, Execute function with retry logic, Wait before retry with optional jitter, Retry decorator with exponential backoff and custom retry conditions, Apply exponential backoff retry decorator to function, Decorator for adding retry functionality to methods, Decorator for exponential backoff retry (+42 more)
+Nodes (51): ConditionalRetry, ExponentialBackoffRetry, Nombre de Objeto: retry_decorator Fecha de Creación: 2026-04-25 Propietario: Ces, Execute function with retry logic, Wait before retry with optional jitter, Retry decorator with exponential backoff and custom retry conditions, Apply exponential backoff retry decorator to function, Decorator for adding retry functionality to methods (+43 more)
 
 ### Community 338 - "performance.ts"
 Cohesion: 0.15
@@ -2821,16 +2807,20 @@ Cohesion: 0.12
 Nodes (9): Tests for QLearningAgent, Test agent initialization, Test state to key conversion, Test action selection in exploitation mode, Test action selection in exploration mode, Test action selection when not training, Test Q-learning update, Test Q-learning update for terminal state (+1 more)
 
 ### Community 341 - "TestEnsemblePerformance"
-Cohesion: 0.12
-Nodes (10): fixture, Tests de performance del sistema ensemble, Fixture para crear instancia de ensemble, Test que el ensemble predice rápidamente, Test que el ensemble maneja múltiples predicciones, Test que el ensemble muestra contribuciones de cada modelo, Test que la confianza del ensemble es calculada correctamente, Test que el ensemble da resultados consistentes (+2 more)
+Cohesion: 0.09
+Nodes (14): fixture, Tests for Ensemble Model Performance Tests de performance del sistema ensemble, Tests de accuracy del ensemble, Test que el ensemble tiene accuracy mínimo aceptable, Tests de performance del sistema ensemble, Fixture para crear instancia de ensemble, Test que el ensemble predice rápidamente, Test que el ensemble maneja múltiples predicciones (+6 more)
 
 ### Community 342 - "init_sentry"
 Cohesion: 0.13
 Nodes (15): Tests for utils/sentry_integration.py, add_breadcrumb(), capture_exception(), capture_message(), clear_sentry_user(), Any, Nombre de Objeto: sentry_integration Fecha de Creación: 2026-04-25 Propietario:, Establece información del usuario en Sentry          Args:         user_id: ID d (+7 more)
 
 ### Community 343 - "DependencyContainer"
-Cohesion: 0.09
-Nodes (20): getWearableData(), getWearableMetrics(), syncWearableData(), checkThresholdsAndAlert(), cooldowns, isCoolingDown(), THRESHOLDS, WearableAlert (+12 more)
+Cohesion: 0.08
+Nodes (24): getWearableData(), getWearableMetrics(), syncWearableData(), patientIdValidation, queryValidation, router, syncValidation, checkThresholdsAndAlert() (+16 more)
+
+### Community 345 - "SMSService"
+Cohesion: 0.12
+Nodes (6): SMSService, baseListeners, loadApp(), LoadedApp, LoadOptions, PROCESS_EVENTS
 
 ### Community 346 - "🔑 Credenciales de Usuarios Demo - RespiCare"
 Cohesion: 0.11
@@ -2844,6 +2834,10 @@ Nodes (17): 10.1 Mejores Prácticas Aplicadas, 10.2 Desafíos Superados, 10. Lec
 Cohesion: 0.11
 Nodes (17): aliases, components, hooks, lib, ui, utils, iconLibrary, rsc (+9 more)
 
+### Community 349 - "Guía: Acceso Externo a la App Móvil (Sin Cables ni Misma WiFi)"
+Cohesion: 0.20
+Nodes (10): 3.1. Resumen Ejecutivo, 3.2.1. Backend (TypeScript/Node.js), 3.2.2. AI Services (Python), 3.2.3. Mobile (React Native), 3.2. Análisis Detallado por Componente, 3.3. Métricas de Calidad, 3. Resultados del Análisis, Complejidad Ciclomática (+2 more)
+
 ### Community 350 - "analyze-bundle-size.js"
 Cohesion: 0.20
 Nodes (17): analyzeDependencies(), analyzeNextBundle(), analyzeNodeModules(), BUILD_DIR, { execSync }, formatBytes(), fs, generateJSONReport() (+9 more)
@@ -2853,20 +2847,20 @@ Cohesion: 0.35
 Nodes (15): automl_auto_retrain(), automl_auto_tune(), automl_drift_detect(), automl_feature_select(), automl_select_model(), AutoRetrainRequest, AutoTuneRequest, DriftDetectRequest (+7 more)
 
 ### Community 352 - "close_cache"
-Cohesion: 0.15
-Nodes (7): asyncio, Test symptom analysis falls back when models not available, Test error handling in symptom analysis, Test medical text processing falls back when models not available, Test error handling in medical text processing, Test fallback symptom analysis, Test that tokenization uses correct parameters
+Cohesion: 0.20
+Nodes (10): Accesibilidad Web, Componentes Principales, Dark Theme, Estructura, Implementación, Layout Principal, Light Theme, Temas (+2 more)
 
 ### Community 353 - "PatternConfig"
-Cohesion: 0.12
-Nodes (15): Config, is_pattern_enabled(), PatternConfig, BaseSettings, Nombre de Objeto: pattern_config Fecha de Creación: 2026-04-25 Propietario: Cesa, Configuration for design patterns and services, Check if a pattern is enabled, pattern_config() (+7 more)
+Cohesion: 0.15
+Nodes (12): Config, PatternConfig, BaseSettings, Configuration for design patterns and services, pattern_config(), Pattern configuration for testing, Tests adicionales para core/pattern_config.py, Tests para PatternConfig (+4 more)
 
 ### Community 354 - "Servicios de Audio - Modelos Pre-entrenados"
 Cohesion: 0.12
 Nodes (17): 1. Transcripción de Audio (Whisper), 2. Análisis de Tos, Análisis de Tos, Análisis de Tos, Dependencias Requeridas, 🔧 Instalación, Instalación de FFmpeg, ⚠️ Limitaciones (+9 more)
 
 ### Community 355 - "NeuralNetworkPredictor"
-Cohesion: 0.15
-Nodes (11): get_neural_network_predictor(), NeuralNetworkPredictor, Any, Nombre de Objeto: neural_network_wrapper Fecha de Creación: 2026-04-25 Propietar, Predict with explanation (alias for predict for compatibility), Check if model is loaded and available, Get global neural network predictor instance          Args:         model_path:, Wrapper for neural network that's compatible with existing ML system (+3 more)
+Cohesion: 0.12
+Nodes (13): Initialize ensemble predictor                  Args:             use_xgboost: Us, Load all available models, get_neural_network_predictor(), NeuralNetworkPredictor, Any, Nombre de Objeto: neural_network_wrapper Fecha de Creación: 2026-04-25 Propietar, Predict with explanation (alias for predict for compatibility), Check if model is loaded and available (+5 more)
 
 ### Community 356 - "RespiCare ETL Pipeline"
 Cohesion: 0.12
@@ -2909,8 +2903,8 @@ Cohesion: 0.20
 Nodes (7): fixture, LLM Testing — Pruebas de Regresión de Prompts  Estrategia:   - Captura snapshots, R8 — El parser debe extraer JSON aunque haya texto narrativo antes/después., JSON con campos anidados debe ser extraído correctamente., JSON de texto médico embebido en narrativa debe extraerse., strategy(), TestJsonExtractionRegression
 
 ### Community 367 - "mlOrchestrationService.ts"
-Cohesion: 0.07
-Nodes (14): ErrorEntrySchema, LogEntrySchema, MLExperimentDocument, MLExperimentModel, MLExperimentSchema, aiServiceGet(), aiServicePost(), FLRoundConfig (+6 more)
+Cohesion: 0.12
+Nodes (5): ErrorEntrySchema, LogEntrySchema, MLExperimentDocument, MLExperimentModel, MLExperimentSchema
 
 ### Community 368 - "src/services/referralService.ts"
 Cohesion: 0.21
@@ -2937,8 +2931,8 @@ Cohesion: 0.12
 Nodes (16): Alternativas, Archivos Modificados, Causa, Cómo Conectarte, Desde herramientas externas (MongoDB Compass, Studio 3T, etc.), Desde línea de comandos (mongosh), Desde tu aplicación (dentro de Docker), Notas Importantes (+8 more)
 
 ### Community 374 - "📱 Guía para ejecutar la app mobile en emulador Android"
-Cohesion: 0.29
-Nodes (7): 🎯 Audiencia, 📚 Contenido, Estrategias y Guías, 📊 Métricas Actuales, Reportes de Tests, Reportes por Componente, 🧪 Testing y Calidad
+Cohesion: 0.08
+Nodes (18): Flujo de ejecución recomendado, Histórico de hitos, Puntos destacados, Recomendaciones de mantenimiento, Resultado global, Resumen de Cobertura Backend – Noviembre 2025, 🎯 Audiencia, 📚 Contenido (+10 more)
 
 ### Community 375 - "Plan de Iteración — Sprint 13: API de Interoperabilidad MINSA/SINADEF e Integración Wearables-IA"
 Cohesion: 0.12
@@ -2953,8 +2947,8 @@ Cohesion: 0.29
 Nodes (14): nlp_ner(), nlp_process(), nlp_sentiment(), nlp_summarize(), nlp_translate(), Any, BaseModel, post (+6 more)
 
 ### Community 378 - "Estado de Cobertura y Tests - AI Services"
-Cohesion: 0.33
-Nodes (5): baseListeners, loadApp(), LoadedApp, LoadOptions, PROCESS_EVENTS
+Cohesion: 0.20
+Nodes (10): Características, Flujo, Flujos Críticos, Implementación, Microinteracciones, Mobile UX/UI, Onboarding, Persistencia (+2 more)
 
 ### Community 379 - "Solución: pytest no es reconocido como comando"
 Cohesion: 0.12
@@ -2965,8 +2959,8 @@ Cohesion: 0.12
 Nodes (15): 1. Rate Limiting ✅, 2. Mocks de Dependencias ✅, 3. Tests de Circuit Breaker ✅, 4. Tests de Factories ✅, 5. Tests de Repositorios ✅, 6. Tests de Servicios - ✅ COMPLETADO, 7. Tests de Estrategias - ✅ COMPLETADO, 8. Tests de API - ✅ COMPLETADO (+7 more)
 
 ### Community 381 - "Resumen de Correcciones de Tests"
-Cohesion: 0.29
-Nodes (6): Flujo de ejecución recomendado, Histórico de hitos, Puntos destacados, Recomendaciones de mantenimiento, Resultado global, Resumen de Cobertura Backend – Noviembre 2025
+Cohesion: 0.33
+Nodes (4): Tests for RESPIRATORY_KNOWLEDGE_BASE, Test knowledge base structure, Test that expected diseases are in knowledge base, TestKnowledgeBase
 
 ### Community 382 - "RespiratoryRiskAutoML"
 Cohesion: 0.18
@@ -2990,7 +2984,7 @@ Nodes (17): Test redacting token field, Test redacting API key field, Tests for 
 
 ### Community 387 - "TestUrgencyCalculator"
 Cohesion: 0.12
-Nodes (9): Test urgency calculation without severity scores, Tests para el calculador de urgencia, Test urgency calculation at high threshold, Test 1: Síntomas leves sin factores de riesgo, Test urgency calculation at medium threshold, Test that age multiplier affects final score, Test 3: Síntomas severos, Test 8: Lista vacía de síntomas (+1 more)
+Nodes (9): Tests para el calculador de urgencia, Test urgency calculation at high threshold, Test 1: Síntomas leves sin factores de riesgo, Test urgency calculation at medium threshold, Test that age multiplier affects final score, Test 3: Síntomas severos, Test 8: Lista vacía de síntomas, Test 9: Múltiples factores de riesgo (+1 more)
 
 ### Community 388 - "5. Re-render Optimization"
 Cohesion: 0.12
@@ -3005,8 +2999,8 @@ Cohesion: 0.12
 Nodes (16): 1. CloudFlare (Recomendado para inicio), 2. AWS CloudFront, Assets no se actualizan, Cache Hit Ratio bajo, Configuración de Assets Estáticos, Configuración de CDN para RespiCare, Errores 403/404, Estructura de Assets (+8 more)
 
 ### Community 391 - "prescriptions-view.tsx"
-Cohesion: 0.33
-Nodes (4): Tests for RESPIRATORY_KNOWLEDGE_BASE, Test knowledge base structure, Test that expected diseases are in knowledge base, TestKnowledgeBase
+Cohesion: 0.25
+Nodes (8): "Construcción de Software I", Docente:, ESCUELA DE INGENIERÍA DE SISTEMAS, Mtro. Alberto Johnatan Flor Rodríguez, Proyecto:, Que se presenta para el curso:, Sistema de Gestión de Enfermedades Respiratorias - RespiCare Tacna, TACNA – PERÚ
 
 ### Community 392 - "context-menu.tsx"
 Cohesion: 0.12
@@ -3017,8 +3011,8 @@ Cohesion: 0.22
 Nodes (5): QLearningAgent, Agente Q-Learning para optimización de recordatorios, Guardar política aprendida, Cargar política aprendida, Test policy save and load
 
 ### Community 394 - "🚀 Guía de Implementación de ngrok para Mobile App"
-Cohesion: 0.20
-Nodes (5): fixture, Create ensemble predictor, Create ensemble predictor, CoughAnalysisService con librosa stub devolviendo arreglos realistas, Create ensemble predictor
+Cohesion: 0.25
+Nodes (8): Bordes, Colores, Design System, Espaciado, Paleta Principal, Tema Dark, Tema Light, Tipografía
 
 ### Community 395 - "🚀 Guía Rápida: Conectar App Móvil con Docker"
 Cohesion: 0.22
@@ -3030,7 +3024,7 @@ Nodes (5): PerformanceMetricsDecorator, Specialized decorator for performance me
 
 ### Community 397 - "Solución para Error "Failed to fetch" en App Móvil"
 Cohesion: 0.25
-Nodes (5): Any, Carga (o simula) el modelo de visión usando caché y lazy loading.         En pro, Clasifica imágenes médicas.         'images' acepta rutas a archivos o tensores/, Entrenamiento (stub). En producción, ajusta el clasificador con dataset etiqueta, Carga real del modelo de visión usando torchvision o timm.                  Retu
+Nodes (8): Bounce, Fade, Microinteracciones, Principios, Scale, Shake, Slide, Tipos de Animaciones
 
 ### Community 398 - "Configuration Reference"
 Cohesion: 0.13
@@ -3062,15 +3056,15 @@ Nodes (15): **Alertas (`/api/v1/alerts`)**, **Analytics (`/api/v1/analytics`)**,
 
 ### Community 405 - "🏥 RespiCare Backend API"
 Cohesion: 0.13
-Nodes (15): 🚀 Características, 🤝 Contribución, **Convenciones:**, **Ejecutar Tests:**, **Guías de Desarrollo:**, **Health Check:**, **Infraestructura para pruebas**, **Jobs Automáticos:** (+7 more)
+Nodes (15): 🚀 Características, 🚀 Deployment, **Docker:**, **Ejecutar Tests:**, **Health Check:**, **Infraestructura para pruebas**, **Jobs Automáticos:**, 📊 Jobs Programados (+7 more)
 
 ### Community 406 - "ChatConversation.js"
 Cohesion: 0.36
 Nodes (9): clampDate(), cleanupPreviousDemoData(), connectDatabase(), ensureUsers(), generateDateInBucket(), randomDateWithinDays(), SEED_DATE_END, SEED_DATE_START (+1 more)
 
 ### Community 407 - "DrugIntegrationService"
-Cohesion: 0.19
-Nodes (3): DrugInfo, DrugIntegrationService, axios
+Cohesion: 0.11
+Nodes (9): DrugInfo, DrugIntegrationConfig, DrugIntegrationService, DrugInteraction, { drugIntegrationService }, flushMicrotasks(), { laboratoryIntegrationService }, runHandler() (+1 more)
 
 ### Community 408 - "Tests de Carga con K6"
 Cohesion: 0.13
@@ -3110,11 +3104,11 @@ Cohesion: 0.13
 Nodes (14): 10. Indicadores de Éxito, 11. Seguimiento y Control, 12. Lecciones Aprendidas y Cierre, 1. Información General, 2. Objetivo de la Iteración, 3. Alcance, 4. Entregables Esperados, 5. Cronograma y Actividades (+6 more)
 
 ### Community 416 - "Plan de Iteración — Sprint 2: Frontend y Dashboard"
-Cohesion: 0.13
+Cohesion: 0.14
 Nodes (14): 10. Indicadores de Éxito, 11. Seguimiento y Control, 12. Lecciones Aprendidas y Cierre, 1. Información General, 2. Objetivo de la Iteración, 3. Alcance, 4. Entregables Esperados, 5. Cronograma y Actividades (+6 more)
 
 ### Community 417 - "Plan de Iteración — Sprint 4: Chatbot y Analytics"
-Cohesion: 0.13
+Cohesion: 0.14
 Nodes (14): 10. Indicadores de Éxito, 11. Seguimiento y Control, 12. Lecciones Aprendidas y Cierre, 1. Información General, 2. Objetivo de la Iteración, 3. Alcance, 4. Entregables Esperados, 5. Cronograma y Actividades (+6 more)
 
 ### Community 418 - "Plan de Iteración — Sprint 5: Dataset y Random Forest"
@@ -3126,7 +3120,7 @@ Cohesion: 0.13
 Nodes (14): 10. Indicadores de Éxito, 11. Seguimiento y Control, 12. Lecciones Aprendidas y Cierre, 1. Información General, 2. Objetivo de la Iteración, 3. Alcance, 4. Entregables Esperados, 5. Cronograma y Actividades (+6 more)
 
 ### Community 420 - "Plan de Iteración — Sprint 9: Refinamiento y Preparación para Producción"
-Cohesion: 0.13
+Cohesion: 0.14
 Nodes (14): 10. Indicadores de Éxito, 11. Seguimiento y Control, 12. Lecciones Aprendidas y Cierre, 1. Información General, 2. Objetivo de la Iteración, 3. Alcance, 4. Entregables Esperados, 5. Cronograma y Actividades (+6 more)
 
 ### Community 421 - "📋 Metodología Ágil - RespiCare Project"
@@ -3199,15 +3193,15 @@ Nodes (13): Common YAML Patterns, Constraints, Core Workflow, Deployment with re
 
 ### Community 439 - "🧪 Guía de Ejecución de Pruebas - AI Services"
 Cohesion: 0.14
-Nodes (14): Archivos Relacionados, ✅ Checklist de Testing, Crear archivo .env para testing, Documentación, Ejecutar con archivo de entorno específico, 🔍 Estructura de Pruebas, GitHub Actions, 🧪 Guía de Ejecución de Pruebas - AI Services (+6 more)
+Nodes (14): Archivos Relacionados, ✅ Checklist de Testing, Documentación, 🔍 Estructura de Pruebas, GitHub Actions, 🧪 Guía de Ejecución de Pruebas - AI Services, 🚦 Integración con CI/CD, 🎉 ¡Listo para Probar! (+6 more)
 
 ### Community 440 - "🚀 Ejecución de Pruebas"
 Cohesion: 0.14
 Nodes (14): Detener después de N fallos, Detener en el Primer Error, Ejecución con Diferentes Niveles de Verbosidad, 🚀 Ejecución de Pruebas, Ejecución en Paralelo (Más Rápido), Ejecutar Primero las Pruebas que Fallaron, Ejecutar Pruebas con Cobertura de Código, Ejecutar Pruebas de un Módulo Específico (+6 more)
 
 ### Community 441 - "INFORME_ANALISIS_ESTATICO_LABORATORIO.md"
-Cohesion: 0.04
-Nodes (46): 1.1. Título del evento práctico, 1.2. Objetivos, 1.3. Tiempo de duración, 1.4. Resultados de Aprendizaje (RA), 1.5. Recursos Utilizados, 1. Información sobre el evento práctico, 2.1. Selección de Herramientas, 2.2. Configuración del Entorno (+38 more)
+Cohesion: 0.14
+Nodes (13): 2.1. Selección de Herramientas, 2.2. Configuración del Entorno, 2.3. Ejecución del Análisis, 2. Procedimiento o Metodología, 6. Referencias Bibliográficas, 8.1. ¿Qué tipo de errores puede detectar el análisis estático que no se detectan fácilmente durante la ejecución?, 8.2. ¿Cuál fue el hallazgo más crítico detectado en tu proyecto y cómo lo resolviste?, 8.3. ¿Por qué es recomendable integrar herramientas de análisis estático en pipelines de CI/CD? (+5 more)
 
 ### Community 442 - "4. Correcciones Aplicadas"
 Cohesion: 0.14
@@ -3222,8 +3216,8 @@ Cohesion: 0.14
 Nodes (14): API Scan, Baseline Scan (Rápido), Cuándo se Ejecuta, DAST (Dynamic Application Security Testing), Ejecución Manual, Escanear Backend Local, Escanear URL Externa, Full Scan (Completo) (+6 more)
 
 ### Community 445 - "📋 Estrategia de Testing - RespiCare"
-Cohesion: 0.17
-Nodes (12): 🏗️ Arquitectura de Testing, Capacitación del Equipo, 🎯 Conclusión, Documentación Técnica, 📚 Documentación y Capacitación, 📋 Estrategia de Testing - RespiCare, Estructura del Sistema, 📈 Mejora Continua (+4 more)
+Cohesion: 0.13
+Nodes (15): 🏗️ Arquitectura de Testing, 🚀 Automatización de Testing, Capacitación del Equipo, 🎯 Conclusión, Continuous Testing, Documentación Técnica, 📚 Documentación y Capacitación, 📋 Estrategia de Testing - RespiCare (+7 more)
 
 ### Community 446 - "Plan de Iteración General del Proyecto"
 Cohesion: 0.14
@@ -3234,11 +3228,11 @@ Cohesion: 0.14
 Nodes (14): 10. Indicadores de Éxito, 11. Seguimiento y Control, 12. Lecciones Aprendidas y Cierre, 1. Información General, 2. Objetivo de la Iteración, 3. Alcance, 4. Entregables Esperados, 5. Cronograma y Actividades (+6 more)
 
 ### Community 448 - "Plan de Iteración — Sprint 10: Integración HL7 FHIR"
-Cohesion: 0.14
+Cohesion: 0.13
 Nodes (14): 10. Indicadores de Éxito, 11. Seguimiento y Control, 12. Lecciones Aprendidas y Cierre, 1. Información General, 2. Objetivo de la Iteración, 3. Alcance, 4. Entregables Esperados, 5. Cronograma y Actividades (+6 more)
 
 ### Community 449 - "Plan de Iteración — Sprint 11: Dashboard Ejecutivo y Analytics"
-Cohesion: 0.14
+Cohesion: 0.13
 Nodes (14): 10. Indicadores de Éxito, 11. Seguimiento y Control, 12. Lecciones Aprendidas y Cierre, 1. Información General, 2. Objetivo de la Iteración, 3. Alcance, 4. Entregables Esperados, 5. Cronograma y Actividades (+6 more)
 
 ### Community 450 - "Plan de Iteración — Sprint 1: Autenticación y Backend Básico"
@@ -3246,7 +3240,7 @@ Cohesion: 0.14
 Nodes (14): 10. Indicadores de Éxito, 11. Seguimiento y Control, 12. Lecciones Aprendidas y Cierre, 1. Información General, 2. Objetivo de la Iteración, 3. Alcance, 4. Entregables Esperados, 5. Cronograma y Actividades (+6 more)
 
 ### Community 451 - "Plan de Iteración — Sprint 3: AI Services"
-Cohesion: 0.14
+Cohesion: 0.13
 Nodes (14): 10. Indicadores de Éxito, 11. Seguimiento y Control, 12. Lecciones Aprendidas y Cierre, 1. Información General, 2. Objetivo de la Iteración, 3. Alcance, 4. Entregables Esperados, 5. Cronograma y Actividades (+6 more)
 
 ### Community 452 - "Plan de Iteración — Sprint 7: Integración Chatbot + ML"
@@ -3332,6 +3326,10 @@ Nodes (13): Diagnóstico, Diagnóstico, Diagnóstico, Disk Space Lleno, MongoDB 
 ### Community 474 - "🔌 **Integración de Servicios**"
 Cohesion: 0.67
 Nodes (3): Métricas Proyectadas, ROI Estimado, 📊 Tabla Comparativa: Antes vs Después
+
+### Community 475 - "Pasos Rápidos para Generar tu Primer APK"
+Cohesion: 0.25
+Nodes (8): Calidad y Testing, Fase W1: Administración Completa (3-4 semanas), Fase W2: Analytics Avanzado (2-3 semanas), Fase W3: Mejoras UX/UI (3-4 semanas), Fase W4: Funcionalidades Médicas (2-3 semanas), Hitos, 🌐 Roadmap Web (React) - RespiCare Tacna, Visión
 
 ### Community 476 - "Pruebas de DDoS"
 Cohesion: 0.15
@@ -3446,8 +3444,8 @@ Cohesion: 0.17
 Nodes (12): 6.10 Use React DOM Resource Hints, 6.11 Use useTransition Over Manual Loading States, 6.1 Animate SVG Wrapper Instead of SVG Element, 6.2 CSS content-visibility for Long Lists, 6.3 Hoist Static JSX Elements, 6.4 Optimize SVG Precision, 6.5 Prevent Hydration Mismatch Without Flickering, 6.6 Suppress Expected Hydration Mismatches (+4 more)
 
 ### Community 505 - "7. Anexos"
-Cohesion: 0.05
-Nodes (38): 7.10. Resumen Ejecutivo de Anexos, 7.1.1. Tabla Resumen de Hallazgos por Componente, 7.1.2. Tabla Detallada de Problemas por Categoría, 7.1.3. Tabla de Herramientas Utilizadas y Resultados, 7.1. Tabla Completa de Hallazgos y Resultados Encontrados, 7.2.1. Reporte de ESLint - Backend, 7.2.2. Reporte de Pylint - AI Services, 7.2.3. Reporte de Bandit - AI Services (+30 more)
+Cohesion: 0.17
+Nodes (12): 7.10. Resumen Ejecutivo de Anexos, 7.3.1. Métricas Generales, 7.3.2. Métricas por Componente, 7.3.3. Evolución de Calidad, 7.3. Comandos de Ejecución, 7.3. Métricas Antes y Después del Análisis, 7.7. Tabla Comparativa de Herramientas, 7.8. Diagrama de Flujo del Proceso de Análisis (+4 more)
 
 ### Community 506 - "Rotar JWT Secrets"
 Cohesion: 0.17
@@ -3479,7 +3477,7 @@ Nodes (11): AI Services (Python), Archivos de Configuración, Backend (Node.js/T
 
 ### Community 513 - "📋 Catálogo de Pruebas - RespiCare Tacna"
 Cohesion: 0.17
-Nodes (12): 13. Documentación Relacionada, 14. Conclusión, 15. Historial de mediciones, 7.1 Resumen General, 7.2 Tipos de Pruebas, 7. Pruebas de Rendimiento, 8.1 Resumen General, 8.2 Patrones Cubiertos (+4 more)
+Nodes (12): 12.1 Mejoras Planificadas, 12.2 Nuevas Pruebas, 12. Próximos Pasos, 13. Documentación Relacionada, 14. Conclusión, 15. Historial de mediciones, 7.1 Resumen General, 7.2 Tipos de Pruebas (+4 more)
 
 ### Community 514 - "1. Pruebas del Backend"
 Cohesion: 0.17
@@ -3496,6 +3494,10 @@ Nodes (12): 6.1 Arquitectura del Pipeline Propuesto, 6.2 Aplicación al Proyecto
 ### Community 517 - "Configuración de CDN con CloudFlare"
 Cohesion: 0.17
 Nodes (9): Assets no se actualizan, Cache no funciona, Configuración de CDN con CloudFlare, Monitoreo, Métricas en CloudFlare, Purge Cache, Referencias, Requisitos Previos (+1 more)
+
+### Community 518 - "Guía Rápida: Iniciar ngrok Manualmente"
+Cohesion: 0.50
+Nodes (3): is_pattern_enabled(), Nombre de Objeto: pattern_config Fecha de Creación: 2026-04-25 Propietario: Cesa, Check if a pattern is enabled
 
 ### Community 520 - "🧪 Testing"
 Cohesion: 0.17
@@ -3691,7 +3693,7 @@ Nodes (14): ChatConversation, chatConversationSchema, messageSchema, mongoose, C
 
 ### Community 579 - "exportService.test.ts"
 Cohesion: 0.02
-Nodes (120): exportReport, generateReport, getAllReports, getLatestReport, getReportById, getReportsByType, getReportStats, getAdminDashboard (+112 more)
+Nodes (117): getAdminDashboard, getDoctorDashboard, getPatientDashboard, getSystemHealth, createContent, deleteContent, getContentById, getPersonalizedContent (+109 more)
 
 ### Community 580 - "dependencies"
 Cohesion: 0.25
@@ -3807,7 +3809,7 @@ Nodes (8): CURRENT, err(), MISSING, ok(), READY, setup-demo.sh script, step(), w
 
 ### Community 608 - "overrides"
 Cohesion: 0.04
-Nodes (48): minimatch, ws, overrides, @babel/core, @babel/plugin-transform-modules-systemjs, body-parser, braces, browserslist (+40 more)
+Nodes (50): minimatch, ws, overrides, @babel/core, @babel/plugin-transform-modules-systemjs, body-parser, braces, browserslist (+42 more)
 
 ### Community 609 - "scripts"
 Cohesion: 0.20
@@ -3986,8 +3988,8 @@ Cohesion: 0.22
 Nodes (9): 1. Usar React.memo para Componentes Pesados, 2. Evitar Re-renders Innecesarios, 3. Lazy Load de Componentes Grandes, 4. Optimizar Listas Grandes, 5. Cachear Resultados Costosos, 6. Debounce Eventos Frecuentes, 7. Optimizar Imágenes, 8. Limpiar Recursos (+1 more)
 
 ### Community 656 - "ReferralService"
-Cohesion: 0.14
-Nodes (10): CreateReferralRequest, Referral, ReferralFilters, ReferralPriority, ReferralService, ReferralStatus, ReferralType, inProgressReferral (+2 more)
+Cohesion: 0.38
+Nodes (4): Any, Predict using ensemble of models                  Args:             symptoms: Li, Weighted voting ensemble, Average confidence ensemble
 
 ### Community 657 - "setup-android-sdk.js"
 Cohesion: 0.28
@@ -3995,7 +3997,7 @@ Nodes (8): ANDROID_DIR, createLocalProperties(), findAndroidSDK(), fs, LOCAL_PRO
 
 ### Community 658 - "✅ **Funcionalidades Implementadas:**"
 Cohesion: 0.29
-Nodes (4): fixture, Create local model strategy instance, Sample symptoms for testing, Sample medical text for testing
+Nodes (7): 7.6. Evidencias de Corrección Detalladas, Evidencia 1: Corrección de Import Circular, Evidencia 2: Corrección de Vulnerabilidad de Seguridad, Evidencia 3: Corrección de Vulnerabilidad npm, Evidencia 4: Corrección de Línea Demasiado Larga, Evidencia 5: Corrección de Tipo 'any' en TypeScript, Evidencia 6: Corrección de Import No Utilizado
 
 ### Community 660 - "development"
 Cohesion: 0.22
@@ -4006,16 +4008,20 @@ Cohesion: 0.22
 Nodes (8): react-app, description, eslintConfig, extends, name, private, proxy, version
 
 ### Community 662 - "global"
-Cohesion: 0.14
-Nodes (14): ^.+\\.module\\.(css|sass|scss)$, [/\\\\]node_modules[/\\\\](?!(@exodus|entities|@asamuzakjp|@csstools|@adobe[/\\\\]css-tools|@bramus[/\\\\]specificity|parse5)[/\\\\]).+\\.(js|jsx|mjs|cjs|ts|tsx)$, global, branches, functions, lines, statements, jest (+6 more)
+Cohesion: 0.33
+Nodes (6): global, branches, functions, lines, statements, coverageThreshold
 
 ### Community 664 - "ExecutiveDashboard.js"
 Cohesion: 0.20
 Nodes (6): Test MedicalHistoryService implementation, Test comprehensive processing with all options enabled, Test care recommendations generation, Test error handling in comprehensive processing, Test processing with risk assessment, TestMedicalHistoryService
 
+### Community 665 - "Plan de Mejora de Cobertura de Pruebas - AI Services"
+Cohesion: 0.50
+Nodes (4): ✅ Plan de Acción, Prioridad Alta 🔴, Prioridad Baja 🟢, Prioridad Media 🟡
+
 ### Community 667 - "Roadmap Semanal"
-Cohesion: 0.62
-Nodes (5): AnonymizationOptions, anonymizeForAnalytics(), getSalt(), pseudonymize(), redactPII()
+Cohesion: 0.06
+Nodes (35): deleteUserData(), exportUserData(), hasDoubleConfirmation(), InteractionSchema, MedicationSchema, PRESCRIPTION_STATUSES, PrescriptionDocument, PrescriptionModel (+27 more)
 
 ### Community 668 - "🏥 Enfermedades Soportadas"
 Cohesion: 0.25
@@ -4078,8 +4084,12 @@ Cohesion: 0.20
 Nodes (9): 1. Plan de despliegue, 2. Testabilidad, 3. QA (participación por fase), Ambientes de sistemas, ✅ Checklist: Despliegue, Testabilidad y QA (fin de ciclo), Estrategia de despliegue, Métricas y criterios de salida, Plan de reversión y checklist de verificación (+1 more)
 
 ### Community 685 - "ExportService"
-Cohesion: 0.20
-Nodes (10): moduleNameMapper, ^axios$, ^css-tree/convertor$, ^css-tree/generator$, ^css-tree/selector-parser$, ^css-tree/utils$, ^css-tree/walker$, ^entities/decode$ (+2 more)
+Cohesion: 0.11
+Nodes (18): ^.+\\.module\\.(css|sass|scss)$, [/\\\\]node_modules[/\\\\](?!(@exodus|entities|@asamuzakjp|@csstools|@adobe[/\\\\]css-tools|@bramus[/\\\\]specificity|parse5)[/\\\\]).+\\.(js|jsx|mjs|cjs|ts|tsx)$, jest, clearMocks, moduleNameMapper, resetMocks, transform, transformIgnorePatterns (+10 more)
+
+### Community 688 - "labController.test.ts"
+Cohesion: 0.67
+Nodes (3): Caching Multi-Nivel, Estrategias de Caching, Redis Cluster
 
 ### Community 690 - "0bis. Advanced NLP (Procesamiento, NER, Resumen, Traducción, Sentimiento)"
 Cohesion: 0.25
@@ -4178,8 +4188,8 @@ Cohesion: 0.25
 Nodes (8): **7.1 Sistema de Alertas y Notificaciones** ✅, **7.2 Sistema de Citas Médicas** ✅, **7.3 Sistema de Prescripciones** ✅, **7.4 Sistema de Reportes Médicos** ✅, **7.5 Pendientes - Funcionalidades Mobile** ✅, **7.6 Sistema de Referidos (Referrals)** ✅, **7.7 Sistema de Consentimientos Informados** ✅, **Fase 7: Funcionalidades Core** ✅ 100%
 
 ### Community 716 - "✅ Métricas de Éxito"
-Cohesion: 0.33
-Nodes (5): bcrypt, demoUsers, mongoose, seedUsers(), UserSchema
+Cohesion: 0.29
+Nodes (7): Accesibilidad, Checklist, Checklist, Herramientas, Implementación, Mobile, Web (WCAG 2.1 AA)
 
 ### Community 717 - "🌐 Roadmap Web (React) - RespiCare Tacna"
 Cohesion: 0.22
@@ -4242,8 +4252,8 @@ Cohesion: 0.29
 Nodes (7): Empty(), EmptyContent(), EmptyDescription(), EmptyHeader(), EmptyMedia(), emptyMediaVariants, EmptyTitle()
 
 ### Community 734 - "✅ **Funcionalidades Principales (Completas)**"
-Cohesion: 0.60
-Nodes (5): checkValidServiceWorker(), isLocalhost, register(), registerValidSW(), unregister()
+Cohesion: 0.33
+Nodes (6): 1.1. Título del evento práctico, 1.2. Objetivos, 1.3. Tiempo de duración, 1.4. Resultados de Aprendizaje (RA), 1.5. Recursos Utilizados, 1. Información sobre el evento práctico
 
 ### Community 735 - "manifest.json"
 Cohesion: 0.25
@@ -4270,8 +4280,8 @@ Cohesion: 0.40
 Nodes (5): 1. Desarrollo (Development), 2. Integración Continua (CI/CD), 3. Pre-deployment, 4. Post-deployment, 🔄 Proceso de Testing
 
 ### Community 741 - "delete_cache"
-Cohesion: 0.40
-Nodes (4): axios, jwt, mongoose, testDashboardPatient()
+Cohesion: 0.33
+Nodes (6): 7.2.1. Reporte de ESLint - Backend, 7.2.2. Reporte de Pylint - AI Services, 7.2.3. Reporte de Bandit - AI Services, 7.2.4. Reporte de npm audit - Mobile (Antes de Corrección), 7.2.5. Reporte de npm audit - Mobile (Después de Corrección), 7.2. Reportes de Salida de Herramientas
 
 ### Community 742 - "set_cache"
 Cohesion: 0.36
@@ -4360,6 +4370,10 @@ Nodes (7): 📦 Instalación, Paso 1: Navegar a la Carpeta de AI Services, Paso 
 ### Community 767 - "Roadmap de Implementación"
 Cohesion: 0.29
 Nodes (7): Fase 1: Base (Semana 1-2), Fase 2: API Gateway (Semana 2-3), Fase 3: Message Queue (Semana 3-4), Fase 4: Service Mesh (Semana 4-5), Fase 5: Microservicios (Semana 5-8), Fase 6: Base de Datos (Semana 8-9), Roadmap de Implementación
+
+### Community 769 - "🚀 Propuestas de Mejora para App y Web"
+Cohesion: 0.33
+Nodes (6): Calidad, Fase B1: Integraciones Externas (3-4 semanas), Fase B2: Seguridad Avanzada (2-3 semanas), Fase B3: DevOps y Escalabilidad (3-4 semanas), Fase B4: ML Avanzado (4-6 semanas), 🧰 Roadmap Backend (Node.js/TypeScript) - RespiCare Tacna
 
 ### Community 772 - "AI Services (Python)"
 Cohesion: 0.29
@@ -4522,8 +4536,8 @@ Cohesion: 0.62
 Nodes (6): check_command(), error(), info(), setup-infra.sh script, success(), warning()
 
 ### Community 818 - "📱 Guía de Optimización de Performance Mobile - RespiCare Tacna"
-Cohesion: 0.20
-Nodes (9): Device Metrics Collector, 📱 Guía de Optimización de Performance Mobile - RespiCare Tacna, Introducción, Mediciones Reales en Dispositivos, Métricas Objetivo, Objetivos de Performance, Recursos Adicionales, Uso en Componentes (+1 more)
+Cohesion: 0.29
+Nodes (6): 📱 Guía de Optimización de Performance Mobile - RespiCare Tacna, Introducción, Métricas Objetivo, Objetivos de Performance, Recursos Adicionales, 📋 Índice
 
 ### Community 820 - "test-connection.js"
 Cohesion: 0.33
@@ -4634,8 +4648,8 @@ Cohesion: 0.33
 Nodes (6): Ejemplo de Workflow para Análisis Estático, GitHub Actions, Instalación de Husky (Backend), 🔄 Integración con CI/CD, Pre-commit Hook Manual, Pre-commit Hooks
 
 ### Community 852 - "1. Información sobre el evento práctico"
-Cohesion: 0.03
-Nodes (58): Fase A1: Infra y Core, Fase A2: Modelos y Analítica, Fase A3: Avances ML/NLP/AutoML, Fase A4: Calidad y Rendimiento, Hitos, 🤖 Roadmap AI Services (FastAPI) - RespiCare Tacna, Calidad, Fase B1: Integraciones Externas (3-4 semanas) (+50 more)
+Cohesion: 0.25
+Nodes (8): **Compliance y Regulatorio**, **Engagement (Nuevas)**, **Funcionales**, **Interoperabilidad**, ✅ Métricas de Éxito, **Operacionales**, **Seguridad**, **Técnicas (actualizadas)**
 
 ### Community 853 - "7.2. Reportes de Salida de Herramientas"
 Cohesion: 0.25
@@ -4778,16 +4792,16 @@ Cohesion: 0.60
 Nodes (5): error(), info(), validate-infra.sh script, success(), warning()
 
 ### Community 890 - ".test_considers_elderly_age_as_risk"
-Cohesion: 0.50
-Nodes (3): mongoose, sampleReports, seedDatabase()
+Cohesion: 0.33
+Nodes (6): Fase 1: CI Básico, Fase 2: Artefactos y Releases, Fase 3: CD/Staging, Fase 4: Producción, Integraciones, 🛠️ Roadmap Workflows (CI/CD) - RespiCare Tacna
 
 ### Community 891 - "aws-sdk"
-Cohesion: 0.50
-Nodes (3): jwt, mongoose, testPatientHistories()
+Cohesion: 0.40
+Nodes (5): 5.1. Primera Conclusión, 5.2. Segunda Conclusión, 5.3. Tercera Conclusión, 5.4. Conclusión Adicional, 5. Conclusiones
 
 ### Community 892 - ".test_generate_preparation_tips_no_context"
-Cohesion: 0.50
-Nodes (3): jwt, mongoose, testPatientLoginAndHistories()
+Cohesion: 0.40
+Nodes (5): 7.5.1. Backend - Configuración ESLint Completa, 7.5.2. AI Services - Configuración Pylint Completa, 7.5.3. AI Services - Configuración Flake8 Completa, 7.5.4. Mobile - Configuración ESLint Completa, 7.5. Configuraciones Utilizadas
 
 ### Community 893 - "darkTheme.ts"
 Cohesion: 0.60
@@ -4806,8 +4820,8 @@ Cohesion: 0.80
 Nodes (5): err(), ok(), deploy-vm.sh script, wait_healthy(), warn()
 
 ### Community 898 - "FairnessVisualization.js"
-Cohesion: 0.50
-Nodes (4): ✅ Plan de Acción, Prioridad Alta 🔴, Prioridad Baja 🟢, Prioridad Media 🟡
+Cohesion: 0.40
+Nodes (5): 🟡 **Corto Plazo (Q2 2025)**, 🔴 **Inmediato (Q1 2025)**, 🔵 **Largo Plazo (2026+)**, 🟢 **Mediano Plazo (Q3-Q4 2025)**, 🎯 Priorización Recomendada
 
 ### Community 900 - "Common Patterns"
 Cohesion: 0.40
@@ -4816,6 +4830,14 @@ Nodes (5): Common Patterns, Custom Render with Providers, Query Within Container
 ### Community 901 - "8. Advanced Patterns"
 Cohesion: 0.40
 Nodes (5): 8.1 Do Not Put Effect Events in Dependency Arrays, 8.2 Initialize App Once, Not Per Mount, 8.3 Store Event Handlers in Refs, 8.4 useEffectEvent for Stable Callback Refs, 8. Advanced Patterns
+
+### Community 903 - ".test_assess_severity_many_symptoms"
+Cohesion: 0.50
+Nodes (4): 7.1.1. Tabla Resumen de Hallazgos por Componente, 7.1.2. Tabla Detallada de Problemas por Categoría, 7.1.3. Tabla de Herramientas Utilizadas y Resultados, 7.1. Tabla Completa de Hallazgos y Resultados Encontrados
+
+### Community 904 - ".test_generate_recommendations_no_symptoms"
+Cohesion: 0.50
+Nodes (4): 7.4.1. Distribución de Problemas por Severidad, 7.4.2. Problemas por Tipo de Herramienta, 7.4.3. Tiempo de Corrección por Categoría, 7.4. Estadísticas Detalladas de Análisis
 
 ### Community 905 - "✨ Características Inteligentes"
 Cohesion: 0.40
@@ -4846,8 +4868,8 @@ Cohesion: 0.70
 Nodes (4): print_header(), print_success(), print_warning(), generate-code.sh script
 
 ### Community 912 - "CreateMedicalHistoryUseCase"
-Cohesion: 0.67
-Nodes (3): 🚀 Deployment, **Docker:**, **Variables de Producción:**
+Cohesion: 0.50
+Nodes (4): 🔍 Análisis de Código, Análisis Estático, 🎯 Audiencia, 📚 Contenido
 
 ### Community 915 - "8. Advanced Patterns"
 Cohesion: 0.40
@@ -4862,8 +4884,8 @@ Cohesion: 0.40
 Nodes (5): 🎯 Audiencia, 📖 Contenido, 📚 Documentación de AI Services, Documentación Específica, Documentación Principal
 
 ### Community 918 - "Modelos de Computer Vision"
-Cohesion: 0.11
-Nodes (17): EMERGENCY_TYPES, EmergencyView(), EmergencyViewProps, HEALTH_CENTER_TYPE_LABELS, HealthCenterMap, STATUS_CONFIG, centerIcon, HEALTH_CENTER_TYPE_LABELS (+9 more)
+Cohesion: 0.09
+Nodes (20): EMERGENCY_TYPES, EmergencyView(), EmergencyViewProps, HEALTH_CENTER_TYPE_LABELS, HealthCenterMap, STATUS_CONFIG, centerIcon, HEALTH_CENTER_TYPE_LABELS (+12 more)
 
 ### Community 919 - "Optimización de Rendimiento"
 Cohesion: 0.40
@@ -4882,8 +4904,8 @@ Cohesion: 0.40
 Nodes (5): 🏗️ Arquitectura, Arquitectura del Sistema, 🎯 Audiencia, 📚 Contenido, 🔗 Documentación Relacionada
 
 ### Community 925 - "5. Conclusiones"
-Cohesion: 0.40
-Nodes (5): 🎯 Audiencia, 📖 Contenido, Documentación Adicional, 📚 Documentación de Web Frontend, Documentación Principal
+Cohesion: 0.50
+Nodes (4): 🔴 Prioridad ALTA (Crítico), 🟢 Prioridad BAJA (Mejoras), 🟡 Prioridad MEDIA (Importante), 📋 Resumen de Tareas Pendientes
 
 ### Community 927 - "🐛 Issues Críticos Encontrados"
 Cohesion: 0.40
@@ -5091,7 +5113,7 @@ Nodes (5): **CI/CD**, **Comunicación**, **Gestión de Proyectos**, 🛠️ Herr
 
 ### Community 982 - ".test_create_follow_up_plan"
 Cohesion: 0.67
-Nodes (3): 🔧 Requisitos Previos, Software Necesario, Verificar Instalación
+Nodes (3): 🤝 Contribución, **Convenciones:**, **Guías de Desarrollo:**
 
 ### Community 983 - "I. INTRODUCCIÓN"
 Cohesion: 0.40
@@ -5113,13 +5135,9 @@ Nodes (5): Archivos de Optimización, Componentes Optimizados, Servicios, Tests,
 Cohesion: 0.50
 Nodes (4): Alert(), AlertDescription(), AlertTitle(), alertVariants
 
-### Community 990 - "Estrategias de Caching"
+### Community 989 - ".test_combines_multiple_risk_factors"
 Cohesion: 0.67
-Nodes (3): Caching Multi-Nivel, Estrategias de Caching, Redis Cluster
-
-### Community 991 - "🚀 Automatización de Testing"
-Cohesion: 0.67
-Nodes (3): 🚀 Automatización de Testing, Continuous Testing, Test Automation Pipeline
+Nodes (3): Fase 7: Funcionalidades Core (Sprints 9-10), Sprint 10: Prescripciones y Reportes, Sprint 9: Alertas y Citas
 
 ### Community 992 - "start-mobile-pwa.sh script"
 Cohesion: 0.70
@@ -5135,7 +5153,7 @@ Nodes (3): File-System Paths, Import Paths, Prefer Statically Analyzable Paths
 
 ### Community 998 - "12. Próximos Pasos"
 Cohesion: 0.67
-Nodes (3): 12.1 Mejoras Planificadas, 12.2 Nuevas Pruebas, 12. Próximos Pasos
+Nodes (3): Crear archivo .env para testing, Ejecutar con archivo de entorno específico, 📝 Variables de Entorno
 
 ### Community 1004 - "🎯 Ejemplos Prácticos"
 Cohesion: 0.50
@@ -5184,6 +5202,14 @@ Nodes (4): 📚 Documentación, **Documentación Técnica:**, **Postman Collecti
 ### Community 1016 - "🤖 Integración con IA"
 Cohesion: 0.50
 Nodes (4): **Endpoints de IA:**, **Flujo de Integración:**, 🤖 Integración con IA, **Servicios AI Disponibles:**
+
+### Community 1017 - ".test_process_medical_text_success"
+Cohesion: 0.67
+Nodes (3): 8.1 Resumen General, 8.2 Patrones Cubiertos, 8. Pruebas de Patrones de Diseño
+
+### Community 1019 - ".test_fallback_medical_text_processing"
+Cohesion: 0.67
+Nodes (3): Device Metrics Collector, Mediciones Reales en Dispositivos, Uso en Componentes
 
 ### Community 1022 - "Prefer Statically Analyzable Paths"
 Cohesion: 0.50
@@ -5693,10 +5719,6 @@ Nodes (3): Entregables, Fase 12: DevOps & Deployment (Sprint 15), Story Points
 Cohesion: 0.50
 Nodes (4): 2. Pruebas de Componente (Component Tests), Backend API — Node.js/TypeScript, Mobile App — React (Next.js + Capacitor), Web Frontend — React
 
-### Community 1314 - ".test_classify_disease_pattern_matching"
-Cohesion: 0.67
-Nodes (3): Fase 7: Funcionalidades Core (Sprints 9-10), Sprint 10: Prescripciones y Reportes, Sprint 9: Alertas y Citas
-
 ### Community 1391 - "🔧 Requisitos Previos"
 Cohesion: 0.67
 Nodes (3): 🔧 Requisitos Previos, Software Requerido, Verificar Instalación
@@ -5706,14 +5728,14 @@ Cohesion: 0.50
 Nodes (4): OWASP ZAP, Pruebas de Carga (DDoS Simulation), Pruebas de Penetración, Pruebas de Seguridad
 
 ## Knowledge Gaps
-- **7075 isolated node(s):** `fs`, `path`, `{
+- **7076 isolated node(s):** `fs`, `path`, `{
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
   ImageRun, HeadingLevel, AlignmentType, BorderStyle, WidthType,
   ShadingType, PageOrientation, PageBreak, PageNumber, Header, Footer,
   LevelFormat, TabStopType, TabStopPosition,
-}`, `border`, `borders` (+7070 more)
+}`, `border`, `borders` (+7071 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **385 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **377 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -5734,6 +5756,6 @@ _Questions this graph is uniquely positioned to answer:_
   ShadingType, PageOrientation, PageBreak, PageNumber, Header, Footer,
   LevelFormat, TabStopType, TabStopPosition,
 }` to the rest of the system?**
-  _7075 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _7076 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `AIServiceManager` be split into smaller, more focused modules?**
   _Cohesion score 0.0663265306122449 - nodes in this community are weakly interconnected._

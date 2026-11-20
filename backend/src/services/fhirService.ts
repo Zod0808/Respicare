@@ -47,12 +47,14 @@ export class FhirService {
       process.env.FHIR_BASE_URL ??
       'https://fhir.example.com/fhir';
 
-    // In test env, stub external HTTP calls unless an explicit baseUrl/env override was
-    // provided (unit tests inject a mocked axios client via a custom baseUrl).
-    this.stubExternalCalls =
-      process.env.NODE_ENV === 'test' &&
-      !options.baseUrl &&
-      !process.env.FHIR_BASE_URL;
+    // Sin un baseUrl explícito ni FHIR_BASE_URL configurado, el baseURL cae al
+    // placeholder 'fhir.example.com', que no resuelve en ningún entorno real.
+    // Se simula la respuesta (igual que en tests) en vez de dejar que la
+    // llamada HTTP falle con un error de red.
+    this.stubExternalCalls = !options.baseUrl && !process.env.FHIR_BASE_URL;
+    if (this.stubExternalCalls && process.env.NODE_ENV !== 'test') {
+      logger.warn('⚠️  FHIR_BASE_URL no configurado — FhirService responde en modo simulado (sin servidor FHIR externo real).');
+    }
 
     const useOAuth2 = options.useOAuth2 ?? process.env.FHIR_USE_OAUTH2 === 'true';
 
