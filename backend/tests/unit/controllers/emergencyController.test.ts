@@ -30,6 +30,7 @@ jest.mock('../../../src/services/emergencyService', () => ({
     getEmergencyStatus: jest.fn(),
     cancelEmergency: jest.fn(),
     getActiveEmergencies: jest.fn(),
+    listEmergencies: jest.fn(),
     detectEmergencyFromSymptoms: jest.fn(),
   },
 }));
@@ -231,6 +232,30 @@ describe('emergencyController', () => {
         buildReq({ user: null }),
       );
       expectStatusError(next, 401);
+    });
+  });
+
+  describe('getEmergencies', () => {
+    it('200 con lista paginada y total', async () => {
+      emergencyService.listEmergencies.mockReturnValue({
+        items: [{ emergencyId: 'e1', metadata: { patientName: 'Juan', description: 'dolor' } }],
+        total: 1,
+      });
+      const { res } = await runHandler(
+        controller.getEmergencies,
+        buildReq({ query: { page: '1', limit: '10' } }),
+      );
+      expect(emergencyService.listEmergencies).toHaveBeenCalledWith(1, 10);
+      expect(res.status).toHaveBeenCalledWith(200);
+      const payload = res.json.mock.calls[0][0];
+      expect(payload.total).toBe(1);
+      expect(payload.data[0]).toMatchObject({ patientName: 'Juan', chiefComplaint: 'dolor' });
+    });
+
+    it('usa page=1 y limit=10 por defecto cuando no vienen en query', async () => {
+      emergencyService.listEmergencies.mockReturnValue({ items: [], total: 0 });
+      await runHandler(controller.getEmergencies, buildReq({ query: {} }));
+      expect(emergencyService.listEmergencies).toHaveBeenCalledWith(1, 10);
     });
   });
 

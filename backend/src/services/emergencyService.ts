@@ -79,6 +79,7 @@ export interface EmergencyResponse {
   estimatedArrival?: Date;
   serviceProvider?: string;
   trackingUrl?: string;
+  createdAt?: Date;
   metadata?: Record<string, any>;
 }
 
@@ -255,6 +256,18 @@ export class EmergencyService {
   }
 
   /**
+   * Listar todas las emergencias (vista clínica), paginadas y ordenadas
+   * de más reciente a más antigua.
+   */
+  listEmergencies(page: number, limit: number): { items: EmergencyResponse[]; total: number } {
+    const all = Array.from(this.activeEmergencies.values()).sort(
+      (a, b) => (b.createdAt?.getTime() ?? 0) - (a.createdAt?.getTime() ?? 0)
+    );
+    const start = (page - 1) * limit;
+    return { items: all.slice(start, start + limit), total: all.length };
+  }
+
+  /**
    * Crear alerta automática para emergencia
    */
   private async createEmergencyAlert(request: EmergencyRequest): Promise<void> {
@@ -359,10 +372,15 @@ export class EmergencyService {
         : undefined,
       serviceProvider: response.data.serviceProvider,
       trackingUrl: response.data.trackingUrl,
+      createdAt: new Date(),
       metadata: {
         ...response.data.metadata,
         userId: request.userId,
         patientId: request.patientId,
+        patientName: request.patientName,
+        description: request.description,
+        emergencyType: request.emergencyType,
+        severity: request.severity,
       },
     };
   }
@@ -380,11 +398,16 @@ export class EmergencyService {
       estimatedArrival,
       serviceProvider: 'Servicio de Emergencias Local',
       trackingUrl: `https://emergency-tracker.example.com/${emergencyId}`,
+      createdAt: new Date(),
       emergencyType: request.emergencyType,
       severity: request.severity,
       metadata: {
         userId: request.userId,
         patientId: request.patientId,
+        patientName: request.patientName,
+        description: request.description,
+        emergencyType: request.emergencyType,
+        severity: request.severity,
         simulated: true,
       },
     } as EmergencyResponse;

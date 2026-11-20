@@ -19,6 +19,7 @@ import {
   createEmergency,
   getEmergencyStatus,
   cancelEmergency,
+  getEmergencies,
   getActiveEmergencies,
   detectEmergency,
   getAmbulanceInfo,
@@ -101,6 +102,15 @@ router.post(
   checkExactBody,
   validate,
   createEmergency
+);
+
+// Listar emergencias (vista clínica), paginadas
+// IMPORTANTE: debe declararse antes de /:emergencyId para que Express no lo
+// interprete como un parámetro dinámico.
+router.get(
+  '/',
+  authenticate,
+  getEmergencies
 );
 
 // Obtener emergencias activas del usuario

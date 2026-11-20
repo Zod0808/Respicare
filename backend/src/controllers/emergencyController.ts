@@ -155,6 +155,35 @@ export const cancelEmergency = asyncHandler(
 );
 
 /**
+ * GET /api/v1/emergencies
+ * Listar emergencias (vista clínica), paginadas
+ */
+export const getEmergencies = asyncHandler(
+  async (req: AuthenticatedRequest, res: Response) => {
+    const page = Math.max(1, parseInt(req.query.page as string, 10) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit as string, 10) || 10));
+
+    const { items, total } = emergencyService.listEmergencies(page, limit);
+    const data = items.map((e) => ({
+      ...e,
+      _id: e.emergencyId,
+      id: e.emergencyId,
+      patientName: e.metadata?.patientName,
+      patientId: e.metadata?.patientId,
+      chiefComplaint: e.metadata?.description,
+      severity: (e as any).severity || e.metadata?.severity,
+    }));
+
+    res.status(200).json({
+      success: true,
+      data,
+      total,
+      pagination: { page, limit, total },
+    });
+  }
+);
+
+/**
  * GET /api/v1/emergencies/active
  * Obtener emergencias activas del usuario
  */
