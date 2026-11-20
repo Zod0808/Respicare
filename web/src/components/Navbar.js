@@ -6,7 +6,7 @@
  * Descripción: Navbar. Parte de: componente estructural de la interfaz web.
  */
 
-import React, { memo, useState, useEffect, useRef, useCallback } from 'react';
+import React, { memo, useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ThemeToggle from './ThemeToggle';
 import LanguageSelector from './LanguageSelector';
@@ -49,7 +49,9 @@ const STAFF_CLINICAL_LINKS = [
 /* ── Dropdown component ─────────────────────────────────────────────────────── */
 function NavDropdown({ label, icon, links, activePathname }) {
   const [open, setOpen] = useState(false);
+  const [menuStyle, setMenuStyle] = useState(null);
   const ref = useRef(null);
+  const btnRef = useRef(null);
   const isActive = links.some(l => l.to === activePathname);
 
   useEffect(() => {
@@ -62,9 +64,37 @@ function NavDropdown({ label, icon, links, activePathname }) {
 
   useEffect(() => { setOpen(false); }, [activePathname]);
 
+  // El menú se renderiza con position:fixed y coordenadas calculadas aquí
+  // (en vez de depender del position:absolute relativo a .nav-dropdown)
+  // porque .navbar-menu tiene overflow-x:auto, y eso fuerza a los
+  // navegadores a computar overflow-y como auto también, recortando
+  // cualquier hijo absolute que se salga de esa fila. position:fixed
+  // escapa de ese recorte. En móvil (<=768px) el CSS lo ancla fijo
+  // abajo-centrado, así que ahí no hace falta posición calculada.
+  useLayoutEffect(() => {
+    if (!open) return;
+    const updatePosition = () => {
+      if (!btnRef.current) return;
+      if (window.innerWidth > 768) {
+        const rect = btnRef.current.getBoundingClientRect();
+        setMenuStyle({ top: rect.bottom + 8, left: rect.left });
+      } else {
+        setMenuStyle(null);
+      }
+    };
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
+  }, [open]);
+
   return (
     <div className="nav-dropdown" ref={ref}>
       <button
+        ref={btnRef}
         className={`nav-link nav-dropdown-btn ${isActive ? 'active' : ''}`}
         onClick={() => setOpen(v => !v)}
         aria-expanded={open}
@@ -75,7 +105,7 @@ function NavDropdown({ label, icon, links, activePathname }) {
         <span className={`nav-chevron ${open ? 'nav-chevron--open' : ''}`} aria-hidden="true">›</span>
       </button>
       {open && (
-        <div className="nav-dropdown-menu" role="menu">
+        <div className="nav-dropdown-menu" role="menu" style={menuStyle || undefined}>
           {links.map(l => (
             <Link
               key={l.to}

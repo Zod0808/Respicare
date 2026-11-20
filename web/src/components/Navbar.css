@@ -232,8 +232,12 @@
 }
 
 .nav-dropdown-menu {
-  position: absolute;
-  top: calc(100% + 8px);
+  /* fixed (no absolute): .navbar-menu tiene overflow-x:auto, lo que fuerza
+     overflow-y:auto también y recortaría un hijo absolute que se salga de
+     esa fila. La posición real (top/left) se calcula en JS (ver NavDropdown
+     en Navbar.js) salvo en móvil, donde el media query de abajo la ancla. */
+  position: fixed;
+  top: 0;
   left: 0;
   background: var(--rc-paper);
   border-radius: 2px 14px 14px 14px;

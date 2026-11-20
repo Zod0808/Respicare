@@ -4730,8 +4730,8 @@
     "semantic_hash": ""
   },
   "web/package.json": {
-    "mtime": 1794096834.3369431,
-    "ast_hash": "f64b0b51153a8179a0b18f0bd865acd1",
+    "mtime": 1794176285.9961345,
+    "ast_hash": "8e132eb1431b3b07f83a61e90453bb19",
     "semantic_hash": ""
   },
   "web/public/manifest.json": {
@@ -4830,8 +4830,8 @@
     "semantic_hash": ""
   },
   "web/src/components/Navbar.js": {
-    "mtime": 1794175454.3136854,
-    "ast_hash": "90db88f43096c20412e3f25421eddb1d",
+    "mtime": 1795134808.898894,
+    "ast_hash": "4199fe149112e09b904cb94574cd33f0",
     "semantic_hash": ""
   },
   "web/src/components/PatientMonitoringReport.js": {
