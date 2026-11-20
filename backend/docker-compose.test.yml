@@ -1,0 +1,15 @@
+## Mongo con replica set de un solo nodo, solo para correr localmente
+## tests/database/transactions.test.ts (requieren transacciones multi-documento,
+## que un mongod standalone no soporta). No usar en dev/prod.
+services:
+  mongodb-test-rs:
+    image: mongo:6.0
+    container_name: respicare-mongodb-test-rs
+    ports:
+      - "27020:27017"
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 5s
+      timeout: 5s
+      retries: 10

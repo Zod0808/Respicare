@@ -172,15 +172,23 @@ jest.mock('sharp');
 
 // Global test setup
 beforeAll(async () => {
+  // tests/database/transactions.test.ts necesita un replica set real (las
+  // transacciones multi-documento no funcionan en un mongod standalone).
+  // Si se pide explícitamente vía env, usar ese MONGODB_URI en vez de
+  // levantar el MongoMemoryServer standalone de siempre.
+  const useExternalReplicaSet = process.env.MONGODB_REPLICA_SET === '1' && process.env.MONGODB_URI;
+
   // Setup MongoDB Memory Server only if not already set
-  if (!globalThis.__MONGOD) {
+  if (!useExternalReplicaSet && !globalThis.__MONGOD) {
     globalThis.__MONGOD = await MongoMemoryServer.create();
     globalThis.__MONGO_URI = globalThis.__MONGOD.getUri();
   }
-  
+
   // Connect to test database only if not already connected
   if (mongoose.connection.readyState === 0) {
-    await mongoose.connect(globalThis.__MONGO_URI || 'mongodb://localhost:27017/respicare-test');
+    await mongoose.connect(
+      useExternalReplicaSet ? process.env.MONGODB_URI! : (globalThis.__MONGO_URI || 'mongodb://localhost:27017/respicare-test')
+    );
   } else if (mongoose.connection.readyState === 1) {
     // Already connected, use existing connection
     // But we need to switch to test database

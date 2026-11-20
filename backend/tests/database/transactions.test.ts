@@ -319,7 +319,7 @@ describeIfReplicaSet('MongoDB Transactions Tests', () => {
         await Appointment.updateOne(
           { _id: appointment._id },
           { status: 'invalid-status' }, // Status inválido
-          { session }
+          { session, runValidators: true }
         );
 
         await session.commitTransaction();
@@ -431,28 +431,29 @@ describeIfReplicaSet('MongoDB Transactions Tests', () => {
         const userInSession2 = await User.findById(patient._id).session(session2);
         expect(userInSession2?.name).toBe('Patient User'); // Valor original
 
-        await User.updateOne(
-          { _id: patient._id },
-          { name: 'Updated by Session 2' },
-          { session: session2 }
-        );
+        // MongoDB usa "first-committer-wins": mientras session1 tiene una
+        // escritura sin confirmar sobre este documento, session2 recibe un
+        // WriteConflict inmediato al intentar escribirlo (no espera a que
+        // session1 termine).
+        await expect(
+          User.updateOne(
+            { _id: patient._id },
+            { name: 'Updated by Session 2' },
+            { session: session2 }
+          )
+        ).rejects.toThrow(/WriteConflict/);
+
+        await session2.abortTransaction();
 
         // Commit transacción 1
         await session1.commitTransaction();
 
-        // Verificar que transacción 2 aún ve su propio valor
-        const userInSession2After = await User.findById(patient._id).session(session2);
-        expect(userInSession2After?.name).toBe('Updated by Session 2');
-
-        // Commit transacción 2
-        await session2.commitTransaction();
-
-        // Valor final debería ser el de la última transacción en commit
+        // Valor final debería ser el de la única transacción que hizo commit
         const finalUser = await User.findById(patient._id);
-        expect(finalUser?.name).toBe('Updated by Session 2');
+        expect(finalUser?.name).toBe('Updated by Session 1');
       } catch (error) {
-        await session1.abortTransaction();
-        await session2.abortTransaction();
+        await session1.abortTransaction().catch(() => {});
+        await session2.abortTransaction().catch(() => {});
         throw error;
       } finally {
         session1.endSession();
